@@ -1,0 +1,2 @@
+KDE_LANG = zh_CN
+POFILES = AUTO

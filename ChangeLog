@@ -1,0 +1,808 @@
+15th, January, 2007 yunfan
+1. Fixed: add font size constaint for displaying messages
+    File: src/ui/evachatview.cpp
+
+
+--------------------------------------------------------
+5th, November, 2006 yunfan
+1. Changed: change the call for favorate search provides in order to
+                  get compiled in KDE 3.2
+    File: src/ui/evachatview.cpp
+
+2. Changed: delay the notifications of the server stored messages 
+                  for half seccond right after user gets logged in
+    Files: src/api/evaconnecter.h/cpp src/evamain.cpp
+
+
+--------------------------------------------------------
+5th, October, 2006 yunfan
+1. Fixed: as the protocol of the extra information reply has been changed(just found this today),
+             the signature, custom avator etc., cannot be recognised properly.
+             the extra byte changed from 0x04 to 0x05,  fixed for now. Also, changed some signed
+             variables to unsigned ones.
+     Files: src/libeva/evaextrainfo.h/cpp  src/libeva/evafriend.h/cpp src/libeva/evaonlinestatus.h/cpp
+
+2. Updated: const variables in evadefines.h now changed to macro defines
+     Files: src/libeva/evadefines.h
+
+3. Changed: remove some useless code
+     Files: src/libeva/evapacket.cpp src/evamain.cpp
+
+--------------------------------------------------------
+30th, September, 2006 yunfan
+1. Fixed: an infinite signal/slot loop caused by network exception.
+   Files: src/api/evaconnecter.h/cpp  evapacketmanager.cpp
+
+2. Clean: remove some commented code
+   File: src/api/evasocket.cpp
+
+3. Fixed: popup Qun system message box
+   File: src/api/evapacketmanager.cpp
+
+
+--------------------------------------------------------
+29th, September, 2006 yunfan
+1. Fixed: if user set his/her nick name to an empty string, the client crashs.
+    File: src/evamain.cpp
+
+
+--------------------------------------------------------
+6th, September, 2006 yunfan
+1. Improved: custom smiley management supported. Takes about one and half weeks full time
+                  work. Anyway, the feature is fully supported now. User can copy their CustomFace
+                  directory frome somewhere like "C:\Program Files\Tencent\QQ\your QQ number\"
+                  to your $HOME/.eva/your number.
+    Files: src/api/customface.h/cpp  src/api/evaqtutil.cpp  src/ui/createsmileyui.cpp
+             src/ui/createsmileywindow.h/cpp  src/ui/customfacemanagerui.h/cpp
+             src/ui/customfaceselector.cpp  src/ui/evachatview.cpp  src/ui/evaqunchatwindow.h/cpp
+
+2. Updated: update pot file. still need some one to update the po files
+    File: src/po/eva.pot
+
+3. Fixed: adding group might cause some problem
+   File: src/ui/createsmileywindow.cpp
+
+4. Updated: update pot file again with Simplified Chinese po
+   Files: po/eva.pot  po/zh_CN/eva.po
+
+
+--------------------------------------------------------
+2nd, September, 2006 yunfan
+1. Improved: google(or other engines) search in the chat view popup menu
+                  custom face creating window partly implemented.
+    Files: src/servers  src/api/customface.cpp  src/api/evaqtutil.h/cpp
+             src/ui/createsmileyui.cpp  src/ui/createsmileywindow.h/cpp
+             src/ui/customfaceslector.h/cpp  src/ui/evachatview.h/cpp
+             src/evaqunchatwindow.h/cpp
+
+
+--------------------------------------------------------
+1st, September, 2006 yunfan
+1. Added: custom smiley editing related ui files
+    Files: src/ui/createsmileyui.h/cpp src/ui/createsmileywindow.h/cpp
+             src/ui/customfacemanagerui.h/cpp
+
+
+--------------------------------------------------------
+31th, Auguest, 2006 yunfan
+1. Added: account re-activate request supported
+   Files: src/libeva/evalogin.cpp src/api/evapacketmanager.cpp src/libeva/evadefines.h
+
+2. Fixed: in the case of that if the IP of Qun smiley relay server contains 0, like 10.0.0.1, the 0s
+             are coded as spaces for the ip part of the No 15 smiley message
+   File: src/api/evahtmlparser.cpp
+
+
+--------------------------------------------------------
+30th, Auguest, 2006 yunfan
+1. Added: custom smiley select window, not integrated with eva yet
+   Files: src/ui/customfaceuibase.h/cpp src/ui/customfaceselector.h/cpp
+           src/api/customface.h/cpp
+
+2. Changed: use config directly instead of relative expression of "../config"
+    Files: src/evamain.h src/evaidt.h
+
+3. Removed: remove old smiley popup window. 
+    Files: src/ui/evasmileypopup.h/cpp src/ui/evatable.h/cpp
+
+4. Changed: Eva won't load those system smileys(gif animations) into the memory any more.
+                  This brings us an extremely low CPU usage value, try top eva out in the shell ;)
+    Files: src/api/evaresource.h/cpp
+
+5. Improved: using new smiley popup window now. currently, only Qun chat
+                  allows custom smiley selection. But, this is only the first step of this
+                  solution. Users could copy their custom smileys settings from their
+                  Windows(dir of QQ installation/XXXX/CustomFace) to $HOME/.eva/XXXX/CustomFace,
+                  you can copy while directory, even overide the empty CustomFace directory if
+                  CustomFace is empty. The QQ custom smiley setting are fully supported by Eva now.
+    Files:  src/api/customface.cpp src/api/evausersetting.h/cpp  src/ui/customfaceselector.h/cpp
+              src/ui/customfaceuibase.h/cpp src/ui/evachatwindow.h/cpp src/ui/evaqunchatwindow.h/cpp
+              src/ui/evaui.h src/ui/evauseruibase.cpp
+
+6. Changed: correct some comments in the eva.deskop file
+
+
+--------------------------------------------------------
+25th, Auguest, 2006 yunfan
+1. Fixed: Qun message setting does not load properly.
+   File: src/libeva/evaqunlist.cpp
+
+2. Changed: if user selects only show message in main window for a Qun,
+                  the sound notification won't be played.
+   File: src/evamain.cpp
+
+
+--------------------------------------------------------
+21th, Auguest, 2006 yunfan
+1. Improved: sound tip won't be played when receiving new messages 
+                  if the corresponding Qun or buddy chatting windows are already opened.
+   File: src/evamain.cpp
+
+2. Fixed: a really stupid timer in evachatview,  which makes chat window do a scroll check
+             every 20 ms!!!  Sorry for my careless work. Anyway, fixed today. also it saves some 
+             CPU resources.
+             the way of autoscrolling changes a bit. if scroll bar is not at the bottom, appending
+             messages won't cause scrolling.
+   File: src/ui/evachatview.h/cpp
+
+3. Fixed: clicking open local files. some non-latin charactors might cause opening problem
+   File: src/ui/evachatview.cpp
+
+
+--------------------------------------------------------
+20th, Auguest, 2006 yunfan
+1. Fixed: crash when the real name request reply contains some user we don't have
+   Files: src/api/evapacketmanager.cpp src/libeva/evaqun.cpp 
+            src/libeva/evaqunlist.h/cpp src/libeva/evafriend.h/cpp
+
+2. Fixed: if user quit a Qun in other machine, the Qun still shown in current machine would cause crash if 
+             user click the removed Qun. Qun would be automatically deleted now.
+   Files: src/libeva/evaqun.cpp src/api/evapacketmanager.cpp
+            src/evamain.cpp src/evachatwindowmanager.h/cpp
+
+
+--------------------------------------------------------
+19th, Auguest, 2006 yunfan
+1. Fixed: Qun notification when some joined, quit a Qun, thanks to starkwong :)
+   Files: src/libeva/evaimreceive.h/cpp src/api/evapacketmanager.h/cpp
+            src/ui/evaqunchatwindow.h/cpp src/evamain.cpp
+            src/evawindowmanager.h/cpp
+
+
+--------------------------------------------------------
+15th, Auguest, 2006 yunfan
+1. Fixed: mixing up the fragment flag with other type of im messages.
+             It could make file transfer failed sometimes.
+             Still, this was reported and fixed by hanshuiyuanshan(good man)
+    Files: src/libeva/evaimsend.h/cpp
+
+
+--------------------------------------------------------
+14th, Auguest, 2006 yunfan
+1. Fixed: long message sending and receiving problems, 
+             many thanks to hanshuiyuanshan from linuxfans.org
+   Files: src/api/evapacketmanager.h/cpp  src/ui/evachatwindow.cpp 
+            src/ui/evaqunchatwindow.cpp  src/libeva/evaimsend.h/cpp
+            src/libeva/evaimreceive.h/cpp
+
+2. Improved: new message notification use only color font instead of flashing, 
+                 by this way, the usage of cpu could be much lower(removed tons of timers)
+   Files: src/ui/evalistview.h/cpp
+
+
+--------------------------------------------------------
+8th, Auguest, 2006 yunfan
+1. Fixed: buddy face id out of range causing crash when opening Qun details window
+    File: src/ui/evaqunmemberpicker.cpp
+
+2. Changed: set face id to 1 if the face number not existed in eva
+   Files: src/api/evaresource.cpp src/evamain.cpp
+
+
+--------------------------------------------------------
+4th, Auguest, 2006 yunfan
+1. Fixed: lose reponse when connection broken
+    Files: src/api/evaconnecter.h/cpp
+
+2. Changed: Qun chat window layout change a bit
+   Files: src/ui/evaqunchatuibase.h/cpp
+
+
+--------------------------------------------------------
+14th, March, 2006 nwillis
+1. Added: idle detecting function, which also bring in a dependency on libxss.so(XScreenSaver extension).
+	Files: configure.in.in Makefile.am evaidt.cpp evaidt.h evamain.h evamain.cpp ...
+2. Fixed: main window cannot remember the position and size user last set it.
+	Files: ui/evamainwindow.cpp ui/evamainwindow.h evamain.cpp
+3. Added: README about theme creating, mostly MNG creating
+	File: image/theme/README
+4. Fixed: when login time qq server doesn't response, eva will run into a forever loop, which will cause cpu 100%.
+	File: api/evapackemanager.cpp api/evaconnecter.cpp
+5. Added: a spinbox to change idle time setting in system setting window 
+	File: ui/evasyssettinguibase.cpp ui/evasyssettinguibase.h
+	ui/evasyssettingwindow.cpp ui/evasyssettingwindow.h evamain.cpp
+
+
+--------------------------------------------------------
+20th, Feburary, 2006 yunfan
+1. Updated: two image updated
+    Files: qunlogo.png search.png
+
+
+--------------------------------------------------------
+5th, Feburary, 2006 yunfan
+1. Fixed: evaconnecter never reomve the timeout packets
+    File: src/api/evaconnecter.cpp
+
+
+--------------------------------------------------------
+4th, Feburary, 2006 yunfan
+1. Fixed: login reply 'too many users online now, try login again later on please' problem, change some fixed 
+              bytes in login request packet
+    File: src/libeva/evadefines.h
+
+
+--------------------------------------------------------
+31th, January, 2006 yunfan
+1. Fixed: deleted by Qun bug, actually a wrong notification
+    File: src/api/evapacketmanager.cpp
+
+2. Fixed: the member still in client Qun list if administrator already remove she(he)
+              from the Qun. Note that the server and other clients are correct. This
+              bug is only occurred in Qun Admin's client.
+    File: src/libeva/evaqunlist.cpp
+
+
+--------------------------------------------------------
+30th, January, 2006 yunfan
+1. Fixed: forget commiting new evaqun.cpp on 28/01/06
+    File: src/libeva/evaqun.cpp
+
+
+--------------------------------------------------------
+29th, January, 2006 yunfan
+1. Updated: the unknown bytes of login packet updated to 2006 new year edition
+    File: evadefines.h
+
+2. Updated: add new search sub-command 0x33 for custom search
+    Files: src/libeva/evadefines.h src/libeva/evasearchuser.cpp src/api/evapacketmanager.cpp
+
+3. Fixed: memory leak in signature changing parsing ( Thanks for starkwong :) )
+    File: src/libeva/evaimreceive.cpp
+
+
+--------------------------------------------------------
+28th, January, 2006 yunfan
+1. Fixed: searching Qun reply interpreted wrong
+    File: src/libeva/evaqun.h/cpp
+
+2. Changed: the default udp server ip address, this one might be quicker :)
+    File: src/api/evaservers.cpp
+
+
+--------------------------------------------------------
+27th, January, 2006 yunfan
+1. Improved: change the processing of showing images(custom smileis/pictures)
+    Files: src/api/evahtmlparser.h/cpp src/ui/evachatview.h/cpp src/ui/evachatwindow.h/cpp
+             src/ui/evaqunchatwindow.h/cpp src/evachatwindowmanager.cpp
+
+
+--------------------------------------------------------
+26th, January, 2006 yunfan
+1. Fixed: re-download groups bug
+    Files: src/evamain.h/cpp src/api/evapacketmanager.cpp src/api/evauser.cpp 
+             src/libeva/evaqun.cpp  src/libeva/evagroup.cpp
+
+2. Fixed: searching bug fixed
+    File: src/libeva/evasearchuser.cpp
+
+
+--------------------------------------------------------
+24th, January, 2006 yunfan
+1. Fixed: crashing if losing network connection
+    Files: src/evamain.cpp src/api/evaconnecter.cpp
+
+2. Fixed: 0.4.0 cannot log on Tencent server since Tencent has stopped
+             supporting 2005 beta2 version
+             src/libeva/evadefines.h src/libeva/evaqun.h/cpp src/libeva/libuh/evauhpacket.h/cpp
+             src/api/evafiledownloader.h/cpp src/main.cpp README README.zh
+
+
+--------------------------------------------------------
+19th, January, 2006 yunfan
+1. Fixed: if user doesn't select blood type, showing details window 
+              takes ages.
+    File: src/ui/evadetailswindow.cpp
+
+
+--------------------------------------------------------
+15th, January, 2006 yunfan
+1. Updated: simplified Chinese po file
+    Files: po/eva.pot po/zh_CN/eva.po
+
+2. Changed: basic dat file version updated to 0x000400
+    Files: src/api/evaqtutil.h
+
+3. Fixed: signature changing notification bug
+    Files: src/evamain.cpp
+
+4. Updated: updated eva version to 0.4.0 :)
+    Files: src/main.cpp
+
+5. Updated: change copyright period as 2004-2006
+    Files: src/main.cpp
+
+6. Updated: some docs updated
+    Files: README README.zh NEWS TODO
+
+7. Added: if client not ready, ask for the infomation client needed from server
+    Files: src/api/evaconnecter.h/cpp src/api/evapacketmanager.h/cpp
+
+
+--------------------------------------------------------
+14th, January, 2006 yunfan
+1. Added: font setting page in system setting
+    Files: src/ui/evasyssettinguibase.h/cpp src/ui/evasyssettingwindow.cpp
+             src/ui/mainlistfontsettinguibase.h/cpp(new files)
+
+2. Changed: save member's Qun card name instead of his/her nickname
+    File: src/api/evapacketmanager.cpp
+
+3. Improved: when double clicking on a certain message saved, the appended
+                    hishory message displaying the sender id at first in input box
+   File: src/ui/evaqunchatwindow.cpp
+
+4. Changed: display Qun card name in the member list of Qun details window
+   File: src/ui/qundetailswindow.cpp
+
+5. Fixed: file status panel tab label displaying bug
+   File: src/ui/evafilepanel.cpp
+
+6. Fixed: if network error or transfer stoped, file status panel still show the status page bug
+   File: src/ui/evachatwindow.cpp src/ui/evafilepanel.h/cpp
+
+7. Added: show messages when user click on "accept", "reject" or "save as" link.
+   File: src/ui/evachatwindow.cpp
+
+8. Changed: layout in system setting window
+   File: src/ui/evasyssettinguibase.cpp
+
+9. Changed: some images
+   File: src/image/theme/evalogo.png src/image/theme/file_transfer.png src/image/theme/memo.png
+          src/image/theme/qunlogo.png src/image/theme/search.png
+
+
+--------------------------------------------------------
+13th, January, 2006 yunfan
+1. Fixed: crashed when deleting item in quick reply list right after adding new item
+    File: src/ui/evasyssettingwindow.cpp
+
+2. Added: user notificatioin if she/he sends message before client ready
+    File: src/api/evapacketmanager.cpp
+
+3. Fixed: speed tip about file transfering
+    Files: src/api/filetrans/evafiledownloader.h/cpp src/ui/evafilestatusuibase.h/cpp
+             src/ui/evafilepanel.cpp
+
+4. Added: some font settings
+    Files: src/api/evausersetting.h/cpp src/ui/evalistview.cpp
+
+
+--------------------------------------------------------
+12th, January, 2006 yunfan
+1. Fixed: some literal string wrong
+    File: src/ui/evasyssettinguibase.cpp
+
+2. Fixed: multiple selection bug in authentication of adding friend setting
+    Files: src/ui/evasyssettinguibase.h/cpp
+
+
+--------------------------------------------------------
+11th, January, 2006 yunfan
+1. Fixed: line break bug with system smileies / all letters
+    File: src/ui/evatextedit.cpp src/ui/evachatview.cpp
+
+2. Fixed: wrong smiley code conversion with urls 
+    File: src/api/evahtmlparser.cpp
+
+
+--------------------------------------------------------
+9th, January, 2006 yunfan
+1. Fixed: if sending message error, crashing
+    File: src/api/evaconnecter.cpp
+
+
+--------------------------------------------------------
+8th, January, 2006 yunfan
+1. Fixed: send key (Enter in keypad) bug fixed
+    Files: src/ui/evatextedit.cpp src/ui/evachatwindow.cpp 
+             src/ui/evaqunchatwindow.cpp
+
+2. Fixed: system message displaying bug
+    File: src/ui/evasyshistoryviewer.cpp
+
+3. Fixed: chat message viewer bug, prev/next button not function as expected
+    Files: src/ui/evahistoryviewer.cpp src/ui/evahistoryuibase.cpp
+
+4. Changed: change the QQ id number shown in main window to 
+                    friends' online/all numbers
+    Files: src/libeva/evafriendlist.h/cpp src/ui/evamainwindow.h/cpp
+
+5. Fixed: empty group name supported
+    File: src/api/evauser.cpp
+
+6. Improved: displaying system smiley icons in tip window
+    File: src/ui/evatipwindow.cpp
+
+7. Improved: displaying system smiley icons in system tray tip window
+    File: src/evasystemtray.cpp
+
+8. Improved: saving font settings supported ( one setting each for all your friends/Qun)
+    Files: src/libeva/evafriendlist.h/cpp src/libeva/evaqunlist.h/cpp
+             src/api/evaqtutil.cpp src/ui/evachatwindow.h/cpp src/ui/evaqunchatwindow.h/cpp
+             src/ui/evafontselecter.h/cpp
+
+9. Changed: put "quit" down to the bottom item of system menu
+    File: src/evamain.cpp
+
+
+--------------------------------------------------------
+7th, January, 2006 yunfan
+1. Fixed: if lost connection, crash
+    Files: src/evamain.cpp src/api/evaconnecter.h/cpp 
+           src/api/evapacketmanager.cpp
+
+
+--------------------------------------------------------
+2nd, January, 2006 yunfan
+1. Improved: stop checking timer if there is no packet left in queue,
+    File: src/api/evaconnecter.cpp
+
+2. Fixed: I18N_NOOP tags in printf
+    File: src/evamain.cpp
+
+
+--------------------------------------------------------
+28st, December, 2005 yunfan
+1. Fixed: user nick name displaying bug in main window
+    File: src/ui/evamainwindow.cpp
+
+
+--------------------------------------------------------
+21st, December, 2005 yunfan
+1. Fixed: if message sent failed the input box & send button never change to
+              enabled
+    Files: src/ui/evachatwindow.cpp src/ui/evaqunchatwindow.cpp src/api/evaconnecter.cpp
+
+
+--------------------------------------------------------
+19th, December, 2005 yunfan
+1. Fixed: when Qun info updated, the real name will lost as well
+    File: src/libeva/evaqunlist.cpp
+
+2. Fixed: cannot save user defined message pick-up key, it actually was a loading bug :)
+    File: src/api/evausersetting.cpp
+
+3. Fixed: lost message bug( user does send, whereas buddy doesn't get it)
+    File: src/libeva/evaimsend.cpp src/api/evapacketmanager.cpp
+
+4. Fixed: cannot send files(images) through proxy server 
+    File: src/evamain.cpp
+
+
+--------------------------------------------------------
+18th, December, 2005 yunfan
+1. Added: Qun member real name download and show the real names 
+               in Qun chat window
+    Files: src/libeva/evaqun.h/cpp src/libeva/evafriend.h/cpp src/libeva/evadefines.h
+             src/libeva/evaqunlist.h/cpp src/api/evaqtutil.cpp src/api/evapacketmanager.h/cpp
+             src/ui/evaqunchatuibase.cpp src/ui/evaqunchatwindow.h/cpp
+             src/ui/evaqunlistview.cpp src/evamain.cpp src/evachatwindowmanager.h/cpp
+
+--------------------------------------------------------
+17th, December, 2005 yunfan
+
+1. Changed DNS solving method in downloading files
+    File: src/api/filetrans/evafiledownloader.cpp
+
+2. Added sending message failed notification
+    Files: src/api/evaconnecter.h/cpp src/evamain.cpp
+             src/ui/evachatwindow.cpp src/ui/evaqunchatwindow.cpp
+
+3. Changed textedit format to QTextEdit::AutoNone
+    File: src/ui/evatextedit.cpp
+
+4. Changed: nick name color shown in chat window following QQ's way to display
+    File: src/ui/evachatview.cpp src/ui/evachatwindow.cpp src/ui/evaqunchatwindow.cpp
+
+5. Fixed default message pick-up key bug
+    File: src/api/evausersetting.cpp
+
+6. Improved: user nick name shown in main window with system smiley icon(s)
+    File: src/ui/evamainwindow.cpp
+
+
+--------------------------------------------------------
+16th, December, 2005 yunfan
+1. Added CLI, some users would be happy now :)
+    Files: src/main.cpp src/evamain.h/cpp
+
+2. Fixed if some member quit Qun, the creator will get wrong exiting Qun message
+    File: src/api/evapacketmanager.cpp
+
+
+--------------------------------------------------------
+14th, December, 2005 yunfan
+1. Added 2 settings recording main window position
+    Files: src/api/evausersetting.h/cpp src/evamain.cpp
+
+
+--------------------------------------------------------
+12th, December, 2005 yunfan
+1. Improved text smiley code conversion
+    File: src/api/evahtmlparser.cpp
+
+
+--------------------------------------------------------
+11th, December, 2005 yunfan
+1. Updated extra info protocol. As Tencent changed the format of this protocol, Eva 
+    could not get all friends' signature & user head image downloaded. Now fixed
+    Files: src/libeva/evadefines.h src/libeva/evaextrainfo.h/cpp src/libeva/evafriendlist.h/cpp
+               src/api/evapacketmanager.cpp
+
+8th, December, 2005 yunfan
+1. Add popup menu item, Details, in Qun chatting window
+   File: src/ui/evaqunlistview.h/cpp src/ui/evaqunchatwindow.h/cpp src/evawindowmanager.cpp
+
+2. Add image, qun_card.png
+   File: src/image/theme/qun_card.png src/image/theme/eva.theme
+
+3. Fixed only format in *.* files can be selected in file sending dialog
+   File: src/ui/evachatwindow.cpp
+
+4. Update zh_CN po file
+
+
+--------------------------------------------------------
+7th, December, 2005 yunfan
+1. Fixed IA64 crash problem, actually the bug lived in saving grouped friends proccedure
+    File: src/api/evaqtutil.cpp
+
+2. Fixed picking message shortcut key problem( load key and set it to default, stupid bug:) )
+    File: src/api/evausersetting.cpp
+
+
+--------------------------------------------------------
+6th, December, 2005 yunfan
+1. Fixed when user goes offline(including lost connection), the status can never
+            changed to online/away
+   File: src/evamain.cpp
+
+2. Add 2 settings, show system smiley icon in buddy list and show signature in 
+   seperate line
+   File(s): src/api/evausersetting.h/cpp src/ui/evalistview.cpp src/ui/evasyssettinguibase.h/cpp
+             src/ui/evasyssettingwindow.cpp
+
+3. Fixed transfer file through http proxy server
+   File(s): src/api/evasocket.h/cpp src/api/eavnetwork.cpp
+
+--------------------------------------------------------
+5th, December, 2005 yunfan
+
+1. Add "<nobr>" to system tray tip
+   File: src/evasystemtray.cpp
+
+2. Fixed cannot log in again if lost connection
+   File: src/evamain.cpp
+
+3. Improved set focus in chat windows when user uses shortcut key opening window
+   File(s): src/ui/evachatwindow.cpp src/ui/evaqunchatwindow.cpp
+
+4. Improved: new background image
+   File: src/image/theme/background.png
+
+
+--------------------------------------------------------
+4th, December, 2005 yunfan
+
+1. Fixed bugs in changing details
+   by capser
+   File(s): src/ui/evadetailswindow.cpp src/ui/evasyssettingwindow.cpp
+
+2. Fix network write notifier bug
+   Files: src/api/evasocket.cpp src/api/filetrans/evafiledownloader.h/cpp
+
+3. Fixed Eva looses response when received same file acception request.
+   File(s): src/api/filetrans/evafilemanager.cpp
+
+4. Fixed url with ip displaying as normal text
+   File: src/api/evahtmlparser.cpp
+
+5. Add a background image for main buddy list window.
+   File: src/ui/evamainwindow.cpp
+
+6. Fixed bug transfering file through http proxy server
+   File(s): src/api/evasocket.h/cpp
+
+7. Changed new message notification in buddy list window from flashing icon to flashing name color
+   File(s): src/ui/evalistview.h/cpp
+
+
+--------------------------------------------------------
+16th, November, 2005 yunfan
+1. Add file transfering feature. At the moment, only agent transfering
+   supported, point 2 point feature is still under development.
+   by yunfan
+   Directories: added 2 new dirs, src/libeva/libft, src/api/filetrans
+   Files: too many files involved, including libeva im sending/receiving part, 
+         personal chatting ui part.
+         src: evamain.h/cpp
+         src/api: evasocket.h/cpp evahtmlparser.h/cpp evauser.h/cpp
+                  evapacketmanager.h/cpp
+         src/libeva: evadefines.h, evaimsend.h/cpp evaimreceive.h/cpp
+                     evautil.h/cpp evafriendlist.h/cpp
+         src/ui: evafilestatusuibase.h/cpp(new) evafilepanel.h/cpp(new)
+                 evachatuibase.h/cpp evachatwindow.h/cpp evachatview.h/cpp
+                 evamainwindow.h/cpp
+         src/image/theme: eva.theme msg_info.png(new) file_transfer.png(new)
+                          send_image.png(new)
+                 
+2. Change User Details window and System Setting window
+   by casper
+   Files: src/api: evaapi.h evauser.h/cpp evaqtutil.h/cpp evapacketmanager.h/cpp
+          src/libeva: evadefines.h evamemo.h/cpp evafriendlist.h/cpp
+          src/ui: evauserinfowidget.h/cpp(new) evauseruibase.h/cpp
+                  evasyssettinguibase.h/cpp evasyssettingwindow.h/cpp
+                  evauseruibase.h/cpp evadetailswindow.h/cpp
+                  evamainwindow.h/cpp
+          src/image/theme:  memo.png(new, by Eva :) )
+                          setting_close.png(new, by Re X) setting_open.png(new, by Re X)
+                          sys_close.png(new, by Re X) sys_open.png(new, by Re X)
+                          details_basic_info.png(new, by Re X) details_description.png(new, by Re X)
+                          details_details.png(new, by Re X)
+
+3. Add 64 bit CPU support, change all long to int
+   by yunfan
+   Files: src/libeva/evacrypt.h/cpp
+
+4. Fixed when user change something about details, Qun details or system settings, 
+   pop up message displays several times
+   by yunfan
+   Files: src/ui: evadetailswindow.h/cpp evasyssettingwindow.h/cpp evaquncreatewindow.cpp
+                  qundetailswindow.cpp
+
+5. Changed the main buddy list window displaying. make the listview itmes showed without the left dot line
+   by yunfan
+   Files: src/ui/evalistview.h/cpp
+
+
+--------------------------------------------------------
+2st, Octobor, 2005 yunfan
+1. Fixed program has no response if user has too many buddies
+   File(s): src/libeva/evafriendlist.cpp
+
+
+--------------------------------------------------------
+1st, Octobor, 2005 yunfan
+1. Recording show-online users and show-all users settings
+   when user change it with pop-up menu in main window.
+   File(s): src/evamain.h/cpp src/ui/evamainwindow.h/cpp
+2. Remove the redundant md5 checking for user-head picture
+   File(s): src/api/evauhmanager.cpp
+3. Adding sound theme real time changing
+   File(s): src/evamain.cpp
+4. Fixed making screen shot in Qun Chat window might 
+   cause crash
+   File(s): evaqunchatwindow.cpp
+5. Improvement the status of buddy update when Buddy list
+   reloaded
+   File(s): src/libeva/evafriendlist.h src/ui/evalistview.cpp
+            src/ui/evamainwindow.h/cpp src/evamain.cpp
+5. Change version to 0.3.2
+   File(s): main.cpp
+
+
+--------------------------------------------------------
+28th, September, 2005 yunfan
+1. Changing the order of group displaying
+    File(s): src/ui/evalistview.cpp
+2. Fixed when change to another user, the system tray still 
+   blinking if last user dosen't pick up messages from system tray
+    File(s): src/evasystemtray.h/cpp src/evamain.cpp
+3. Fixed when network exception occurs user cannot log in anymore
+    File(s): src/api/evapacketmanager.cpp
+4. Fixed user cannot change his/her 'Animal Sign', 'Blood' and 'Horoscope'
+   settings
+    Files(s): src/ui/evadetailswindow.cpp
+
+
+--------------------------------------------------------
+23th, September, 2005 yunfan
+1. Adding User Head downloading feature
+    File(s): src/api/evauhmanager.h/cpp src/api/evaqtutil.h/cpp 
+             src/api/evaapi.h
+             src/api/evausersetting.h/cpp  src/evamain.h/cpp
+             src/api/evapacketmanager.h/cpp 
+             src/libeva/evafriendlist.h/cpp
+             src/libeva/evaextrainfo.h/cpp  src/api/evauser.cpp
+             src/api/evaresource.h/cpp src/ui/evalistview.h/cpp
+             src/ui/evamainwindow.h/cpp src/ui/evadetailswindow.cpp
+             src/ui/evachatwindow.cpp src/ui/evatipwindow.cpp
+             src/evasystemtray.cpp
+
+
+--------------------------------------------------------
+23th, September, 2005 yunfan
+1. Adding libuh into libeva
+   Directory: src/libeva/libuh
+
+
+--------------------------------------------------------
+22th, September, 2005 yunfan
+1. Adding custom-picture file name checking
+   File(s): evaqunchatwindow.cpp
+2. Fixed re-sending custom-pic request causing crash (network already deleted)
+   File(s): evapicmanager.cpp
+
+
+--------------------------------------------------------
+21th, September, 2005 yunfan
+1. Patch for compiling libeva part in Visual Studio.Net 2002/2003 
+   from starkwong <starkwong@hotmail.com>
+   Directory: src/libeva
+2. Fixed EvaSocket writing bug
+   File(s): evasocket.h/cpp
+3. Adding User Head(following the Tencent way to call the avatar as 
+   user head =__=!) flag recognition
+   File(s): evafriendlist.h evadefines.h
+4. Fixed trying to connect custom-picture server when picture 
+   downloading list is empty
+   File(s): evapicmanager.cpp
+5. Fixed custom-pictures downloading problems in some distros like FC3
+   File(s): evapicmanager.cpp evahtmlparser.cpp
+6. Adding '#' recognition in URLs
+   File(s): evahtmlparser.cpp
+
+
+--------------------------------------------------------
+9th, September, 2005 yunfan
+evapacketmanager.cpp
+1. Fixed the anonymous list lost when user logged out
+
+
+--------------------------------------------------------
+23th, Auguest, 2005 yunfan
+evasocket.cpp, evapicmanager, evaconnecter.cpp
+1. Change network connection waiting from blocking to non-blocking
+2. Remove blocking waiting during downloading pictures in Qun chatting
+3. Change timeout of sending packets to 30 second
+
+
+--------------------------------------------------------
+18th, August, 2005 yunfan
+1. Fixed clicking "Show All" button then selecting one user
+   in the search windows that causes eva crash.
+
+
+--------------------------------------------------------
+17th, August, 2005  yunfan
+1. Fixed Fedora Core 4 crash when password box clicked
+2. Fixed some the duplicated packet causing Eva crash when 
+   downloading pictures in Qun chatting
+3. Fixed Eva losing response if sending/receiving messages 
+   containing same email addresses or URLs more than once.
+
+
+--------------------------------------------------------
+5th August, 2005  yunfan 
+ 1. fixed Qun administrator recognition.
+ 2. fixed some Qun members missing.
+ 3. fixed after saving setting Qun list becomes empty.
+ 4. fixed adding a new line when pressing Send Key(s).
+ 5. supported personal signature.
+ 6. supported auto-reply for "Away" menu runtime updated.
+ 7. changed network part to non-blocking.
+ 8. changed buddy tip contents.
+ 9. changed buddy chatting window layout.
+10. changed buddy details window layout.
+11. changed login process logic.

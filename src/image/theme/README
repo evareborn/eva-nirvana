@@ -1,0 +1,13 @@
+EVA login animation( in the system tray ) uses QMovie, which only support MNG and GIF.
+Because of the patent problem of format GIF, TrollTech recommend using MNG, and also developers are warned in Qt docs that the support of GIF MAY BE REMOVED some time.
+
+You can create simple MNG animation( like the login one ) after following steps:
+1. Create series of pics, better in PNG format.
+2. Use 'convert', which is in imagemagick package.
+    # convert -delay n PNGs target.mng
+   which 'n' is a number means 1/100 seconds.
+3. You got it!
+
+Related links:
+1. get convert: http://www.imagemagick.org/
+2. preview mng, using showimg: http://www.jalix.org/projects/showimg/

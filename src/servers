@@ -1,0 +1,44 @@
+This is the server list file
+
+You can add some more Tencent servers following the format below. 
+
+1. "UDP" and "TCP" are the keywords for starting different 
+   server list and they should be the only word in the row.
+
+2. Anything after "UDP" and before "TCP" will be assumed as
+   UDP servers. Anything after "TCP" will be treated as 
+   TCP servers.
+
+3. Each server entry contains only two parts, a tag and the
+   content, which are seperated by ":"
+
+4. Also, any URL should be after tag "URL"
+   and any IP address should follow tag "IP".
+
+5. Anything else, doesn't matter :)
+
+     Created by Yunfan (yunfan_zg@163.com) 24/Nov/2004
+=================================================
+
+UDP
+-------------------------------
+URL: sz.tencent.com
+URL:sz2.tencent.com
+URL:sz3.tencent.com
+URL:sz4.tencent.com
+URL:sz5.tencent.com
+URL:sz6.tencent.com
+URL:sz7.tencent.com
+URL:sz8.tencent.com
+URL:sz9.tencent.com
+IP: 202.96.170.164
+
+
+TCP
+--------------------------------    
+URL: tcpconn.tencent.com
+URL:tcpconn2.tencent.com
+URL:tcpconn3.tencent.com
+URL:tcpconn4.tencent.com
+URL:tcpconn5.tencent.com
+URL:tcpconn6.tencent.com

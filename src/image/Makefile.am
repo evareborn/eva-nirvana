@@ -1,0 +1,2 @@
+SUBDIRS = face smiley theme
+

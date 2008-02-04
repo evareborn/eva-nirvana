@@ -1,0 +1,99 @@
+LOGO:                logo.png
+EVALOGO:             evalogo.png
+EVA:                 eva.png
+QQ:                  qq.png
+
+LOGIN_MNG:           login.mng
+ONLINE:              online.png
+OFFLINE:             offline.png
+LEAVE:               leave.png
+INVISIBLE:           invisible.png
+
+ADD_BUDDY:           addfriend.png
+DEL_BUDDY:           delfriend.png
+DOWNLOAD_BUDDIES:    refreshbuddies.png
+SHOW_ALL_BUDDIES:    showall.png
+SHOW_ONLINE_BUDDIES: showonline.png
+REFRESH_BUDDIES:     refresh.png
+NA:                  na.png
+
+ADD_GROUP:           addgroup.png
+DEL_GROUP:           delgroup.png
+GROUP:               group.png
+DOWNLOAD_GROUPS:     downloadgroup.png
+UPLOAD_GROUPS:       uploadgroup.png
+OPEN:                open.png
+CLOSE:               close.png
+RENAME:              rename.png
+
+DETAILS:             details.png
+DETAILS_LOGO:        detailslogo.png
+CHANGE_USER:         changeuser.png
+CHAT:                chat.png
+FIND:                find.png
+MSG:                 msg.png
+HISTORY:             history.png
+HIDE_PORTRAIT:       hide_portrait.png
+SHOW_PORTRAIT:       show_portrait.png
+
+SMILEY:              smiley.png
+FONT:                font.png
+FONT_B:              bold.png
+FONT_U:              underline.png
+FONT_I:              italic.png
+CUSTOM_SMILEY:       custom_smiley.png
+SCREEN_SHOT:         screen_shot.png
+QUICK_REPLY:         quickreply.png
+
+QUIT:                quit.png
+
+SYSTEM_MSG:          sysmsg.png
+SYSTEM_SETTING:      sysoption.png
+SYSTEM_OPTIONS:      syssetting.png
+
+SEARCH_LOGO:         search.png
+SETTING_LOGO:        settinglogo.png
+
+QUN:                 qun.png
+QUN_CARD:      qun_card.png
+QUN_LOGO:            qunlogo.png
+QUN_CREATOR:         creator.png
+QUN_ADMIN:           admin.png
+QUN_SHAREHOLDER:     shareholder.png
+QUN_EXIT:            qunexit.png
+
+TIME_SUN:            time_sun.png
+TIME_MOON:           time_moon.png
+TIME_STAR:           time_star.png
+
+QQ_SHOP:             qq_shop.png
+QQ_ALBUM:            qq_album.png
+QQ_HOME:             qq_home.png
+
+MSG_INFO:            msg_info.png
+FILE_TRANSFER:       file_transfer.png
+SEND_IMAGE:          send_image.png
+
+SETTING_CLOSE:       setting_close.png
+SETTING_OPEN:        setting_open.png
+SYS_CLOSE:           sys_close.png
+SYS_OPEN:            sys_open.png
+
+DETAILS_BASIC_INFO:  details_basic_info.png
+DETAILS_DESCRIPTION: details_description.png
+DETAILS_DETAILS:     details_details.png
+
+MEMO:                memo.png
+BACK_GROUND:         background.png
+
+CONTACT:             contact.png
+QUNS:                quns.png
+
+SCRIPT:              script.png
+SCRIPT_INSTALL:      script_install.png
+SCRIPT_UNINSTALL:    script_uninstall.png
+SCRIPT_RUN:          script_run.png
+SCRIPT_STOP:         script_stop.png
+SCRIPT_CONFIG:       script_config.png
+SCRIPT_ABOUT:        script_about.png
+
