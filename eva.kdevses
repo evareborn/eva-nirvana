@@ -1,0 +1,56 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE KDevPrjSession>
+<KDevPrjSession>
+ <DocsAndViews NumberOfDocuments="6" >
+  <Doc0 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/ui/evacontactlistview.cpp" >
+   <View0 Type="Source" />
+  </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/evascriptmanager.cpp" >
+   <View0 Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/api/evausersetting.cpp" >
+   <View0 Type="Source" />
+  </Doc2>
+  <Doc3 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/ui/evacontactlistview.h" >
+   <View0 Type="Source" />
+  </Doc3>
+  <Doc4 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/main.cpp" >
+   <View0 Type="Source" />
+  </Doc4>
+  <Doc5 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/evasysmsgmanager.cpp" >
+   <View0 line="280" Type="Source" />
+  </Doc5>
+ </DocsAndViews>
+ <pluginList>
+  <kdevdebugger>
+   <breakpointList/>
+  </kdevdebugger>
+  <kdevbookmarks>
+   <bookmarks>
+    <bookmark url="/root/Projects/Implementation/eva/src/ui/evasyssettingwindow.cpp" >
+     <mark line="395" />
+     <mark line="736" />
+     <mark line="685" />
+    </bookmark>
+    <bookmark url="/root/Projects/Implementation/listview/eva/src/evamain.cpp" >
+     <mark line="2578" />
+     <mark line="2566" />
+     <mark line="1138" />
+    </bookmark>
+    <bookmark url="/root/Projects/Implementation/eva/src/evamain.cpp" >
+     <mark line="1701" />
+     <mark line="838" />
+    </bookmark>
+    <bookmark url="/root/Projects/Implementation/listview/eva/src/api/evapacketmanager.cpp" >
+     <mark line="1736" />
+    </bookmark>
+   </bookmarks>
+  </kdevbookmarks>
+  <kdevvalgrind>
+   <executable path="" params="" />
+   <valgrind path="/usr/bin/valgrind" params=" --leak-check=yes" />
+   <calltree path="calltree" params="" />
+   <kcachegrind path="/usr/bin/kcachegrind" />
+  </kdevvalgrind>
+ </pluginList>
+</KDevPrjSession>

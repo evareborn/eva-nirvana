@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Eva
+Exec=eva -caption "%c" %i %m %u
+GenericName=Instant Messenger
+GenericName[zh_CN]=Eva 即时消息客户程序
+Comment=Instant Messenger
+Comment[zh_CN]=Eva 即时消息客户程序
+MimeTypes=
+Icon=eva
+Categories=Qt;KDE;Network
+Terminal=false

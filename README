@@ -1,0 +1,78 @@
+Eva 0.4.1 IM Client
+
+Copyright(C)2004-2006, yunfan <yunfan_zg@163.com> 24th Jan, 2006
+
+
+Introduction:
+
+Eva is an instant message client software providing communication with Tencent QQ
+or other clients. It is written for KDE envirenment. This software is released under
+GPL lisence, for more details about the license, please see the content of file COPYING.
+
+
+Feathers:
+=================================================
+- basic buddy chatting
+- file transfer
+- chatting messages recording
+- custom-head picture downloading and displaying
+- display buddies' details
+- modifying personal details
+- persional signature
+- downloading groups
+- uploading groups
+- displaying buddies' level
+- creating Qun
+- modifying Qun details
+- modifying Qun members
+- Qun chatting
+- UDP and TCP log in
+- HTTP proxy log in
+- delete buddy
+- search buddy and add buddy
+- adding request approving
+- system messages recording
+- auto replying
+- quick replying
+- system setting
+
+More details of changing in ChangeLog file.
+
+
+Compile and Run
+==============================================
+1. enter eva directory, input
+   ./configure --prefix=`kde-config --prefix`
+2. then type,
+   make
+   and press enter
+3. when making finished, input
+   su
+   make install
+4. now, eva should be installed into your system. you can 
+   open a console and type eva to run it.
+    
+
+Authors
+==============================================
+see file AUTHORS
+
+
+Art Designer
+==============================================
+ caihua
+ Phytonix
+
+Acknowledge
+==============================================
+ Levin Du
+ Minmin
+ Shixin Zeng 
+ starkwong
+ zsyddl
+ And all friends who helped us in the past.
+
+
+At the End
+Qun is actually a chinese word for a relatively fixed group of people. In QQ, Qun can be created when a user achieved a certain level.
+
