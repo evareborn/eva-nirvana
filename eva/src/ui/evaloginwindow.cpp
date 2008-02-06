@@ -293,7 +293,8 @@ void EvaLoginWindow::setupOtherSetings( int index )
 		proxyPwdChanged = true;
 	}
 	
-	lePwd->setFocus(); // finally, set focus in the password item
+	//lePwd->setFocus(); // finally, set focus in the password item
+	cbQQ->setFocus();  // set focus in the QQ number item
 }
 
 void EvaLoginWindow::slotLoginTypeChanged( int index)
