@@ -179,8 +179,6 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     resize( QSize(292, 333).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 
-    cbQQ->setFocus();
-
     // signals and slots connections
     connect( loginBtn, SIGNAL( clicked() ), this, SLOT( loginClickSlot() ) );
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( cancelClickSlot() ) );
