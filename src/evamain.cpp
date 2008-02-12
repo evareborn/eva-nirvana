@@ -446,7 +446,7 @@ void EvaMain::slotAutoReplyMenuActivated(int id)
 
 void EvaMain::doSlotConnection()
 {
-	QObject::connect(onlineFriendTimer, SIGNAL(timeout()), this, SLOT(slotGetOnlineStatus()));
+//	QObject::connect(onlineFriendTimer, SIGNAL(timeout()), this, SLOT(slotGetOnlineStatus()));
 	QObject::connect(loginWin, SIGNAL(doLogin()), this, SLOT(slotDoLoginClick()));
 	QObject::connect(loginWin, SIGNAL(doCancel()), this, SLOT(slotDoCancel()));
 	
@@ -497,6 +497,7 @@ void EvaMain::doSlotConnection()
 
 void EvaMain::slotGetOnlineStatus()
 {
+	printf("slotGetOnlineStatus() called!\n");
 	std::map<unsigned int, QQFriend>::iterator iter;
 	std::map<unsigned int, QQFriend> list = (user->getFriendList()).getAllFriendsMap();
 	for(iter = list.begin(); iter != list.end(); ++iter){
@@ -686,6 +687,7 @@ void EvaMain::slotSetupNetwork( )
 	QObject::connect(packetManager, SIGNAL(invisibleReady()), SLOT(slotInvisibleReady()));
 	QObject::connect(packetManager, SIGNAL(leaveReady()), SLOT(slotLeaveReady()));	
 	QObject::connect(packetManager, SIGNAL(friendStatusChanged(unsigned int)), SLOT(slotFriendStatusChanged(unsigned int)));
+	QObject::connect(packetManager, SIGNAL(friendListReady()), SLOT(slotGetOnlineStatus()));
 
 	// friend list related signals
 	//QObject::connect(packetManager, SIGNAL(friendListReady()), SLOT(slotFriendListReady()));
@@ -876,7 +878,7 @@ void EvaMain::slotSetupWindowManager()
 
 void EvaMain::slotSetupEvaClient()
 {	
-	g_mainWin->clearList();
+//	g_mainWin->clearList();
 	loginWin->hide();
 
 	// make sure that slotSetupUser and
@@ -889,6 +891,7 @@ void EvaMain::slotSetupEvaClient()
 	user->loadQunList();
 	tray->show();
 
+	g_mainWin->updateMyInfo();
 	g_mainWin->showInfoFrame(true);
 	g_mainWin->resize(user->getSetting()->getWinSize());
 	g_mainWin->move(user->getSetting()->getWinPoint());
@@ -1613,6 +1616,7 @@ void EvaMain::slotRequestSystemSettingWindow( )
 	
 		QObject::connect(win, SIGNAL(requestUpdate(const unsigned int)), packetManager, SLOT(doGetUserInfo(const unsigned int)));
 		QObject::connect(win, SIGNAL(settingChanged()), SLOT(slotUserSettingChanged()));
+		QObject::connect(win, SIGNAL(faceSizeChanged()), SLOT(slotFaceSizeChanged()));
 		QObject::connect(packetManager, SIGNAL(userInfoReady(QStringList)), win, SLOT(slotDetailsUpdated(QStringList)));
 	
 		QObject::connect(win, SIGNAL(requestUpdateSignature(const QString)), packetManager, SLOT(doModifySignature( const QString))); 
@@ -2036,6 +2040,13 @@ void EvaMain::slotUpdateShortcut( )
 			user->getSetting()->getMessageShortcut(), KKey::QtWIN+Key_F12, this, SLOT(slotShotcutKeyPressed( )));
 	if(!accelKey->updateConnections())
 		kdDebug() << "F12 Key registered failed!" << endl;
+}
+
+void EvaMain::slotFaceSizeChanged()
+{
+	g_mainWin->loadContacts();
+	g_mainWin->loadQuns();
+	g_mainWin->loadRecentContacts();
 }
 
 void EvaMain::slotUserSettingChanged( )
@@ -2549,7 +2560,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			break;
 		case E_MyInfo:
 			g_mainWin->UpdateLoginInfo(E_MyInfo + 1, s_ENotify[E_MyInfo]);
-			g_mainWin->updateBuddy(user->getQQ());
+			g_mainWin->updateMyInfo();
 			g_ChatWindowManager->setMyName(codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str()), 
 					user->getQQ());
 			break;
@@ -2615,19 +2626,19 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			QString nick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
 			int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
 			
-			g_mainWin->clearList();
-			g_mainWin->updateBuddy(user->getQQ());//update my info first
+//			g_mainWin->clearList();
+			g_mainWin->updateMyInfo();//update my info first
 			g_ChatWindowManager->setMyName(nick, user->getQQ());
 
-			g_mainWin->updateContacts();
-			g_mainWin->updateQuns();
 	
 			tray->changeToolTip(user->getQQ(), nick, faceId);			
 			g_mainWin->showInfoFrame(false);
 
-			g_mainWin->updateRecentContacts();
 			g_mainWin->ShowTab(g_mainWin->m_buddyTabKey);
 			
+			g_mainWin->loadContacts();
+			g_mainWin->loadQuns();
+			g_mainWin->loadRecentContacts();
 			connecter->slotClientReady();
 			packetManager->doRequestExtraInfo();
 			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather
@@ -2636,6 +2647,8 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			GetContactManager()->fetchAllSignatures();
 
 			GetScriptManager()->findScripts();
+
+			packetManager->doGetOnlineFriends();
 			if(!onlineFriendTimer->isActive())
 				onlineFriendTimer->start(60000, false);
 		}

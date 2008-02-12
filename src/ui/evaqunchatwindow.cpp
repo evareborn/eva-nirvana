@@ -145,6 +145,7 @@ void EvaQunChatWindow::graphicChanged( )
 	tbImageFile->setIconSet(*(images->getIcon("CUSTOM_SMILEY")));
 	tbScreenShot->setIconSet(*(images->getIcon("SCREEN_SHOT")));
 	tbQuickReply->setIconSet(*(images->getIcon("QUICK_REPLY")));
+	tbEnableSound->setIconSet(*(images->getIcon("SYSTEM_MSG")));
 }
 
 void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int senderQQ, QString message, QDateTime time, const char size, 
@@ -165,6 +166,8 @@ void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int sen
 		QApplication::postEvent((QObject *)EvaMain::picManager, event);
 	}
 	chatDisplay->append(nick, time, Qt::blue, true, QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue), size, u, i, b, message);
+	if( tbEnableSound->isOn())
+		EvaMain::global->getSoundResource()->playNewMessage();
 }
 
 void EvaQunChatWindow::showMessages()

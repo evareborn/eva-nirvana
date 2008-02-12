@@ -64,6 +64,7 @@ public slots:
 	
 	void doChangeStatus(EvaUser::UserStatus newStatus);
 	void doRequestFileAgentKey();
+	void doGetOnlineFriends();
 	void doGetAllFriends();
 	
 	void doGetAllLevels();
@@ -175,7 +176,7 @@ signals:
 	void kickedOut(const QString);
 	
 	void friendStatusChanged(unsigned int id);
-	//void friendListReady();
+	void friendListReady();
 	//void myInfoReady();
 	void userInfoReady(QStringList info);
 	void extraInfoReady();
@@ -306,7 +307,7 @@ private:
 
 	
 	void redirectTo(const unsigned int ip, const short port);
-	void doGetOnlineFriends();
+//	void doGetOnlineFriends();
 	void parsePacket(InPacket *packet);
 	
 	void saveBuddyQQ(const unsigned int id, const short seq);
