@@ -147,6 +147,16 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	tbQuickReply->setMaximumSize( QSize( 24, 24 ) );
 	tbQuickReply->setAutoRaise( TRUE );
 	layout14->addWidget( tbQuickReply );
+
+	tbEnableSound = new QToolButton( lowerLayoutWidget, "tbEnableSound" );
+	tbEnableSound->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbEnableSound->sizePolicy().hasHeightForWidth() ) );
+	tbEnableSound->setMinimumSize( QSize( 24, 24 ) );
+	tbEnableSound->setMaximumSize( QSize( 24, 24 ) );
+	tbEnableSound->setToggleButton( TRUE );
+	tbEnableSound->setUsesTextLabel( FALSE );
+	tbEnableSound->setAutoRaise( TRUE );
+	layout14->addWidget( tbEnableSound );
+
 	spacer5 = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout14->addItem( spacer5 );
 
@@ -298,6 +308,7 @@ void EvaQunChatUIBase::languageChange()
 	tbQuickReply->setText( i18n( "..." ) );
 	tbQuickReply->setAccel( QKeySequence( tr( "Alt+R" ) ) );
 	QToolTip::add( tbQuickReply, i18n( "select an quick-reply message" ) );
+	QToolTip::add( tbEnableSound, i18n( "toggle sound notification" ) );
 	pbHistory->setText( i18n( "History" ) );
 	pbHistory->setAccel( QKeySequence( tr( "Alt+H" ) ) );
 	QToolTip::add( pbHistory, i18n( "view IM history(Alt+H)" ) );

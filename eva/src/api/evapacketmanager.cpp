@@ -501,6 +501,11 @@ void EvaPacketManager::processChangeStatusReply( const InPacket * in )
 	delete packet;
 }
 
+void EvaPacketManager::doGetOnlineFriends()
+{
+	connecter->append(new GetOnlineFriendsPacket());
+}
+
 void EvaPacketManager::doGetAllFriends( )
 {
 	connecter->append(new GetFriendListPacket());
@@ -666,7 +671,8 @@ void EvaPacketManager::processGetOnlineFriendReply( const InPacket * in )
 	}
 	if(packet->getPosition() != QQ_FRIEND_ONLINE_LIST_POSITION_END){
 		connecter->append(new GetOnlineFriendsPacket(packet->getPosition()));
-	}
+	} else
+		emit friendListReady();
 	delete packet;
 }
 

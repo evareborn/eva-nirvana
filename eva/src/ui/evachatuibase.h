@@ -62,6 +62,7 @@ public:
 	QToolButton* tbScreenShot;
 	QToolButton* tbQuickReply;
 	QToolButton* tbHideShows;
+	QToolButton* tbEnableSound;
 	EvaTextEdit* kteInput;
 	QPushButton* pbHistory;
 	QPushButton* pbClose;

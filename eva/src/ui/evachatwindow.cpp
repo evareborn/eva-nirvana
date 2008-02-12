@@ -125,6 +125,7 @@ void EvaChatWindow::graphicChanged()
 	tbAddImage->setIconSet(*(images->getIcon("SEND_IMAGE")));
 	tbScreenShot->setIconSet(*(images->getIcon("SCREEN_SHOT")));
 	tbQuickReply->setIconSet(*(images->getIcon("QUICK_REPLY")));
+	tbEnableSound->setIconSet(*(images->getIcon("SYSTEM_MSG")));
 	tbHideShows->setIconSet(*(images->getIcon("HIDE_PORTRAIT")));
 	slotBuddyQQShowReady(getBuddyQQ());
 	slotMyQQShowReady();
@@ -295,6 +296,8 @@ void EvaChatWindow::slotReceivedMessage(unsigned int sender, bool isNormal, QStr
 	chatDisplay->append(nick, time, Qt::blue, isNormal,
 				QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue),
 				size, u, i, b, message);
+	if ( tbEnableSound->isOn() )
+		EvaMain::global->getSoundResource()->playNewMessage();
 }
 
 void EvaChatWindow::showMessages()

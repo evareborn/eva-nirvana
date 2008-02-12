@@ -164,6 +164,16 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	tbQuickReply->setMaximumSize( QSize( 24, 24 ) );
 	tbQuickReply->setAutoRaise( TRUE );
 	layout3->addWidget( tbQuickReply );
+
+	tbEnableSound = new QToolButton( lowerLayoutWidget, "tbEnableSound" );
+	tbEnableSound->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbEnableSound->sizePolicy().hasHeightForWidth() ) );
+	tbEnableSound->setMinimumSize( QSize( 24, 24 ) );
+	tbEnableSound->setMaximumSize( QSize( 24, 24 ) );
+	tbEnableSound->setToggleButton( TRUE );
+	tbEnableSound->setUsesTextLabel( FALSE );
+	tbEnableSound->setAutoRaise( TRUE );
+	layout3->addWidget( tbEnableSound );
+
 	spcToolBtn3 = new QSpacerItem( 71, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout3->addItem( spcToolBtn3 );
 	
@@ -322,6 +332,8 @@ void EvaChatUIBase::languageChange()
 	QToolTip::add( tbScreenShot, i18n( "add a screen shot" ) );
 	tbQuickReply->setAccel( QKeySequence( tr( "Alt+R" ) ) );
 	QToolTip::add( tbQuickReply, i18n( "select an quick-reply message" ) );
+
+	QToolTip::add(tbEnableSound, i18n("toggle sound notification") );
 	
 	
 	tbHideShows->setText( i18n( "..." ) );

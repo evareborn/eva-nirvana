@@ -549,6 +549,54 @@ void EvaContactListView::loadContacts()
 	sort();
 }
 
+void EvaContactListView::updateContacts()
+{
+	/// load groups
+	EvaUser *user =  EvaMain::user;
+	if(!user) return;
+	std::list<std::string> names = user->getGroupNames();
+	std::list<std::string>::iterator iter;
+	int i=0;
+
+	QMutex mutex;
+	mutex.lock();	
+
+	for(iter = names.begin(); iter!= names.end(); ++iter){
+		if( ! m_groups.count(i) )
+			m_groups[i]  = new EvaGroupItem(i, this);
+		i++;
+	}
+
+	if (!m_groups.count(user->getAnonymousIndex()))
+		m_groups[user->getAnonymousIndex()] = new EvaGroupItem(user->getAnonymousIndex(), this);
+	if (!m_groups.count(user->getBlackIndex()))
+		m_groups[user->getBlackIndex()] = new EvaGroupItem(user->getBlackIndex(), this);
+
+	/// load all contacts
+	FriendList *list = EvaMain::user->getFriends();
+	QQFriend *f = list->firstFriend();
+	while( f ){
+		if (!m_contacts.count(f->getQQ()))
+			m_contacts[f->getQQ()] = new EvaBuddyItem(f, m_groups[f->getGroupIndex()]);
+		f = list->nextFriend();
+	}
+	if(user->getSetting()->isShowOnlineEnabled())
+		showOnlineOnly();
+	else
+		showAll();
+	
+	// update group online counts
+	KConfig* const config = EvaMain::user->config( "Group Open Status" );
+	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
+	while(it != m_groups.end()){
+		it->second->setOpen( config->readBoolEntry(it->second->groupName(), false) );
+		it->second->update();
+		it++;
+	}
+	mutex.unlock();
+}
+
+
 void EvaContactListView::clear()
 {
 	m_groups.clear();

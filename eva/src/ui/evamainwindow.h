@@ -74,6 +74,7 @@ public:
 	void addBuddy(const unsigned int id);
 
 	void updateBuddy(const unsigned int id);
+	void updateMyInfo();
 
 	void addQun(const unsigned int id);
 	void updateQun(const unsigned int id);

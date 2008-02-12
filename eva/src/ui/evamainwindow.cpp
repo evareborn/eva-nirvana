@@ -124,11 +124,11 @@ void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPix
 	slotUpdateBuddyStat();
 
 	tbMyFace->setIconSet( QIconSet(*pix));
-
-
-	loadContacts();
-	loadQuns();
-	loadRecentContacts();
+//
+//
+//	loadContacts();
+//	loadQuns();
+//	loadRecentContacts();
 }
 
 void EvaMainWindow::slotUpdateBuddyStat()
@@ -182,6 +182,27 @@ void EvaMainWindow::updateBuddy(const unsigned int id)
 	if(m_buddyLv)
 		m_buddyLv->friendStatusChanged(id);
 }
+
+void EvaMainWindow::updateMyInfo()
+{
+	EvaUser *user = EvaMain::user;
+	if(user){
+		QString myNick = GB2Unicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
+		if(myNick.isNull()) myNick = "";
+		setCaption(myNick + " - Eva");
+		QString faceIdStr = user->getDetails().at(ContactInfo::Info_face).c_str();
+		if( faceIdStr.isNull() ) faceIdStr = "0";
+		int myFaceId = faceIdStr.toInt();
+		QPixmap *face = EvaMain::images->getFaceByID(myFaceId);
+		if(user->hasUserHead()){
+			QPixmap *uhPic = EvaMain::images->getUserHeadPixmap(user->getQQ()); // color pixmap
+			if(uhPic) face = uhPic;
+		}
+		setIcon(*face);
+		setMainInfo(user->getQQ(), myNick, face?face:EvaMain::images->getFace(0));
+	}
+}
+
 
 void EvaMainWindow::addQun(const unsigned int id)
 {
@@ -386,9 +407,9 @@ QString EvaMainWindow::myInfoTip( )
 		i18n("Nickname:") + " </font></b>"+htmlName +"<br>" + signature + "<br><b><font color = blue>"+ 
 		i18n("Level") +": </font></b>"+ level + "  (" + QString::number(EvaMain::user->getLevel()) +")<br><b><font color = blue>"+
 		i18n("Online Time") +": </font></b>"+ QString::number(EvaMain::user->getOnlineTime()/3600)+
-									" Hours<br><b><font color = blue>"+
-		i18n("Level Up") +": </font></b>"+ QString::number(EvaMain::user->getHoursToLevelUp())+
-							" Hours<br><b><font color = blue>" + "</td></tr></table>"; 
+									" Hours<br><b><font color = blue>";
+	//	i18n("Level Up") +": </font></b>"+ QString::number(EvaMain::user->getHoursToLevelUp())+
+//							" Hours<br><b><font color = blue>" + "</td></tr></table>"; 
 	tip += "</qt>";
 	return tip;
 }
@@ -401,7 +422,7 @@ void EvaMainWindow::resizeEvent( QResizeEvent * event )
 	if(m_recentLv) m_recentLv->setColumnWidth(0, s.width());
 }
 
-void EvaMainWindow::moveEvent( QMoveEvent */*event*/ )
+void EvaMainWindow::moveEvent( QMoveEvent * /*event*/ )
 {
         setPosAndSize();
 }
@@ -555,7 +576,8 @@ bool EvaMainWindow::removeTab( int id )
 
 void EvaMainWindow::updateContacts( )
 {
-	if(m_buddyLv) m_buddyLv->loadContacts();
+	if(m_buddyLv) m_buddyLv->updateContacts();
+	updateRecentContacts();
 }
 
 void EvaMainWindow::updateQuns( )
