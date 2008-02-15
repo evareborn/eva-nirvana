@@ -35,6 +35,7 @@
 #include "evafilestatusuibase.h"
 #include "regiongrabber.h"
 #include "evamainwindow.h"
+#include "evahistoryviewer.h"
 #include "evascriptmanager.h"
 
 #include <qtextcodec.h>
@@ -75,7 +76,7 @@ std::list<QString> EvaChatWindow::quickList;
 	
 EvaChatWindow::EvaChatWindow(QQFriend * frd, QWidget* parent, const char* name, WFlags fl)
 	: EvaChatUIBase(parent, name, fl), smileyPopup(NULL), quickMenu(NULL), fontSelecter(NULL),
-	m_NumImages(0), grabber(NULL)
+	m_NumImages(0), grabber(NULL), viewer(NULL)
 {
 	//buddy = new QQFriend(*frd);
 	buddy = frd;
@@ -457,7 +458,34 @@ void EvaChatWindow::slotHideShowsClick()
 
 void EvaChatWindow::slotHistoryClick()
 {
-	emit requestHistory(getBuddyQQ());
+//	emit requestHistory(getBuddyQQ());
+	if ( !pbHistory->isOn() )
+	{
+		if (viewer) delete viewer;
+		viewer = NULL;
+		return;
+	}
+
+	QString nick = codec->toUnicode(buddy->getNick().c_str());
+
+	viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::user->getSetting());
+	
+	unsigned short faceId = buddy->getFace();
+	QPixmap *face = EvaMain::images->getFaceByID(faceId);
+	viewer->setIcon(*face);
+
+	connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+					QString, QDateTime, const char,
+					const bool, const bool, const bool,
+					const char, const char, const char)),
+			this,
+			SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+					QString, QDateTime, const char,
+					const bool, const bool, const bool,
+					const char, const char, const char)));
+	viewer->move(this->x(), this->y() + this->height() + 25);
+
+	viewer->show();
 }
 
 void EvaChatWindow::slotSendKeyClick()
@@ -854,6 +882,8 @@ void EvaChatWindow::closeEvent( QCloseEvent * e )
 		for(iter = m_FileList.begin(); iter!=m_FileList.end(); ++iter){
 			emit fileTransferCancel(buddy->getQQ(), iter.key());
 		}
+		if (viewer)
+			delete viewer;
 		e->accept();
 	}
 }
@@ -962,7 +992,7 @@ void EvaChatWindow::addToolButton( QString & scriptName, QString buttonName, QSt
 	m_scriptMap[buttonName] = scriptName;
 }
 
-void EvaChatWindow::removeToolButton( QString & scriptName, QString buttonName )
+void EvaChatWindow::removeToolButton( QString & /*scriptName*/, QString buttonName )
 {
 	QMap<QString, QToolButton*>::Iterator it = m_btnMap.find(buttonName);
 	if( it == m_btnMap.end()) return;

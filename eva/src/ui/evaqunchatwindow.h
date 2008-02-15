@@ -40,6 +40,7 @@ class QShowEvent;
 class QCloseEvent;
 class QHideEvent;
 class RegionGrabber;
+class EvaHistoryViewer;
 
 class EvaQunChatWindow : public EvaQunChatUIBase
 {
@@ -131,6 +132,7 @@ private:
 	QString sendingImageMsg;
 	
 	RegionGrabber *grabber;
+	EvaHistoryViewer* viewer;
 	//std::list<QString> outPicList;
 	unsigned int sessionID;
 	unsigned int ip;

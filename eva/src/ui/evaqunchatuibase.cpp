@@ -177,6 +177,7 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
 	
 	pbHistory = new QPushButton( this, "pbHistory" );
+	pbHistory->setToggleButton(TRUE);
 	layout3->addWidget( pbHistory );
 	spacer1 = new QSpacerItem( 81, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout3->addItem( spacer1 );

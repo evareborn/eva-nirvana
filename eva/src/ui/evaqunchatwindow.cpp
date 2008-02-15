@@ -32,6 +32,7 @@
 #include "evachatview.h"
 #include "evaqunlist.h"
 #include "evaqunlistview.h"
+#include "evahistoryviewer.h"
 #include "evafriend.h"
 #include "evaqtutil.h"
 #include "regiongrabber.h"
@@ -78,7 +79,7 @@ std::list<QString> EvaQunChatWindow::quickList;
 
 EvaQunChatWindow::EvaQunChatWindow( Qun * qun, QWidget * parent, const char * name, WFlags fl )
 	: EvaQunChatUIBase(parent, name, fl), smileyPopup(NULL), fontSelecter(NULL), quickMenu(NULL),
-	mQun(qun), grabber(NULL)
+	mQun(qun), grabber(NULL), viewer(NULL)
 {
 	codec = QTextCodec::codecForName("GB18030");
 	initObjects();
@@ -454,7 +455,39 @@ void EvaQunChatWindow::slotQuickReplyActivated( int id )
 
 void EvaQunChatWindow::slotHistoryClick( )
 {
-	emit requestHistory(mQun->getQunID());
+	//emit requestHistory(mQun->getQunID());
+	if ( !pbHistory->isOn() )
+	{
+		if (viewer) delete viewer;
+		viewer = NULL;
+		return;
+	}
+
+	QString qName = i18n("Qun");
+
+	if (mQun){
+		QunInfo info = mQun->getDetails();
+		qName = codec->toUnicode(info.getName().c_str());
+	}
+
+	viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::user->getSetting(), true);
+	
+	unsigned short faceId = atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str());
+	QPixmap *face = EvaMain::images->getFaceByID(faceId);
+	viewer->setIcon(*face);
+
+	connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+					QString, QDateTime, const char,
+					const bool, const bool, const bool,
+					const char, const char, const char)),
+			this,
+			SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+					QString, QDateTime, const char,
+					const bool, const bool, const bool,
+					const char, const char, const char)));
+	viewer->move(this->x(), this->y() + this->height() + 25);
+
+	viewer->show();
 }
 
 void EvaQunChatWindow::slotSendKeyClick( )
@@ -595,6 +628,8 @@ void EvaQunChatWindow::closeEvent( QCloseEvent * e )
 {
 	if(timer->isActive())
 		timer->stop();
+	if (viewer)
+		delete viewer;
 	QWidget::closeEvent(e);
 }
 
@@ -837,7 +872,7 @@ void EvaQunChatWindow::addToolButton( QString & scriptName, QString buttonName, 
 	m_scriptMap[buttonName] = scriptName;
 }
 
-void EvaQunChatWindow::removeToolButton( QString & scriptName, QString buttonName )
+void EvaQunChatWindow::removeToolButton( QString & /*scriptName*/, QString buttonName )
 {
 	QMap<QString, QToolButton*>::Iterator it = m_btnMap.find(buttonName);
 	if( it == m_btnMap.end()) return;

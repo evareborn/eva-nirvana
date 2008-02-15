@@ -181,7 +181,7 @@ void EvaMain::processCLIArgs()
 		bool ok = false;
 		user  = args->getOption("user");
 		if(!user.isEmpty()) {
-			unsigned int id = user.toUInt(&ok);
+			//unsigned int id = user.toUInt(&ok);
 			if(!ok){
 				printf(I18N_NOOP("username must be in numeric format.\n"));
 				QTimer::singleShot(200, this, SLOT(doQuit()));
@@ -243,7 +243,7 @@ void EvaMain::processCLIArgs()
 					return;
 				}
 				bool ok = false;
-				unsigned int pp = port.toUInt(&ok);
+			//	unsigned int pp = port.toUInt(&ok);
 				if(!ok){
 					printf(I18N_NOOP("http proxy server port number is in wrong format.\n"));
 					QTimer::singleShot(200, this, SLOT(doQuit()));
@@ -996,7 +996,7 @@ void EvaMain::slotLeaveReady( )
 	GetScriptManager()->notifyStatusChange(user->getQQ());
 }
 
-void EvaMain::slotNetworkException( int exp)
+void EvaMain::slotNetworkException( int/* exp*/)
 {
 	g_mainWin->offline();
 	tray->setOffline();
@@ -2078,7 +2078,7 @@ void EvaMain::slotLoginProcessReady( )
 	//QTimer::singleShot( 500,  connecter, SLOT(slotClientReady()));
 }*/
 
-void EvaMain::slotAddAnonymous(const unsigned int id, const unsigned short face)
+void EvaMain::slotAddAnonymous(const unsigned int id, const unsigned short/* face*/)
 {
 	if(g_mainWin){
 // 		QString nick = QString::number(id);
@@ -2272,7 +2272,7 @@ void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned in
 }
 
 void EvaMain::slotReceivedFileAccepted(const unsigned int id, const unsigned int session,
-					const unsigned int ip, const bool isAccepted,
+					const unsigned int /*ip*/, const bool isAccepted,
 					const unsigned char transferType)
 {
 	if(g_ChatWindowManager){
@@ -2322,14 +2322,14 @@ void EvaMain::slotReceivedFileAgentInfo( const unsigned int id, const unsigned i
 
 void EvaMain::slotReceivedFileNotifyIpEx( const unsigned int id, const bool isSender,
 				const unsigned int session,const unsigned char transferType,
-				const unsigned int wanIp1, const unsigned short wanPort1,
-				const unsigned int wanIp2, const unsigned short wanPort2,
-				const unsigned int wanIp3, const unsigned short wanPort3,
-				const unsigned int lanIp1, const unsigned short lanPort1,
-				const unsigned int lanIp2, const unsigned short lanPort2,
-				const unsigned int lanIp3, const unsigned short lanPort3,
-				const unsigned int syncIp, const unsigned short syncPort,
-				const unsigned int syncSession )
+				const unsigned int wanIp1, const unsigned short /*wanPort1*/,
+				const unsigned int /*wanIp2*/, const unsigned short /*wanPort2*/,
+				const unsigned int /*wanIp3*/, const unsigned short /*wanPort3*/,
+				const unsigned int /*lanIp1*/, const unsigned short /*lanPort1*/,
+				const unsigned int /*lanIp2*/, const unsigned short /*lanPort2*/,
+				const unsigned int /*lanIp3*/, const unsigned short /*lanPort3*/,
+				const unsigned int /*syncIp*/, const unsigned short /*syncPort*/,
+				const unsigned int /*syncSession*/ )
 {
 	if(isSender) {  // true means buddy started udp upload session
 		// we should start udp download session, but now
@@ -2344,9 +2344,9 @@ void EvaMain::slotReceivedFileNotifyIpEx( const unsigned int id, const bool isSe
 	}
 }
 
-void EvaMain::slotNotifyAddressRequest( const unsigned int id, const unsigned int session, const unsigned int synSession, 
-				const unsigned int synIp, const unsigned short synPort,
-				const unsigned int myIp, const unsigned short myPort)
+void EvaMain::slotNotifyAddressRequest( const unsigned int id, const unsigned int session, const unsigned int /*synSession*/, 
+				const unsigned int /*synIp*/, const unsigned short /*synPort*/,
+				const unsigned int /*myIp*/, const unsigned short /*myPort*/)
 {
 	bool ok = false;
 	if(m_FileManager){
@@ -2409,7 +2409,7 @@ void EvaMain::slotIdleBack()
 // 	win->show();
 // }
 
-void EvaMain::slotBuddyAdded( const unsigned int id, const QString nick, const unsigned short face, const int group)
+void EvaMain::slotBuddyAdded( const unsigned int id, const QString /*nick*/, const unsigned short /*face*/, const int /*group*/)
 {
 	//g_mainWin->addBuddy(nick, id, QString(""), group, images->getFaceByID(face, true), images->getFaceByID(face, false));
 	g_mainWin->addBuddy(id);
