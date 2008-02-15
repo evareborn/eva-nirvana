@@ -196,6 +196,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	layout2 = new QHBoxLayout( 0, 4, 6, "layout2"); 
 	
 	pbHistory = new QPushButton( lowerLayoutWidget, "pbHistory" );
+	pbHistory->setToggleButton( TRUE );
 	layout2->addWidget( pbHistory );
 	spcBottom = new QSpacerItem( 60, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout2->addItem( spcBottom );
@@ -342,7 +343,7 @@ void EvaChatUIBase::languageChange()
 	
 	pbHistory->setText( i18n( "&History" ) );
 	pbHistory->setAccel( QKeySequence( tr( "Alt+H" ) ) );
-	QToolTip::add( pbHistory, i18n( "view IM history(Alt+H)" ) );
+	QToolTip::add( pbHistory, i18n( "view/hide IM history(Alt+H)" ) );
 	pbClose->setText( i18n( "Close" ) );
 	pbClose->setAccel( QKeySequence( tr( "Alt+X" ) ) );
 	QToolTip::add( pbClose, i18n( "close this window(Alt+X)" ) );
