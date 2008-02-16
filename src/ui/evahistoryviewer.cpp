@@ -79,7 +79,7 @@ void EvaHistoryViewer::display()
 void EvaHistoryViewer::closeEvent( QCloseEvent * e)
 {
 	emit windowClosed();
-	e->accept();
+	e->ignore();
 }
 
 void EvaHistoryViewer::slotChbSelectClick()

@@ -456,44 +456,48 @@ void EvaQunChatWindow::slotQuickReplyActivated( int id )
 void EvaQunChatWindow::slotHistoryClick( )
 {
 	//emit requestHistory(mQun->getQunID());
-	if ( !pbHistory->isOn() )
+	if ( !viewer )
 	{
-		if (viewer) delete viewer;
-		viewer = NULL;
-		return;
+		QString qName = i18n("Qun");
+
+		if (mQun){
+			QunInfo info = mQun->getDetails();
+			qName = codec->toUnicode(info.getName().c_str());
+		}
+
+		viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::user->getSetting(), true);
+
+		unsigned short faceId = atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str());
+		QPixmap *face = EvaMain::images->getFaceByID(faceId);
+		viewer->setIcon(*face);
+
+		connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)),
+				this,
+				SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)));
+		connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
+	}
+	if ( pbHistory->isOn() )
+	{
+		viewer->move(this->x(), this->y() + this->height() + 25);
+
+		viewer->show();
+	}
+	else
+	{
+		viewer->hide();
 	}
 
-	QString qName = i18n("Qun");
-
-	if (mQun){
-		QunInfo info = mQun->getDetails();
-		qName = codec->toUnicode(info.getName().c_str());
-	}
-
-	viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::user->getSetting(), true);
-	
-	unsigned short faceId = atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str());
-	QPixmap *face = EvaMain::images->getFaceByID(faceId);
-	viewer->setIcon(*face);
-
-	connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
-					QString, QDateTime, const char,
-					const bool, const bool, const bool,
-					const char, const char, const char)),
-			this,
-			SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
-					QString, QDateTime, const char,
-					const bool, const bool, const bool,
-					const char, const char, const char)));
-	connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
-	viewer->move(this->x(), this->y() + this->height() + 25);
-
-	viewer->show();
 }
 
 void EvaQunChatWindow::slotHistoryWindowClosed()
 {
-	viewer = NULL;
+	viewer->hide();
 	pbHistory->setOn(FALSE);
 }
 
