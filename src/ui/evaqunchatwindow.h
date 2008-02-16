@@ -157,6 +157,7 @@ private slots:
 	void slotQuickReplyActivated(int id);
 	
 	void slotHistoryClick();
+	void slotHistoryWindowClosed();
 	void slotSendKeyClick();
 	void slotSend();
 	

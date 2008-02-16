@@ -18,6 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef EVAAPI_H
+#define EVAAPI_H
+
 #include "evaconnecter.h"
 #include "evahtmlparser.h"
 #include "evanetwork.h"
@@ -88,4 +91,4 @@ static QString s_ENotify[E_Count] =
 	""
 };
 
-
+#endif //EVAAPI_H
