@@ -2533,7 +2533,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			GetLoginManager()->setLoggedOut();
 			user->setStatus(EvaUser::Eva_Offline);
 			numOfLostKeepAlivePackets = 0;
-			//KMessageBox::information(g_mainWin, msg, i18n("Eva Login"));
+			KMessageBox::information(g_mainWin, e->m_desc, i18n("Eva Login"));
 			slotDoChangeUser();
 			break;
 		case E_LoggedIn:

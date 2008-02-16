@@ -144,7 +144,7 @@ void EvaLoginManager::wrongPassword( QString msg )
 {	
 	//KMessageBox::information(0, msg, i18n("Eva Login"));
 	m_status = EStart;
-	notifyEvent(E_PwWrong);	
+	notifyEvent(E_PwWrong, msg);
 	//TODO
 }
 
