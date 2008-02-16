@@ -459,39 +459,42 @@ void EvaChatWindow::slotHideShowsClick()
 void EvaChatWindow::slotHistoryClick()
 {
 //	emit requestHistory(getBuddyQQ());
-	if ( !pbHistory->isOn() )
+	if ( !viewer )
 	{
-		if (viewer) delete viewer;
-		viewer = NULL;
-		return;
+		QString nick = codec->toUnicode(buddy->getNick().c_str());
+
+		viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::user->getSetting());
+
+		unsigned short faceId = buddy->getFace();
+		QPixmap *face = EvaMain::images->getFaceByID(faceId);
+		viewer->setIcon(*face);
+
+		connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)),
+				this,
+				SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)));
+		connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
 	}
+	if ( pbHistory->isOn() )
+	{
+		viewer->move(this->x(), this->y() + this->height() + 25);
 
-	QString nick = codec->toUnicode(buddy->getNick().c_str());
-
-	viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::user->getSetting());
-	
-	unsigned short faceId = buddy->getFace();
-	QPixmap *face = EvaMain::images->getFaceByID(faceId);
-	viewer->setIcon(*face);
-
-	connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
-					QString, QDateTime, const char,
-					const bool, const bool, const bool,
-					const char, const char, const char)),
-			this,
-			SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
-					QString, QDateTime, const char,
-					const bool, const bool, const bool,
-					const char, const char, const char)));
-	connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
-	viewer->move(this->x(), this->y() + this->height() + 25);
-
-	viewer->show();
+		viewer->show();
+	}
+	else
+	{
+		viewer->hide();
+	}
 }
 
 void EvaChatWindow::slotHistoryWindowClosed()
 {
-	viewer = NULL;
+	viewer->hide();
 	pbHistory->setOn(FALSE);
 }
 
