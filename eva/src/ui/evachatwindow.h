@@ -154,6 +154,7 @@ private slots:
 	void slotHideShowsClick();
 	
 	void slotHistoryClick();
+	void slotHistoryWindowClosed();
 	void slotSendKeyClick();
 	void slotSend();
 	

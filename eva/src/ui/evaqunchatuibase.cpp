@@ -312,7 +312,7 @@ void EvaQunChatUIBase::languageChange()
 	QToolTip::add( tbEnableSound, i18n( "toggle sound notification" ) );
 	pbHistory->setText( i18n( "History" ) );
 	pbHistory->setAccel( QKeySequence( tr( "Alt+H" ) ) );
-	QToolTip::add( pbHistory, i18n( "view IM history(Alt+H)" ) );
+	QToolTip::add( pbHistory, i18n( "view/hide Qun history(Alt+H)" ) );
 	pbClose->setText( i18n( "Close" ) );
 	pbClose->setAccel( QKeySequence( tr( "Alt+X" ) ) );
 	QToolTip::add( pbClose, i18n( "close this window(Alt+X)" ) );

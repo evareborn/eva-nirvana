@@ -485,9 +485,16 @@ void EvaQunChatWindow::slotHistoryClick( )
 					QString, QDateTime, const char,
 					const bool, const bool, const bool,
 					const char, const char, const char)));
+	connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
 	viewer->move(this->x(), this->y() + this->height() + 25);
 
 	viewer->show();
+}
+
+void EvaQunChatWindow::slotHistoryWindowClosed()
+{
+	viewer = NULL;
+	pbHistory->setOn(FALSE);
 }
 
 void EvaQunChatWindow::slotSendKeyClick( )

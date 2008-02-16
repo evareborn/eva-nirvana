@@ -36,6 +36,7 @@ signals:
 					 QString message, QDateTime time, const char size, 
 					const bool u, const bool i, const bool b, 
 					const char blue, const char green, const char red);
+	void windowClosed();
 private:	
 	void display();
 	int page;
@@ -44,6 +45,8 @@ private:
 	EvaUserSetting *setting; // for load messages only
 	bool isQun;
 	std::list<EvaUserSetting::chatMessage> list;
+
+	void closeEvent( QCloseEvent * e );
 	
 private slots:
 	void slotChbSelectClick();

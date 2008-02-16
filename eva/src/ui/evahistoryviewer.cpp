@@ -76,6 +76,12 @@ void EvaHistoryViewer::display()
 	tblDisplay->setColumnWidth(2, tblDisplay->width()/4);		
 }
 
+void EvaHistoryViewer::closeEvent( QCloseEvent * e)
+{
+	emit windowClosed();
+	e->accept();
+}
+
 void EvaHistoryViewer::slotChbSelectClick()
 {
 	bool enabled = (chbSelect->isChecked())?true:false;
