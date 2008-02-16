@@ -289,6 +289,7 @@ void LoginReplyPacket::parseBody()
 			replyMessage.assign(tmpMsg);
 			delete []tmpMsg;
 		}
+		break;
 	default:
 		replyCode = QQ_LOGIN_REPLY_MISC_ERROR;
 		{

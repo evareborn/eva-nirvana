@@ -387,6 +387,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 		break;
 	case QQ_LOGIN_REPLY_PWD_ERROR_EX:
 		GetLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		break;
 	case QQ_LOGIN_REPLY_MISC_ERROR:
 		printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
 		emit serverBusy();

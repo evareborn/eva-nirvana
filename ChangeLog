@@ -1,3 +1,10 @@
+16th, Feburary, 2008 yunfan
+Another year has gone!
+1. Fixed: if password is wrongly typed, Eva would keep trying to login infinitely.
+   File: src/api/evapacketmanager.cpp src/libeva/evalogin.cpp src/evamain.cpp
+
+--------------------------------------------------------
+
 15th, January, 2007 yunfan
 1. Fixed: add font size constaint for displaying messages
     File: src/ui/evachatview.cpp

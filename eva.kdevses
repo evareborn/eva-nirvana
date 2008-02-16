@@ -1,7 +1,7 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="6" >
+ <DocsAndViews NumberOfDocuments="9" >
   <Doc0 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/ui/evacontactlistview.cpp" >
    <View0 Type="Source" />
   </Doc0>
@@ -18,8 +18,17 @@
    <View0 Type="Source" />
   </Doc4>
   <Doc5 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/test/eva/src/evasysmsgmanager.cpp" >
-   <View0 line="280" Type="Source" />
+   <View0 Type="Source" />
   </Doc5>
+  <Doc6 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/svn/branches/eva/src/evamain.cpp" >
+   <View0 Type="Source" />
+  </Doc6>
+  <Doc7 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/svn/branches/eva/src/evaloginmanager.cpp" >
+   <View0 Type="Source" />
+  </Doc7>
+  <Doc8 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/svn/branches/eva/src/api/evapacketmanager.cpp" >
+   <View0 line="376" Type="Source" />
+  </Doc8>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
