@@ -766,8 +766,8 @@ void EvaContactListView::friendStatusChanged(const int id)
 	s = f->getStatus();
 	if( s==QQ_FRIEND_STATUS_ONLINE || s==QQ_FRIEND_STATUS_LEAVE )
 		b->setVisible(true);
-	//else
-	//	b->setVisible(false);
+	else if(EvaMain::user->getSetting()->isShowOnlineEnabled())
+		b->setVisible(false);
 
 
 	b->update();
