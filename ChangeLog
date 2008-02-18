@@ -1,4 +1,11 @@
 16th, Feburary, 2008 yunfan
+1. Updated: eva.pot
+    File: po/eva.pot
+2. Traditional Chinese translation added
+    Files: po/zh_TW/eva.po po/zh_TW/eva.gmo
+
+--------------------------------------------------------
+16th, Feburary, 2008 yunfan
 Another year has gone!
 1. Fixed: if password is wrongly typed, Eva would keep trying to login infinitely.
    File: src/api/evapacketmanager.cpp src/libeva/evalogin.cpp src/evamain.cpp
