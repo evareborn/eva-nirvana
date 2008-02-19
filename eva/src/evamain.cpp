@@ -497,7 +497,7 @@ void EvaMain::doSlotConnection()
 
 void EvaMain::slotGetOnlineStatus()
 {
-	printf("slotGetOnlineStatus() called!\n");
+//	printf("slotGetOnlineStatus() called!\n");
 	std::map<unsigned int, QQFriend>::iterator iter;
 	std::map<unsigned int, QQFriend> list = (user->getFriendList()).getAllFriendsMap();
 	for(iter = list.begin(); iter != list.end(); ++iter){
@@ -505,15 +505,15 @@ void EvaMain::slotGetOnlineStatus()
 		case QQ_FRIEND_STATUS_ONLINE:
 			g_mainWin->changeToOnline(iter->second.getQQ());
 			break;
-		case QQ_FRIEND_STATUS_OFFLINE:
-			g_mainWin->changeToOffline(iter->second.getQQ());
-			break;
+//		case QQ_FRIEND_STATUS_OFFLINE:
+//			g_mainWin->changeToOffline(iter->second.getQQ());
+//			break;
 		case QQ_FRIEND_STATUS_LEAVE:
 			g_mainWin->changeToLeave(iter->second.getQQ());
 			break;
-		case QQ_FRIEND_STATUS_INVISIBLE:
-			g_mainWin->changeToInvisible(iter->second.getQQ());
-			break;
+//		case QQ_FRIEND_STATUS_INVISIBLE:
+//			g_mainWin->changeToInvisible(iter->second.getQQ());
+//			break;
 		}	
 	}	
 }
@@ -2045,7 +2045,6 @@ void EvaMain::slotUpdateShortcut( )
 void EvaMain::slotFaceSizeChanged()
 {
 	g_mainWin->loadContacts();
-	g_mainWin->loadQuns();
 	g_mainWin->loadRecentContacts();
 }
 

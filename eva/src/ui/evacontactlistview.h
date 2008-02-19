@@ -73,7 +73,7 @@ protected:
 	virtual void cancelRename(int col);
 private:
 	int m_groupIndex;
-	
+
 	const int countOnlineFriends();
 };
 
@@ -117,7 +117,7 @@ private:
 
 	QPopupMenu *m_groupMenu; 
 	QPopupMenu *m_buddyMenu;
-	
+
 	void initPopup();
 
 private slots:

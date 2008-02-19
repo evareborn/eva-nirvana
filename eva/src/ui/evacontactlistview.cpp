@@ -126,8 +126,8 @@ void EvaBuddyItem::update( )
 		if(m_buddy->getStatus() == QQ_FRIEND_STATUS_LEAVE){
 				QPixmap *na = images->getIcon("NA");
 				if(na){
-					//QPixmap scaledNa = na->convertToImage().smoothScale(EvaMain::global->getFaceSize());
-					QPixmap scaledNa = na->convertToImage().smoothScale(QSize(8,8));
+//					QPixmap scaledNa = na->convertToImage().smoothScale(EvaMain::global->getFaceSize()/ 1.5);
+					QPixmap scaledNa = na->convertToImage().smoothScale(QSize(12,12));
 					copyBlt(pixmap, pixmap->width() - scaledNa.width(), pixmap->height()- scaledNa.height(), 
 									&scaledNa, 0, 0, scaledNa.width(), scaledNa.height());
 				} else
@@ -406,48 +406,48 @@ const int EvaGroupItem::countOnlineFriends()
 
 void EvaGroupItem::update()
 {
-    sort();
-    int num = countOnlineFriends();
+	sort();
+	int num = countOnlineFriends();
 
-    EvaUserSetting * setting = EvaMain::user->getSetting();
-    QColor showColor = Qt::black;
-    QString fontedName = groupName();
-    if(hasMessage()){
-            if(setting->isGroupFlashBold())
-                    fontedName = ("<b>" + fontedName + "</b>");
-            if(setting->isGroupFlashUnderline())
-                    fontedName = ("<u>" + fontedName + "</u>");
-            if(setting->isGroupFlashItalic())
-                    fontedName = ("<i>" + fontedName + "</i>");
-            showColor = setting->getGroupFlashColor();
-    } else {
-            if(setting->isGroupNameBold())
-                    fontedName = ("<b>" + fontedName + "</b>");
-            if(setting->isGroupNameUnderline())
-                    fontedName = ("<u>" + fontedName + "</u>");
-            if(setting->isGroupNameItalic())
-                    fontedName = ("<i>" + fontedName + "</i>");
-            showColor = setting->getGroupNameColor();
-    }
-    //QColor showColor = isMsgShown?setting->getGroupFlashColor():setting->getGroupNameColor();
-    QString showName = "<font color=\"" + showColor.name() + "\">&nbsp;" + fontedName + "</font>";
+	EvaUserSetting * setting = EvaMain::user->getSetting();
+	QColor showColor = Qt::black;
+	QString fontedName = groupName();
+	if(hasMessage()){
+		if(setting->isGroupFlashBold())
+			fontedName = ("<b>" + fontedName + "</b>");
+		if(setting->isGroupFlashUnderline())
+			fontedName = ("<u>" + fontedName + "</u>");
+		if(setting->isGroupFlashItalic())
+			fontedName = ("<i>" + fontedName + "</i>");
+		showColor = setting->getGroupFlashColor();
+	} else {
+		if(setting->isGroupNameBold())
+			fontedName = ("<b>" + fontedName + "</b>");
+		if(setting->isGroupNameUnderline())
+			fontedName = ("<u>" + fontedName + "</u>");
+		if(setting->isGroupNameItalic())
+			fontedName = ("<i>" + fontedName + "</i>");
+		showColor = setting->getGroupNameColor();
+	}
+	//QColor showColor = isMsgShown?setting->getGroupFlashColor():setting->getGroupNameColor();
+	QString showName = "<font color=\"" + showColor.name() + "\">&nbsp;" + fontedName + "</font>";
 
-    QString counting = QString::number(num) + "/" +  QString::number(childCount());
-    if(setting->isGroupOnlineCountBold())
-            counting = ("<b>" + counting + "</b>");
-    if(setting->isGroupOnlineCountUnderline())
-            counting = ("<u>" + counting + "</u>");
-    if(setting->isGroupOnlineCountItalic())
-            counting = ("<i>" + counting + "</i>");
+	QString counting = QString::number(num) + "/" +  QString::number(childCount());
+	if(setting->isGroupOnlineCountBold())
+		counting = ("<b>" + counting + "</b>");
+	if(setting->isGroupOnlineCountUnderline())
+		counting = ("<u>" + counting + "</u>");
+	if(setting->isGroupOnlineCountItalic())
+		counting = ("<i>" + counting + "</i>");
 
-    showName += (" (<font color=\"" + setting->getGroupCountColor().name() + "\">" + counting + "</font>)");
+	showName += (" (<font color=\"" + setting->getGroupCountColor().name() + "\">" + counting + "</font>)");
 
-    setText("<nobr>" + showName +"</nobr>");
+	setText("<nobr>" + showName +"</nobr>");
 
-    if(listView() && isVisible()){
-        listView()->repaintItem(this);
-        widthChanged( 0 );
-    }
+	if(listView() && isVisible()){
+		listView()->repaintItem(this);
+		widthChanged( 0 );
+	}
 }
 
 QString EvaGroupItem::tip()
@@ -536,7 +536,6 @@ void EvaContactListView::loadContacts()
 		showOnlineOnly();
 	else
 		showAll();
-	
 	// update group online counts
 	KConfig* const config = EvaMain::user->config( "Group Open Status" );
 	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
@@ -554,15 +553,15 @@ void EvaContactListView::updateContacts()
 	/// load groups
 	EvaUser *user =  EvaMain::user;
 	if(!user) return;
+	QListView::clear();
+	/*
 	std::list<std::string> names = user->getGroupNames();
 	std::list<std::string>::iterator iter;
 	int i=0;
-
-	QMutex mutex;
-	mutex.lock();	
-
+*/
+/*
 	for(iter = names.begin(); iter!= names.end(); ++iter){
-		if( ! m_groups.count(i) )
+		if(  m_groups.count(iter) == 0)
 			m_groups[i]  = new EvaGroupItem(i, this);
 		i++;
 	}
@@ -571,7 +570,7 @@ void EvaContactListView::updateContacts()
 		m_groups[user->getAnonymousIndex()] = new EvaGroupItem(user->getAnonymousIndex(), this);
 	if (!m_groups.count(user->getBlackIndex()))
 		m_groups[user->getBlackIndex()] = new EvaGroupItem(user->getBlackIndex(), this);
-
+*/
 	/// load all contacts
 	FriendList *list = EvaMain::user->getFriends();
 	QQFriend *f = list->firstFriend();
@@ -593,7 +592,6 @@ void EvaContactListView::updateContacts()
 		it->second->update();
 		it++;
 	}
-	mutex.unlock();
 }
 
 
@@ -777,6 +775,7 @@ void EvaContactListView::friendStatusChanged(const int id)
 	if(itr == m_groups.end()) return;
 	
 	m_groups[index]->update();
+
 	b->getFriend()->inactiveEvaUpdateFlag(StatusChanged);
 }
 
@@ -1020,6 +1019,7 @@ void EvaContactListView::slotItemRenamed( QListViewItem * item, int )
 void EvaContactListView::buddyAdded( const unsigned int id )
 {
 	/// load all contacts
+	
 	QQFriend *f = EvaMain::user->getFriends()->getFriend(id);
 	if( f ){
 		m_contacts[f->getQQ()] = new EvaBuddyItem(f, m_groups[f->getGroupIndex()]);

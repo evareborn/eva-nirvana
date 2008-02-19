@@ -784,7 +784,7 @@ int QunReplyPacket::parseGetTempQunMembers(unsigned char *buf, int len)
 }
 
 // useful variables:  qunID,  targetQQ
-int QunReplyPacket::parseModifyQunCard(unsigned char *buf, int len)
+int QunReplyPacket::parseModifyQunCard(unsigned char *buf, int /*len*/)
 {
 	int pos=0;
 	//if(replyCode == QQ_QUN_CMD_REPLY_OK) {
@@ -827,7 +827,7 @@ int QunReplyPacket::parseRequestAllRealNames(unsigned char *buf, int len)
 }
 
 // useful variables: qunID, targetQQ
-int QunReplyPacket::parseRequestQunCard(unsigned char *buf, int len)
+int QunReplyPacket::parseRequestQunCard(unsigned char *buf, int /*len*/)
 {
 	int pos = 0;
 	
@@ -876,7 +876,7 @@ int QunReplyPacket::parseRequestQunCard(unsigned char *buf, int len)
 	return pos;
 }
 
-int QunReplyPacket::parseQunAdminOperation(unsigned char *buf, int len)
+int QunReplyPacket::parseQunAdminOperation(unsigned char *buf, int /*len*/)
 {
 	int pos=0;
 
@@ -900,7 +900,7 @@ int QunReplyPacket::parseQunAdminOperation(unsigned char *buf, int len)
 	return pos;
 }
 
-int QunReplyPacket::parseQunTransfer(unsigned char *buf, int len)
+int QunReplyPacket::parseQunTransfer(unsigned char *buf, int /*len*/)
 {
 	int pos=0;
 	int tmp4;
