@@ -163,6 +163,7 @@ void EvaMainWindow::changeGroupTo(const unsigned int id, const int index)
 
 void EvaMainWindow::updateBuddy(const unsigned int id)
 {
+	/*
 	EvaUser *user = EvaMain::user;
 	if(user && id == user->getQQ()){
 		//QString myNick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
@@ -178,7 +179,7 @@ void EvaMainWindow::updateBuddy(const unsigned int id)
 		setIcon(*face);
 		setMainInfo(user->getQQ(), myNick, face?face:EvaMain::images->getFace(0));
 	}
-		
+*/		
 	if(m_buddyLv)
 		m_buddyLv->friendStatusChanged(id);
 }
