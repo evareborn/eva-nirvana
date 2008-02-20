@@ -497,7 +497,7 @@ void EvaQunChatWindow::slotHistoryClick( )
 
 void EvaQunChatWindow::slotHistoryWindowClosed()
 {
-	viewer->hide();
+//	viewer->hide();
 	pbHistory->setOn(FALSE);
 }
 

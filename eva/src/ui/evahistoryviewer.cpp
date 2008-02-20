@@ -79,6 +79,7 @@ void EvaHistoryViewer::display()
 void EvaHistoryViewer::closeEvent( QCloseEvent * e)
 {
 	emit windowClosed();
+	hide();
 	e->ignore();
 }
 
