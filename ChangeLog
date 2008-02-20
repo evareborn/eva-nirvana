@@ -1,3 +1,8 @@
+20th, Feburary, 2008 Byakko Ang
+
+1. Fixed: Histroy Viewers launched from popupmenu could not be closed.
+    File: ui/evachatviewer.cpp ui/evachatwindow.cpp ui/evaqunchatwindow.cpp
+
 16th, Feburary, 2008 yunfan
 1. Updated: eva.pot
     File: po/eva.pot
