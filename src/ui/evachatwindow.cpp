@@ -62,6 +62,7 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
+#include <stdio.h>
 
 #ifndef QQ_MSG_IM_MAX
 #define QQ_MSG_IM_MAX 15000
@@ -595,6 +596,9 @@ void EvaChatWindow::slotFontChanged(QColor color, int size)
 // 	int fontColor = color;
 	buddy->setChatFontSize(size);
 	buddy->setChatFontColor(color.rgb());
+	printf("setting color: %s size: %d\n", color.name().ascii(), size);
+	//QColor c=color;
+	//QString s=c.name();
 	EvaMain::user->saveGroupedBuddyList();
 }
 

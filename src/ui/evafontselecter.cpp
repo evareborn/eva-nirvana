@@ -33,6 +33,8 @@
 #include <qframe.h>
 #include <klocale.h>
 
+#include <stdio.h>
+
 EvaFontSelecter::EvaFontSelecter( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )
 {
@@ -55,6 +57,7 @@ EvaFontSelecter::EvaFontSelecter( QWidget* parent, const char* name, WFlags fl )
 	color = new KColorCombo( frame, "kColorButton" );
 	color->setMaximumSize( QSize( 80, 32767 ) );
 	layout3->addWidget( color );
+	QObject::connect(color, SIGNAL(activated( const QColor & )), this, SLOT(slotClicked()));
 	
 	lblSize = new QLabel( frame, "lblSize" );
 	layout3->addWidget( lblSize );
@@ -106,6 +109,7 @@ void EvaFontSelecter::languageChange()
 void EvaFontSelecter::slotClicked()
 {
 	emit fontChanged(color->color(), kIntSpinBox->value());	
+	printf("EvaFontSelecter::slotClicked emmited\n");
 	close();
 	//hide();
 }
