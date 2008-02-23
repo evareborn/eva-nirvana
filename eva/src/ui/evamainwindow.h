@@ -118,6 +118,7 @@ public slots:
 
 	void addBuddyToRecentList(const unsigned int id, bool isMyWord = false);
 	void addQunToRecentList(const unsigned int id, bool isMyWord = false);
+	void slotFaceSizeChanged();
 	
 	void deleteBuddy(unsigned int id);
 	

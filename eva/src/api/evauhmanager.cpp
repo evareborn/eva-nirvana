@@ -419,7 +419,7 @@ EvaUHManager::~EvaUHManager()
 	mProfileManager = NULL;
 }
 
-void EvaUHManager::initiate(QSize size)
+void EvaUHManager::initiate(QSize /*size*/)
 {
 	if(mProfileManager) delete mProfileManager;
 	mProfileManager = new EvaUHProfile();

@@ -1,8 +1,21 @@
+23th, Feburary, 2008 Byakko Ang
+
+1. Changed: changed the pointers of QQFriend to references when constructing
+	EvaBuddyItem, as the global friendlist might be cleared during some
+	operation, using pointers in UI code should cause segfault problems.
+    File: ui/evacontactlistview.cpp ui/evamainwindow.cpp
+
+2. Changed: Now changing online status and face size won't enffect a contact
+	list reconstruction.
+    File: evamain.cpp
+
+--------------------------------------------------------
 20th, Feburary, 2008 Byakko Ang
 
 1. Fixed: Histroy Viewers launched from popupmenu could not be closed.
     File: ui/evachatviewer.cpp ui/evachatwindow.cpp ui/evaqunchatwindow.cpp
 
+--------------------------------------------------------
 16th, Feburary, 2008 yunfan
 1. Updated: eva.pot
     File: po/eva.pot

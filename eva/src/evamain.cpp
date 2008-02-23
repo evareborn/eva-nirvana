@@ -2044,8 +2044,7 @@ void EvaMain::slotUpdateShortcut( )
 
 void EvaMain::slotFaceSizeChanged()
 {
-	g_mainWin->loadContacts();
-	g_mainWin->loadRecentContacts();
+	g_mainWin->slotFaceSizeChanged();
 }
 
 void EvaMain::slotUserSettingChanged( )
@@ -2635,9 +2634,10 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 
 			g_mainWin->ShowTab(g_mainWin->m_buddyTabKey);
 			
-			g_mainWin->loadContacts();
-			g_mainWin->loadQuns();
-			g_mainWin->loadRecentContacts();
+			g_mainWin->updateContacts();
+			g_mainWin->updateQuns();
+			g_mainWin->updateRecentContacts();
+
 			connecter->slotClientReady();
 			packetManager->doRequestExtraInfo();
 			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather
