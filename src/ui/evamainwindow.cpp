@@ -93,9 +93,9 @@ EvaMainWindow::EvaMainWindow(QWidget* parent, const char* name, WFlags fl)
 	m_buddyTabKey = 0;
 	m_qunTabKey = 1;
 	m_recentTabKey = 2;
-// 	loadContacts();
-// 	loadQuns();
-// 	loadRecentContacts();
+ 	loadContacts();
+ 	loadQuns();
+ 	loadRecentContacts();
 
 	QObject::connect(statusBar->tbSearch, SIGNAL(clicked()), this, SLOT(slotSearch()));
 	QObject::connect(statusBar->tbSysMsg, SIGNAL(clicked()), this, SLOT(slotSystemMessages()));
@@ -578,7 +578,6 @@ bool EvaMainWindow::removeTab( int id )
 void EvaMainWindow::updateContacts( )
 {
 	if(m_buddyLv) m_buddyLv->updateContacts();
-	updateRecentContacts();
 }
 
 void EvaMainWindow::updateQuns( )
@@ -590,6 +589,13 @@ void EvaMainWindow::updateRecentContacts( )
 {
 	if(m_recentLv) m_recentLv->loadRecentContacts();
 }
+
+void EvaMainWindow::slotFaceSizeChanged()
+{
+	if(m_buddyLv) m_buddyLv->slotFaceSizeChanged();
+	if(m_recentLv) m_recentLv->loadRecentContacts();
+}
+
 
 void EvaMainWindow::showInfoFrame( bool showInfo )
 {

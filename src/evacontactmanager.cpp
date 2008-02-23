@@ -495,7 +495,7 @@ void EvaContactManager::fetchAllLevels( )
 	m_packetManager->doGetAllLevels();
 }
 
-void EvaContactManager::fetchAddQuestion( const unsigned int id )
+void EvaContactManager::fetchAddQuestion( const unsigned int /*id*/ )
 {
 }
 

@@ -510,7 +510,7 @@ void EvaAddingManager::slotFinalAdd( )
 
 void EvaAddingManager::authAddEx( )
 {
-	unsigned char auth;
+	unsigned char auth = 0;
 	switch(m_AuthType){
 		case QQ_AUTH_NO_AUTH:
 			auth = ADDING_AUTH_TYPE_ANYONE;
@@ -591,7 +591,7 @@ void EvaAddingManager::acceptAndAdd( const unsigned int id, const QString &nick,
 	
 }
 
-void EvaAddingManager::slotAccepAndAdd( const int index)
+void EvaAddingManager::slotAccepAndAdd( const int /*index*/)
 {
 	m_PacketManager->doAddBuddyAuthEx(m_ID, ADDING_AUTH_TYPE_ACCEPT_ADD);
 }
@@ -617,7 +617,7 @@ void EvaAddingManager::slotAddQun( const QunInfo & info )
 	}
 }
 
-void EvaAddingManager::slotJoinQunReply( const unsigned int id, const unsigned char authType, const QString & message )
+void EvaAddingManager::slotJoinQunReply( const unsigned int /*id*/, const unsigned char authType, const QString & message )
 {
 	m_AuthType = authType;
 	switch(m_AuthType){
