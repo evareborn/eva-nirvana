@@ -693,8 +693,8 @@ void EvaPacketManager::processFriendChangeStatus( const InPacket * in )
 	
 	if( frd && (frd->getStatus() != packet->getStatus()) ){
 		user->getFriendList().updateFriendStatus(packet->getQQ(), packet->getStatus());
+		emit friendStatusChanged(packet->getQQ());
 	}
-	emit friendStatusChanged(packet->getQQ());
 	delete packet;
 }
 
