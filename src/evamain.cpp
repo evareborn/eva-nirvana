@@ -522,6 +522,7 @@ void EvaMain::slotDoLoginClick()
 {
 	GetScriptManager()->releaseScripts();
 	if(g_mainWin) g_mainWin->offline();
+	
 	if(tray) tray->reset();
 	numLoginRetry = 0;
 	isClientSet = false;
@@ -542,8 +543,6 @@ void EvaMain::slotGotServer(QHostAddress addr)
 	//printf("Got server :%s\n", addr.toString().ascii());
 	global->getEvaServers()->stopDns();
 	QQServer = addr;
-	if(!isClientSet)
-		slotSetupEvaClient();
 	slotDoLogin();
 }
 
@@ -878,7 +877,7 @@ void EvaMain::slotSetupWindowManager()
 
 void EvaMain::slotSetupEvaClient()
 {	
-//	g_mainWin->clearList();
+	g_mainWin->clearList();
 	loginWin->hide();
 
 	// make sure that slotSetupUser and
@@ -901,6 +900,8 @@ void EvaMain::slotSetupEvaClient()
 
 void EvaMain::slotDoLogin()
 {
+	if(!isClientSet)
+		slotSetupEvaClient();
 	tray->setLoginWaiting();
 	//ServerDetectorPacket::setStep(0);
 	//ServerDetectorPacket::setFromIP(0);
@@ -916,7 +917,10 @@ void EvaMain::slotDoCancel()
 		doQuit();
 	else{
 		if(!tray->isVisible())
+		{
+			printf("show \n");
 			tray->show();
+		}
 		if(!g_mainWin->isVisible())
 			g_mainWin->show();
 	}
@@ -1257,8 +1261,8 @@ void EvaMain::slotDoChangeUser()
 {
 	if(g_mainWin->isVisible())
 		g_mainWin->hide();
-	if(tray->isVisible())
-		tray->hide();
+//	if(tray->isVisible())
+//		tray->hide();
 	if(!loginWin->isVisible())
 		loginWin->show();
 }
