@@ -315,7 +315,7 @@ void EvaChatWindow::slotAddMessage(unsigned int , QString sNick, unsigned int , 
 	if(!kteInput->isEnabled()) return;
 	EvaHtmlParser parser;
 	parser.convertToHtml(message, false, false, true);
-	QString msg = sNick + (isNormal?(""):i18n("(Auto-Reply)")) + " " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
+	QString msg = sNick + (isNormal?(""):i18n("(Auto-Reply)")) + "  " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
 	kteInput->append(msg);
 }
 
