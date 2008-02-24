@@ -24,11 +24,13 @@
 #include <qregexp.h>
 #include <qfile.h>
 #include <qpixmap.h>
+//#include <stdio.h>
 
 unsigned int EvaHtmlParser::tmpNum = 0;
 
 std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn, bool isAbsImgPath, bool useRealFileName)
 {
+	//printf("EvaHtmlParser::convertToHtml before:%s\n", txt.latin1() );
 	// FIXME  by this way, some html code may not be displayed properly
 	txt.replace("&amp;", "&amp;amp;");
 	txt.replace("&lt;", "&lt;lt;");
@@ -154,6 +156,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 			}
 		}
 	}
+	//printf("EvaHtmlParser::convertToHtml stage 1:%s\n", txt.latin1() );
 	std::list< CustomizedPic > picList = convertCustomizedPictures(txt, useRealFileName);
 	if(isURLOn){
 		QString email;
@@ -188,6 +191,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 				}
 			}
 	}
+	//printf("EvaHtmlParser::convertToHtml stage 2:%s\n", txt.latin1() );
 	bool isIgnore = false;
 	for(pos = 0; pos < (int)txt.length(); pos ++ ){
 		QChar ch = txt.at(pos);//printf("ch(%d): %c\t", pos,  ch.latin1());
@@ -208,6 +212,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 			pos+= (QString("&nbsp;&nbsp;&nbsp;&nbsp;").length() - 1);
 		}
 	}
+	//printf("EvaHtmlParser::convertToHtml after:%s\n", txt.latin1() );
 	return picList;
 }
 

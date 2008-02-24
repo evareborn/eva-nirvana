@@ -184,7 +184,7 @@ void EvaQunChatWindow::slotAddMessage(unsigned int sender, QString sNick, unsign
 	if(!teInput->isEnabled()) return;
 	EvaHtmlParser parser;
 	parser.convertToHtml(message, false, false, true);
-	QString msg = QString::number(sender) + "(" +sNick + ")" + (isNormal?(""):i18n("(Auto-Reply)")) + " " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
+	QString msg = QString::number(sender) + "(" +sNick + ")" + (isNormal?(""):i18n("(Auto-Reply)")) + "  " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
 	kdDebug()  << msg << endl;
 	teInput->append(msg);
 }
