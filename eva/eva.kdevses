@@ -1,10 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="1" >
-  <Doc0 NumberOfViews="1" URL="http://doc.trolltech.com/3.3/qcolor.html#name" >
-   <View0 Type="Documentation" />
+ <DocsAndViews NumberOfDocuments="3" >
+  <Doc0 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/api/evapacketmanager.cpp" >
+   <View0 Encoding="" line="1470" Type="Source" />
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/libeva/evasearchuser.h" >
+   <View0 Encoding="" line="4" Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/libeva/evapacket.cpp" >
+   <View0 Encoding="" line="487" Type="Source" />
+  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
@@ -33,6 +39,9 @@
     <bookmark url="/root/Projects/Implementation/eva/src/evamain.cpp" >
      <mark line="1701" />
      <mark line="838" />
+    </bookmark>
+    <bookmark url="/home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/ui/evachatview.cpp" >
+     <mark line="526" />
     </bookmark>
     <bookmark url="/root/Projects/Implementation/listview/eva/src/api/evapacketmanager.cpp" >
      <mark line="1736" />
