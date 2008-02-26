@@ -1,4 +1,36 @@
-23th, Feburary, 2008 Byakko Ang
+
+--------------------------------------------------------
+26th, Feburary, 2008 lsz
+
+1. Deleted: .gmo files in po/ since they can be generated from the .po files.
+2. Updated: zh_CN translation mostly from my early work.
+3. Updated: ChangeLog.
+
+    Files: po/zh_CN/eva.po po/zh_CN/eva.gmo po/zh_TW/eva.gmo ChangeLog
+
+--------------------------------------------------------
+24th, Feburary, 2008 lsz
+
+Fixed: Removed the duplicated space when chatting with some space chars. e.g. "a b c" was "a  b  c" in the past.
+
+    Files: ui/evachatwindow.cpp ui/evaqunchatwindow.cpp ui/evachatview.cpp api/evahtmlparser.cpp
+
+--------------------------------------------------------
+23th, Feburary, 2008 lsz
+
+Changed: Ignore the 'fake' status changing (e.g. Online to Online). Maybe this will fix the bug of poping up loooots of balloons at a time due to unknown changes in the protocol.
+
+    File: api/evapacketmanager.cpp
+
+--------------------------------------------------------
+21st, Feburary, 2008 lsz
+
+Fixed: Custom chatting text color support.
+
+    File: ui/evafontselecter.cpp
+
+--------------------------------------------------------
+23rd, Feburary, 2008 Byakko Ang
 
 1. Changed: changed the pointers of QQFriend to references when constructing
 	EvaBuddyItem, as the global friendlist might be cleared during some
