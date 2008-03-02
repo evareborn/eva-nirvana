@@ -28,7 +28,7 @@
 static const char description[] =
 	I18N_NOOP("An IM Client Under KDE Using QQ IM Protocol.");
 
-static const char version[] = "0.4.921";
+static const char version[] = "$Rev$:";
 
 static KCmdLineOptions options[] =
 {
@@ -51,7 +51,7 @@ static KCmdLineOptions options[] =
 int main(int argc, char **argv)
 {
 	KAboutData about("eva", I18N_NOOP("Eva"), version, description,
-									 KAboutData::License_GPL, I18N_NOOP("(c) 2004-2007, yunfan"), "yunfan_zg@163.com", "http://www.sourceforge.net/projects/evaq", "eva.bugs@gmail.com");
+									 KAboutData::License_GPL, I18N_NOOP("(c) 2004-2008, yunfan"), "yunfan_zg@163.com", "http://www.sourceforge.net/projects/evaq", "eva.bugs@gmail.com");
 	about.addAuthor( I18N_NOOP("yunfan"), I18N_NOOP("original developer, maintainer"), 
 			"yunfan_zg@163.com","http://www.sourceforge.net/projects/evaq" );
 	about.addAuthor( I18N_NOOP("casper"), I18N_NOOP("developer, memo, system setting ui and IP address converting"), "tlmcasper@163.com" );

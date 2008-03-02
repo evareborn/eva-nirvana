@@ -92,8 +92,8 @@ void EvaBuddyItem::update( )
 
 	m_buddy = *(EvaMain::user->getFriends()->getFriend(m_buddy.getQQ()));
 	
-// 	if(m_buddy->isStatusChanged()){
-// 		m_buddy->inactiveEvaUpdateFlag(StatusChanged);
+// 	if((m_buddy.isStatusChanged() && s != m_buddy.getStatus()) || !m_icon ){
+// 		m_buddy.inactiveEvaUpdateFlag(StatusChanged);
 		QPixmap *pixmap = images->getFaceByID(m_buddy.getFace(), false);
 		switch(m_buddy.getStatus()){
 		case QQ_FRIEND_STATUS_ONLINE:

@@ -1,3 +1,4 @@
+AUTOMAKE_OPTIONS = foreign 1.9
 SUBDIRS = $(TOPSUBDIRS)
 
 $(top_srcdir)/configure.in: configure.in.in $(top_srcdir)/subdirs
