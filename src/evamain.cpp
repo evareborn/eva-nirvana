@@ -918,7 +918,6 @@ void EvaMain::slotDoCancel()
 	else{
 		if(!tray->isVisible())
 		{
-			printf("show \n");
 			tray->show();
 		}
 		if(!g_mainWin->isVisible())
