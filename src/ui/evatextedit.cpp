@@ -36,22 +36,34 @@ EvaTextEdit::EvaTextEdit(QWidget *parent, const char * name):
 
 void EvaTextEdit::keyPressEvent(QKeyEvent *e)
 {
-	int para;
-	int index;	
-	getCursorPosition(&para,&index);
-	if( (isEnterSend && (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return)  && (e->state() != Qt::KeyButtonMask)) || 
-			( (!isEnterSend)  &&
-			( (e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ) && 
-			( (e->state() & Qt::ControlButton)==Qt::ControlButton))  ){
-		emit keyPressed(e);
-		return;
-	}
-	KTextEdit::keyPressEvent(e);
-	if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){	
-		QString txt = text();
-		txt.replace("</p>\n<p>", "<br />");
-		setText(txt);
-		setCursorPosition(para, index + 1);
-	}
-	emit keyPressed(e);
+
+    int para;
+    int index;	
+    getCursorPosition(&para,&index);
+    if ( ((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ) && 
+            ( (e->state() & Qt::ControlButton)==Qt::ControlButton))
+    {
+        if ( !isEnterSend )
+        {
+            emit keyPressed(e);
+            return;
+        }
+    }
+
+    if( (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return)  && (!(e->state() | Qt::KeyButtonMask)))
+    {
+        if (isEnterSend )
+        {
+            emit keyPressed(e);
+            return;
+        }
+    }
+    KTextEdit::keyPressEvent(e);
+    if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){	
+        QString txt = text();
+        txt.replace("</p>\n<p>", "<br />");
+        setText(txt);
+        setCursorPosition(para, index + 1);
+    }
+    emit keyPressed(e);
 }

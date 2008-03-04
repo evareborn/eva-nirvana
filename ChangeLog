@@ -1,3 +1,8 @@
+04, March, 2008 Byakko Ang
+
+1. Fixed: able to use Ctrl+Enter to insert newline on using Enter to send Messages.
+
+--------------------------------------------------------
 02, March, 2008 Byakko Ang
 
 1. Changed: changned the release version number to subversion revision number
