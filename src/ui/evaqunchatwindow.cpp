@@ -559,7 +559,7 @@ void EvaQunChatWindow::slotSend( )
 void EvaQunChatWindow::slotInputKeyPress( QKeyEvent * e )
 {
 	if(isSentByEnter && ((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ) && 
-			(e->state() != Qt::KeyButtonMask) ){
+			(e->state() == Qt::NoButton) ){
 		e->accept();
 		slotSend();
 	}else{
