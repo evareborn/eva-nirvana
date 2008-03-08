@@ -691,7 +691,7 @@ void EvaScriptManager::notifyScripts( const QString& message, const unsigned cha
 {
 	for( ScriptMap::Iterator it = m_scripts.begin(); it != m_scripts.end(); ++it ) {
 		KProcIO* const proc = it.data().process;
-		if( proc && (it.data().type | type) )
+		if( proc && (it.data().type & type) )
 			proc->writeStdin( message );
 	}
 }
