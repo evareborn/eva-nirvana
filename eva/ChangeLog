@@ -1,3 +1,9 @@
+8, March, 2008 yunfan
+
+1. Fixed: send any type of messages to all scripts even the type of the script mentioned.
+   File: src/evascriptmanager.cpp
+
+--------------------------------------------------------
 06, March, 2008 Byakko Ang
 
 1. Fixed: same bug fix as last which also works to Qun chat window.

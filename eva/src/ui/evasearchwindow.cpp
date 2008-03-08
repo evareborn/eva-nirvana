@@ -210,8 +210,7 @@ void EvaSearchWindow::adjustInterface()
 	tbASResult->setColumnWidth(6,40);
 	tbQSResult->setLeftMargin(0);
 	
-	
-	//把省份填充进省份的下拉框中
+
 	cbASProvince->insertItem(i18n("any"));
 	cbASProvince->insertItem(i18n("oversea"));
 	cbASProvince->insertItem( i18n( "BeiJing" ) );
