@@ -577,7 +577,7 @@ ReceivedQunIMJoinRequest::ReceivedQunIMJoinRequest(const unsigned short imType, 
 			sender = READ32(buf+pos);
 			pos+=4;
 			exttype=buf[pos++];
-			pos++;
+			//pos++;
 			if(exttype == 3) {
 				commander = READ32(buf+pos);
 				pos+=4;
