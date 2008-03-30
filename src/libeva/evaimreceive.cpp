@@ -577,7 +577,13 @@ ReceivedQunIMJoinRequest::ReceivedQunIMJoinRequest(const unsigned short imType, 
 			sender = READ32(buf+pos);
 			pos+=4;
 			exttype=buf[pos++];
-			if(exttype == 3) {
+			
+			// LumaQQ disregard value of exttype(rootCause) when deal with QQ_RECV_IM_ADDED_TO_QUN
+			// Values for exttype (For QQ_RECV_IM_DELETED_FROM_QUN, from LumaQQ Mac)
+			// static const char kQQExitClusterDismissed = 0x01;
+			// static const char kQQExitClusterActive = 0x02;
+			// static const char kQQExitClusterPassive = 0x03;
+			if(imType == QQ_RECV_IM_ADDED_TO_QUN || exttype == 3) {
 				commander = READ32(buf+pos);
 				pos+=4;
 			}
