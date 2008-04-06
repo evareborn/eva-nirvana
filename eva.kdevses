@@ -1,26 +1,18 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="3" >
-  <Doc0 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/api/evapacketmanager.cpp" >
-   <View0 Encoding="" line="1470" Type="Source" />
+ <DocsAndViews NumberOfDocuments="2" >
+  <Doc0 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/svn/branches/eva/doc/en/index.docbook" >
+   <View0 line="94" Type="Source" />
   </Doc0>
-  <Doc1 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/libeva/evasearchuser.h" >
-   <View0 Encoding="" line="4" Type="Source" />
+  <Doc1 NumberOfViews="1" URL="file:///mnt/sda3/Projects/Implementation/svn/branches/eva/src/main.cpp" >
+   <View0 line="36" Type="Source" />
   </Doc1>
-  <Doc2 NumberOfViews="1" URL="file:///home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/libeva/evapacket.cpp" >
-   <View0 Encoding="" line="487" Type="Source" />
-  </Doc2>
  </DocsAndViews>
  <pluginList>
   <kdevdebugger>
    <breakpointList/>
-   <showInternalCommands value="0" />
   </kdevdebugger>
-  <kdevastyle>
-   <Extensions ext="*.cpp *.h,*.c *.h,*.cxx *.hxx,*.c++ *.h++,*.cc *.hh,*.C *.H,*.diff,*.inl,*.java,*.moc,*.patch,*.tlh,*.xpm" />
-   <AStyle IndentPreprocessors="0" FillCount="4" PadParenthesesOut="1" IndentNamespaces="1" IndentLabels="1" Fill="Tabs" MaxStatement="40" Brackets="Break" MinConditional="-1" IndentBrackets="0" PadParenthesesUn="1" BlockBreak="0" KeepStatements="1" KeepBlocks="1" BlockIfElse="0" IndentSwitches="1" PadOperators="0" FStyle="UserDefined" IndentCases="0" FillEmptyLines="0" BracketsCloseHeaders="0" BlockBreakAll="0" PadParenthesesIn="1" IndentClasses="1" IndentBlocks="0" FillForce="0" />
-  </kdevastyle>
   <kdevbookmarks>
    <bookmarks>
     <bookmark url="/root/Projects/Implementation/eva/src/ui/evasyssettingwindow.cpp" >
@@ -31,17 +23,17 @@
     <bookmark url="/home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/api/evausersetting.cpp" >
      <mark line="426" />
     </bookmark>
-    <bookmark url="/root/Projects/Implementation/listview/eva/src/evamain.cpp" >
-     <mark line="2578" />
-     <mark line="2566" />
-     <mark line="1138" />
+    <bookmark url="/home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/ui/evachatview.cpp" >
+     <mark line="526" />
     </bookmark>
     <bookmark url="/root/Projects/Implementation/eva/src/evamain.cpp" >
      <mark line="1701" />
      <mark line="838" />
     </bookmark>
-    <bookmark url="/home/lsz/soft/eva-svn/evaq/branches/eva-qt3-bugfix/eva/src/ui/evachatview.cpp" >
-     <mark line="526" />
+    <bookmark url="/root/Projects/Implementation/listview/eva/src/evamain.cpp" >
+     <mark line="2578" />
+     <mark line="2566" />
+     <mark line="1138" />
     </bookmark>
     <bookmark url="/root/Projects/Implementation/listview/eva/src/api/evapacketmanager.cpp" >
      <mark line="1736" />
@@ -49,7 +41,7 @@
    </bookmarks>
   </kdevbookmarks>
   <kdevsubversion>
-   <subversion base="" />
+   <subversion recurseresolve="1" recurserelocate="1" recursemerge="1" recursecommit="1" base="" recursepropget="1" recurseswitch="1" recurseupdate="1" recursepropset="1" recursediff="1" recurserevert="1" forcemove="1" recursecheckout="1" forceremove="1" recurseadd="1" recurseproplist="1" forcemerge="1" />
   </kdevsubversion>
   <kdevvalgrind>
    <executable path="" params="" />

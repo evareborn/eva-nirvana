@@ -48,9 +48,9 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <authorgroup>
 <author>
-<firstname></firstname>
+<firstname>Yinghao</firstname>
 <othername></othername>
-<surname>yunfan</surname>
+<surname>Qin</surname>
 <affiliation>
 <address><email>yunfan_zg@163.com</email></address>
 </affiliation>
@@ -61,9 +61,11 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <copyright>
 <year>2004</year>
-<year>2007</year>
+<year>2008</year>
 <holder>yunfan</holder>
 </copyright>
+
+<legalnotice>&GPLNotice;</legalnotice>
 
 <!-- Date and version information of the documentation
 Don't forget to include this last date and this last revision number, we
@@ -72,7 +74,7 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2007-6-9</date>
+<date>2008-4-6</date>
 <releaseinfo>0.5.0</releaseinfo>
 
 <!-- Abstract about this handbook -->
@@ -80,6 +82,19 @@ Do NOT change these in the translation. -->
 <abstract>
 <para>
 &eva; is a QQ compatible instant messenger. I will finish this manual book once I got time, really sorry.
+
+<screenshot>
+<screeninfo>A screenshot of &eva;</screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="evamainwindow.png" format="PNG"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Eva main window and contact list</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+
 </para>
 </abstract>
 
@@ -116,8 +131,9 @@ problems. Basically a long version of the abstract.  Don't include a
 revision history. (see installation appendix comment) -->
 
 <para>
-&eva; is a program that lets you do absolutely nothing. Please report
-any problems or feature requests to the &kde; mailing lists.
+&eva; is a Tencent QQ compatible chatting client. It was designed to fully
+support all QQ's features, but for now only some of the features implemented.
+Please report any problems or feature requests to <email>eva.bugs@gmail.com</email>
 </para>
 </chapter>
 
@@ -137,13 +153,10 @@ patent issues. -->
 <screeninfo>Here's a screenshot of &eva;</screeninfo>
 	<mediaobject>
 	  <imageobject>
-	    <imagedata fileref="screenshot.png" format="PNG"/>
-	  </imageobject>
-	  <imageobject>
-	    <imagedata fileref="screenshot.eps" format="EPS"/>
+	    <imagedata fileref="evamainwindow.png" format="PNG"/>
 	  </imageobject>
 	  <textobject>
-	    <phrase>Screenshot</phrase>
+	    <phrase>Eva main window and contact list</phrase>
 	  </textobject>
 	</mediaobject>
 </screenshot>
@@ -451,18 +464,8 @@ Documentation copyright %{YEAR} yunfan <email>yunfan_zg@163.com</email>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 
-&underFDL;               <!-- FDL: do not remove -->
-
-<!-- Determine which license your application is licensed under, 
-     and delete all the remaining licenses below:
-
-     (NOTE:  All documentation are licensed under the FDL, 
-     regardless of what license the application uses) -->
-
 &underGPL;        	 <!-- GPL License -->
-&underBSDLicense;        <!-- BSD License -->
-&underArtisticLicense;   <!-- BSD Artistic License -->
-&underX11License;        <!-- X11 License  -->
+
 
 </chapter>
 
@@ -505,14 +508,14 @@ platform and configuration.
 
 <para>
 All required libraries as well as &eva; itself can be found
-on <ulink url="ftp://ftp.eva.org">The &eva; home page</ulink>.
+on <ulink url="http://www.sourceforge.net/projectes/evaq">The &eva; home page</ulink>.
 </para>
 
 <!-- For a list of updates, you may refer to the application web site
 or the ChangeLog file, or ... -->
 <para>
 You can find a list of changes at <ulink
-url="http://apps.kde.org/eva">http://apps.kde.org/eva</ulink>.
+url="http://www.sourceforge.net/projectes/evaq">http://www.sourceforge.net/projectes/evaq</ulink>.
 </para>
 </sect1>
 
