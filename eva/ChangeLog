@@ -1,3 +1,15 @@
+
+--------------------------------------------------------
+6, April, 2008 yunfan
+1. Updated: Using GPL as the licence of the doc
+    Files: doc/en/index.docbook, doc/en/evamainwindow.png
+
+2. Updated: Using VERSION generated in config.h instead of in source code(main.cpp). 
+                To update the version information, change the version information in configure.in.in, 
+                then re-generate the configure script. It is easy to use autogen.sh
+    Files: configure.in.in
+
+--------------------------------------------------------
 8, March, 2008 yunfan
 
 1. Fixed: send any type of messages to all scripts even the type of the script mentioned.
