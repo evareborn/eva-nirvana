@@ -1,32 +1,31 @@
-
 --------------------------------------------------------
-6, April, 2008 yunfan
+6th, April, 2008 yunfan
 1. Updated: Using GPL as the licence of the doc
     Files: doc/en/index.docbook, doc/en/evamainwindow.png
 
 2. Updated: Using VERSION generated in config.h instead of in source code(main.cpp). 
-                To update the version information, change the version information in configure.in.in, 
-                then re-generate the configure script. It is easy to use autogen.sh
+            To update the version information, change the version information in configure.in.in, 
+            then re-generate the configure script. It is easy to use autogen.sh
     Files: configure.in.in
 
 --------------------------------------------------------
-8, March, 2008 yunfan
+8th, March, 2008 yunfan
 
 1. Fixed: send any type of messages to all scripts even the type of the script mentioned.
    File: src/evascriptmanager.cpp
 
 --------------------------------------------------------
-06, March, 2008 Byakko Ang
+6th, March, 2008 Byakko Ang
 
 1. Fixed: same bug fix as last which also works to Qun chat window.
 
 --------------------------------------------------------
-04, March, 2008 Byakko Ang
+4th, March, 2008 Byakko Ang
 
 1. Fixed: able to use Ctrl+Enter to insert newline on using Enter to send Messages.
 
 --------------------------------------------------------
-02, March, 2008 Byakko Ang
+2nd, March, 2008 Byakko Ang
 
 1. Changed: changned the release version number to subversion revision number
 	in the About dialog.
