@@ -401,14 +401,14 @@ QString EvaMainWindow::myInfoTip( )
 	for(int i=0; i<stars; i++){
 		level += strStar;
 	}
-	
+	int seconds = EvaMain::user->getOnlineTime();
 	tip += "<table width = 260><tr><td width=60 align = center valign = middle>" + facePath + 
 		"</td><td align = left valign = middle><b><font color = blue>"+
 		i18n("QQ") +": </font></b>"+ QString::number(EvaMain::user->getQQ()) +"<br><b><font color = blue>"+
 		i18n("Nickname:") + " </font></b>"+htmlName +"<br>" + signature + "<br><b><font color = blue>"+ 
 		i18n("Level") +": </font></b>"+ level + "  (" + QString::number(EvaMain::user->getLevel()) +")<br><b><font color = blue>"+
-		i18n("Online Time") +": </font></b>"+ QString::number(EvaMain::user->getOnlineTime()/3600)+
-									" Hours<br><b><font color = blue>";
+		i18n("Online Time") +": </font></b>"+ QString::number(seconds/3600)+
+			i18n(" Hours ")+QString::number((seconds%3600)/60)+i18n(" min ")+"<br><b><font color = blue>";
 	//	i18n("Level Up") +": </font></b>"+ QString::number(EvaMain::user->getHoursToLevelUp())+
 //							" Hours<br><b><font color = blue>" + "</td></tr></table>"; 
 	tip += "</qt>";
