@@ -1,4 +1,12 @@
 --------------------------------------------------------
+15th, April, 2008 lsz
+1. Rough fixed: Show the QQ number as 0 sometimes when trying to add.
+           it is rather rough that I still failed to add him. I think
+	   the protocol has changed.
+2. Spelling mistake in src/api/evaapi.h
+    Files: src/api/evaapi.h src/libeva/evasearchuser.h
+
+--------------------------------------------------------
 6th, April, 2008 yunfan
 1. Updated: Using GPL as the licence of the doc
     Files: doc/en/index.docbook, doc/en/evamainwindow.png

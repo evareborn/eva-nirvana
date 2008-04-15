@@ -68,7 +68,7 @@ enum EVA_NOTIFY
 
 static QString s_ENotify[E_Count] =
 {
-	I18N_NOOP("Somethign error"),
+	I18N_NOOP("Something error"),
 	I18N_NOOP("Server connected"),
 	I18N_NOOP("Login redirection"),
 	I18N_NOOP("Login failed"),
