@@ -1,4 +1,9 @@
 --------------------------------------------------------
+16th, April, 2008 lsz
+1. Changed: the size of the box in "Resource Settings". The original one is
+   too short on my theme.
+    Files: src/ui/evasyssettinguibase.cpp
+--------------------------------------------------------
 15th, April, 2008 lsz
 1. Rough fixed: Show the QQ number as 0 sometimes when trying to add.
            it is rather rough that I still failed to add him. I think
