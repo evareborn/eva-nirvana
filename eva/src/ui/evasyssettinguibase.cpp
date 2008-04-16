@@ -745,7 +745,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	gbPath = new QGroupBox( wspResource, "gbPath" );
 	
 	QWidget* privateLayoutWidget_6 = new QWidget( gbPath, "layout59" );
-	privateLayoutWidget_6->setGeometry( QRect( 10, 15, 350, 120 ) );
+	privateLayoutWidget_6->setGeometry( QRect( 10, 15, 350, 160 ) );
 	layout59 = new QVBoxLayout( privateLayoutWidget_6, 11, 6, "layout59"); 
 	
 	layout56_3 = new QGridLayout( 0, 1, 1, 0, 6, "layout56_3"); 
