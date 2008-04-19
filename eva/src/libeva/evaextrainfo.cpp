@@ -25,7 +25,6 @@
 #else
 #include <arpa/inet.h>
 #endif
-#include <byteswap.h>
 
 RequestExtraInfoPacket::RequestExtraInfoPacket()
 	: OutPacket(QQ_CMD_REQUEST_EXTRA_INFORMATION, true), 

@@ -508,6 +508,12 @@ static const unsigned char Computer_UUID_0F5F[16] = {
 #define AUTH_INFO_TYPE_CODE     0x00
 #define AUTH_INFO_TYPE_GRAPHIC  0x01
 
+/// sub commands of 0x00AE
+#define AUTH_INFO_SUB_CMD_USER 0x01
+#define AUTH_INFO_SUB_CMD_QUN 0x02
+#define AUTH_INFO_SUB_CMD_TEMP_SESSION 0x03
+#define AUTH_INFO_SUB_CMD_DELETE_USER 0x06
+#define AUTH_INFO_SUB_CMD_MODIFY_USER_INFO 0x07
 
 #define QQ_MY_AUTH_APPROVE  0x30
 #define QQ_MY_AUTH_REJECT   0x31
@@ -550,10 +556,14 @@ static const unsigned char Computer_UUID_0F5F[16] = {
 #define QQ_LOGIN_TOKEN_OK          0x00
 #define QQ_LOGIN_TOKEN_NEED_VERI   0x01
 
-/** rechieve weather information, sub-command of QQ_CMD_WEATHER */
+/** retrieve weather information, sub-command of QQ_CMD_WEATHER */
 #define QQ_SUB_CMD_GET_WEATHER 0x01
 
 /** reply code for QQ_CMD_SERVER_DETECT */
 #define QQ_CMD_SERVER_DETECT_REPLY_OK           0x0000
 #define QQ_CMD_SERVER_DETECT_REPLY_REDIRECT     0x0001
+
+/** send temp session IM, sub-command of QQ_CMD_TEMP_SESSION_OP */
+#define QQ_SUB_CMD_SEND_TEMP_SESSION_IM 0x01
+
 #endif

@@ -1005,10 +1005,198 @@ void ReceivedQQNews::parseData( const unsigned char * buf, const int /*len*/ )
 }
 
 
+/** ====================================================================== */
 
 
+ReceivedTempSessionTextIMPacket::ReceivedTempSessionTextIMPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
+
+ReceivedTempSessionTextIMPacket::ReceivedTempSessionTextIMPacket( const ReceivedTempSessionTextIMPacket & rhs )
+{
+	*this = rhs;
+}
+
+ReceivedTempSessionTextIMPacket & ReceivedTempSessionTextIMPacket::operator =( const ReceivedTempSessionTextIMPacket & rhs )
+{
+	//*((ReceivedTempSessionTextIMPacket *)this) = (ReceivedTempSessionTextIMPacket)rhs;
+	sender=rhs.getSender();
+	nick=rhs.getNick();
+	site=rhs.getSite();
+	time=rhs.getTime();
+	message=rhs.getMessage();
+	fontname=rhs.getFontName();
+	fontsize=rhs.getFontSize();
+	bold=rhs.isBold();
+	italic=rhs.isItalic();
+	underline=rhs.isUnderline();
+	red=rhs.getRed();
+	green=rhs.getGreen();
+	blue=rhs.getBlue();
+	return *this;
+}
+
+void ReceivedTempSessionTextIMPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=0;
+	int len2=0;
+	int fontStyleLength;
+	char* pszTemp;
+	int fontFlag;
+
+	// Sender
+	sender = htonl(*(unsigned int*)buf);
+	pos+=4;
+	// Unknown 4 bytes
+	pos+=4;
+	// Nick (TM only sends string version of QQ number)
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	nick=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+	// Qun name (TM only sends "QQ Qun")
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	site=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+	// Unknown 1 byte
+	pos++;
+	// Timestamp
+	time = htonl(*(unsigned int*)(buf+pos));
+	pos+=4;
+	// Length of following content
+	len2 = htons(*(unsigned short*)(buf+pos));
+	pos+=2;
+	// Obtain length of font attributes, then get message content
+	fontStyleLength = buf[pos+len2-1];
+	pszTemp=new char[len2+1];
+	message = strncpy(pszTemp,(const char*)buf+pos,len2-fontStyleLength);
+	message[len2-fontStyleLength]=0;
+	delete[] pszTemp;
+	pos+=(len2-fontStyleLength);
+	// Font attributes
+	fontFlag = htons(*(unsigned short*)(buf+pos));
+	pos+=2;
+	// Analyze font attribute for assigning to variables
+	// Font size
+	fontsize = fontFlag & 0x1F;
+	// Bold, Italic, Underline
+	bold = (fontFlag & 0x20) != 0;
+	italic = (fontFlag & 0x40) != 0;
+	underline = (fontFlag & 0x80) != 0;
+	// Font color in rgb
+	red = buf[pos++] & 0xFF;
+	green = buf[pos++] & 0xFF;
+	blue = buf[pos++] & 0xFF;
+	// 1 Unknown Byte
+	pos++;
+	// Encoding (unused)
+	pos+=2;
+	// Font name in GBK
+	pszTemp=new char[strlen((const char*)buf+pos)+1];
+	strcpy(pszTemp,(const char*)buf+pos);
+	pszTemp[strlen(pszTemp)-1]=0;
+	fontname = pszTemp;
+	delete[] pszTemp;
+}
 
 
+/** ====================================================================== */
 
 
+TempSessionOpReplyPacket::TempSessionOpReplyPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
 
+TempSessionOpReplyPacket::TempSessionOpReplyPacket( const TempSessionOpReplyPacket & rhs )
+{
+	*this = rhs;
+}
+
+TempSessionOpReplyPacket & TempSessionOpReplyPacket::operator =( const TempSessionOpReplyPacket & rhs )
+{
+	replyMessage=rhs.getReplyMessage();
+	receiver=rhs.getReceiver();
+	replyCode=rhs.getReplyCode();
+	subCommand=rhs.getSubCommand();
+
+	return *this;
+}
+
+void TempSessionOpReplyPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=0;
+
+	subCommand = buf[pos++];
+	switch(subCommand) {
+			case QQ_SUB_CMD_SEND_TEMP_SESSION_IM:
+				receiver = htonl(*(int*)(buf+pos));
+				pos+=4;
+				replyCode = buf[pos++];
+				unsigned char len2 = buf[pos++];
+				char* pszTemp=new char[len2+1];
+				memmove(pszTemp,(char*)buf+pos,len2);
+				pszTemp[len2]=0;
+				replyMessage = pszTemp;
+				delete[] pszTemp;
+				break;
+	}
+}
+
+
+/** ====================================================================== */
+
+
+ReceivedQQMailPacket::ReceivedQQMailPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
+
+ReceivedQQMailPacket::ReceivedQQMailPacket( const ReceivedQQMailPacket & rhs )
+{
+	*this = rhs;
+}
+
+ReceivedQQMailPacket & ReceivedQQMailPacket::operator =( const ReceivedQQMailPacket & rhs )
+{
+	return *this;
+}
+
+void ReceivedQQMailPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=1;
+	int len2=0;
+	char* pszTemp;
+
+	pszTemp=new char[31];
+	strncpy(pszTemp,(const char*)buf+pos,30);
+	pszTemp[30]=0;
+	mailID=pszTemp;
+	delete[] pszTemp;
+	pos+=30;
+
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	from=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+
+	pos+=9;
+
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	title=pszTemp;
+	delete[] pszTemp;
+}
