@@ -1,4 +1,19 @@
 --------------------------------------------------------
+19th, April, 2008 starkwong
+(Changes to libeva only)
+1. Removed unused reference to byteswap.h in evaextrainfo.cpp
+2. Added other auth support to EvaAddFriendGetAuthInfoPacket
+3. Added Temp Sesson support (3 Packets)
+4. Added QQ Mail notificaton support (1 Packet)
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaaddfriendex.cpp
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaaddfriendex.h
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evadefines.h
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaextrainfo.cpp
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaimreceive.cpp
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaimreceive.h
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaimsend.cpp
+Modified : /branches/eva-qt3-bugfix/eva/src/libeva/evaimsend.h
+--------------------------------------------------------
 16th, April, 2008 lsz
 1. Changed: the size of the box in "Resource Settings". The original one is
    too short on my theme.
