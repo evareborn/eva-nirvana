@@ -186,6 +186,9 @@ public:
 	void setSubCommand(const unsigned char cmd) { m_Cmd = cmd; }
 	const unsigned char getSubCommand() const { return m_Cmd; }
 
+	void setSubSubCommand(const unsigned char cmd) { m_SubCmd = cmd; }
+	const unsigned char getSubSubCommand() const { return m_SubCmd; }
+
 	const bool isQun() const { return m_IsQun; }
 protected:
 	virtual int putBody(unsigned char* buf);
@@ -193,6 +196,7 @@ private:
 	 bool m_IsQun;
 	unsigned int m_AddID;
 	unsigned char m_Cmd;
+	unsigned char m_SubCmd;
 	// used for AUTH_INFO_CMD_CODE, the contents of the verification images
 	std::string m_Verification;
 	// used for AUTH_INFO_CMD_CODE, the returned session id from server when asking for verification images
@@ -215,6 +219,7 @@ public:
 	void setReplyCode( const unsigned char replyCode ) { m_ReplyCode = replyCode; }	
 
 	const unsigned char getSubCommand() const { return m_Cmd; }
+	const unsigned char getSubSubCommand() const { return m_SubCmd; }
 	const unsigned char *getCode() const { return m_Code; }
 	const int getCodeLength () const { return m_CodeLen; }
 
@@ -225,6 +230,9 @@ private:
 	bool m_IsQun;
 	// one of AUTH_INFO_CMD_INFO and AUTH_INFO_CMD_CODE
 	unsigned char m_Cmd;
+	
+	// one of AUTH_INFO_SUB_CMD_*
+	unsigned char m_SubCmd;
 
 	// if cmd is AUTH_INFO_CMD_INFO,  reply could be one of AUTH_INFO_TYPE_CODE and AUTH_INFO_TYPE_GRAPHIC
 	// if cmd is AUTH_INFO_CMD_CODE, reply could be 0x00(success) or 0x01(failed)
