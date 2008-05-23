@@ -28,7 +28,8 @@
 #else
 #include <arpa/inet.h>
 #endif
- 
+#include <cstring> 
+
 EvaAddFriendExPacket::EvaAddFriendExPacket()
  	:OutPacket(),
 	m_AddQQNum(0)

@@ -33,7 +33,7 @@
 #include <qsize.h>
 #include <qcolor.h>
 #include <kshortcut.h>
-
+#include <cstring>
 class KConfig;
 
 typedef struct BuddyInfoCacheItem{

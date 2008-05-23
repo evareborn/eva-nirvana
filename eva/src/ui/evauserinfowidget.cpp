@@ -503,7 +503,7 @@ void EvaUserInfoWidget::languageChange()
     lblRealName->setText( tr( "Real Name:" ) );
     lblNickName->setText( tr( "Nick Name:" ) );
     lblAge->setText( tr( "Age:" ) );
-    lblArea->setText( tr( "Area:" ) );
+    lblArea->setText( tr( "Region:" ) );
     leRealName->setText( QString::null );
     leNickName->setText( QString::null );
     leAge->setText( QString::null );
@@ -527,7 +527,7 @@ void EvaUserInfoWidget::languageChange()
     leMobile->setText( QString::null );
     leOccupation->setText( QString::null );
     leBlood->setText( QString::null );
-    lblBlood->setText( tr( "Blood:" ) );
+    lblBlood->setText( tr( "Blood Type:" ) );
     lblOccupation->setText( tr( "Occupation:" ) );
     leZodiac->setText( QString::null );
     leHoroscape->setText( QString::null );
@@ -535,12 +535,12 @@ void EvaUserInfoWidget::languageChange()
     leEmail->setText( QString::null );
     leAddress->setText( QString::null );
     leZipCode->setText( QString::null );
-    lblZodiac->setText( tr( "Zodiac:" ) );
-    lblHoroscape->setText( tr( "Horoscape:" ) );
+    lblZodiac->setText( tr( "Chinese Zodiac:" ) );
+    lblHoroscape->setText( tr( "Horoscope:" ) );
     lblSchool->setText( tr( "School:" ) );
     lblEmail->setText( tr( "Email:" ) );
     lblAddress->setText( tr( "Address:" ) );
-    lblZipCode->setText( tr( "Zip Code:" ) );
+    lblZipCode->setText( tr( "Postal Code:" ) );
     lblPhone->setText( tr( "Phone:" ) );
     lblHomePage->setText( tr( "Home Page:" ) );
     lblDetails->setText( tr( "Details" ) );

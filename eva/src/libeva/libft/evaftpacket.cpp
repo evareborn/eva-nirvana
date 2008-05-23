@@ -22,6 +22,7 @@
 #include "../evautil.h"
 #include <string.h>
 #include <stdio.h>
+#include <cstring>
 
 
 EvaFTPacket::EvaFTPacket(const unsigned char *buf, const int len)

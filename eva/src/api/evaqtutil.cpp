@@ -28,6 +28,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qapplication.h>
+#include <cstring>
 
 const QString EvaTextFilter::filter( const QString & source )
 {

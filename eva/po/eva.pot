@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 20:02+0800\n"
+"POT-Creation-Date: 2008-05-06 03:12+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,15 +44,15 @@ msgid "Eva Search/Add Friend"
 msgstr ""
 
 #: evaaddingmanager.cpp:186
-msgid "You are adding %1, cannot processing %2 request."
+msgid "You are adding %1, cannot process %2 request."
 msgstr ""
 
 #: evaaddingmanager.cpp:251
-msgid "Incorrect verify code, try again please!"
+msgid "Incorrect verification code, try again please!"
 msgstr ""
 
 #: evaaddingmanager.cpp:284
-msgid "Unkown auth reply type(%1), adding failed."
+msgid "Unknown auth reply type (%1), adding failed."
 msgstr ""
 
 #: evaaddingmanager.cpp:318
@@ -161,7 +161,7 @@ msgstr ""
 msgid "Download Group"
 msgstr ""
 
-#: evamain.cpp:393 ui/evacontactlistview.cpp:456
+#: evamain.cpp:393 ui/evacontactlistview.cpp:423
 msgid "Group"
 msgstr ""
 
@@ -185,140 +185,140 @@ msgstr ""
 msgid "No Auto-Reply"
 msgstr ""
 
-#: evamain.cpp:570 ui/evamainwindow.cpp:492
+#: evamain.cpp:569 ui/evamainwindow.cpp:493
 msgid "Qun List"
 msgstr ""
 
-#: evamain.cpp:571
+#: evamain.cpp:570
 msgid "Anonymous"
 msgstr ""
 
-#: evamain.cpp:572
+#: evamain.cpp:571
 msgid "Black List"
 msgstr ""
 
-#: evamain.cpp:590 ui/evamainwindow.cpp:451
+#: evamain.cpp:589 ui/evamainwindow.cpp:452
 msgid "Buddy List"
 msgstr ""
 
-#: evamain.cpp:1012
+#: evamain.cpp:1015
 msgid "Network error occurred, check your network then try Eva later please."
 msgstr ""
 
-#: evamain.cpp:1013 ui/loginuibase.cpp:196
+#: evamain.cpp:1016 ui/loginuibase.cpp:196
 msgid "Network"
 msgstr ""
 
-#: evamain.cpp:1038
+#: evamain.cpp:1041
 msgid "Cannot login, try later please."
 msgstr ""
 
-#: evamain.cpp:1038 evamain.cpp:1075 evamain.cpp:2536
-#: ui/evaloginwindow.cpp:140 ui/evaloginwindow.cpp:148
+#: evamain.cpp:1041 evamain.cpp:1078 evamain.cpp:2537
+#: ui/evaloginwindow.cpp:141 ui/evaloginwindow.cpp:149
 msgid "Eva Login"
 msgstr ""
 
-#: evamain.cpp:1052
+#: evamain.cpp:1055
 msgid "Lost connection with server, try later please."
 msgstr ""
 
-#: evamain.cpp:1052
+#: evamain.cpp:1055
 msgid "Eva Connection"
 msgstr ""
 
-#: evamain.cpp:1101
+#: evamain.cpp:1104
 msgid "I am online."
 msgstr ""
 
-#: evamain.cpp:1115
+#: evamain.cpp:1118
 msgid "I am busy ..."
 msgstr ""
 
-#: evamain.cpp:1244
+#: evamain.cpp:1247
 msgid "Uploading grouped friends successfully."
 msgstr ""
 
-#: evamain.cpp:1244 evamain.cpp:1246
+#: evamain.cpp:1247 evamain.cpp:1249
 msgid "Eva Upload Groups"
 msgstr ""
 
-#: evamain.cpp:1246
+#: evamain.cpp:1249
 msgid "Uploading grouped friends failed."
 msgstr ""
 
-#: evamain.cpp:1605
+#: evamain.cpp:1608
 msgid "Delete buddy \"%1\" failed."
 msgstr ""
 
-#: evamain.cpp:1605
+#: evamain.cpp:1608
 msgid "Eva Delete Buddy"
 msgstr ""
 
-#: evamain.cpp:1668
+#: evamain.cpp:1671
 msgid "put \"%1\" into Blacklist, are you sure?"
 msgstr ""
 
-#: evamain.cpp:1669 evamain.cpp:1684
+#: evamain.cpp:1672 evamain.cpp:1687
 msgid "Eva Blacklist"
 msgstr ""
 
-#: evamain.cpp:1683
+#: evamain.cpp:1686
 msgid "Blacklist operation on \"%1\" failed."
 msgstr ""
 
-#: evamain.cpp:1691
+#: evamain.cpp:1694
 msgid "add \"%1\" into your Buddy list?"
 msgstr ""
 
-#: evamain.cpp:1691
+#: evamain.cpp:1694
 msgid "Eva Add Buddy"
 msgstr ""
 
-#: evamain.cpp:1839 ui/evanotifywindow.cpp:272 ui/evanotifywindow.cpp:290
+#: evamain.cpp:1842 ui/evanotifywindow.cpp:272 ui/evanotifywindow.cpp:290
 #: ui/evanotifywindow.cpp:308 ui/evanotifywindow.cpp:325
 #: ui/evanotifywindow.cpp:346 ui/evanotifywindow.cpp:364
 #: ui/evaqunchatuibase.cpp:288 ui/evaqunchatwindow.cpp:322
-#: ui/evaqunchatwindow.cpp:466 ui/evasyshistoryviewer.cpp:96
+#: ui/evaqunchatwindow.cpp:461 ui/evasyshistoryviewer.cpp:96
 #: ui/qundetailsui.cpp:341 ui/qundetailswindow.cpp:106
 #: ui/qundetailswindow.cpp:282
 msgid "Qun"
 msgstr ""
 
-#: evamain.cpp:1960
+#: evamain.cpp:1963
 msgid "You have exited the Qun \"%1\" successfully."
 msgstr ""
 
-#: evamain.cpp:1962
+#: evamain.cpp:1965
 msgid ""
 "Exit Qun \"%1\" failed\n"
 "%2"
 msgstr ""
 
-#: evamain.cpp:1964 evamain.cpp:1982 evamain.cpp:1988
+#: evamain.cpp:1967 evamain.cpp:1985 evamain.cpp:1991
 #: ui/evaquncreatewindow.cpp:74 ui/evaquncreatewindow.cpp:81
 #: ui/evaquncreatewindow.cpp:296 ui/evaquncreatewindow.cpp:302
 msgid "Qun Operation"
 msgstr ""
 
-#: evamain.cpp:1978
+#: evamain.cpp:1981
 msgid ""
 "You are the creator of Qun \"%1\", if you exit this Qun this Qun will be "
 "deleted, are you sure?"
 msgstr ""
 
-#: evamain.cpp:1980
+#: evamain.cpp:1983
 msgid "Are you sure you want to exit Qun \"%1\"?"
 msgstr ""
 
-#: evamain.cpp:2010
+#: evamain.cpp:2013
 msgid "signature"
 msgstr ""
 
-#: evamain.cpp:2038
+#: evamain.cpp:2041
 msgid "Eva Global Key"
 msgstr ""
 
-#: evamain.cpp:2039
+#: evamain.cpp:2042
 msgid "This action allows you to read your new Eva message globally."
 msgstr ""
 
@@ -414,164 +414,164 @@ msgstr ""
 msgid "IM Client"
 msgstr ""
 
-#: main.cpp:29
+#: main.cpp:33
 msgid "An IM Client Under KDE Using QQ IM Protocol."
 msgstr ""
 
-#: main.cpp:35
+#: main.cpp:39
 msgid "Using the last saved settings to login."
 msgstr ""
 
-#: main.cpp:37
+#: main.cpp:41
 msgid "QQ number to login."
 msgstr ""
 
-#: main.cpp:39
+#: main.cpp:43
 msgid "Password for your QQ number."
 msgstr ""
 
-#: main.cpp:41
-msgid "Connection mode ( one of UDP, TCP or HTTP_PROXY), defaulting to UDP"
-msgstr ""
-
-#: main.cpp:42
-msgid "Proxy server IP address."
-msgstr ""
-
-#: main.cpp:43
-msgid "Proxy server port number"
-msgstr ""
-
-#: main.cpp:44
-msgid "Proxy user name if required."
-msgstr ""
-
 #: main.cpp:45
-msgid "Proxy password if required."
+msgid "Connection mode (one of UDP, TCP or HTTP_PROXY), defaulting to UDP"
 msgstr ""
 
 #: main.cpp:46
-msgid "Select login mode to invisible."
+msgid "Proxy server IP address."
 msgstr ""
 
 #: main.cpp:47
+msgid "Proxy server port number"
+msgstr ""
+
+#: main.cpp:48
+msgid "Proxy user name if required."
+msgstr ""
+
+#: main.cpp:49
+msgid "Proxy password if required."
+msgstr ""
+
+#: main.cpp:50
+msgid "Select login mode to invisible."
+msgstr ""
+
+#: main.cpp:51
 msgid "Save password and proxy settings."
 msgstr ""
 
-#: main.cpp:53 ui/evamainuibase.cpp:90
+#: main.cpp:58 ui/evamainuibase.cpp:90
 msgid "Eva"
 msgstr ""
 
-#: main.cpp:54
-msgid "(c) 2004-2007, yunfan"
+#: main.cpp:62
+msgid "(c) 2004-2008, yunfan"
 msgstr ""
 
-#: main.cpp:55
+#: main.cpp:66
 msgid "yunfan"
 msgstr ""
 
-#: main.cpp:55
+#: main.cpp:66
 msgid "original developer, maintainer"
 msgstr ""
 
-#: main.cpp:57
+#: main.cpp:68
 msgid "casper"
 msgstr ""
 
-#: main.cpp:57
+#: main.cpp:68
 msgid "developer, memo, system setting ui and IP address converting"
 msgstr ""
 
-#: main.cpp:60
+#: main.cpp:71
 msgid "byakko"
 msgstr ""
 
-#: main.cpp:60
+#: main.cpp:71
 msgid "UI patch provider"
 msgstr ""
 
-#: main.cpp:61
+#: main.cpp:72
 msgid "caihua"
 msgstr ""
 
-#: main.cpp:61
+#: main.cpp:72
 msgid "icon designer"
 msgstr ""
 
-#: main.cpp:62
-msgid "fundawang"
+#: main.cpp:73
+msgid "Funda Wang"
 msgstr ""
 
-#: main.cpp:62
+#: main.cpp:73
 msgid "patch for xdg-user-dir supported"
 msgstr ""
 
-#: main.cpp:63
+#: main.cpp:74
 msgid "Levin Du"
 msgstr ""
 
-#: main.cpp:64
+#: main.cpp:75
 msgid ""
 "patch for system setting \n"
 "fixed combo box index massing up after \n"
 "clicking \"Default\" several times."
 msgstr ""
 
-#: main.cpp:66
+#: main.cpp:77
 msgid "Minmin"
 msgstr ""
 
-#: main.cpp:66
+#: main.cpp:77
 msgid "encapsulating encryption class in C++"
 msgstr ""
 
-#: main.cpp:67
+#: main.cpp:78
 msgid "nwillis"
 msgstr ""
 
-#: main.cpp:67
+#: main.cpp:78
 msgid "idle detecting(auto-away) feature"
 msgstr ""
 
-#: main.cpp:68
+#: main.cpp:79
 msgid "Phytonix"
 msgstr ""
 
-#: main.cpp:68
+#: main.cpp:79
 msgid "some original faces & Eva Logo designer."
 msgstr ""
 
-#: main.cpp:69
+#: main.cpp:80
 msgid "Shixin Zeng"
 msgstr ""
 
-#: main.cpp:69
-msgid "libeva patch for Windows supporting."
+#: main.cpp:80
+msgid "libeva patch for Windows support."
 msgstr ""
 
-#: main.cpp:70
-msgid "starkwong"
+#: main.cpp:81
+msgid "Stark Wong"
 msgstr ""
 
-#: main.cpp:70
+#: main.cpp:81
 msgid ""
-"libeva patch for Visual Studio .Net 2002/2003 compiling supporting. 2007II "
-"new smiley code"
+"libeva patch for Visual Studio .NET 2002/2003 compiling support.\n"
+"2007II new smiley code"
 msgstr ""
 
-#: main.cpp:71
+#: main.cpp:82
 msgid "zsyddl"
 msgstr ""
 
-#: main.cpp:71
+#: main.cpp:82
 msgid "earlier user details window designer"
 msgstr ""
 
-#: main.cpp:72
+#: main.cpp:83
 msgid "swear"
 msgstr ""
 
-#: main.cpp:72
+#: main.cpp:83
 msgid "forum maintainer"
 msgstr ""
 
@@ -594,7 +594,7 @@ msgstr ""
 #: ui/createsmileyui.cpp:135
 msgid ""
 "1. Select files from your computer.<br>\n"
-"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">( 150 pixels x 150 pixels or "
+"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">(150 pixels x 150 pixels or "
 "smaller size for better quality. )</font>"
 msgstr ""
 
@@ -623,8 +623,8 @@ msgid ""
 "names would be used as smiley names and shortcuts.</font>"
 msgstr ""
 
-#: ui/createsmileywindow.cpp:97 ui/evachatwindow.cpp:896
-#: ui/evaqunchatwindow.cpp:661
+#: ui/createsmileywindow.cpp:97 ui/evachatwindow.cpp:910
+#: ui/evaqunchatwindow.cpp:672
 msgid " all images (*.png *.bmp *.jpg *.jpeg *.gif)"
 msgstr ""
 
@@ -964,8 +964,8 @@ msgstr ""
 msgid "You have joined Qun %1(%2)"
 msgstr ""
 
-#: ui/evaadduibase.cpp:175
-msgid "Verify Code:"
+#: ui/evaadduibase.cpp:175 ui/evaloginveriuibase.cpp:127
+msgid "Verification Code:"
 msgstr ""
 
 #: ui/evaadduibase.cpp:176
@@ -980,9 +980,9 @@ msgstr ""
 msgid "allow reverse adding"
 msgstr ""
 
-#: ui/evachatuibase.cpp:303 ui/evacontactlistview.cpp:847
-#: ui/evacontactlistview.cpp:1146 ui/evacontactlistview.cpp:1633
-#: ui/evacontactlistview.cpp:1649
+#: ui/evachatuibase.cpp:303 ui/evacontactlistview.cpp:826
+#: ui/evacontactlistview.cpp:1134 ui/evacontactlistview.cpp:1621
+#: ui/evacontactlistview.cpp:1637
 msgid "Chat"
 msgstr ""
 
@@ -994,11 +994,11 @@ msgstr ""
 msgid "IP:"
 msgstr ""
 
-#: ui/evachatuibase.cpp:309 ui/evaqunchatuibase.cpp:291
+#: ui/evachatuibase.cpp:309
 msgid "add a smiley icon"
 msgstr ""
 
-#: ui/evachatuibase.cpp:312 ui/evaqunchatuibase.cpp:293
+#: ui/evachatuibase.cpp:312
 msgid "choose font size and color"
 msgstr ""
 
@@ -1011,11 +1011,11 @@ msgstr ""
 msgid "B"
 msgstr ""
 
-#: ui/evachatuibase.cpp:319 ui/evaqunchatuibase.cpp:296
-#: ui/mainlistfontsettinguibase.cpp:317 ui/mainlistfontsettinguibase.cpp:322
-#: ui/mainlistfontsettinguibase.cpp:327 ui/mainlistfontsettinguibase.cpp:332
-#: ui/mainlistfontsettinguibase.cpp:337 ui/mainlistfontsettinguibase.cpp:342
-#: ui/mainlistfontsettinguibase.cpp:347 ui/mainlistfontsettinguibase.cpp:352
+#: ui/evachatuibase.cpp:319 ui/mainlistfontsettinguibase.cpp:317
+#: ui/mainlistfontsettinguibase.cpp:322 ui/mainlistfontsettinguibase.cpp:327
+#: ui/mainlistfontsettinguibase.cpp:332 ui/mainlistfontsettinguibase.cpp:337
+#: ui/mainlistfontsettinguibase.cpp:342 ui/mainlistfontsettinguibase.cpp:347
+#: ui/mainlistfontsettinguibase.cpp:352
 msgid "bold"
 msgstr ""
 
@@ -1023,11 +1023,11 @@ msgstr ""
 msgid "U"
 msgstr ""
 
-#: ui/evachatuibase.cpp:323 ui/evaqunchatuibase.cpp:299
-#: ui/mainlistfontsettinguibase.cpp:318 ui/mainlistfontsettinguibase.cpp:323
-#: ui/mainlistfontsettinguibase.cpp:328 ui/mainlistfontsettinguibase.cpp:333
-#: ui/mainlistfontsettinguibase.cpp:338 ui/mainlistfontsettinguibase.cpp:343
-#: ui/mainlistfontsettinguibase.cpp:348 ui/mainlistfontsettinguibase.cpp:353
+#: ui/evachatuibase.cpp:323 ui/mainlistfontsettinguibase.cpp:318
+#: ui/mainlistfontsettinguibase.cpp:323 ui/mainlistfontsettinguibase.cpp:328
+#: ui/mainlistfontsettinguibase.cpp:333 ui/mainlistfontsettinguibase.cpp:338
+#: ui/mainlistfontsettinguibase.cpp:343 ui/mainlistfontsettinguibase.cpp:348
+#: ui/mainlistfontsettinguibase.cpp:353
 msgid "underline"
 msgstr ""
 
@@ -1035,32 +1035,32 @@ msgstr ""
 msgid "I"
 msgstr ""
 
-#: ui/evachatuibase.cpp:326 ui/evaqunchatuibase.cpp:302
-#: ui/mainlistfontsettinguibase.cpp:319 ui/mainlistfontsettinguibase.cpp:324
-#: ui/mainlistfontsettinguibase.cpp:329 ui/mainlistfontsettinguibase.cpp:334
-#: ui/mainlistfontsettinguibase.cpp:339 ui/mainlistfontsettinguibase.cpp:344
-#: ui/mainlistfontsettinguibase.cpp:349 ui/mainlistfontsettinguibase.cpp:354
+#: ui/evachatuibase.cpp:326 ui/mainlistfontsettinguibase.cpp:319
+#: ui/mainlistfontsettinguibase.cpp:324 ui/mainlistfontsettinguibase.cpp:329
+#: ui/mainlistfontsettinguibase.cpp:334 ui/mainlistfontsettinguibase.cpp:339
+#: ui/mainlistfontsettinguibase.cpp:344 ui/mainlistfontsettinguibase.cpp:349
+#: ui/mainlistfontsettinguibase.cpp:354
 msgid "italic"
 msgstr ""
 
 #: ui/evachatuibase.cpp:330
-msgid "send image files"
+msgid "Send image files"
 msgstr ""
 
 #: ui/evachatuibase.cpp:333
-msgid "add a screen shot"
+msgid "Add a screenshot"
 msgstr ""
 
-#: ui/evachatuibase.cpp:335 ui/evaqunchatuibase.cpp:311
-msgid "select an quick-reply message"
+#: ui/evachatuibase.cpp:335
+msgid "Select an quick-reply message"
 msgstr ""
 
 #: ui/evachatuibase.cpp:337 ui/evaqunchatuibase.cpp:312
-msgid "toggle sound notification"
+msgid "Toggle sound notification"
 msgstr ""
 
 #: ui/evachatuibase.cpp:342
-msgid "hide/display QQ show panel"
+msgid "Hide/Display QQ Show panel"
 msgstr ""
 
 #: ui/evachatuibase.cpp:344
@@ -1068,19 +1068,19 @@ msgid "&History"
 msgstr ""
 
 #: ui/evachatuibase.cpp:346
-msgid "view/hide IM history(Alt+H)"
+msgid "View/Hide IM history (Alt+H)"
 msgstr ""
 
 #: ui/evachatuibase.cpp:349 ui/evaqunchatuibase.cpp:318
-msgid "close this window(Alt+X)"
+msgid "Close this window (Alt+X)"
 msgstr ""
 
 #: ui/evachatuibase.cpp:352 ui/evaqunchatuibase.cpp:321
-msgid "send message"
+msgid "Send message"
 msgstr ""
 
 #: ui/evachatuibase.cpp:355 ui/evaqunchatuibase.cpp:323
-msgid "change send key"
+msgid "Change send key"
 msgstr ""
 
 #: ui/evachatuibase.cpp:356
@@ -1099,7 +1099,7 @@ msgstr ""
 msgid "&Copy Text"
 msgstr ""
 
-#: ui/evachatview.cpp:140 ui/evachatwindow.cpp:317 ui/evaqunchatwindow.cpp:187
+#: ui/evachatview.cpp:140 ui/evachatwindow.cpp:318 ui/evaqunchatwindow.cpp:187
 msgid "(Auto-Reply)"
 msgstr ""
 
@@ -1160,226 +1160,226 @@ msgstr ""
 msgid "%1 wants to send you a file \"%2\", you can %3, %4 or %5."
 msgstr ""
 
-#: ui/evachatview.cpp:545
+#: ui/evachatview.cpp:546
 msgid "resume"
 msgstr ""
 
-#: ui/evachatview.cpp:547
+#: ui/evachatview.cpp:548
 msgid "start"
 msgstr ""
 
-#: ui/evachatview.cpp:548
+#: ui/evachatview.cpp:549
 msgid ""
 "Cached information of \"%1\" has been found, you can %2 the last download or "
 "ignore the last cached download information and %3 a new download."
 msgstr ""
 
-#: ui/evachatwindow.cpp:155 ui/evaqunchatwindow.cpp:304
+#: ui/evachatwindow.cpp:156 ui/evaqunchatwindow.cpp:304
 msgid "Press \"Enter\" to Send"
 msgstr ""
 
-#: ui/evachatwindow.cpp:156 ui/evaqunchatwindow.cpp:305
+#: ui/evachatwindow.cpp:157 ui/evaqunchatwindow.cpp:305
 msgid "Press \"Ctrl+Enter\" to Send"
 msgstr ""
 
-#: ui/evachatwindow.cpp:169
+#: ui/evachatwindow.cpp:170
 msgid "Chatting with %1"
 msgstr ""
 
-#: ui/evachatwindow.cpp:171
+#: ui/evachatwindow.cpp:172
 msgid "(offline)"
 msgstr ""
 
-#: ui/evachatwindow.cpp:189
+#: ui/evachatwindow.cpp:190
 msgid "(online)"
 msgstr ""
 
-#: ui/evachatwindow.cpp:199
+#: ui/evachatwindow.cpp:200
 msgid "(leave)"
 msgstr ""
 
-#: ui/evachatwindow.cpp:209
+#: ui/evachatwindow.cpp:210
 msgid "(invisible)"
 msgstr ""
 
-#: ui/evachatwindow.cpp:324 ui/evaqunchatwindow.cpp:200
+#: ui/evachatwindow.cpp:325 ui/evaqunchatwindow.cpp:200
 msgid "message sent failed"
 msgstr ""
 
-#: ui/evachatwindow.cpp:324 ui/evachatwindow.cpp:509 ui/evachatwindow.cpp:513
-#: ui/evaqunchatwindow.cpp:200 ui/evaqunchatwindow.cpp:528
-#: ui/evaqunchatwindow.cpp:532 ui/evaqunchatwindow.cpp:709
-#: ui/evaqunchatwindow.cpp:713
+#: ui/evachatwindow.cpp:325 ui/evachatwindow.cpp:520 ui/evachatwindow.cpp:524
+#: ui/evaqunchatwindow.cpp:200 ui/evaqunchatwindow.cpp:539
+#: ui/evaqunchatwindow.cpp:543 ui/evaqunchatwindow.cpp:720
+#: ui/evaqunchatwindow.cpp:724
 msgid "Message"
 msgstr ""
 
-#: ui/evachatwindow.cpp:509 ui/evaqunchatwindow.cpp:528
-#: ui/evaqunchatwindow.cpp:709
+#: ui/evachatwindow.cpp:520 ui/evaqunchatwindow.cpp:539
+#: ui/evaqunchatwindow.cpp:720
 msgid "Cannot send empty message."
 msgstr ""
 
-#: ui/evachatwindow.cpp:513 ui/evaqunchatwindow.cpp:532
-#: ui/evaqunchatwindow.cpp:713
+#: ui/evachatwindow.cpp:524 ui/evaqunchatwindow.cpp:543
+#: ui/evaqunchatwindow.cpp:724
 msgid "Message is too long, cannot send."
 msgstr ""
 
-#: ui/evachatwindow.cpp:622 ui/evachatwindow.cpp:693
+#: ui/evachatwindow.cpp:636 ui/evachatwindow.cpp:707
 msgid " all files (*)"
 msgstr ""
 
-#: ui/evachatwindow.cpp:623
+#: ui/evachatwindow.cpp:637
 msgid "select a file"
 msgstr ""
 
-#: ui/evachatwindow.cpp:682 ui/evachatwindow.cpp:698
+#: ui/evachatwindow.cpp:696 ui/evachatwindow.cpp:712
 msgid ""
-"You have accepted transfering \"%1\", network connecting start, please "
+"You have accepted transferring \"%1\", network connecting start, please "
 "wait..."
 msgstr ""
 
-#: ui/evachatwindow.cpp:707
-msgid "You have cancelled transfering \"%1\"."
+#: ui/evachatwindow.cpp:721
+msgid "You have cancelled transferring \"%1\"."
 msgstr ""
 
-#: ui/evachatwindow.cpp:726
+#: ui/evachatwindow.cpp:740
 msgid "accepted"
 msgstr ""
 
-#: ui/evachatwindow.cpp:726
-msgid "stoped"
+#: ui/evachatwindow.cpp:740
+msgid "stopped"
 msgstr ""
 
-#: ui/evachatwindow.cpp:727
-msgid "%1 has %2 transfering \"%3\"."
+#: ui/evachatwindow.cpp:741
+msgid "%1 has %2 transferring \"%3\"."
 msgstr ""
 
-#: ui/evachatwindow.cpp:778
-msgid "network lost connection or your friend has stoped transfering \"%1\"."
+#: ui/evachatwindow.cpp:792
+msgid "network lost connection or your friend has stopped transferring \"%1\"."
 msgstr ""
 
-#: ui/evachatwindow.cpp:809
+#: ui/evachatwindow.cpp:823
 msgid "sending \"%1\" finished."
 msgstr ""
 
-#: ui/evachatwindow.cpp:831
+#: ui/evachatwindow.cpp:845
 msgid "receiving file \"%1\" has been finished and saved in %2"
 msgstr ""
 
-#: ui/evachatwindow.cpp:875
+#: ui/evachatwindow.cpp:889
 msgid ""
-"File transfer is still in process( %1 file(s) left ). Closing this window "
-"will also stop those transfer processes.Do you want to close this window?"
+"File transfer is still in process (%1 file(s) left). Closing this window "
+"will also stop those transfer processes. Do you want to close this window?"
 msgstr ""
 
-#: ui/evachatwindow.cpp:878
+#: ui/evachatwindow.cpp:892
 msgid "Close Window?"
 msgstr ""
 
-#: ui/evachatwindow.cpp:897 ui/evaqunchatwindow.cpp:662
+#: ui/evachatwindow.cpp:911 ui/evaqunchatwindow.cpp:673
 msgid "select an image file"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:457 ui/evaqunchatuibase.cpp:327
+#: ui/evacontactlistview.cpp:424 ui/evaqunchatuibase.cpp:327
 msgid "Members"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:836
+#: ui/evacontactlistview.cpp:815
 msgid "Rename"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:837
+#: ui/evacontactlistview.cpp:816
 msgid "New Group"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:838
+#: ui/evacontactlistview.cpp:817
 msgid "Delele Group"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:842
+#: ui/evacontactlistview.cpp:821
 msgid "Show Online"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:844
+#: ui/evacontactlistview.cpp:823
 msgid "Show All"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:848 ui/evacontactlistview.cpp:1634
+#: ui/evacontactlistview.cpp:827 ui/evacontactlistview.cpp:1622
 msgid "Send File"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:850 ui/evacontactlistview.cpp:1636
+#: ui/evacontactlistview.cpp:829 ui/evacontactlistview.cpp:1624
 msgid "Update Level"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:851 ui/evacontactlistview.cpp:1148
-#: ui/evacontactlistview.cpp:1637 ui/evacontactlistview.cpp:1651
+#: ui/evacontactlistview.cpp:830 ui/evacontactlistview.cpp:1136
+#: ui/evacontactlistview.cpp:1625 ui/evacontactlistview.cpp:1639
 #: ui/evaqunlistview.cpp:40 ui/evasearchuibase.cpp:697
 #: ui/evasearchuibase.cpp:730 ui/evasearchuibase.cpp:749
 #: ui/qundetailsui.cpp:355
 msgid "Details"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:852 ui/evacontactlistview.cpp:1638
+#: ui/evacontactlistview.cpp:831 ui/evacontactlistview.cpp:1626
 msgid "Modify Memo"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:853 ui/evacontactlistview.cpp:1149
-#: ui/evacontactlistview.cpp:1639 ui/evacontactlistview.cpp:1652
+#: ui/evacontactlistview.cpp:832 ui/evacontactlistview.cpp:1137
+#: ui/evacontactlistview.cpp:1627 ui/evacontactlistview.cpp:1640
 #: ui/evaqunchatuibase.cpp:313
 msgid "History"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:856 ui/evacontactlistview.cpp:1642
+#: ui/evacontactlistview.cpp:835 ui/evacontactlistview.cpp:1630
 msgid "Delete Buddy"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:871
+#: ui/evacontactlistview.cpp:850
 msgid "new group"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:893
+#: ui/evacontactlistview.cpp:872
 msgid "Delete group"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:894
+#: ui/evacontactlistview.cpp:873
 msgid ""
 "Only empty group can be deleted.\n"
 "\n"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:950 ui/evacontactlistview.cpp:1731
+#: ui/evacontactlistview.cpp:929 ui/evacontactlistview.cpp:1719
 msgid ""
 "Delete friend \"%1\" from your list, are you sure?\n"
 "\n"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:953 ui/evacontactlistview.cpp:1734
+#: ui/evacontactlistview.cpp:932 ui/evacontactlistview.cpp:1722
 msgid "Delete a friend"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:953 ui/evacontactlistview.cpp:1734
+#: ui/evacontactlistview.cpp:932 ui/evacontactlistview.cpp:1722
 msgid "Deleting"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:1108 ui/evacontactlistview.cpp:1592
+#: ui/evacontactlistview.cpp:1096 ui/evacontactlistview.cpp:1580
 msgid "Qun name"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:1109 ui/evacontactlistview.cpp:1593
+#: ui/evacontactlistview.cpp:1097 ui/evacontactlistview.cpp:1581
 msgid "Qun Number"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:1110 ui/evacontactlistview.cpp:1594
+#: ui/evacontactlistview.cpp:1098 ui/evacontactlistview.cpp:1582
 #: ui/quncreateui.cpp:222 ui/qundetailsui.cpp:350
 msgid "Qun Description"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:1151 ui/evacontactlistview.cpp:1654
+#: ui/evacontactlistview.cpp:1139 ui/evacontactlistview.cpp:1642
 #: ui/quncreateui.cpp:216
 msgid "Create Qun"
 msgstr ""
 
-#: ui/evacontactlistview.cpp:1152 ui/evacontactlistview.cpp:1655
+#: ui/evacontactlistview.cpp:1140 ui/evacontactlistview.cpp:1643
 msgid "Exit Qun"
 msgstr ""
 
@@ -1456,7 +1456,6 @@ msgid "AB"
 msgstr ""
 
 #: ui/evadetailswindow.cpp:262 ui/evasyssettinguibase.cpp:1079
-#: ui/evasyssettinguibase.cpp:1177
 msgid "Other"
 msgstr ""
 
@@ -1560,7 +1559,7 @@ msgstr ""
 msgid "x"
 msgstr ""
 
-#: ui/evafilestatusuibase.cpp:159 ui/evafontselecter.cpp:100
+#: ui/evafilestatusuibase.cpp:159 ui/evafontselecter.cpp:103
 msgid "Size:"
 msgstr ""
 
@@ -1568,19 +1567,19 @@ msgstr ""
 msgid "Speed:"
 msgstr ""
 
-#: ui/evafontselecter.cpp:97
+#: ui/evafontselecter.cpp:100
 msgid "Font Selecter"
 msgstr ""
 
-#: ui/evafontselecter.cpp:98
+#: ui/evafontselecter.cpp:101
 msgid "Color:"
 msgstr ""
 
-#: ui/evafontselecter.cpp:99
+#: ui/evafontselecter.cpp:102
 msgid "select font color"
 msgstr ""
 
-#: ui/evafontselecter.cpp:101
+#: ui/evafontselecter.cpp:104
 msgid "select font size"
 msgstr ""
 
@@ -1637,19 +1636,15 @@ msgstr ""
 msgid "Verification Graphic:"
 msgstr ""
 
-#: ui/evaloginveriuibase.cpp:127
-msgid "Verification Code:"
-msgstr ""
-
 #: ui/evaloginveriuibase.cpp:129
 msgid "Change image"
 msgstr ""
 
-#: ui/evaloginwindow.cpp:141
+#: ui/evaloginwindow.cpp:142
 msgid "Sorry, account is not an integer number."
 msgstr ""
 
-#: ui/evaloginwindow.cpp:149
+#: ui/evaloginwindow.cpp:150
 msgid "Sorry, proxy server port is not an integer number."
 msgstr ""
 
@@ -1659,27 +1654,35 @@ msgstr ""
 msgid "Nick"
 msgstr ""
 
-#: ui/evamainuibase.cpp:93 ui/evamainwindow.cpp:406
+#: ui/evamainuibase.cpp:93 ui/evamainwindow.cpp:407
 #: ui/evaquncreatewindow.cpp:112 ui/evaqunlistview.cpp:218
 #: ui/quncreateui.cpp:147 ui/quncreateui.cpp:227 ui/qundetailsui.cpp:175
 #: ui/qundetailsui.cpp:356 ui/qundetailswindow.cpp:432
 msgid "QQ"
 msgstr ""
 
-#: ui/evamainwindow.cpp:407 ui/evaqunlistview.cpp:217
+#: ui/evamainwindow.cpp:408 ui/evaqunlistview.cpp:217
 #: ui/mainlistfontsettinguibase.cpp:315
 msgid "Nickname:"
 msgstr ""
 
-#: ui/evamainwindow.cpp:408
+#: ui/evamainwindow.cpp:409
 msgid "Level"
 msgstr ""
 
-#: ui/evamainwindow.cpp:409
+#: ui/evamainwindow.cpp:410
 msgid "Online Time"
 msgstr ""
 
-#: ui/evamainwindow.cpp:517
+#: ui/evamainwindow.cpp:411
+msgid " Hours "
+msgstr ""
+
+#: ui/evamainwindow.cpp:411
+msgid " min "
+msgstr ""
+
+#: ui/evamainwindow.cpp:518
 msgid "Recent Contacts List"
 msgstr ""
 
@@ -1874,16 +1877,36 @@ msgstr ""
 msgid "Your Request has been rejected by \"%1\" of Qun \"%2\"."
 msgstr ""
 
+#: ui/evaqunchatuibase.cpp:291
+msgid "Add a smiley icon"
+msgstr ""
+
+#: ui/evaqunchatuibase.cpp:293
+msgid "Choose font size and color"
+msgstr ""
+
+#: ui/evaqunchatuibase.cpp:296
+msgid "Bold"
+msgstr ""
+
+#: ui/evaqunchatuibase.cpp:299
+msgid "Underline"
+msgstr ""
+
 #: ui/evaqunchatuibase.cpp:305
-msgid "add a custom smiley (file size less than 50K)"
+msgid "Add a custom smiley (file size less than 50KB)"
 msgstr ""
 
 #: ui/evaqunchatuibase.cpp:308
-msgid "add a screen shot ( less than 700 X 600 )"
+msgid "Add a screenshot (smaller than 700 x 600)"
+msgstr ""
+
+#: ui/evaqunchatuibase.cpp:311
+msgid "Select a quick-reply message"
 msgstr ""
 
 #: ui/evaqunchatuibase.cpp:315
-msgid "view IM history(Alt+H)"
+msgid "View/Hide Qun history (Alt+H)"
 msgstr ""
 
 #: ui/evaqunchatuibase.cpp:320 ui/qundetailsui.cpp:366
@@ -1895,14 +1918,14 @@ msgid "Notice"
 msgstr ""
 
 #: ui/evaqunchatuibase.cpp:325
-msgid "Click to open/close qun notice"
+msgid "Click to open/close Qun notice"
 msgstr ""
 
 #: ui/evaqunchatuibase.cpp:332
 msgid "New Item"
 msgstr ""
 
-#: ui/evaqunchatwindow.cpp:693
+#: ui/evaqunchatwindow.cpp:704
 msgid "Send Image Error"
 msgstr ""
 
@@ -2258,131 +2281,131 @@ msgid "Unknown"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:215
-msgid "oversea"
+msgid "Abroad"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:216 ui/evasyssettinguibase.cpp:1112
-msgid "BeiJing"
+msgid "Beijing"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:217 ui/evasyssettinguibase.cpp:1113
-msgid "ShangHai"
+msgid "Shanghai"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:218 ui/evasyssettinguibase.cpp:1114
-msgid "TianJing"
+msgid "Tianjin"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:219 ui/evasyssettinguibase.cpp:1115
-msgid "ChongQing"
+msgid "Chongqing"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:220 ui/evasyssettinguibase.cpp:1116
-msgid "HeBei"
+msgid "Hebei"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:221 ui/evasyssettinguibase.cpp:1117
-msgid "ShanXi"
+msgid "Shanxi"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:222 ui/evasyssettinguibase.cpp:1118
-msgid "NeiMengGu"
+msgid "Neimenggu"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:223 ui/evasyssettinguibase.cpp:1119
-msgid "LiaoNing"
+msgid "Liaoning"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:224 ui/evasyssettinguibase.cpp:1120
-msgid "JiLin"
+msgid "Jilin"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:225 ui/evasyssettinguibase.cpp:1121
-msgid "HeiLongJiang"
+msgid "Heilongjiang"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:226 ui/evasyssettinguibase.cpp:1122
-msgid "JiangSu"
+msgid "Jiangsu"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:227 ui/evasyssettinguibase.cpp:1123
-msgid "ZheJiang"
+msgid "Zhejiang"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:228 ui/evasyssettinguibase.cpp:1124
-msgid "AnHui"
+msgid "Anhui"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:229 ui/evasyssettinguibase.cpp:1125
-msgid "FuJian"
+msgid "Fujian"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:230 ui/evasyssettinguibase.cpp:1126
-msgid "JiangXi"
+msgid "Jiangxi"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:231 ui/evasyssettinguibase.cpp:1127
-msgid "ShanDong"
+msgid "Shandong"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:232 ui/evasyssettinguibase.cpp:1128
-msgid "HeNan"
+msgid "Henan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:233 ui/evasyssettinguibase.cpp:1129
-msgid "HuBei"
+msgid "Hubei"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:234 ui/evasyssettinguibase.cpp:1130
-msgid "HuNan"
+msgid "Hunan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:235 ui/evasyssettinguibase.cpp:1131
-msgid "GuangDong"
+msgid "Guangdong"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:236 ui/evasyssettinguibase.cpp:1132
-msgid "GuangXi"
+msgid "Guangxi"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:237 ui/evasyssettinguibase.cpp:1133
-msgid "HaiNan"
+msgid "Hainan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:238 ui/evasyssettinguibase.cpp:1134
-msgid "SiChuan"
+msgid "Sichuan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:239 ui/evasyssettinguibase.cpp:1135
-msgid "GuiZhou"
+msgid "Guizhou"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:240 ui/evasyssettinguibase.cpp:1136
-msgid "YunNan"
+msgid "Yunnan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:241 ui/evasyssettinguibase.cpp:1137
-msgid "XiZang"
+msgid "Xizang"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:242 ui/evasyssettinguibase.cpp:1138
-msgid "ShaanXi"
+msgid "Shaanxi"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:243 ui/evasyssettinguibase.cpp:1139
-msgid "GanSu"
+msgid "Gansu"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:244 ui/evasyssettinguibase.cpp:1140
-msgid "NingXia"
+msgid "Ningxia"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:245 ui/evasyssettinguibase.cpp:1141
-msgid "QingHai"
+msgid "Qinghai"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:246 ui/evasyssettinguibase.cpp:1142
-msgid "XinJiang"
+msgid "Xinjiang"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:247 ui/evasyssettinguibase.cpp:1143
@@ -2394,7 +2417,7 @@ msgid "Macao"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:249 ui/evasyssettinguibase.cpp:1145
-msgid "TaiWan"
+msgid "Taiwan"
 msgstr ""
 
 #: ui/evasearchwindow.cpp:375 ui/evasearchwindow.cpp:400
@@ -2621,15 +2644,15 @@ msgid "Age:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1041
-msgid "Zodiac:"
+msgid "Chinese Zodiac:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1042
-msgid "Horoscape:"
+msgid "Horoscope:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1043
-msgid "Blood:"
+msgid "Blood Type:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1087 ui/evauseruibase.cpp:282
@@ -2657,7 +2680,7 @@ msgid "Private Info"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1094
-msgid "following availible to"
+msgid "Following available to"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1095
@@ -2705,11 +2728,11 @@ msgid "Province:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1146 ui/evauseruibase.cpp:296
-msgid "Zip Code:"
+msgid "Postal Code:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1147
-msgid "Area:"
+msgid "Region:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1148
@@ -2781,51 +2804,51 @@ msgid "General"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1168
-msgid "display buddy online tip"
+msgid "Display buddy online tip"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1169
-msgid "display online users only"
+msgid "Display online users only"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1170
-msgid "sound enabled"
+msgid "Sound enabled"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1171
-msgid "show smiley icon in buddy list"
+msgid "Show smiley icon in buddy list"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1172
-msgid "show QQ News"
+msgid "Show QQ News"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1173
-msgid "display message tip"
+msgid "Display message tip"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1174
-msgid "display system ad. tip"
+msgid "Display system ad. tip"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1175
-msgid "change send key to \"Enter\""
+msgid "Change send key to \"Enter\""
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1176
-msgid "display buddy signature in seperate line"
+msgid "Display buddy signature in separate line"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1178
-msgid "message page size:"
+msgid "Message page size:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1179
-msgid "pieces"
+msgid "entries"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1180
-msgid "change status to away after:"
+msgid "Change status to away after:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1181
@@ -2833,7 +2856,7 @@ msgid "minutes"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1182
-msgid "face size:"
+msgid "Face size:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1183
@@ -2853,7 +2876,7 @@ msgid "Path"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1188
-msgid "theme path:"
+msgid "Theme path:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1189 ui/evasyssettinguibase.cpp:1191
@@ -2861,7 +2884,7 @@ msgid "Browse"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1190
-msgid "sound path:"
+msgid "Sound path:"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1192
@@ -2877,7 +2900,7 @@ msgid "Auto-Reply (within 50 words):"
 msgstr ""
 
 #: ui/evasyssettinguibase.cpp:1196
-msgid "reply automatically when leave"
+msgid "Reply automatically when away"
 msgstr ""
 
 #: ui/evasyssettingwindow.cpp:407
@@ -2934,7 +2957,8 @@ msgstr ""
 msgid "Enjoy Eva, Enjoy Open Source!"
 msgstr ""
 
-#: ui/evauseruibase.cpp:291
+#: ui/evauseruibase.cpp:291 ui/mainlistfontsettinguibase.cpp:330
+#: ui/mainlistfontsettinguibase.cpp:340
 msgid "Name:"
 msgstr ""
 
@@ -3040,16 +3064,12 @@ msgstr ""
 msgid "signature color:"
 msgstr ""
 
-#: ui/mainlistfontsettinguibase.cpp:330 ui/mainlistfontsettinguibase.cpp:340
-msgid "name:"
-msgstr ""
-
 #: ui/mainlistfontsettinguibase.cpp:331 ui/mainlistfontsettinguibase.cpp:341
 msgid "name color:"
 msgstr ""
 
 #: ui/mainlistfontsettinguibase.cpp:350
-msgid "online counting:"
+msgid "Online statistics:"
 msgstr ""
 
 #: ui/quncategoryui.cpp:94
@@ -3073,11 +3093,11 @@ msgid "Category"
 msgstr ""
 
 #: ui/quncreateui.cpp:220
-msgid "select a category"
+msgid "Select a category"
 msgstr ""
 
 #: ui/quncreateui.cpp:221 ui/qundetailsui.cpp:349
-msgid "Qun Notice ( member only)"
+msgid "Qun Notice (member only)"
 msgstr ""
 
 #: ui/quncreateui.cpp:224 ui/qundetailsui.cpp:352
@@ -3253,27 +3273,27 @@ msgid "Message setting updated successfully."
 msgstr ""
 
 #: api/evausersetting.cpp:871 api/evausersetting.cpp:1115
-msgid "sorry, I am working."
+msgid "Sorry, I am working."
 msgstr ""
 
 #: api/evausersetting.cpp:872 api/evausersetting.cpp:1116
-msgid "having dinner now./fa"
+msgid "Having dinner now./fa"
 msgstr ""
 
 #: api/evausersetting.cpp:873 api/evausersetting.cpp:1117
-msgid "I am not available now, sorry"
+msgid "I am not available now, sorry."
 msgstr ""
 
 #: api/evausersetting.cpp:882 api/evausersetting.cpp:1121
-msgid "oh."
+msgid "Oh."
 msgstr ""
 
 #: api/evausersetting.cpp:883 api/evausersetting.cpp:1122
-msgid "ok, ok, I got u."
+msgid "OK, OK, I got you."
 msgstr ""
 
 #: api/evausersetting.cpp:884 api/evausersetting.cpp:1123
-msgid "/jy ,really?"
+msgid "/jy , really?"
 msgstr ""
 
 #: api/regiongrabber.cpp:47
@@ -3281,5 +3301,5 @@ msgid "Press mouse left button<br>to grab screenshot."
 msgstr ""
 
 #: api/regiongrabber.cpp:47
-msgid "Size(W x H):"
+msgid "Size (W x H):"
 msgstr ""

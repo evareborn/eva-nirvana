@@ -24,6 +24,7 @@
 #include <qregexp.h>
 #include <qfile.h>
 #include <qpixmap.h>
+#include <cstring>
 //#include <stdio.h>
 
 unsigned int EvaHtmlParser::tmpNum = 0;

@@ -19,6 +19,8 @@
  ***************************************************************************/
  #include "evafriendlist.h"
  #include <stdio.h>
+#include <cstring>
+#include <cstdlib>
 
 QQFriend::sortItem QQFriend::field2Sort = Sort_Nick;
 

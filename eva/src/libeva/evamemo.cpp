@@ -19,6 +19,7 @@
  ***************************************************************************/ 
 #include "evamemo.h"
 #include "evautil.h"
+#include <cstring>
 
 EvaMemoPacket::EvaMemoPacket( const int id, const unsigned char type )
 	:OutPacket( QQ_CMD_MEMO_OP, true ), m_Id( id ), m_Type( type )

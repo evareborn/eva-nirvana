@@ -26,6 +26,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 GroupNameOpPacket::GroupNameOpPacket( )
 	: OutPacket(QQ_CMD_GROUP_NAME_OP, true),

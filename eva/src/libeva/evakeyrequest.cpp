@@ -20,6 +20,7 @@
 
 #include "evakeyrequest.h"
 #include <string.h>
+#include <cstring>
 
 EvaRequestKeyPacket::EvaRequestKeyPacket()
       : OutPacket(QQ_CMD_REQUEST_KEY, true)

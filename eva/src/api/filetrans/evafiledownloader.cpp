@@ -26,6 +26,7 @@
 #include <qdns.h>
 #include <qtextcodec.h>
 #include <qapplication.h>
+#include <cstring>
 
 #define RELAY_SERVER_URL             "RelayServer2.tencent.com"
 #define RELAY_SERVER_DEFAULT_IP      "219.133.40.38"

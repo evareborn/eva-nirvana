@@ -25,6 +25,8 @@
 #include "evautil.h"
 #include "evafriend.h"
 #include <string.h>
+#include <cstring>
+#include <cstdlib>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <klocale.h>

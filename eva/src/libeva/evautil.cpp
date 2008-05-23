@@ -25,6 +25,8 @@
 #include <arpa/inet.h>
 #endif
 #include "md5.h"
+#include <cstring>
+#include <cstdlib>
 
 // const char EvaUtil::smileyMap[QQ_SMILEY_AMOUNT] = {
 // 	0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,

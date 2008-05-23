@@ -20,7 +20,7 @@
  
 #include "evaqunsysmsgwindow.h"
 
-
+#include <cstring>
 #include <qpushbutton.h>
 #include <qframe.h>
 #include <qtoolbutton.h>

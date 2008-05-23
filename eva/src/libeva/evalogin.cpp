@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include "evacrypt.h"
 #include "evautil.h"
+#include <cstring>
 
 LoginPacket::LoginPacket()
 	: OutPacket(),

@@ -21,6 +21,7 @@
 #include "evafilemanager.h"
 #include "evafiledownloader.h"
 #include <qevent.h>
+#include <cstring>
 
 EvaFileManager::EvaFileManager(const int myId, QObject *parent)
 	: QObject(parent), m_MyId(myId), m_FileAgentToken(NULL), m_IsProxySet(false)

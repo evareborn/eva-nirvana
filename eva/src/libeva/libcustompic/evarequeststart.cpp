@@ -25,6 +25,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 EvaRequestStartPacket::EvaRequestStartPacket()
 	: EvaPicOutPacket(QQ_05_CMD_REQUEST_START, true), requestSend(true)

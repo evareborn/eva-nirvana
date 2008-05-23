@@ -27,6 +27,8 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 QunInfo::QunInfo()
 	: qunID(0), externalID(0), type(QQ_QUN_TYPE_PERMANENT),

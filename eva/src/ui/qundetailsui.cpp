@@ -346,7 +346,7 @@ void QunDetailsUI::languageChange()
     lblQunFace->setText( i18n( "Qun Face" ) );
     lblCategory->setText( i18n( "Category" ) );
     tbCategory->setText( QString::null );
-    gbNotice->setTitle( i18n( "Qun Notice ( member only)" ) );
+    gbNotice->setTitle( i18n( "Qun Notice (member only)" ) );
     gbDescription->setTitle( i18n( "Qun Description" ) );
     bgAuthen->setTitle( i18n( "Authentication" ) );
     rbNoAuthenNeed->setText( i18n( "No authentication needed." ) );
