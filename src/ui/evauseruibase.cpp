@@ -293,7 +293,7 @@ void EvaUserUIBase::languageChange()
     lblMemoAddress->setText( i18n( "Address:" ) );
     lblMemoEmail->setText( i18n( "Email:" ) );
     lblMemoTelephone->setText( i18n( "Telephone:" ) );
-    lblMemoZipCode->setText( i18n( "Zip Code:" ) );
+    lblMemoZipCode->setText( i18n( "Postal Code:" ) );
     lblMemoNote->setText( i18n( "Note:" ) );
     chbAutoUploadMemo->setText( i18n( "Auto Upload Memo" ) );
     pbDownloadMemo->setText( i18n( "Download Memo" ) );

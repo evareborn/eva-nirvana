@@ -133,7 +133,7 @@ void CreateSmileyUI::languageChange()
     lblTop->setText( i18n("<b>Please follow the steps below to create your smiley.</b><br>\n"
 "<b>You could select one or more files at a time.</b>" ) );
     lblStep1->setText( i18n("1. Select files from your computer.<br>\n"
-"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">( 150 pixels x 150 pixels or smaller size for better quality. )</font>" ) );
+"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">(150 pixels x 150 pixels or smaller size for better quality. )</font>" ) );
     lblSelect->setText( QString::null );
     btnSelect->setText( i18n("Select Images ..." ) );
     lblStep2->setText( i18n("2. Input the shortcut key for the smiley. Max length is 6 chars.<br>\n"

@@ -217,8 +217,8 @@ void QunCreateUI::languageChange()
     lblTip->setText( i18n( "Please input Qun details below, then click \"Next\"" ) );
     lblName->setText( i18n( "Name" ) );
     lblCategory->setText( i18n( "Category" ) );
-    tbCategory->setText( i18n( "select a category" ) );
-    gbNotice->setTitle( i18n( "Qun Notice ( member only)" ) );
+    tbCategory->setText( i18n( "Select a category" ) );
+    gbNotice->setTitle( i18n( "Qun Notice (member only)" ) );
     gbDescription->setTitle( i18n( "Qun Description" ) );
     bgAuthen->setTitle( i18n( "Authentication" ) );
     rbNoAuthenNeed->setText( i18n( "No authentication needed." ) );

@@ -1,18 +1,21 @@
-# translation of new.po to
-# translation of eva.po to
-# This file is distributed under the same license as the PACKAGE package.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+# Translation of eva.po to Chinese (simplified)
 #
-# 云帆 <yunfan_zg@163.com>, 2006.
-# bamfox <bamfox@126.com>, 2006.
+# This file is distributed under the same license as the eva package.
+# Copyright (C) 2004-2008  yunfan
+#
+# Translators:
+#  云帆 <yunfan_zg@163.com>, 2006.
+#  bamfox <bamfox@126.com>, 2006.
+#  Liu Sizhuang(刘思壮) <chinatslsz@hotmail.com>, 2008.
+#  Anthony Fok 霍东灵 <anthony.fok@thizgroup.com> <foka@debian.org>, 2008.
 msgid ""
 msgstr ""
-"Project-Id-Version: new\n"
+"Project-Id-Version: eva-0.4.921+svn42\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-18 20:02+0800\n"
-"PO-Revision-Date: 2008-02-26 19:07+0800\n"
-"Last-Translator: Liu Sizhuang(刘思壮) <chinatslsz@hotmail.com>\n"
-"Language-Team:  <zh@li.org>\n"
+"POT-Creation-Date: 2008-05-06 03:12+0800\n"
+"PO-Revision-Date: 2008-05-06 02:30+0800\n"
+"Last-Translator: Anthony Fok <anthony.fok@thizgroup.com>\n"
+"Language-Team: Chinese (simplified) <i18n-translation@lists.linux.net.cn>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,13 +25,15 @@ msgstr ""
 msgid ""
 "_: NAME OF TRANSLATORS\n"
 "Your names"
-msgstr "云帆"
+msgstr "云帆,bamfox,Liu Sizhuang(刘思壮),Anthony Fok 霍东灵"
 
 #: _translatorinfo.cpp:3
 msgid ""
 "_: EMAIL OF TRANSLATORS\n"
 "Your emails"
-msgstr "yunfan_zg@163.com"
+msgstr ""
+"yunfan_zg@163.com,bamfox@126.com,chinatslsz@hotmail.com,anthony."
+"fok@thizgroup.com"
 
 #: evaaddingmanager.cpp:141 evaaddingmanager.cpp:602
 msgid ""
@@ -49,17 +54,16 @@ msgid "Eva Search/Add Friend"
 msgstr "Eva 查找/添加好友"
 
 #: evaaddingmanager.cpp:186
-msgid "You are adding %1, cannot processing %2 request."
-msgstr "你正在添加%1，不能处理%2的请求。"
+msgid "You are adding %1, cannot process %2 request."
+msgstr "您正在添加 %1，不能处理 %2 的请求。"
 
 #: evaaddingmanager.cpp:251
-msgid "Incorrect verify code, try again please!"
+msgid "Incorrect verification code, try again please!"
 msgstr "验证码错误，再试一次！"
 
 #: evaaddingmanager.cpp:284
-#, fuzzy
-msgid "Unkown auth reply type(%1), adding failed."
-msgstr "未知auth回复类型(%1)，添加失败。"
+msgid "Unknown auth reply type (%1), adding failed."
+msgstr "未知 auth 回复类型 (%1)，添加失败。"
 
 #: evaaddingmanager.cpp:318
 msgid "Incorrect answer, try again please!"
@@ -79,7 +83,7 @@ msgstr "发送消息"
 
 #: evachatwindowmanager.cpp:198
 msgid "Send message to \"%1\" failed."
-msgstr "发送消息给“%1” 失败。"
+msgstr "发送消息给 “%1” 失败。"
 
 #: evachatwindowmanager.cpp:312
 msgid "Send Message Failed"
@@ -111,15 +115,15 @@ msgstr "用户名必须是数字格式。\n"
 
 #: evamain.cpp:192
 msgid "password missing, type \"eva --help\" to see details.\n"
-msgstr "缺少密码， 输入 “eva --help” 来查看详情。\n"
+msgstr "缺少密码，输入 “eva --help” 来查看详情。\n"
 
 #: evamain.cpp:220
 msgid "mode can only be one of UDP, TCP or HTTP_PROXY.\n"
-msgstr "模式只能为 UDP， TCP 或者 HTTP_PROXY 之一。\n"
+msgstr "模式只能为 UDP，TCP 或者 HTTP_PROXY 之一。\n"
 
 #: evamain.cpp:229
 msgid "http proxy server IP address missing.\n"
-msgstr "缺少 http 代理服务器IP地址。\n"
+msgstr "缺少 http 代理服务器 IP 地址。\n"
 
 #: evamain.cpp:235
 msgid "http proxy server port number missing.\n"
@@ -167,7 +171,7 @@ msgstr "上传好友分组"
 msgid "Download Group"
 msgstr "下载好友分组"
 
-#: evamain.cpp:393 ui/evacontactlistview.cpp:456
+#: evamain.cpp:393 ui/evacontactlistview.cpp:423
 msgid "Group"
 msgstr "好友分组"
 
@@ -191,110 +195,110 @@ msgstr "更改用户"
 msgid "No Auto-Reply"
 msgstr "无自动回复"
 
-#: evamain.cpp:570 ui/evamainwindow.cpp:492
+#: evamain.cpp:569 ui/evamainwindow.cpp:493
 msgid "Qun List"
 msgstr "群列表"
 
-#: evamain.cpp:571
+#: evamain.cpp:570
 msgid "Anonymous"
 msgstr "陌生人"
 
-#: evamain.cpp:572
+#: evamain.cpp:571
 msgid "Black List"
 msgstr "黑名单"
 
-#: evamain.cpp:590 ui/evamainwindow.cpp:451
+#: evamain.cpp:589 ui/evamainwindow.cpp:452
 msgid "Buddy List"
 msgstr "好友列表"
 
-#: evamain.cpp:1012
+#: evamain.cpp:1015
 msgid "Network error occurred, check your network then try Eva later please."
-msgstr "网络连接发生错误， 请检查你的网络连接或者稍后尝试重新登录Eva。"
+msgstr "网络连接发生错误，请检查您的网络连接或者稍后尝试重新登录 Eva。"
 
-#: evamain.cpp:1013 ui/loginuibase.cpp:196
+#: evamain.cpp:1016 ui/loginuibase.cpp:196
 msgid "Network"
 msgstr "网络设置"
 
-#: evamain.cpp:1038
+#: evamain.cpp:1041
 msgid "Cannot login, try later please."
-msgstr "无法登录， 请稍后再试。"
+msgstr "无法登录，请稍后再试。"
 
-#: evamain.cpp:1038 evamain.cpp:1075 evamain.cpp:2536
-#: ui/evaloginwindow.cpp:140 ui/evaloginwindow.cpp:148
+#: evamain.cpp:1041 evamain.cpp:1078 evamain.cpp:2537
+#: ui/evaloginwindow.cpp:141 ui/evaloginwindow.cpp:149
 msgid "Eva Login"
 msgstr "登录"
 
-#: evamain.cpp:1052
+#: evamain.cpp:1055
 msgid "Lost connection with server, try later please."
 msgstr "已经与服务器失去连接，请稍后再试。"
 
-#: evamain.cpp:1052
+#: evamain.cpp:1055
 msgid "Eva Connection"
 msgstr "Eva 网络连接"
 
-#: evamain.cpp:1101
+#: evamain.cpp:1104
 msgid "I am online."
 msgstr "上线了。"
 
-#: evamain.cpp:1115
+#: evamain.cpp:1118
 msgid "I am busy ..."
 msgstr "忙碌中……"
 
-#: evamain.cpp:1244
+#: evamain.cpp:1247
 msgid "Uploading grouped friends successfully."
 msgstr "上传好友分组成功。"
 
-#: evamain.cpp:1244 evamain.cpp:1246
+#: evamain.cpp:1247 evamain.cpp:1249
 msgid "Eva Upload Groups"
 msgstr "Eva 上传分组"
 
-#: evamain.cpp:1246
+#: evamain.cpp:1249
 msgid "Uploading grouped friends failed."
 msgstr "上传好友分组失败。"
 
-#: evamain.cpp:1605
+#: evamain.cpp:1608
 msgid "Delete buddy \"%1\" failed."
 msgstr "删除好友“%1”失败。"
 
-#: evamain.cpp:1605
+#: evamain.cpp:1608
 msgid "Eva Delete Buddy"
 msgstr "Eva 删除好友"
 
-#: evamain.cpp:1668
+#: evamain.cpp:1671
 msgid "put \"%1\" into Blacklist, are you sure?"
 msgstr "将“%1”放入黑名单吗？"
 
-#: evamain.cpp:1669 evamain.cpp:1684
+#: evamain.cpp:1672 evamain.cpp:1687
 msgid "Eva Blacklist"
 msgstr "Eva 黑名单"
 
-#: evamain.cpp:1683
+#: evamain.cpp:1686
 msgid "Blacklist operation on \"%1\" failed."
-msgstr "无法将“%1”放入黑名单， 请稍后再试。"
+msgstr "无法将“%1”放入黑名单，请稍后再试。"
 
-#: evamain.cpp:1691
+#: evamain.cpp:1694
 msgid "add \"%1\" into your Buddy list?"
 msgstr "将“%1”加入好友列表吗？"
 
-#: evamain.cpp:1691
+#: evamain.cpp:1694
 msgid "Eva Add Buddy"
 msgstr "Eva 添加好友"
 
-#: evamain.cpp:1839 ui/evanotifywindow.cpp:272 ui/evanotifywindow.cpp:290
+#: evamain.cpp:1842 ui/evanotifywindow.cpp:272 ui/evanotifywindow.cpp:290
 #: ui/evanotifywindow.cpp:308 ui/evanotifywindow.cpp:325
 #: ui/evanotifywindow.cpp:346 ui/evanotifywindow.cpp:364
 #: ui/evaqunchatuibase.cpp:288 ui/evaqunchatwindow.cpp:322
-#: ui/evaqunchatwindow.cpp:466 ui/evasyshistoryviewer.cpp:96
+#: ui/evaqunchatwindow.cpp:461 ui/evasyshistoryviewer.cpp:96
 #: ui/qundetailsui.cpp:341 ui/qundetailswindow.cpp:106
 #: ui/qundetailswindow.cpp:282
 msgid "Qun"
 msgstr "群"
 
-#: evamain.cpp:1960
+#: evamain.cpp:1963
 msgid "You have exited the Qun \"%1\" successfully."
-msgstr "你已成功退出群“%1”。"
+msgstr "您已成功退出群“%1”。"
 
-#: evamain.cpp:1962
+#: evamain.cpp:1965
 msgid ""
 "Exit Qun \"%1\" failed\n"
 "%2"
@@ -302,33 +306,33 @@ msgstr ""
 "退出群“%1”失败\n"
 "%2"
 
-#: evamain.cpp:1964 evamain.cpp:1982 evamain.cpp:1988
+#: evamain.cpp:1967 evamain.cpp:1985 evamain.cpp:1991
 #: ui/evaquncreatewindow.cpp:74 ui/evaquncreatewindow.cpp:81
 #: ui/evaquncreatewindow.cpp:296 ui/evaquncreatewindow.cpp:302
 msgid "Qun Operation"
 msgstr "群操作"
 
-#: evamain.cpp:1978
+#: evamain.cpp:1981
 msgid ""
 "You are the creator of Qun \"%1\", if you exit this Qun this Qun will be "
 "deleted, are you sure?"
-msgstr "你是群“%1”的创建者， 如果你退出，这个群将会被删除，你确定吗？"
+msgstr "您是群“%1”的创建者，如果您退出，这个群将会被删除，您确定吗？"
 
-#: evamain.cpp:1980
+#: evamain.cpp:1983
 msgid "Are you sure you want to exit Qun \"%1\"?"
 msgstr "确定要退出群“%1”吗？"
 
-#: evamain.cpp:2010
+#: evamain.cpp:2013
 msgid "signature"
 msgstr "个性签名"
 
-#: evamain.cpp:2038
+#: evamain.cpp:2041
 msgid "Eva Global Key"
 msgstr "Eva 全局热键"
 
-#: evamain.cpp:2039
+#: evamain.cpp:2042
 msgid "This action allows you to read your new Eva message globally."
-msgstr "这个动作允许你全局读取Eva消息。"
+msgstr "这个动作允许您全局读取Eva消息。"
 
 #: evascriptmanager.cpp:336
 msgid ""
@@ -361,7 +365,7 @@ msgstr ""
 
 #: evascriptmanager.cpp:409
 msgid "Are you sure you want to uninstall the script '%1'?"
-msgstr "你确定要卸载脚本 “%1” 吗？"
+msgstr "您确定要卸载脚本 “%1” 吗？"
 
 #: evascriptmanager.cpp:409
 msgid "Uninstall Script"
@@ -394,14 +398,13 @@ msgstr "关于 %1"
 
 #: evascriptmanager.cpp:566
 msgid "%1 Eva Script"
-msgstr "%1 Eva脚本"
+msgstr "%1 Eva 脚本"
 
 #: evascriptmanager.cpp:570
 msgid "License"
 msgstr "协议"
 
 #: evascriptmanager.cpp:598
-#, fuzzy
 msgid "Debugging"
 msgstr "调试"
 
@@ -418,7 +421,6 @@ msgid "The script '%1' exited with error code: %2"
 msgstr "脚本 “%1” 以错误代码 %2 退出"
 
 #: evasysmsgmanager.cpp:145
-#, fuzzy
 msgid "Verifying system message for buddy %1 failed."
 msgstr "好友 %1 的验证消息失败。"
 
@@ -426,164 +428,166 @@ msgstr "好友 %1 的验证消息失败。"
 msgid "IM Client"
 msgstr "聊天客户端"
 
-#: main.cpp:29
+#: main.cpp:33
 msgid "An IM Client Under KDE Using QQ IM Protocol."
 msgstr "KDE 下兼容 QQ 即时通讯协议的客户端。"
 
-#: main.cpp:35
+#: main.cpp:39
 msgid "Using the last saved settings to login."
 msgstr "使用上次保存的设置登录。"
 
-#: main.cpp:37
+#: main.cpp:41
 msgid "QQ number to login."
 msgstr "登录的 QQ 号码。"
 
-#: main.cpp:39
+#: main.cpp:43
 msgid "Password for your QQ number."
 msgstr "您 QQ 号的密码。"
 
-#: main.cpp:41
-msgid "Connection mode ( one of UDP, TCP or HTTP_PROXY), defaulting to UDP"
-msgstr "连接模式 （UDP， TCP 或者 HTTP_PROXY 之一），默认为 UDP"
+#: main.cpp:45
+msgid "Connection mode (one of UDP, TCP or HTTP_PROXY), defaulting to UDP"
+msgstr "连接模式 (UDP、TCP 或者 HTTP_PROXY 之一)，默认为 UDP"
 
-#: main.cpp:42
+#: main.cpp:46
 msgid "Proxy server IP address."
-msgstr "代理服务器IP地址。"
+msgstr "代理服务器 IP 地址。"
 
-#: main.cpp:43
+#: main.cpp:47
 msgid "Proxy server port number"
 msgstr "代理服务器端口号"
 
-#: main.cpp:44
+#: main.cpp:48
 msgid "Proxy user name if required."
 msgstr "代理器上的用户名（如果需要的话）。"
 
-#: main.cpp:45
+#: main.cpp:49
 msgid "Proxy password if required."
 msgstr "代理器上的密码（如果需要的话）。"
 
-#: main.cpp:46
+#: main.cpp:50
 msgid "Select login mode to invisible."
 msgstr "选择登录模式为隐身。"
 
-#: main.cpp:47
+#: main.cpp:51
 msgid "Save password and proxy settings."
 msgstr "保存密码和代理设置。"
 
-#: main.cpp:53 ui/evamainuibase.cpp:90
+#: main.cpp:58 ui/evamainuibase.cpp:90
 msgid "Eva"
 msgstr "Eva"
 
-#: main.cpp:54
-msgid "(c) 2004-2007, yunfan"
-msgstr "(c) 2004-2007， 云帆"
+#: main.cpp:62
+msgid "(c) 2004-2008, yunfan"
+msgstr "(c) 2004-2008，云帆"
 
-#: main.cpp:55
+#: main.cpp:66
 msgid "yunfan"
 msgstr "云帆"
 
-#: main.cpp:55
+#: main.cpp:66
 msgid "original developer, maintainer"
 msgstr "最初作者，维护者"
 
-#: main.cpp:57
+#: main.cpp:68
 msgid "casper"
 msgstr "casper"
 
-#: main.cpp:57
+#: main.cpp:68
 msgid "developer, memo, system setting ui and IP address converting"
-msgstr "作者， 备注、系统设置以及IP地址转换"
+msgstr "作者，备注、系统设置以及 IP 地址转换"
 
-#: main.cpp:60
+#: main.cpp:71
 msgid "byakko"
-msgstr ""
+msgstr "byakko"
 
-#: main.cpp:60
+#: main.cpp:71
 msgid "UI patch provider"
 msgstr "提供 UI 补丁"
 
-#: main.cpp:61
+#: main.cpp:72
 msgid "caihua"
 msgstr "caihua"
 
-#: main.cpp:61
+#: main.cpp:72
 msgid "icon designer"
 msgstr "图标设计"
 
-#: main.cpp:62
-msgid "fundawang"
-msgstr ""
+#: main.cpp:73
+msgid "Funda Wang"
+msgstr "Funda Wang"
 
-#: main.cpp:62
+#: main.cpp:73
 msgid "patch for xdg-user-dir supported"
 msgstr "xdg-user-dir 支持的补丁"
 
-#: main.cpp:63
+#: main.cpp:74
 msgid "Levin Du"
 msgstr "Levin Du"
 
-#: main.cpp:64
+#: main.cpp:75
 msgid ""
 "patch for system setting \n"
 "fixed combo box index massing up after \n"
 "clicking \"Default\" several times."
-msgstr "系统选项补丁－解决多次点击“默认”按钮导致combo box索引混乱问题。"
+msgstr "系统选项补丁－解决多次点击“默认”按钮导致 combo box 索引混乱问题。"
 
-#: main.cpp:66
+#: main.cpp:77
 msgid "Minmin"
 msgstr "民民"
 
-#: main.cpp:66
+#: main.cpp:77
 msgid "encapsulating encryption class in C++"
-msgstr "加密的C++类封装。"
+msgstr "加密的 C++ 类封装。"
 
-#: main.cpp:67
+#: main.cpp:78
 msgid "nwillis"
 msgstr "nwillis"
 
-#: main.cpp:67
+#: main.cpp:78
 msgid "idle detecting(auto-away) feature"
 msgstr "空闲检测（自动离开）功能"
 
-#: main.cpp:68
+#: main.cpp:79
 msgid "Phytonix"
 msgstr "Phytonix"
 
-#: main.cpp:68
+#: main.cpp:79
 msgid "some original faces & Eva Logo designer."
 msgstr "部分头像和 Eva Logo 设计者。"
 
-#: main.cpp:69
+#: main.cpp:80
 msgid "Shixin Zeng"
 msgstr "Shixin Zeng"
 
-#: main.cpp:69
-msgid "libeva patch for Windows supporting."
+#: main.cpp:80
+msgid "libeva patch for Windows support."
 msgstr "libeva 的 Windows 支持补丁。"
 
-#: main.cpp:70
-msgid "starkwong"
-msgstr "starkwong"
+#: main.cpp:81
+msgid "Stark Wong"
+msgstr "Stark Wong"
 
-#: main.cpp:70
+#: main.cpp:81
 msgid ""
-"libeva patch for Visual Studio .Net 2002/2003 compiling supporting. 2007II "
-"new smiley code"
-msgstr "libeva 在 Visual Studio .Net 2002/2003 下正常编译的补丁。2007II 新表情"
+"libeva patch for Visual Studio .NET 2002/2003 compiling support.\n"
+"2007II new smiley code"
+msgstr ""
+"libeva 在 Visual Studio .NET 2002/2003 下正常编译的补丁。\n"
+"2007II 新表情"
 
-#: main.cpp:71
+#: main.cpp:82
 msgid "zsyddl"
 msgstr "zsyddl"
 
-#: main.cpp:71
+#: main.cpp:82
 msgid "earlier user details window designer"
 msgstr "原用户资料窗口设计者"
 
-#: main.cpp:72
+#: main.cpp:83
 msgid "swear"
-msgstr ""
+msgstr "swear"
 
-#: main.cpp:72
+#: main.cpp:83
 msgid "forum maintainer"
 msgstr "论坛维护者"
 
@@ -591,7 +595,7 @@ msgstr "论坛维护者"
 #: rc.cpp:3
 #, no-c-format
 msgid "C&ustom"
-msgstr "自定义(&u)"
+msgstr "自定义(&U)"
 
 #: ui/createsmileyui.cpp:132
 msgid "Add custom smiley"
@@ -608,11 +612,11 @@ msgstr ""
 #: ui/createsmileyui.cpp:135
 msgid ""
 "1. Select files from your computer.<br>\n"
-"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">( 150 pixels x 150 pixels or "
+"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">(150 pixels x 150 pixels or "
 "smaller size for better quality. )</font>"
 msgstr ""
 "1. 从计算机中选择文件。<br>\n"
-"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">( 150 象素 X 150 象素或者更小"
+"&nbsp;&nbsp;&nbsp;&nbsp;<font color=\"#0066cc\">(150 像素 x 150 像素或者更小"
 "的尺寸效果更好。)</font>"
 
 #: ui/createsmileyui.cpp:138
@@ -634,7 +638,7 @@ msgstr "选择分组"
 
 #: ui/createsmileyui.cpp:142
 msgid "3. Give your smiley a name."
-msgstr "3. 为你的表情命名。"
+msgstr "3. 为您的表情命名。"
 
 #: ui/createsmileyui.cpp:143
 msgid ""
@@ -644,8 +648,8 @@ msgstr ""
 "<font color=\"#0099cc\">注：当创建多个表情时，文件名将作为表情名和快捷键。</"
 "font>"
 
-#: ui/createsmileywindow.cpp:97 ui/evachatwindow.cpp:896
-#: ui/evaqunchatwindow.cpp:661
+#: ui/createsmileywindow.cpp:97 ui/evachatwindow.cpp:910
+#: ui/evaqunchatwindow.cpp:672
 msgid " all images (*.png *.bmp *.jpg *.jpeg *.gif)"
 msgstr "所有图片 (*.png *.bmp *.jpg *.jpeg *.gif)"
 
@@ -706,7 +710,7 @@ msgstr "增加分组"
 
 #: ui/createsmileywindow.cpp:474
 msgid "A directory named \"%1\" already exists. "
-msgstr "名为 \"%1\" 的目录已经存在。 "
+msgstr "名为 “%1” 的目录已经存在。 "
 
 #: ui/createsmileywindow.cpp:474
 msgid "Directory Exists!"
@@ -714,7 +718,7 @@ msgstr "目录存在！"
 
 #: ui/createsmileywindow.cpp:576
 msgid "Remove directory \"%1\" failed. "
-msgstr "删除目录\"%1\"失败。 "
+msgstr "删除目录 “%1” 失败。 "
 
 #: ui/createsmileywindow.cpp:577
 msgid "Remove Directory!"
@@ -722,7 +726,7 @@ msgstr "删除目录！"
 
 #: ui/createsmileywindow.cpp:592
 msgid "Cannot rename the group name \"%1\" to \"%2\". "
-msgstr "不能重命名分组 \"%1\" 为 \"%2\"。"
+msgstr "不能重命名分组 “%1” 为 “%2”。"
 
 #: ui/createsmileywindow.cpp:594 ui/createsmileywindow.cpp:601
 #: ui/createsmileywindow.cpp:610
@@ -755,15 +759,15 @@ msgstr "增加分组(&G)"
 
 #: ui/customfacemanagerui.cpp:515
 msgid "Ed&it Group"
-msgstr "编辑分组(&i)"
+msgstr "编辑分组(&I)"
 
 #: ui/customfacemanagerui.cpp:518
 msgid "Re&move Group"
-msgstr "删除分组(&m)"
+msgstr "删除分组(&M)"
 
 #: ui/customfacemanagerui.cpp:522
 msgid "&Add"
-msgstr "添加(&d)"
+msgstr "添加(&A)"
 
 #: ui/customfacemanagerui.cpp:528
 msgid "&Up"
@@ -783,7 +787,7 @@ msgstr "系统"
 
 #: ui/customfaceuibase.cpp:89
 msgid "CustomFaceUIBase"
-msgstr ""
+msgstr "CustomFaceUIBase"
 
 #: ui/customfaceuibase.cpp:90
 msgid "Add smiley"
@@ -862,23 +866,23 @@ msgstr "验证设置"
 
 #: ui/evaaddingnoticewindow.cpp:144
 msgid "%1 has approved your request"
-msgstr "%1 已经通过了你的请求"
+msgstr "%1 已经通过了您的请求"
 
 #: ui/evaaddingnoticewindow.cpp:148
 msgid "%1 has rejected your request"
-msgstr "%1 已经拒绝了你的请求"
+msgstr "%1 已经拒绝了您的请求"
 
 #: ui/evaaddingnoticewindow.cpp:152
 msgid "%1 wants to add you onto her/his contact list"
-msgstr "%1 想添加你作为她/他的好友"
+msgstr "%1 想添加您作为她/他的好友"
 
 #: ui/evaaddingnoticewindow.cpp:163
 msgid "%1 has approved your request and added you onto her/his contact list"
-msgstr "%1 通过了你的请求并且加了你作为她/他的好友"
+msgstr "%1 通过了您的请求并且加了您作为她/他的好友"
 
 #: ui/evaaddingnoticewindow.cpp:168
 msgid "%1 has added you onto her/his contact list"
-msgstr "%1 已经加了你作为她/他的好友"
+msgstr "%1 已经加了您作为她/他的好友"
 
 #: ui/evaaddingnoticewindow.cpp:170
 msgid "&Add to my list"
@@ -889,9 +893,8 @@ msgid "Additional message(%1):"
 msgstr "附加信息(%1):"
 
 #: ui/evaaddingnoticewindow.cpp:249
-#, fuzzy
 msgid "Select one of the three actions to perform please."
-msgstr "选择一个行为："
+msgstr "请选择三个行为中的其中一个进行。"
 
 #: ui/evaaddingnoticewindow.cpp:270
 msgid "accept and add"
@@ -911,7 +914,7 @@ msgstr "未知"
 
 #: ui/evaaddingnoticewindow.cpp:282
 msgid "Operation %1 failed."
-msgstr "操作 %1 失败"
+msgstr "操作 %1 失败。"
 
 #: ui/evaaddingwindow.cpp:61
 msgid "Select a group for %1"
@@ -919,11 +922,11 @@ msgstr "给 %1 选择一个分组"
 
 #: ui/evaaddingwindow.cpp:63 ui/evaaddqunwindow.cpp:84
 msgid "Retrieving information from server..."
-msgstr "从服务器接受信息……"
+msgstr "从服务器接收信息……"
 
 #: ui/evaaddingwindow.cpp:65
 msgid "You are about to add "
-msgstr "你正在增加好友 "
+msgstr "您正在增加好友 "
 
 #: ui/evaaddingwindow.cpp:102
 msgid " refuses to be added."
@@ -935,7 +938,7 @@ msgstr "请输入正确的验证码"
 
 #: ui/evaaddingwindow.cpp:160
 msgid "Enter the answer please."
-msgstr "请输入答案"
+msgstr "请输入答案。"
 
 #: ui/evaaddqunuibase.cpp:193
 msgid "Qun ID:"
@@ -954,7 +957,6 @@ msgid "Creator Details"
 msgstr "创建者信息"
 
 #: ui/evaaddqunuibase.cpp:201
-#, fuzzy
 msgid "Auth Code:"
 msgstr "验证信息："
 
@@ -967,7 +969,6 @@ msgid "Refresh"
 msgstr "刷新"
 
 #: ui/evaaddqunuibase.cpp:205
-#, fuzzy
 msgid "Authentication needed, please leave a message"
 msgstr "需要验证，请留言"
 
@@ -986,28 +987,27 @@ msgstr "需要验证，请在下面留言。"
 
 #: ui/evaaddqunwindow.cpp:157
 msgid "You have joined Qun %1(%2)"
-msgstr "你已经加入了群 %1(%2)"
+msgstr "您已经加入了群 %1(%2)"
 
-#: ui/evaadduibase.cpp:175
-msgid "Verify Code:"
+#: ui/evaadduibase.cpp:175 ui/evaloginveriuibase.cpp:127
+msgid "Verification Code:"
 msgstr "验证码："
 
 #: ui/evaadduibase.cpp:176
-#, fuzzy
 msgid "Personal Question:"
 msgstr "个人问题："
 
 #: ui/evaadduibase.cpp:177
 msgid "Your Answer:"
-msgstr "你的答案："
+msgstr "您的答案："
 
 #: ui/evaadduibase.cpp:181
 msgid "allow reverse adding"
-msgstr "允许对方把你添加为好友"
+msgstr "允许对方把您添加为好友"
 
-#: ui/evachatuibase.cpp:303 ui/evacontactlistview.cpp:847
-#: ui/evacontactlistview.cpp:1146 ui/evacontactlistview.cpp:1633
-#: ui/evacontactlistview.cpp:1649
+#: ui/evachatuibase.cpp:303 ui/evacontactlistview.cpp:826
+#: ui/evacontactlistview.cpp:1134 ui/evacontactlistview.cpp:1621
+#: ui/evacontactlistview.cpp:1637
 msgid "Chat"
 msgstr "收发讯息"
 
@@ -1019,11 +1019,11 @@ msgstr "点击查看用户资料"
 msgid "IP:"
 msgstr "IP:"
 
-#: ui/evachatuibase.cpp:309 ui/evaqunchatuibase.cpp:291
+#: ui/evachatuibase.cpp:309
 msgid "add a smiley icon"
 msgstr "添加表情"
 
-#: ui/evachatuibase.cpp:312 ui/evaqunchatuibase.cpp:293
+#: ui/evachatuibase.cpp:312
 msgid "choose font size and color"
 msgstr "选择字体大小和颜色"
 
@@ -1036,11 +1036,11 @@ msgstr "发送文件给好友"
 msgid "B"
 msgstr "B"
 
-#: ui/evachatuibase.cpp:319 ui/evaqunchatuibase.cpp:296
-#: ui/mainlistfontsettinguibase.cpp:317 ui/mainlistfontsettinguibase.cpp:322
-#: ui/mainlistfontsettinguibase.cpp:327 ui/mainlistfontsettinguibase.cpp:332
-#: ui/mainlistfontsettinguibase.cpp:337 ui/mainlistfontsettinguibase.cpp:342
-#: ui/mainlistfontsettinguibase.cpp:347 ui/mainlistfontsettinguibase.cpp:352
+#: ui/evachatuibase.cpp:319 ui/mainlistfontsettinguibase.cpp:317
+#: ui/mainlistfontsettinguibase.cpp:322 ui/mainlistfontsettinguibase.cpp:327
+#: ui/mainlistfontsettinguibase.cpp:332 ui/mainlistfontsettinguibase.cpp:337
+#: ui/mainlistfontsettinguibase.cpp:342 ui/mainlistfontsettinguibase.cpp:347
+#: ui/mainlistfontsettinguibase.cpp:352
 msgid "bold"
 msgstr "粗体"
 
@@ -1048,11 +1048,11 @@ msgstr "粗体"
 msgid "U"
 msgstr "U"
 
-#: ui/evachatuibase.cpp:323 ui/evaqunchatuibase.cpp:299
-#: ui/mainlistfontsettinguibase.cpp:318 ui/mainlistfontsettinguibase.cpp:323
-#: ui/mainlistfontsettinguibase.cpp:328 ui/mainlistfontsettinguibase.cpp:333
-#: ui/mainlistfontsettinguibase.cpp:338 ui/mainlistfontsettinguibase.cpp:343
-#: ui/mainlistfontsettinguibase.cpp:348 ui/mainlistfontsettinguibase.cpp:353
+#: ui/evachatuibase.cpp:323 ui/mainlistfontsettinguibase.cpp:318
+#: ui/mainlistfontsettinguibase.cpp:323 ui/mainlistfontsettinguibase.cpp:328
+#: ui/mainlistfontsettinguibase.cpp:333 ui/mainlistfontsettinguibase.cpp:338
+#: ui/mainlistfontsettinguibase.cpp:343 ui/mainlistfontsettinguibase.cpp:348
+#: ui/mainlistfontsettinguibase.cpp:353
 msgid "underline"
 msgstr "下划线"
 
@@ -1060,32 +1060,32 @@ msgstr "下划线"
 msgid "I"
 msgstr "I"
 
-#: ui/evachatuibase.cpp:326 ui/evaqunchatuibase.cpp:302
-#: ui/mainlistfontsettinguibase.cpp:319 ui/mainlistfontsettinguibase.cpp:324
-#: ui/mainlistfontsettinguibase.cpp:329 ui/mainlistfontsettinguibase.cpp:334
-#: ui/mainlistfontsettinguibase.cpp:339 ui/mainlistfontsettinguibase.cpp:344
-#: ui/mainlistfontsettinguibase.cpp:349 ui/mainlistfontsettinguibase.cpp:354
+#: ui/evachatuibase.cpp:326 ui/mainlistfontsettinguibase.cpp:319
+#: ui/mainlistfontsettinguibase.cpp:324 ui/mainlistfontsettinguibase.cpp:329
+#: ui/mainlistfontsettinguibase.cpp:334 ui/mainlistfontsettinguibase.cpp:339
+#: ui/mainlistfontsettinguibase.cpp:344 ui/mainlistfontsettinguibase.cpp:349
+#: ui/mainlistfontsettinguibase.cpp:354
 msgid "italic"
 msgstr "斜体"
 
 #: ui/evachatuibase.cpp:330
-msgid "send image files"
+msgid "Send image files"
 msgstr "发送图片"
 
 #: ui/evachatuibase.cpp:333
-msgid "add a screen shot"
+msgid "Add a screenshot"
 msgstr "添加屏幕截图"
 
-#: ui/evachatuibase.cpp:335 ui/evaqunchatuibase.cpp:311
-msgid "select an quick-reply message"
+#: ui/evachatuibase.cpp:335
+msgid "Select an quick-reply message"
 msgstr "选择快捷回复消息"
 
 #: ui/evachatuibase.cpp:337 ui/evaqunchatuibase.cpp:312
-msgid "toggle sound notification"
+msgid "Toggle sound notification"
 msgstr "声音提示开关"
 
 #: ui/evachatuibase.cpp:342
-msgid "hide/display QQ show panel"
+msgid "Hide/Display QQ Show panel"
 msgstr "隐藏/显示QQ秀面板"
 
 #: ui/evachatuibase.cpp:344
@@ -1093,19 +1093,19 @@ msgid "&History"
 msgstr "聊天记录(&H)"
 
 #: ui/evachatuibase.cpp:346
-msgid "view/hide IM history(Alt+H)"
-msgstr "查看/隐藏聊天记录(Alt+H)"
+msgid "View/Hide IM history (Alt+H)"
+msgstr "查看/隐藏聊天记录 (Alt+H)"
 
 #: ui/evachatuibase.cpp:349 ui/evaqunchatuibase.cpp:318
-msgid "close this window(Alt+X)"
-msgstr "关闭窗口(Alt+X)"
+msgid "Close this window (Alt+X)"
+msgstr "关闭窗口 (Alt+X)"
 
 #: ui/evachatuibase.cpp:352 ui/evaqunchatuibase.cpp:321
-msgid "send message"
+msgid "Send message"
 msgstr "发送消息"
 
 #: ui/evachatuibase.cpp:355 ui/evaqunchatuibase.cpp:323
-msgid "change send key"
+msgid "Change send key"
 msgstr "切换发送键"
 
 #: ui/evachatuibase.cpp:356
@@ -1114,7 +1114,7 @@ msgstr "我的好友"
 
 #: ui/evachatuibase.cpp:358 ui/evachatuibase.cpp:362
 msgid "Click to update"
-msgstr "单击更新QQ秀"
+msgstr "单击更新 QQ 秀"
 
 #: ui/evachatuibase.cpp:359
 msgid "Me"
@@ -1124,7 +1124,7 @@ msgstr "我的形象"
 msgid "&Copy Text"
 msgstr "复制文本(&C)"
 
-#: ui/evachatview.cpp:140 ui/evachatwindow.cpp:317 ui/evaqunchatwindow.cpp:187
+#: ui/evachatview.cpp:140 ui/evachatwindow.cpp:318 ui/evaqunchatwindow.cpp:187
 msgid "(Auto-Reply)"
 msgstr "(自动回复)"
 
@@ -1167,7 +1167,7 @@ msgstr "图像另存"
 #: ui/evachatview.cpp:462 ui/evascriptwidget.cpp:432
 msgid ""
 "A file named \"%1\" already exists. Are you sure you want to overwrite it?"
-msgstr "名为\"%1\"的文件已经存在。您确定要覆盖它吗？"
+msgstr "名为 “%1” 的文件已经存在。您确定要覆盖它吗？"
 
 #: ui/evachatview.cpp:462 ui/evascriptwidget.cpp:432
 msgid "Overwrite File?"
@@ -1179,198 +1179,198 @@ msgstr "覆盖"
 
 #: ui/evachatview.cpp:512
 msgid "Waiting for %1 accepting file \"%2\". Please wait or %3."
-msgstr "等待 %1 接受发送文件“%2”的请求。 请等待或者 %3。"
+msgstr "等待 %1 接受发送文件 “%2” 的请求。 请等待或者 %3。"
 
 #: ui/evachatview.cpp:515
 msgid "%1 wants to send you a file \"%2\", you can %3, %4 or %5."
-msgstr "%1 请求发送文件“%2”给您， 您可以 %3， %4 或者 %5。"
+msgstr "%1 请求发送文件 “%2” 给您，您可以 %3，%4 或者 %5。"
 
-#: ui/evachatview.cpp:545
+#: ui/evachatview.cpp:546
 msgid "resume"
 msgstr "续传"
 
-#: ui/evachatview.cpp:547
+#: ui/evachatview.cpp:548
 msgid "start"
 msgstr "开始"
 
-#: ui/evachatview.cpp:548
+#: ui/evachatview.cpp:549
 msgid ""
 "Cached information of \"%1\" has been found, you can %2 the last download or "
 "ignore the last cached download information and %3 a new download."
 msgstr ""
-"已发现文件“%1”的接收缓存文件， 您希望 %2 未接收完的文件， 还是 %3 从起始位置"
-"接收？"
+"已发现文件“%1”的接收缓存文件，您希望 %2 未接收完的文件，还是 %3 从起始位置接"
+"收？"
 
-#: ui/evachatwindow.cpp:155 ui/evaqunchatwindow.cpp:304
+#: ui/evachatwindow.cpp:156 ui/evaqunchatwindow.cpp:304
 msgid "Press \"Enter\" to Send"
 msgstr "按“Enter”键发送"
 
-#: ui/evachatwindow.cpp:156 ui/evaqunchatwindow.cpp:305
+#: ui/evachatwindow.cpp:157 ui/evaqunchatwindow.cpp:305
 msgid "Press \"Ctrl+Enter\" to Send"
 msgstr "按“Ctrl+Enter”键发送"
 
-#: ui/evachatwindow.cpp:169
+#: ui/evachatwindow.cpp:170
 msgid "Chatting with %1"
 msgstr "与 %1 聊天中"
 
-#: ui/evachatwindow.cpp:171
+#: ui/evachatwindow.cpp:172
 msgid "(offline)"
 msgstr "(离线)"
 
-#: ui/evachatwindow.cpp:189
+#: ui/evachatwindow.cpp:190
 msgid "(online)"
 msgstr "(在线)"
 
-#: ui/evachatwindow.cpp:199
+#: ui/evachatwindow.cpp:200
 msgid "(leave)"
 msgstr "(离开)"
 
-#: ui/evachatwindow.cpp:209
+#: ui/evachatwindow.cpp:210
 msgid "(invisible)"
 msgstr "(隐身)"
 
-#: ui/evachatwindow.cpp:324 ui/evaqunchatwindow.cpp:200
+#: ui/evachatwindow.cpp:325 ui/evaqunchatwindow.cpp:200
 msgid "message sent failed"
 msgstr "消息发送失败"
 
-#: ui/evachatwindow.cpp:324 ui/evachatwindow.cpp:509 ui/evachatwindow.cpp:513
-#: ui/evaqunchatwindow.cpp:200 ui/evaqunchatwindow.cpp:528
-#: ui/evaqunchatwindow.cpp:532 ui/evaqunchatwindow.cpp:709
-#: ui/evaqunchatwindow.cpp:713
+#: ui/evachatwindow.cpp:325 ui/evachatwindow.cpp:520 ui/evachatwindow.cpp:524
+#: ui/evaqunchatwindow.cpp:200 ui/evaqunchatwindow.cpp:539
+#: ui/evaqunchatwindow.cpp:543 ui/evaqunchatwindow.cpp:720
+#: ui/evaqunchatwindow.cpp:724
 msgid "Message"
 msgstr "消息提示"
 
-#: ui/evachatwindow.cpp:509 ui/evaqunchatwindow.cpp:528
-#: ui/evaqunchatwindow.cpp:709
+#: ui/evachatwindow.cpp:520 ui/evaqunchatwindow.cpp:539
+#: ui/evaqunchatwindow.cpp:720
 msgid "Cannot send empty message."
 msgstr "不能发送空消息。"
 
-#: ui/evachatwindow.cpp:513 ui/evaqunchatwindow.cpp:532
-#: ui/evaqunchatwindow.cpp:713
+#: ui/evachatwindow.cpp:524 ui/evaqunchatwindow.cpp:543
+#: ui/evaqunchatwindow.cpp:724
 msgid "Message is too long, cannot send."
 msgstr "消息太长，不能发送。"
 
-#: ui/evachatwindow.cpp:622 ui/evachatwindow.cpp:693
+#: ui/evachatwindow.cpp:636 ui/evachatwindow.cpp:707
 msgid " all files (*)"
 msgstr " 所有文件 (*)"
 
-#: ui/evachatwindow.cpp:623
+#: ui/evachatwindow.cpp:637
 msgid "select a file"
 msgstr "选择要发送的文件"
 
-#: ui/evachatwindow.cpp:682 ui/evachatwindow.cpp:698
+#: ui/evachatwindow.cpp:696 ui/evachatwindow.cpp:712
 msgid ""
-"You have accepted transfering \"%1\", network connecting start, please "
+"You have accepted transferring \"%1\", network connecting start, please "
 "wait..."
-msgstr "您已经接受了发送“%1”的请求， 开始进行网络连接，请等待……"
+msgstr "您已经接受了发送“%1”的请求，开始进行网络连接，请等待……"
 
-#: ui/evachatwindow.cpp:707
-msgid "You have cancelled transfering \"%1\"."
+#: ui/evachatwindow.cpp:721
+msgid "You have cancelled transferring \"%1\"."
 msgstr "您已经取消了传送 “%1”。"
 
-#: ui/evachatwindow.cpp:726
+#: ui/evachatwindow.cpp:740
 msgid "accepted"
 msgstr "接受了"
 
-#: ui/evachatwindow.cpp:726
-msgid "stoped"
+#: ui/evachatwindow.cpp:740
+msgid "stopped"
 msgstr "停止了"
 
-#: ui/evachatwindow.cpp:727
-msgid "%1 has %2 transfering \"%3\"."
-msgstr "%1已经%2传输文件“%3”。"
+#: ui/evachatwindow.cpp:741
+msgid "%1 has %2 transferring \"%3\"."
+msgstr "%1 已经%2传输文件“%3”。"
 
-#: ui/evachatwindow.cpp:778
-msgid "network lost connection or your friend has stoped transfering \"%1\"."
-msgstr "失去网络连接或者你的好友停止了传送“%1”。"
+#: ui/evachatwindow.cpp:792
+msgid "network lost connection or your friend has stopped transferring \"%1\"."
+msgstr "失去网络连接或者您的好友停止了传送“%1”。"
 
-#: ui/evachatwindow.cpp:809
+#: ui/evachatwindow.cpp:823
 msgid "sending \"%1\" finished."
 msgstr "发送“%1”完成。"
 
-#: ui/evachatwindow.cpp:831
+#: ui/evachatwindow.cpp:845
 msgid "receiving file \"%1\" has been finished and saved in %2"
 msgstr "文件“%1”已经接收完成，保存在 %2。"
 
-#: ui/evachatwindow.cpp:875
+#: ui/evachatwindow.cpp:889
 msgid ""
-"File transfer is still in process( %1 file(s) left ). Closing this window "
-"will also stop those transfer processes.Do you want to close this window?"
+"File transfer is still in process (%1 file(s) left). Closing this window "
+"will also stop those transfer processes. Do you want to close this window?"
 msgstr ""
-"依然有文件在传输（%1 文件）， 关闭窗口将停止传输这些文件， 你确定要关闭窗口"
+"依然有文件在传输 (%1 个文件)，关闭窗口将停止传输这些文件，您确定要关闭窗口"
 "吗？"
 
-#: ui/evachatwindow.cpp:878
+#: ui/evachatwindow.cpp:892
 msgid "Close Window?"
 msgstr "关闭窗口？"
 
-#: ui/evachatwindow.cpp:897 ui/evaqunchatwindow.cpp:662
+#: ui/evachatwindow.cpp:911 ui/evaqunchatwindow.cpp:673
 msgid "select an image file"
 msgstr "选择一幅图片"
 
-#: ui/evacontactlistview.cpp:457 ui/evaqunchatuibase.cpp:327
+#: ui/evacontactlistview.cpp:424 ui/evaqunchatuibase.cpp:327
 msgid "Members"
 msgstr "成员"
 
-#: ui/evacontactlistview.cpp:836
+#: ui/evacontactlistview.cpp:815
 msgid "Rename"
 msgstr "重命名"
 
-#: ui/evacontactlistview.cpp:837
+#: ui/evacontactlistview.cpp:816
 msgid "New Group"
 msgstr "添加组"
 
-#: ui/evacontactlistview.cpp:838
+#: ui/evacontactlistview.cpp:817
 msgid "Delele Group"
 msgstr "删除组"
 
-#: ui/evacontactlistview.cpp:842
+#: ui/evacontactlistview.cpp:821
 msgid "Show Online"
 msgstr "只显示在线用户"
 
-#: ui/evacontactlistview.cpp:844
+#: ui/evacontactlistview.cpp:823
 msgid "Show All"
 msgstr "显示全部用户"
 
-#: ui/evacontactlistview.cpp:848 ui/evacontactlistview.cpp:1634
+#: ui/evacontactlistview.cpp:827 ui/evacontactlistview.cpp:1622
 msgid "Send File"
 msgstr "发送文件"
 
-#: ui/evacontactlistview.cpp:850 ui/evacontactlistview.cpp:1636
+#: ui/evacontactlistview.cpp:829 ui/evacontactlistview.cpp:1624
 msgid "Update Level"
 msgstr "更新等级"
 
-#: ui/evacontactlistview.cpp:851 ui/evacontactlistview.cpp:1148
-#: ui/evacontactlistview.cpp:1637 ui/evacontactlistview.cpp:1651
+#: ui/evacontactlistview.cpp:830 ui/evacontactlistview.cpp:1136
+#: ui/evacontactlistview.cpp:1625 ui/evacontactlistview.cpp:1639
 #: ui/evaqunlistview.cpp:40 ui/evasearchuibase.cpp:697
 #: ui/evasearchuibase.cpp:730 ui/evasearchuibase.cpp:749
 #: ui/qundetailsui.cpp:355
 msgid "Details"
 msgstr "详细资料"
 
-#: ui/evacontactlistview.cpp:852 ui/evacontactlistview.cpp:1638
+#: ui/evacontactlistview.cpp:831 ui/evacontactlistview.cpp:1626
 msgid "Modify Memo"
 msgstr "更改备注"
 
-#: ui/evacontactlistview.cpp:853 ui/evacontactlistview.cpp:1149
-#: ui/evacontactlistview.cpp:1639 ui/evacontactlistview.cpp:1652
+#: ui/evacontactlistview.cpp:832 ui/evacontactlistview.cpp:1137
+#: ui/evacontactlistview.cpp:1627 ui/evacontactlistview.cpp:1640
 #: ui/evaqunchatuibase.cpp:313
 msgid "History"
 msgstr "聊天记录"
 
-#: ui/evacontactlistview.cpp:856 ui/evacontactlistview.cpp:1642
+#: ui/evacontactlistview.cpp:835 ui/evacontactlistview.cpp:1630
 msgid "Delete Buddy"
 msgstr "删除好友"
 
-#: ui/evacontactlistview.cpp:871
+#: ui/evacontactlistview.cpp:850
 msgid "new group"
 msgstr "添加组"
 
-#: ui/evacontactlistview.cpp:893
+#: ui/evacontactlistview.cpp:872
 msgid "Delete group"
 msgstr "删除组"
 
-#: ui/evacontactlistview.cpp:894
+#: ui/evacontactlistview.cpp:873
 msgid ""
 "Only empty group can be deleted.\n"
 "\n"
@@ -1378,7 +1378,7 @@ msgstr ""
 "只能删除空组。\n"
 "\n"
 
-#: ui/evacontactlistview.cpp:950 ui/evacontactlistview.cpp:1731
+#: ui/evacontactlistview.cpp:929 ui/evacontactlistview.cpp:1719
 msgid ""
 "Delete friend \"%1\" from your list, are you sure?\n"
 "\n"
@@ -1386,34 +1386,33 @@ msgstr ""
 "从您的好友列表中删除“%1”，确认吗？\n"
 "\n"
 
-#: ui/evacontactlistview.cpp:953 ui/evacontactlistview.cpp:1734
+#: ui/evacontactlistview.cpp:932 ui/evacontactlistview.cpp:1722
 msgid "Delete a friend"
 msgstr "删除好友"
 
-#: ui/evacontactlistview.cpp:953 ui/evacontactlistview.cpp:1734
-#, fuzzy
+#: ui/evacontactlistview.cpp:932 ui/evacontactlistview.cpp:1722
 msgid "Deleting"
 msgstr "正在删除"
 
-#: ui/evacontactlistview.cpp:1108 ui/evacontactlistview.cpp:1592
+#: ui/evacontactlistview.cpp:1096 ui/evacontactlistview.cpp:1580
 msgid "Qun name"
 msgstr "群名称"
 
-#: ui/evacontactlistview.cpp:1109 ui/evacontactlistview.cpp:1593
+#: ui/evacontactlistview.cpp:1097 ui/evacontactlistview.cpp:1581
 msgid "Qun Number"
 msgstr "群号码"
 
-#: ui/evacontactlistview.cpp:1110 ui/evacontactlistview.cpp:1594
+#: ui/evacontactlistview.cpp:1098 ui/evacontactlistview.cpp:1582
 #: ui/quncreateui.cpp:222 ui/qundetailsui.cpp:350
 msgid "Qun Description"
 msgstr "群描述"
 
-#: ui/evacontactlistview.cpp:1151 ui/evacontactlistview.cpp:1654
+#: ui/evacontactlistview.cpp:1139 ui/evacontactlistview.cpp:1642
 #: ui/quncreateui.cpp:216
 msgid "Create Qun"
 msgstr "创建群"
 
-#: ui/evacontactlistview.cpp:1152 ui/evacontactlistview.cpp:1655
+#: ui/evacontactlistview.cpp:1140 ui/evacontactlistview.cpp:1643
 msgid "Exit Qun"
 msgstr "退出群"
 
@@ -1490,7 +1489,6 @@ msgid "AB"
 msgstr "AB"
 
 #: ui/evadetailswindow.cpp:262 ui/evasyssettinguibase.cpp:1079
-#: ui/evasyssettinguibase.cpp:1177
 msgid "Other"
 msgstr "其它"
 
@@ -1594,7 +1592,7 @@ msgstr "文件名"
 msgid "x"
 msgstr "x"
 
-#: ui/evafilestatusuibase.cpp:159 ui/evafontselecter.cpp:100
+#: ui/evafilestatusuibase.cpp:159 ui/evafontselecter.cpp:103
 msgid "Size:"
 msgstr "大小："
 
@@ -1602,19 +1600,19 @@ msgstr "大小："
 msgid "Speed:"
 msgstr "速度:"
 
-#: ui/evafontselecter.cpp:97
+#: ui/evafontselecter.cpp:100
 msgid "Font Selecter"
 msgstr "字体选择"
 
-#: ui/evafontselecter.cpp:98
+#: ui/evafontselecter.cpp:101
 msgid "Color:"
 msgstr "颜色："
 
-#: ui/evafontselecter.cpp:99
+#: ui/evafontselecter.cpp:102
 msgid "select font color"
 msgstr "选择字体颜色"
 
-#: ui/evafontselecter.cpp:101
+#: ui/evafontselecter.cpp:104
 msgid "select font size"
 msgstr "选择字体大小"
 
@@ -1671,19 +1669,15 @@ msgstr "请输入如下内容："
 msgid "Verification Graphic:"
 msgstr "验证图片："
 
-#: ui/evaloginveriuibase.cpp:127
-msgid "Verification Code:"
-msgstr "验证码："
-
 #: ui/evaloginveriuibase.cpp:129
 msgid "Change image"
 msgstr "更换图片"
 
-#: ui/evaloginwindow.cpp:141
+#: ui/evaloginwindow.cpp:142
 msgid "Sorry, account is not an integer number."
 msgstr "对不起，输入的帐号不是整数。"
 
-#: ui/evaloginwindow.cpp:149
+#: ui/evaloginwindow.cpp:150
 msgid "Sorry, proxy server port is not an integer number."
 msgstr "对不起，代理服务器端口不是整数。"
 
@@ -1693,27 +1687,35 @@ msgstr "对不起，代理服务器端口不是整数。"
 msgid "Nick"
 msgstr "昵称"
 
-#: ui/evamainuibase.cpp:93 ui/evamainwindow.cpp:406
+#: ui/evamainuibase.cpp:93 ui/evamainwindow.cpp:407
 #: ui/evaquncreatewindow.cpp:112 ui/evaqunlistview.cpp:218
 #: ui/quncreateui.cpp:147 ui/quncreateui.cpp:227 ui/qundetailsui.cpp:175
 #: ui/qundetailsui.cpp:356 ui/qundetailswindow.cpp:432
 msgid "QQ"
 msgstr "QQ"
 
-#: ui/evamainwindow.cpp:407 ui/evaqunlistview.cpp:217
+#: ui/evamainwindow.cpp:408 ui/evaqunlistview.cpp:217
 #: ui/mainlistfontsettinguibase.cpp:315
 msgid "Nickname:"
 msgstr "昵称："
 
-#: ui/evamainwindow.cpp:408
+#: ui/evamainwindow.cpp:409
 msgid "Level"
 msgstr "等级"
 
-#: ui/evamainwindow.cpp:409
+#: ui/evamainwindow.cpp:410
 msgid "Online Time"
 msgstr "在线时长"
 
-#: ui/evamainwindow.cpp:517
+#: ui/evamainwindow.cpp:411
+msgid " Hours "
+msgstr " 小时 "
+
+#: ui/evamainwindow.cpp:411
+msgid " min "
+msgstr " 分钟 "
+
+#: ui/evamainwindow.cpp:518
 msgid "Recent Contacts List"
 msgstr "最近联系人列表"
 
@@ -1792,7 +1794,7 @@ msgstr "身份验证"
 msgid ""
 "Authentication is needed for adding her/him, you can send a message to her/"
 "him."
-msgstr "加她/他为好友需要验证，你可以给她/他发送一条信息。"
+msgstr "加她/他为好友需要验证，您可以给她/他发送一条信息。"
 
 #: ui/evanotifywindow.cpp:86
 msgid "Sending error, please try again."
@@ -1804,7 +1806,7 @@ msgstr "验证信息已发送"
 
 #: ui/evanotifywindow.cpp:108
 msgid "You are added by %1"
-msgstr "你已经被 %1 加为好友"
+msgstr "您已经被 %1 加为好友"
 
 #: ui/evanotifywindow.cpp:123
 msgid "%1 is waiting for your approve."
@@ -1821,7 +1823,7 @@ msgstr ""
 
 #: ui/evanotifywindow.cpp:141
 msgid "You'v been approved by \"%1\""
-msgstr "%1 已经通过你的验证请求"
+msgstr "%1 已经通过您的验证请求"
 
 #: ui/evanotifywindow.cpp:156
 msgid "Your Request has been rejected by %1"
@@ -1857,7 +1859,7 @@ msgstr "接受请求中，请等待…"
 
 #: ui/evanotifywindow.cpp:258
 msgid "Do you want to add \"%1\" into your list?"
-msgstr "要把“%1”加到你的好友列表中吗？"
+msgstr "要把“%1”加到您的好友列表中吗？"
 
 #: ui/evanotifywindow.cpp:272 ui/evasyshistoryviewer.cpp:99
 msgid "created"
@@ -1873,7 +1875,7 @@ msgstr "已加入"
 
 #: ui/evanotifywindow.cpp:293
 msgid "You'v joined Qun \"%1\"."
-msgstr "你已经加入群“%1”。"
+msgstr "您已经加入群“%1”。"
 
 #: ui/evanotifywindow.cpp:308 ui/evasyshistoryviewer.cpp:105
 msgid "removed"
@@ -1881,7 +1883,7 @@ msgstr "已删除"
 
 #: ui/evanotifywindow.cpp:311
 msgid "You have been removed out from Qun \"%1\"."
-msgstr "你已经被群“%1”删除。"
+msgstr "您已经被群“%1”删除。"
 
 #: ui/evanotifywindow.cpp:325 ui/evasyshistoryviewer.cpp:80
 #: ui/evasyshistoryviewer.cpp:108
@@ -1899,7 +1901,7 @@ msgstr "通过验证"
 
 #: ui/evanotifywindow.cpp:349
 msgid "You'v been approved by creator \"%1\" of Qun \"%2\"."
-msgstr "“%1”已经通过你加入群“%2”的请求。"
+msgstr "“%1”已经通过您加入群“%2”的请求。"
 
 #: ui/evanotifywindow.cpp:364 ui/evasyshistoryviewer.cpp:86
 #: ui/evasyshistoryviewer.cpp:115
@@ -1908,19 +1910,39 @@ msgstr "已被拒绝"
 
 #: ui/evanotifywindow.cpp:367
 msgid "Your Request has been rejected by \"%1\" of Qun \"%2\"."
-msgstr "“%1”已经拒绝你加入群“%2”的请求。"
+msgstr "“%1”已经拒绝您加入群“%2”的请求。"
+
+#: ui/evaqunchatuibase.cpp:291
+msgid "Add a smiley icon"
+msgstr "添加表情"
+
+#: ui/evaqunchatuibase.cpp:293
+msgid "Choose font size and color"
+msgstr "选择字体大小和颜色"
+
+#: ui/evaqunchatuibase.cpp:296
+msgid "Bold"
+msgstr "粗体"
+
+#: ui/evaqunchatuibase.cpp:299
+msgid "Underline"
+msgstr "下划线"
 
 #: ui/evaqunchatuibase.cpp:305
-msgid "add a custom smiley (file size less than 50K)"
-msgstr "添加自定义表情(请小于50K)"
+msgid "Add a custom smiley (file size less than 50KB)"
+msgstr "添加自定义表情 (请小于 50KB)"
 
 #: ui/evaqunchatuibase.cpp:308
-msgid "add a screen shot ( less than 700 X 600 )"
-msgstr "添加屏幕截图(小于 700 X 600)"
+msgid "Add a screenshot (smaller than 700 x 600)"
+msgstr "添加屏幕截图 (小于 700 x 600)"
+
+#: ui/evaqunchatuibase.cpp:311
+msgid "Select a quick-reply message"
+msgstr "选择快捷回复消息"
 
 #: ui/evaqunchatuibase.cpp:315
-msgid "view IM history(Alt+H)"
-msgstr "查看聊天记录(Alt+H)"
+msgid "View/Hide Qun history (Alt+H)"
+msgstr "查看/隐藏聊天记录 (Alt+H)"
 
 #: ui/evaqunchatuibase.cpp:320 ui/qundetailsui.cpp:366
 msgid "Alt+S"
@@ -1931,14 +1953,14 @@ msgid "Notice"
 msgstr "群公告"
 
 #: ui/evaqunchatuibase.cpp:325
-msgid "Click to open/close qun notice"
+msgid "Click to open/close Qun notice"
 msgstr "点击打开/关闭群公告"
 
 #: ui/evaqunchatuibase.cpp:332
 msgid "New Item"
 msgstr "新项目"
 
-#: ui/evaqunchatwindow.cpp:693
+#: ui/evaqunchatwindow.cpp:704
 msgid "Send Image Error"
 msgstr "发送图片错误"
 
@@ -2018,7 +2040,7 @@ msgstr "群系统消息"
 
 #: ui/evaqunsysmsgwindow.cpp:122
 msgid "You have created Qun"
-msgstr "你已经建立了群"
+msgstr "您已经建立了群"
 
 #: ui/evaqunsysmsgwindow.cpp:123
 msgid "(%1)"
@@ -2026,11 +2048,11 @@ msgstr "(%1)"
 
 #: ui/evaqunsysmsgwindow.cpp:128
 msgid "has added you to Qun"
-msgstr "已经把你加进了群"
+msgstr "已经把您加进了群"
 
 #: ui/evaqunsysmsgwindow.cpp:134
 msgid "You have been removed from Qun"
-msgstr "你已经退出了群"
+msgstr "您已经退出了群"
 
 #: ui/evaqunsysmsgwindow.cpp:137
 msgid "has quit Qun"
@@ -2041,37 +2063,30 @@ msgid "requests to join Qun"
 msgstr "请求进入群"
 
 #: ui/evaqunsysmsgwindow.cpp:150
-#, fuzzy
 msgid "has approved your request to be a member of Qun"
-msgstr "已经同意了你的请求：加入群"
+msgstr "已经同意了您的请求：加入群"
 
 #: ui/evaqunsysmsgwindow.cpp:155
-#, fuzzy
 msgid "has rejected your request to be a member of Qun"
-msgstr "已经拒绝了你的请求：加入群"
+msgstr "已经拒绝了您的请求：加入群"
 
 #: ui/evaqunsysmsgwindow.cpp:162
-#, fuzzy
 msgid "You have been set as an administrator of Qun"
-msgstr "你已经被设置为管理员：群"
+msgstr "您已经被设置为管理员：群"
 
 #: ui/evaqunsysmsgwindow.cpp:164
-#, fuzzy
 msgid "You have been set as an non-administrator(normal member) of Qun"
-msgstr "你已经被设置为普通成员：群"
+msgstr "您已经被设置为普通成员：群"
 
 #: ui/evaqunsysmsgwindow.cpp:169
-#, fuzzy
 msgid "has been set as an administrator of Qun"
 msgstr "被设置成了管理员：群"
 
 #: ui/evaqunsysmsgwindow.cpp:171
-#, fuzzy
 msgid "has been set as an non-administrator(normal member) of Qun"
 msgstr "被设置为普通成员：群"
 
 #: ui/evaqunsysmsgwindow.cpp:175
-#, fuzzy
 msgid "Additional message: %1"
 msgstr "附加信息: %1"
 
@@ -2088,8 +2103,8 @@ msgid ""
 "%1 is an Eva script, \n"
 "do your want to install it?"
 msgstr ""
-"%1 是一个Eva脚本， \n"
-"你想安装吗？"
+"%1 是一个 Eva 脚本，\n"
+"您想安装吗？"
 
 #: ui/evascriptwidget.cpp:362
 msgid "Install Eva script?"
@@ -2183,7 +2198,7 @@ msgstr "在线用户数量："
 
 #: ui/evasearchuibase.cpp:691 ui/evasearchuibase.cpp:720
 msgid "the following users is found for you by Eva."
-msgstr "以下是 Eva 为你找到的用户"
+msgstr "以下是 Eva 为您找到的用户"
 
 #: ui/evasearchuibase.cpp:692 ui/evasearchuibase.cpp:721
 msgid "QQ Num"
@@ -2210,7 +2225,7 @@ msgstr "基本查找(&B)"
 
 #: ui/evasearchuibase.cpp:701
 msgid "you may set one condition or more to search friend here"
-msgstr "你也许想在这里设置查找好友的条件"
+msgstr "您也许想在这里设置查找好友的条件"
 
 #: ui/evasearchuibase.cpp:702
 msgid "online users"
@@ -2303,131 +2318,131 @@ msgid "Unknown"
 msgstr "未知"
 
 #: ui/evasearchwindow.cpp:215
-msgid "oversea"
+msgid "Abroad"
 msgstr "海外"
 
 #: ui/evasearchwindow.cpp:216 ui/evasyssettinguibase.cpp:1112
-msgid "BeiJing"
+msgid "Beijing"
 msgstr "北京"
 
 #: ui/evasearchwindow.cpp:217 ui/evasyssettinguibase.cpp:1113
-msgid "ShangHai"
+msgid "Shanghai"
 msgstr "上海"
 
 #: ui/evasearchwindow.cpp:218 ui/evasyssettinguibase.cpp:1114
-msgid "TianJing"
+msgid "Tianjin"
 msgstr "天津"
 
 #: ui/evasearchwindow.cpp:219 ui/evasyssettinguibase.cpp:1115
-msgid "ChongQing"
+msgid "Chongqing"
 msgstr "重庆"
 
 #: ui/evasearchwindow.cpp:220 ui/evasyssettinguibase.cpp:1116
-msgid "HeBei"
+msgid "Hebei"
 msgstr "河北"
 
 #: ui/evasearchwindow.cpp:221 ui/evasyssettinguibase.cpp:1117
-msgid "ShanXi"
+msgid "Shanxi"
 msgstr "山西"
 
 #: ui/evasearchwindow.cpp:222 ui/evasyssettinguibase.cpp:1118
-msgid "NeiMengGu"
+msgid "Neimenggu"
 msgstr "内蒙古"
 
 #: ui/evasearchwindow.cpp:223 ui/evasyssettinguibase.cpp:1119
-msgid "LiaoNing"
+msgid "Liaoning"
 msgstr "辽宁"
 
 #: ui/evasearchwindow.cpp:224 ui/evasyssettinguibase.cpp:1120
-msgid "JiLin"
+msgid "Jilin"
 msgstr "吉林"
 
 #: ui/evasearchwindow.cpp:225 ui/evasyssettinguibase.cpp:1121
-msgid "HeiLongJiang"
+msgid "Heilongjiang"
 msgstr "黑龙江"
 
 #: ui/evasearchwindow.cpp:226 ui/evasyssettinguibase.cpp:1122
-msgid "JiangSu"
+msgid "Jiangsu"
 msgstr "江苏"
 
 #: ui/evasearchwindow.cpp:227 ui/evasyssettinguibase.cpp:1123
-msgid "ZheJiang"
+msgid "Zhejiang"
 msgstr "浙江"
 
 #: ui/evasearchwindow.cpp:228 ui/evasyssettinguibase.cpp:1124
-msgid "AnHui"
+msgid "Anhui"
 msgstr "安徽"
 
 #: ui/evasearchwindow.cpp:229 ui/evasyssettinguibase.cpp:1125
-msgid "FuJian"
+msgid "Fujian"
 msgstr "福建"
 
 #: ui/evasearchwindow.cpp:230 ui/evasyssettinguibase.cpp:1126
-msgid "JiangXi"
+msgid "Jiangxi"
 msgstr "江西"
 
 #: ui/evasearchwindow.cpp:231 ui/evasyssettinguibase.cpp:1127
-msgid "ShanDong"
+msgid "Shandong"
 msgstr "山东"
 
 #: ui/evasearchwindow.cpp:232 ui/evasyssettinguibase.cpp:1128
-msgid "HeNan"
+msgid "Henan"
 msgstr "河南"
 
 #: ui/evasearchwindow.cpp:233 ui/evasyssettinguibase.cpp:1129
-msgid "HuBei"
+msgid "Hubei"
 msgstr "湖北"
 
 #: ui/evasearchwindow.cpp:234 ui/evasyssettinguibase.cpp:1130
-msgid "HuNan"
+msgid "Hunan"
 msgstr "湖南"
 
 #: ui/evasearchwindow.cpp:235 ui/evasyssettinguibase.cpp:1131
-msgid "GuangDong"
+msgid "Guangdong"
 msgstr "广东"
 
 #: ui/evasearchwindow.cpp:236 ui/evasyssettinguibase.cpp:1132
-msgid "GuangXi"
+msgid "Guangxi"
 msgstr "广西"
 
 #: ui/evasearchwindow.cpp:237 ui/evasyssettinguibase.cpp:1133
-msgid "HaiNan"
+msgid "Hainan"
 msgstr "海南"
 
 #: ui/evasearchwindow.cpp:238 ui/evasyssettinguibase.cpp:1134
-msgid "SiChuan"
+msgid "Sichuan"
 msgstr "四川"
 
 #: ui/evasearchwindow.cpp:239 ui/evasyssettinguibase.cpp:1135
-msgid "GuiZhou"
+msgid "Guizhou"
 msgstr "贵州"
 
 #: ui/evasearchwindow.cpp:240 ui/evasyssettinguibase.cpp:1136
-msgid "YunNan"
+msgid "Yunnan"
 msgstr "云南"
 
 #: ui/evasearchwindow.cpp:241 ui/evasyssettinguibase.cpp:1137
-msgid "XiZang"
+msgid "Xizang"
 msgstr "西藏"
 
 #: ui/evasearchwindow.cpp:242 ui/evasyssettinguibase.cpp:1138
-msgid "ShaanXi"
+msgid "Shaanxi"
 msgstr "陕西"
 
 #: ui/evasearchwindow.cpp:243 ui/evasyssettinguibase.cpp:1139
-msgid "GanSu"
+msgid "Gansu"
 msgstr "甘肃"
 
 #: ui/evasearchwindow.cpp:244 ui/evasyssettinguibase.cpp:1140
-msgid "NingXia"
+msgid "Ningxia"
 msgstr "宁夏"
 
 #: ui/evasearchwindow.cpp:245 ui/evasyssettinguibase.cpp:1141
-msgid "QingHai"
+msgid "Qinghai"
 msgstr "青海"
 
 #: ui/evasearchwindow.cpp:246 ui/evasyssettinguibase.cpp:1142
-msgid "XinJiang"
+msgid "Xinjiang"
 msgstr "新疆"
 
 #: ui/evasearchwindow.cpp:247 ui/evasyssettinguibase.cpp:1143
@@ -2439,7 +2454,7 @@ msgid "Macao"
 msgstr "澳门"
 
 #: ui/evasearchwindow.cpp:249 ui/evasyssettinguibase.cpp:1145
-msgid "TaiWan"
+msgid "Taiwan"
 msgstr "台湾"
 
 #: ui/evasearchwindow.cpp:375 ui/evasearchwindow.cpp:400
@@ -2462,7 +2477,7 @@ msgstr "请选择一个群"
 #: ui/evasearchwindow.cpp:460 ui/evasearchwindow.cpp:657
 #: ui/evasearchwindow.cpp:736 ui/evasearchwindow.cpp:888
 msgid "Eva is searching users for you..."
-msgstr "Eva 正在为你搜寻用户……"
+msgstr "Eva 正在为您搜寻用户……"
 
 #: ui/evasearchwindow.cpp:484
 msgid "Search conditions can not be empty."
@@ -2485,7 +2500,7 @@ msgstr "加入群"
 
 #: ui/evasearchwindow.cpp:595 ui/evasearchwindow.cpp:757
 msgid "the following users are found for you by Eva."
-msgstr "以下是 Eva 为你找到的用户"
+msgstr "以下是 Eva 为您找到的用户"
 
 #: ui/evasearchwindow.cpp:642 ui/evasearchwindow.cpp:825
 msgid "Current page %1 "
@@ -2509,7 +2524,7 @@ msgstr "群号码错误"
 
 #: ui/evasearchwindow.cpp:942
 msgid "Eva is searching Qun for you..."
-msgstr "Eva 正在为你搜寻群……"
+msgstr "Eva 正在为您搜寻群……"
 
 #: ui/evasearchwindow.cpp:973
 msgid "Current page 1 "
@@ -2517,7 +2532,7 @@ msgstr "当前第 1 页"
 
 #: ui/evasearchwindow.cpp:974
 msgid "the following Qun are found for you by Eva."
-msgstr "以下是 Eva 为你搜寻到的群"
+msgstr "以下是 Eva 为您搜寻到的群"
 
 #: ui/evasysbroadcastuibase.cpp:113
 msgid "System message"
@@ -2532,7 +2547,6 @@ msgid "&More Details"
 msgstr "更多信息(&M)"
 
 #: ui/evasysbroadcastwindow.cpp:75
-#, fuzzy
 msgid "System News"
 msgstr "系统消息"
 
@@ -2549,9 +2563,8 @@ msgid "added"
 msgstr "已被添加"
 
 #: ui/evasyshistoryviewer.cpp:76
-#, fuzzy
 msgid "approved and added"
-msgstr "通过并加入(?)"
+msgstr "通过并添加"
 
 #: ui/evasyshistoryviewer.cpp:89
 msgid "News"
@@ -2668,15 +2681,15 @@ msgid "Age:"
 msgstr "年龄："
 
 #: ui/evasyssettinguibase.cpp:1041
-msgid "Zodiac:"
+msgid "Chinese Zodiac:"
 msgstr "属相："
 
 #: ui/evasyssettinguibase.cpp:1042
-msgid "Horoscape:"
+msgid "Horoscope:"
 msgstr "星座："
 
 #: ui/evasyssettinguibase.cpp:1043
-msgid "Blood:"
+msgid "Blood Type:"
 msgstr "血型："
 
 #: ui/evasyssettinguibase.cpp:1087 ui/evauseruibase.cpp:282
@@ -2704,7 +2717,7 @@ msgid "Private Info"
 msgstr "私人联系方式"
 
 #: ui/evasyssettinguibase.cpp:1094
-msgid "following availible to"
+msgid "Following available to"
 msgstr "以下资料"
 
 #: ui/evasyssettinguibase.cpp:1095
@@ -2752,11 +2765,11 @@ msgid "Province:"
 msgstr "省份："
 
 #: ui/evasyssettinguibase.cpp:1146 ui/evauseruibase.cpp:296
-msgid "Zip Code:"
+msgid "Postal Code:"
 msgstr "邮政编码："
 
 #: ui/evasyssettinguibase.cpp:1147
-msgid "Area:"
+msgid "Region:"
 msgstr "国家："
 
 #: ui/evasyssettinguibase.cpp:1148
@@ -2828,51 +2841,51 @@ msgid "General"
 msgstr "常规"
 
 #: ui/evasyssettinguibase.cpp:1168
-msgid "display buddy online tip"
+msgid "Display buddy online tip"
 msgstr "好友上线提示"
 
 #: ui/evasyssettinguibase.cpp:1169
-msgid "display online users only"
+msgid "Display online users only"
 msgstr "只显示在线好友"
 
 #: ui/evasyssettinguibase.cpp:1170
-msgid "sound enabled"
+msgid "Sound enabled"
 msgstr "播放声音提示"
 
 #: ui/evasyssettinguibase.cpp:1171
-msgid "show smiley icon in buddy list"
+msgid "Show smiley icon in buddy list"
 msgstr "显示昵称中的表情图标"
 
 #: ui/evasyssettinguibase.cpp:1172
-msgid "show QQ News"
+msgid "Show QQ News"
 msgstr "显示 QQ 新闻"
 
 #: ui/evasyssettinguibase.cpp:1173
-msgid "display message tip"
+msgid "Display message tip"
 msgstr "消息提示"
 
 #: ui/evasyssettinguibase.cpp:1174
-msgid "display system ad. tip"
+msgid "Display system ad. tip"
 msgstr "系统广告提示"
 
 #: ui/evasyssettinguibase.cpp:1175
-msgid "change send key to \"Enter\""
+msgid "Change send key to \"Enter\""
 msgstr "更改发送键为“Enter”"
 
 #: ui/evasyssettinguibase.cpp:1176
-msgid "display buddy signature in seperate line"
+msgid "Display buddy signature in separate line"
 msgstr "分行显示个性签名"
 
 #: ui/evasyssettinguibase.cpp:1178
-msgid "message page size:"
+msgid "Message page size:"
 msgstr "消息浏览页大小："
 
 #: ui/evasyssettinguibase.cpp:1179
-msgid "pieces"
+msgid "entries"
 msgstr "条"
 
 #: ui/evasyssettinguibase.cpp:1180
-msgid "change status to away after:"
+msgid "Change status to away after:"
 msgstr "更改状态为离开，如果空闲超过："
 
 #: ui/evasyssettinguibase.cpp:1181
@@ -2880,7 +2893,7 @@ msgid "minutes"
 msgstr "分钟"
 
 #: ui/evasyssettinguibase.cpp:1182
-msgid "face size:"
+msgid "Face size:"
 msgstr "头像大小："
 
 #: ui/evasyssettinguibase.cpp:1183
@@ -2900,7 +2913,7 @@ msgid "Path"
 msgstr "路径"
 
 #: ui/evasyssettinguibase.cpp:1188
-msgid "theme path:"
+msgid "Theme path:"
 msgstr "主题路径："
 
 #: ui/evasyssettinguibase.cpp:1189 ui/evasyssettinguibase.cpp:1191
@@ -2908,12 +2921,12 @@ msgid "Browse"
 msgstr "浏览"
 
 #: ui/evasyssettinguibase.cpp:1190
-msgid "sound path:"
+msgid "Sound path:"
 msgstr "声音路径："
 
 #: ui/evasyssettinguibase.cpp:1192
 msgid "Quick Reply (within 50 words):"
-msgstr "快速回复（50字以内）："
+msgstr "快速回复（50 字以内）："
 
 #: ui/evasyssettinguibase.cpp:1193 ui/evasyssettinguibase.cpp:1197
 msgid "New"
@@ -2924,7 +2937,7 @@ msgid "Auto-Reply (within 50 words):"
 msgstr "自动回复（50 字以内）："
 
 #: ui/evasyssettinguibase.cpp:1196
-msgid "reply automatically when leave"
+msgid "Reply automatically when away"
 msgstr "离开状态时自动回复"
 
 #: ui/evasyssettingwindow.cpp:407
@@ -2979,9 +2992,10 @@ msgstr "图象"
 
 #: ui/evauseruibase.cpp:279
 msgid "Enjoy Eva, Enjoy Open Source!"
-msgstr "享受Eva，享受开源！"
+msgstr "享受 Eva，享受开源！"
 
-#: ui/evauseruibase.cpp:291
+#: ui/evauseruibase.cpp:291 ui/mainlistfontsettinguibase.cpp:330
+#: ui/mainlistfontsettinguibase.cpp:340
 msgid "Name:"
 msgstr "名称："
 
@@ -3087,16 +3101,12 @@ msgstr "提示颜色："
 msgid "signature color:"
 msgstr "个性签名颜色："
 
-#: ui/mainlistfontsettinguibase.cpp:330 ui/mainlistfontsettinguibase.cpp:340
-msgid "name:"
-msgstr "名称："
-
 #: ui/mainlistfontsettinguibase.cpp:331 ui/mainlistfontsettinguibase.cpp:341
 msgid "name color:"
 msgstr "名称颜色："
 
 #: ui/mainlistfontsettinguibase.cpp:350
-msgid "online counting:"
+msgid "Online statistics:"
 msgstr "在线统计："
 
 #: ui/quncategoryui.cpp:94
@@ -3120,12 +3130,12 @@ msgid "Category"
 msgstr "分类"
 
 #: ui/quncreateui.cpp:220
-msgid "select a category"
+msgid "Select a category"
 msgstr "选择一个分类"
 
 #: ui/quncreateui.cpp:221 ui/qundetailsui.cpp:349
-msgid "Qun Notice ( member only)"
-msgstr "群公告(仅成员可见)"
+msgid "Qun Notice (member only)"
+msgstr "群公告 (仅成员可见)"
 
 #: ui/quncreateui.cpp:224 ui/qundetailsui.cpp:352
 msgid "No authentication needed."
@@ -3300,36 +3310,66 @@ msgid "Message setting updated successfully."
 msgstr "群消息设置已经更新。"
 
 #: api/evausersetting.cpp:871 api/evausersetting.cpp:1115
-msgid "sorry, I am working."
+msgid "Sorry, I am working."
 msgstr "对不起，我正在工作。"
 
 #: api/evausersetting.cpp:872 api/evausersetting.cpp:1116
-msgid "having dinner now./fa"
+msgid "Having dinner now./fa"
 msgstr "吃饭去了。/fa"
 
 #: api/evausersetting.cpp:873 api/evausersetting.cpp:1117
-msgid "I am not available now, sorry"
-msgstr "有事不在，不好意思"
+msgid "I am not available now, sorry."
+msgstr "有事不在，不好意思。"
 
 #: api/evausersetting.cpp:882 api/evausersetting.cpp:1121
-msgid "oh."
+msgid "Oh."
 msgstr "哦。"
 
 #: api/evausersetting.cpp:883 api/evausersetting.cpp:1122
-msgid "ok, ok, I got u."
-msgstr "好了，好了，知道了"
+msgid "OK, OK, I got you."
+msgstr "好了，好了，知道了。"
 
 #: api/evausersetting.cpp:884 api/evausersetting.cpp:1123
-msgid "/jy ,really?"
-msgstr "/jy , 真的吗？"
+msgid "/jy , really?"
+msgstr "/jy ，真的吗？"
 
 #: api/regiongrabber.cpp:47
 msgid "Press mouse left button<br>to grab screenshot."
 msgstr "按下鼠标左键<br>截取屏幕图象"
 
 #: api/regiongrabber.cpp:47
-msgid "Size(W x H):"
-msgstr "尺寸(宽x高)："
+msgid "Size (W x H):"
+msgstr "尺寸 (宽 x 高)："
+
+#~ msgid "select an quick-reply message"
+#~ msgstr "选择快捷回复消息"
+
+#~ msgid "toggle sound notification"
+#~ msgstr "声音提示开关"
+
+#~ msgid "close this window(Alt+X)"
+#~ msgstr "关闭窗口 (Alt+X)"
+
+#~ msgid "send message"
+#~ msgstr "发送消息"
+
+#~ msgid "change send key"
+#~ msgstr "切换发送键"
+
+#~ msgid "Zip Code:"
+#~ msgstr "邮政编码："
+
+#~ msgid "name:"
+#~ msgstr "名称："
+
+#~ msgid "view IM history(Alt+H)"
+#~ msgstr "查看聊天记录(Alt+H)"
+
+#~ msgid "Area:"
+#~ msgstr "国家："
+
+#~ msgid "pieces"
+#~ msgstr "条"
 
 #~ msgid "Double click to chat"
 #~ msgstr "双击打开聊天窗口"
@@ -3427,7 +3467,7 @@ msgstr "尺寸(宽x高)："
 #~ msgstr "正在添加好友，请等待…"
 
 #~ msgid "sending Joining request, please wait..."
-#~ msgstr "正在发送添加请求， 请稍等……"
+#~ msgstr "正在发送添加请求，请稍等……"
 
 #~ msgid "All %1 pages are displayed"
 #~ msgstr "显示所有%1页"
@@ -3480,7 +3520,7 @@ msgstr "尺寸(宽x高)："
 #~ msgstr "加入群回复"
 
 #~ msgid "Your join request have have been denied by Qun \"%1\"."
-#~ msgstr "你加入群“%1”的请求被拒绝。"
+#~ msgstr "您加入群“%1”的请求被拒绝。"
 
 #~ msgid "New Password:"
 #~ msgstr "新密码："

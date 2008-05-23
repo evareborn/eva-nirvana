@@ -26,6 +26,8 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 SendIM::SendIM(const unsigned short type)
 	: OutPacket(QQ_CMD_SEND_IM, true),

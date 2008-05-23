@@ -23,6 +23,7 @@
 #include "evacrypt.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <cstring>
 
 #ifdef _WIN32
 #include <winsock.h>

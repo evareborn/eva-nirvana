@@ -25,6 +25,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 EvaRequestFacePacket::EvaRequestFacePacket()
 	: EvaPicOutPacket(QQ_05_CMD_REQUEST_FACE, true), fileAgentToken(NULL)

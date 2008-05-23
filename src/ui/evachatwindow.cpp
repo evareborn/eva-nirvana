@@ -693,7 +693,7 @@ void EvaChatWindow::slotReceivedFileRequest( const unsigned int session, const Q
 
 void EvaChatWindow::slotFileTransferAcceptClicked( const unsigned int showSession)
 {	
-	QString msg = i18n("You have accepted transfering \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+	QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferAccept(buddy->getQQ(), getSession(showSession), "", QQ_TRANSFER_FILE);
 }
@@ -709,7 +709,7 @@ void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int showSessio
 	QString dir = fullname.left(fullname.findRev("/"));
 	//QFileInfo info(fullname);
 	if(!dir.isEmpty()){
-		QString msg = i18n("You have accepted transfering \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+		QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
 		chatDisplay->showInfomation(msg);
 		emit fileTransferAccept(buddy->getQQ(), session, dir, QQ_TRANSFER_FILE);
 	}
@@ -718,7 +718,7 @@ void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int showSessio
 void EvaChatWindow::slotFileTransferCancelClicked( const unsigned int showSession)
 {
 	printf("EvaChatWindow::slotFileTransferCancelClicked -- \n");
-	QString msg = i18n("You have cancelled transfering \"%1\".").arg(getFileName(getSession(showSession)));
+	QString msg = i18n("You have cancelled transferring \"%1\".").arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferCancel(buddy->getQQ(), getSession(showSession));
 	removeFromFileList(getSession(showSession));
@@ -737,8 +737,8 @@ void EvaChatWindow::slotReceivedFileAccepted(const unsigned int session, const b
 		return;
 	
 	QString name = codec->toUnicode(buddy->getNick().c_str());
-	QString action = isAccepted?i18n("accepted"):i18n("stoped");
-	QString msg = i18n("%1 has %2 transfering \"%3\".").arg(name).arg(action).arg(filename);
+	QString action = isAccepted ? i18n("accepted") : i18n("stopped");
+	QString msg = i18n("%1 has %2 transferring \"%3\".").arg(name).arg(action).arg(filename);
 	chatDisplay->showInfomation(msg);
 }
 
@@ -789,7 +789,7 @@ void EvaChatWindow::slotFileNotifyNormalInfo( const unsigned int session, EvaFil
 	case ESNone:
 		break;
 	case ESError:{
-		QString msg = i18n("network lost connection or your friend has stoped transfering \"%1\".").arg(filename);
+		QString msg = i18n("network lost connection or your friend has stopped transferring \"%1\".").arg(filename);
 		switch(transferType){
 		case QQ_TRANSFER_FILE:{
 			if(getFileName(session).isEmpty()) break;
@@ -886,8 +886,8 @@ void EvaChatWindow::slotFilePanelCloseClicked( const unsigned int session)
 void EvaChatWindow::closeEvent( QCloseEvent * e )
 {
 	if(m_FileList.size() && m_NumImages && KMessageBox::questionYesNo(this,
-			i18n("File transfer is still in process( %1 file(s) left ). Closing this window"
-				" will also stop those transfer processes."
+			i18n("File transfer is still in process (%1 file(s) left). Closing this window "
+				"will also stop those transfer processes. "
 				"Do you want to close this window?").arg(m_FileList.size()),
 			i18n("Close Window?")) == KMessageBox::No){
 		e->ignore();

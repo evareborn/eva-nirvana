@@ -24,6 +24,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 EvaGetLevelPacket::EvaGetLevelPacket(const std::list<unsigned int> &l)
 	: OutPacket(QQ_CMD_GET_LEVEL, true), 

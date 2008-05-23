@@ -26,6 +26,8 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 
 ReceiveIMPacket::ReceiveIMPacket(unsigned char *buf, const int len)

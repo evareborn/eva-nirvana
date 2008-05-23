@@ -19,7 +19,7 @@
  ***************************************************************************/
  
 #include "evapicmanager.h"
-
+#include <cstring>
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evanetwork.h"

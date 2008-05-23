@@ -26,6 +26,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 EvaRequestAgentPacket::EvaRequestAgentPacket( const unsigned char *token, const unsigned short length)
 	: EvaPicOutPacket(QQ_05_CMD_REQUEST_AGENT, false)

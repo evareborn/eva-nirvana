@@ -23,6 +23,7 @@
 #include "evautil.h"
 #include "qmdcodec.h"
 
+#include <cstring>
 #include <qpixmap.h>
 #include <qlineedit.h>
 #include <qcombobox.h>

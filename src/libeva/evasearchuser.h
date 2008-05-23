@@ -27,6 +27,7 @@
 #endif
 #include <string>
 #include <list>
+#include <cstdlib>
 /**
 @author yunfan
 */

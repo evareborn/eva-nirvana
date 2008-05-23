@@ -26,6 +26,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 // class FriendStatus for private use
 class FriendStatus {

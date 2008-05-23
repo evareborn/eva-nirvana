@@ -31,6 +31,7 @@
 #include <qstringlist.h>
 #include <qapplication.h>
 #include <string.h>
+#include <cstring>
 
 #define MaxBlockSize       800
 

@@ -140,7 +140,7 @@ public slots:
 			const unsigned int wanIp1, const unsigned short wanPort1,
 			const unsigned int wanIp2, const unsigned short wanPort2,
 			const unsigned int wanIp3, const unsigned short wanPort3,
-			const unsigned int lanIp1, const unsigned short lanPort2,
+			const unsigned int lanIp1, const unsigned short lanPort1,
 			const unsigned int lanIp2, const unsigned short lanPort2,
 			const unsigned int lanIp3, const unsigned short lanPort3,
 			const unsigned int syncIp, const unsigned short syncPort,

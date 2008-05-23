@@ -20,6 +20,7 @@
   
 #include "evaipaddress.h"
 #include <stdlib.h>
+#include <cstring>
 
 EvaIPAddress::EvaIPAddress(const uint ip)
 	:isValidIP(false)

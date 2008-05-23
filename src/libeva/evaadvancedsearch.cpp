@@ -19,6 +19,7 @@
  ***************************************************************************/
  #include "evaadvancedsearch.h"
  #include "evautil.h"
+#include <cstring>
  
 AdvancedUser::AdvancedUser()
 	:m_QQNum(0),

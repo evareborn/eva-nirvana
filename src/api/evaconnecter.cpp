@@ -29,6 +29,7 @@
 #include <qmutex.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
+#include <cstring>
 #include <kdebug.h>
 
 #define POOL_CHECK_INTERVAL  2000    /// every 2 second check two pools

@@ -30,6 +30,8 @@
 #include <qevent.h>
 #include <qdatetime.h>
 #include <qptrlist.h>
+#include <cstring>
+#include <cstdlib>
 
 #define Eva_FileNotifyAgentEvent       65527
 #define Eva_FileNotifyStatusEvent      65526

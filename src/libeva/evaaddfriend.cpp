@@ -28,6 +28,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 AddFriendPacket::AddFriendPacket( )
 	: OutPacket(),
