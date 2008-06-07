@@ -522,10 +522,10 @@ void EvaChatView::showFileNotification( const QString & who, const QString & fil
 
 void EvaChatView::updateContents( const QString & contents )
 {
-	QString newMsg = contents;
+	//QString newMsg = contents;
 	//Wonder why the following line was added, it does nothing other than extra mess spaces.
 	//newMsg.replace("&nbsp;", "&nbsp; ");
-	buffer += (newMsg + "<br>");
+	buffer += (contents + "<br>");
 }
 
 void EvaChatView::showContents()

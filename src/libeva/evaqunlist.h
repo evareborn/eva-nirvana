@@ -90,6 +90,10 @@ public:
 	const bool isAdmin( const unsigned int id);
 	
 	const int numMembers() const { return memberArgs.size(); }
+
+	const int getNumMembers() const { return numTotal; }
+	const int getNumOnline() const { return numOnline; }
+	//these two are numbers of how many members are online / total.
 	
 	void setCardName(const std::string n) { cardName = n; }
 	void setCardGender(const unsigned char g ) { cardGender = g; }
@@ -150,7 +154,10 @@ private:
 	std::string cardMemo;
 
 	unsigned int m_RealNamesVersion;
-	
+
+	unsigned int numOnline;
+	unsigned int numTotal;
+
 	MessageType msgType;
 
 	int m_ChatFontSize;
