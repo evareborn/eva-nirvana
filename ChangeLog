@@ -1,4 +1,19 @@
 --------------------------------------------------------
+7th, June, 2008 lsz
+1. Added: Count number of online/total members in a Qun. Need more work.
+2. Fixed: Word "unsigned" missed in evamain.
+3. Fixed: 2 small bugs because of my mistake in ealier revisions. Sorry!
+4. Fixed: Remove extra space at end of every message using dirty way.
+Files:	src/api/evapacketmanager.cpp
+	src/libeva/evaqunlist.cpp
+	src/libeva/evaqunlist.h
+	src/ui/evachatview.cpp
+	src/ui/evaqunchatwindow.cpp
+	src/ui/evaqunchatwindow.h
+	src/evamain.cpp
+	api/evapacketmanager.cpp
+	libeva/evaimreceive.cpp
+--------------------------------------------------------
 19th, April, 2008 starkwong
 (Changes to libeva only)
 1. Removed unused reference to byteswap.h in evaextrainfo.cpp
