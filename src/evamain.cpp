@@ -1816,7 +1816,7 @@ void EvaMain::slotRequestQunCardReady(const unsigned int id, const bool ok, cons
 	QObject::connect(win, SIGNAL(requestQunTransfer(const unsigned int, const unsigned int)), 
 			packetManager, SLOT(doQunTransfer(const unsigned int, const unsigned int)));
 	QObject::connect(packetManager, SIGNAL(qunTransferReply(const unsigned int , const bool, const unsigned int, QString)), 
-			win, SLOT(slotTransferQun(const unsigned int, const bool, const int, QString)));
+			win, SLOT(slotTransferQun(const unsigned int, const bool, const unsigned int, QString)));
 			
 	QObject::connect(win, SIGNAL(requestModifyQunMembers(const unsigned int, const std::list<unsigned int>, const bool)), 
 			packetManager, SLOT(doModifyQunMembers(const unsigned int, const std::list<unsigned int>, const bool)));
