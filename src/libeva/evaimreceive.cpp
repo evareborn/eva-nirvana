@@ -62,7 +62,8 @@ std::string ReceiveIMPacket::convertToShow(const std::string &src, const unsigne
 		start+=38;
 		start+=2; // 2 unknown bytes: 0x13 0x4c (always)
 	}
-	for(uint i=start; i<src.length(); i++){
+	for(uint i=start; i<src.length()-1; i++){
+	// Here it is length()-1 to cut off the extra space at the end of every message (always)
 		if(src[i]==0x14){
 			converted+=EvaUtil::smileyToText(src[++i]);
 			converted+=' ';
