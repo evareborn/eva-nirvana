@@ -61,6 +61,7 @@ public:
 	
 	void addToolButton( QString &scriptName, QString buttonName, QString &pixmap, QString &tip );
 	void removeToolButton( QString &scriptName, QString buttonName );
+	void updateQunCountNumbers();
 public slots:
 	void graphicChanged();
 	void slotReceivedMessage(unsigned int qunID, unsigned int senderQQ, QString message, QDateTime time, const char size, 

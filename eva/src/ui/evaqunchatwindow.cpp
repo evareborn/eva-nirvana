@@ -278,6 +278,7 @@ void EvaQunChatWindow::slotUpdateOnlineMembers()
 	}
 	
 	memberList->updateOnlineMembers(onlineList);
+	updateQunCountNumbers();
 	QTimer::singleShot(100, this, SLOT(slotRequestQunRealNames()));
 }
 
@@ -332,6 +333,13 @@ void EvaQunChatWindow::initInformation( )
 	QString notice = codec->toUnicode(mQun->getDetails().getNotice().c_str());
 	teNotice->setText(notice);
 	teNotice->adjustSize();
+}
+void EvaQunChatWindow::updateQunCountNumbers( )
+// TODO this should be implemented as a slot.
+{
+	if(!mQun) return;
+	QString num = " (" + QString::number(mQun->getNumOnline()) + "/" + QString::number(mQun->getNumMembers()) + ")";
+	lblMembers->setText(i18n("Members") + num);
 }
 
 void EvaQunChatWindow::initConnection( )

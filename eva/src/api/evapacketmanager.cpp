@@ -821,7 +821,7 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 			QString rNick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
 			user->getSetting()->saveMessage(sender, sender, sNick, user->getQQ(), rNick, 
 						isNormal, msg, time, fontSize, u, i, b, blue, green, red);
-			printf("From Buddy -- %s (%d)  : %s\n", sNick.local8Bit().data(), sender, msg.local8Bit().data());
+			printf("From Buddy -- %s (%d): <BEGIN>%s<END> %s\n", sNick.local8Bit().data(), sender, msg.local8Bit().data(),received->getFontName());
 			emit txtMessage(sender, isNormal, msg, time, fontSize, 
 					u, i, b, blue, green, red);
 			delete received;

@@ -214,10 +214,10 @@
     <qt>
       <used>false</used>
       <version>3</version>
-      <root>/usr/share/qt3</root>
+      <root>/usr/lib/qt3</root>
       <includestyle>3</includestyle>
       <designerintegration>EmbeddedKDevDesigner</designerintegration>
-      <qmake>/usr/bin/qmake-qt3</qmake>
+      <qmake>/usr/lib/qt3/bin/qmake</qmake>
       <designer>/usr/bin/designer-qt3</designer>
       <designerpluginpaths/>
     </qt>
