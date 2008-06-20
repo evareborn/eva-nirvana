@@ -123,7 +123,8 @@ void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPix
 	tlNick->setText("<qt><nobr>"+name+"</nobr></qt>");
 	slotUpdateBuddyStat();
 
-	tbMyFace->setIconSet( QIconSet(*pix));
+	if(pix)
+		tbMyFace->setIconSet( QIconSet(*pix));
 //
 //
 //	loadContacts();
