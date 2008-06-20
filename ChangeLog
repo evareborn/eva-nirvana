@@ -1,4 +1,11 @@
 --------------------------------------------------------
+20th, June, 2008 yunfan
+1. Fixed: check the face image when update main window's icon
+2. Fixed: validate the group index when adding a buddy to contact list
+Files: src/ui/evamainwindow.cpp
+        src/ui/evacontactlistview.cpp
+
+--------------------------------------------------------
 7th, June, 2008 lsz
 1. Added: Count number of online/total members in a Qun. Need more work.
 2. Fixed: Word "unsigned" missed in evamain.
