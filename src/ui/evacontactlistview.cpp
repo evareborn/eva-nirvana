@@ -541,9 +541,10 @@ void EvaContactListView::updateContacts()
 	FriendList *list = EvaMain::user->getFriends();
 	QQFriend *f = list->firstFriend();
 	while( f ){
-		if (!m_contacts.count(f->getQQ()))	{
+		if (!m_contacts.count(f->getQQ())){
 			gIndex = m_groups.count(f->getGroupIndex())?f->getGroupIndex():0;
 			m_contacts[f->getQQ()] = new EvaBuddyItem(*f, m_groups[gIndex]);
+		}
 
 		f = list->nextFriend();
 	}

@@ -1,4 +1,9 @@
 --------------------------------------------------------
+22th, June, 2008 yunfan
+1. Fixed: forget closing the bracket
+File: src/ui/evacontactlistview.cpp
+
+--------------------------------------------------------
 20th, June, 2008 yunfan
 1. Fixed: check the face image when update main window's icon
 2. Fixed: validate the group index when adding a buddy to contact list
