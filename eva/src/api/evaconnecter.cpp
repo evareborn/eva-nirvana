@@ -188,6 +188,7 @@ void EvaConnecter::processDetectReply( InPacket * in )
 	packet->setInPacket(in);
 	if( !packet->parse()) {
 		kdDebug() << "[EvaConnecter] server detect reply parse error!" << endl;
+		delete packet;
 		return;
 	}
 
@@ -195,6 +196,7 @@ void EvaConnecter::processDetectReply( InPacket * in )
 		m_IsDetecting = false;
         	removePacket(packet->hashCode());
 		kdDebug() << "[EvaConnecter] server " << connecter->getHostAddress().toString() << " is ready." << endl;
+		delete packet;
 		emit isReady();
 		return;
 	}else if(packet->needRedirect()){
@@ -204,7 +206,9 @@ void EvaConnecter::processDetectReply( InPacket * in )
 			redirectTo( packet->getRedirectIP(), -1);
 		}else{
 			kdDebug() << "[EvaConnecter] unkown server detect reply ( reply code: " << packet->getReplyCode() << ")" << endl;
-		}	
+		}
+
+	delete packet;	
 }
 
 

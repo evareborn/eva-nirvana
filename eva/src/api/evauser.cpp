@@ -38,12 +38,10 @@ std::string EvaUser::blackName = "Black List";
 EvaUser::EvaUser(const unsigned int id, const std::string &password)
 	: DCOPObject("Contacts"),
 	QObject()
-{	
-	char *tmp = (char *)malloc(password.length() * sizeof(char));
-        memcpy(tmp, password.c_str(), password.length());
+{
 	qqNum = id;
 	md5Password = new char[16];
-	memcpy(md5Password, EvaUtil::doMd5Md5(tmp, password.length()), 16);
+	memcpy(md5Password, EvaUtil::doMd5Md5((char *)password.c_str(), password.length()), 16);
 
 	timeOnline = 0;
 	level = 0;
