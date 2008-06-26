@@ -1,4 +1,9 @@
 --------------------------------------------------------
+26th, June, 2008 yunfan
+1. Fixed: memory leak fixed
+Files: src/api/evauser.cpp src/api/evaconnecter.cpp
+
+--------------------------------------------------------
 22th, June, 2008 yunfan
 1. Fixed: forget closing the bracket
 File: src/ui/evacontactlistview.cpp
