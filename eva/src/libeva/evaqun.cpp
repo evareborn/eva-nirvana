@@ -198,10 +198,10 @@ int QunInfo::readQunInfo(unsigned char *buf)
 	pos+=len;
 	
 	pos++; // one byte 0x00, could be the C-stryle string terminator
+	pos++; // normally 0x00, 0x02 if super qun?
 
 	// length of Qun notice
-	len = ntohs(*((unsigned short *)(buf+pos)));  // means the max length of Qun notice could be 0xffff
-	pos+=2;
+	len = buf[pos++];  // starkwong: means the max length of Qun notice is also 0xff, not 0xffff
 	char *noticeChar = (char *)malloc((len + 1)* sizeof(char));
 	memcpy(noticeChar, buf + pos, len);
 	noticeChar[len]=0x00;

@@ -1,3 +1,7 @@
+28th, August, 2008 starkwong
+1. Fixed: Misaligned Qun information when retrieving from a Super Qun
+Files: src/libeva/evaqun.cpp
+
 --------------------------------------------------------
 26th, June, 2008 yunfan
 1. Fixed: memory leak fixed
