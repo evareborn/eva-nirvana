@@ -1,3 +1,8 @@
+7th, October, 2008 starkwong
+1. Fixed: Long message damaged due to oldherl(lsz)'s patch in SVN #47.
+Files: src/libeva/evaimreceive.cpp
+
+--------------------------------------------------------
 28th, August, 2008 starkwong
 1. Fixed: Misaligned Qun information when retrieving from a Super Qun
 Files: src/libeva/evaqun.cpp

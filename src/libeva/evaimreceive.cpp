@@ -77,6 +77,9 @@ std::string ReceiveIMPacket::convertToShow(const std::string &src, const unsigne
 			} else
 				converted+=src[i];
 	}
+	// starkwong: oldherl's patch on SVN 47 damages long messages, so add a dirty fix here (not perfect)
+	if (src[src.length()-1]!=0x20) converted+=src[src.length()-1];
+	
 	if(uuid) delete []uuid;
 	return converted;
 }
