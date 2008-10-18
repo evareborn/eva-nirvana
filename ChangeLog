@@ -1,3 +1,8 @@
+17th, October, 2008 Yuking
+1. Fixed: Do not insert Enter when using enter-to-send
+Files: src/ui/evatextedit.cpp
+
+--------------------------------------------------------
 7th, October, 2008 starkwong
 1. Fixed: Long message damaged due to oldherl(lsz)'s patch in SVN #47.
 Files: src/libeva/evaimreceive.cpp
