@@ -48,10 +48,7 @@ void EvaTextEdit::keyPressEvent(QKeyEvent *e)
             emit keyPressed(e);
             return;
         }
-    }
-
-    if( (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return)  && (!(e->state() | Qt::KeyButtonMask)))
-    {
+	else if ( (e->state() | Qt::KeyButtonMask) ) 
         if (isEnterSend )
         {
             emit keyPressed(e);
