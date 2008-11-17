@@ -332,7 +332,7 @@ SendIMReplyPacket &SendIMReplyPacket::operator=(const SendIMReplyPacket &rhs )
         return *this;
 }
 
-const bool SendIMReplyPacket::isSentOK() const
+bool SendIMReplyPacket::isSentOK() const
 {
 	 return replyCode == QQ_SEND_IM_REPLY_OK;
 }
@@ -387,7 +387,7 @@ int SendFileRequestPacket::putContents( unsigned char * buf )
 	pos+=EvaUtil::write16(buf+pos, m_WanPort);
 	
 	pos+=EvaUtil::write16(buf+pos, m_DirectPort);
-	memset(buf+pos, 6, 0); pos+=6;
+	memset(buf+pos, 0, 6); pos+=6;
 
 	buf[pos++] = 0x20;
 	buf[pos++] = 0x1f;
@@ -401,7 +401,7 @@ int SendFileRequestPacket::putContents( unsigned char * buf )
 #else
 	char strSize[100];
 #endif
-	memset(strSize, 100, 0);
+	memset(strSize, 0, 100);
 	sprintf(strSize, "%d", m_FileSize);
 	len = strlen(strSize);
 	memcpy(buf+pos, strSize, len); pos+=len;
@@ -519,7 +519,7 @@ int SendFileExRequestPacket::putContents( unsigned char * buf )
 #else
 	char strSize[100];
 #endif
-	memset(strSize, 100, 0);
+	memset(strSize, 0, 100);
 	sprintf(strSize, "%d", m_FileSize);
 	len = strlen(strSize);
 	memcpy(buf+pos, strSize, len); pos+=len;

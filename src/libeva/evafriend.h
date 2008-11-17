@@ -32,16 +32,16 @@ public:
 	FriendItem(const FriendItem &rhs);
 	~FriendItem() {}
 	
-	const unsigned int getQQ() const { return qqNum; }
-	const unsigned short getFace() const { return face; }
-	const char getAge() const { return age; }
-	const char getGender() const { return gender; }
+	 unsigned int getQQ() const { return qqNum; }
+	 unsigned short getFace() const { return face; }
+	 char getAge() const { return age; }
+	 char getGender() const { return gender; }
 	const std::string &getNick() const { return nick; }  // note: nick is encoded by "GB18030"
-	const char getExtFlag() const { return extFlag; }
-	const char getCommonFlag() const { return commonFlag; }
-	const long getLoginTime() const { return loginTime; }
-	const long getIdleTime() const { return idleTime; }
-	const long getLastRefreshTime() const { return lastRefreshTime; }
+	 char getExtFlag() const { return extFlag; }
+	 char getCommonFlag() const { return commonFlag; }
+	 long getLoginTime() const { return loginTime; }
+	 long getIdleTime() const { return idleTime; }
+	 long getLastRefreshTime() const { return lastRefreshTime; }
 
 	void setQQ(const unsigned int id) { qqNum = id; }
 	void setFace(const unsigned short f) { face = f; }
@@ -52,15 +52,15 @@ public:
 	void setCommonFlag(const char cf) { commonFlag = cf; }
 		
 	void setOnline(const bool online) { mIsOnline = online; }
-	const bool isOnline() const { return mIsOnline; }
+	 bool isOnline() const { return mIsOnline; }
 	
-	const unsigned short getQunGroupIndex() const { return qunGroupIndex; }
-	const unsigned short getQunAdminValue() const { return qunAdminValue; }
+	 unsigned short getQunGroupIndex() const { return qunGroupIndex; }
+	 unsigned short getQunAdminValue() const { return qunAdminValue; }
 	
 	void setQunGroupIndex(const unsigned char index) { qunGroupIndex = index;}
 	void setQunAdminValue(const unsigned char value) { qunAdminValue = value;}
-	const bool isAdmin() const { return qunAdminValue & QUN_TYPE_ADMIN; }
-	const bool isShareHolder() const { return qunAdminValue & QUN_TYEP_SHAREHOLDER; }
+	 bool isAdmin() const { return qunAdminValue & QUN_TYPE_ADMIN; }
+	 bool isShareHolder() const { return qunAdminValue & QUN_TYEP_SHAREHOLDER; }
 
 	// the following 2 methods implemented by henry first, I change the names a bit :)
 	void setQunRealName(const std::string &name) {
@@ -68,7 +68,7 @@ public:
 	}
 	void setQunRealNameVersion( const int version) { m_QunRealNameVersion = version; }
 	const std::string &getQunRealName() const { return m_QunRealName; }
-	const int getQunRealNameVersion() const { return m_QunRealNameVersion; }
+	 int getQunRealNameVersion() const { return m_QunRealNameVersion; }
 
 	bool isMember() { return (commonFlag & 0x2) != 0; }
 	bool isBoy() { return gender == QQ_FRIEND_GENDER_GG;}
@@ -110,7 +110,7 @@ public:
 	OutPacket * copy() { return new GetFriendListPacket(*this);}
 	GetFriendListPacket &operator=( const GetFriendListPacket &rhs);
 	
-	const unsigned short getStartPosition() const { return startPosition; }
+	 unsigned short getStartPosition() const { return startPosition; }
 	void setStartPosition(const unsigned short startPosition) { this->startPosition = startPosition; }
 
 protected:
@@ -127,7 +127,7 @@ public:
 	GetFriendListReplyPacket(const GetFriendListReplyPacket &rhs);
 	virtual ~GetFriendListReplyPacket() {}
 	
-	const unsigned short getPosition() const { return position; }
+	 unsigned short getPosition() const { return position; }
 	const friendItemList &getFriendList() const { return friends; }
 	GetFriendListReplyPacket &operator=( const GetFriendListReplyPacket &rhs);
 protected:

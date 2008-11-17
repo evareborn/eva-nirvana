@@ -39,12 +39,12 @@ public:
 	void setMyBasicInfo(const unsigned char *key, const unsigned char *token, const unsigned int tokenLen);
 	void setMyProxyInfo(const QHostAddress addr, const short port, const QCString &param);
 
-	const bool newSession(const unsigned int id, const unsigned int session, 
+	bool newSession(const unsigned int id, const unsigned int session, 
 				const QValueList<QString> &dirList, 
 				const QValueList<QString> &filenameList,
 				const QValueList<unsigned int> &sizeList, const bool isDownload,
 				const unsigned char transferType = QQ_TRANSFER_FILE);
-	const bool changeToAgent(const unsigned int id, const unsigned int session);
+	bool changeToAgent(const unsigned int id, const unsigned int session);
 
 // 	const bool newSession(const int id, const QString &dir, const QString &file, 
 // 			const unsigned int session, const unsigned int size, 
@@ -57,11 +57,11 @@ public:
 	void saveFileTo(const unsigned int id, const unsigned int session, const QString dir);
 
 	void updateIp(const unsigned int id, const unsigned int session, const unsigned int ip);
-	const bool startSession(const unsigned int id, const unsigned int session);
+	 bool startSession(const unsigned int id, const unsigned int session);
 
-	const QString getFileName(const unsigned int id, const unsigned int session, const bool isAbs = false);
-	const unsigned int getFileSize(const unsigned int id, const unsigned int session);
-	const unsigned char getTransferType(const unsigned int id, const unsigned int session);
+	 const QString getFileName(const unsigned int id, const unsigned int session, const bool isAbs = false);
+	 unsigned int getFileSize(const unsigned int id, const unsigned int session);
+	 unsigned char getTransferType(const unsigned int id, const unsigned int session);
 
 // 	void newSendThread(const int id, const unsigned int ip, const QString &srcDir, const QString &srcFilename,
 // 			const bool isDirectConnection = true, const bool usingProxy = false);
@@ -69,7 +69,7 @@ public:
 
 	void stopThread(const unsigned int id, const unsigned int session);
 	void stopAll();
-	const bool isSender(const unsigned int id, const unsigned int session, bool *isExisted);
+	 bool isSender(const unsigned int id, const unsigned int session, bool *isExisted);
 signals:
 	// buddy qq, session id, file size, bytes sent, time elapsed
 	void notifyTransferStatus(const unsigned int, const unsigned int, const unsigned int, const unsigned int, const int );

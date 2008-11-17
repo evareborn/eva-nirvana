@@ -36,16 +36,16 @@ public:
 	SendIM(const SendIM &rhs) ;
 	virtual ~SendIM() {}
 		
-	const int getReceiver() const { return receiver; };                       // your friend's qq number
+	 int getReceiver() const { return receiver; };                       // your friend's qq number
 	void setReceiver(int receiver) { this->receiver = receiver; }
 	
-	const short getFaceCode() const { return face; }
+	 short getFaceCode() const { return face; }
 	void setFaceCode(short face) { this->face = face; }                      // set my face code	
 	
-	const unsigned short getContentType() const  { return contentType; }
-	const time_t getSendTime() const { return m_SendTime; }
+	 unsigned short getContentType() const  { return contentType; }
+	 time_t getSendTime() const { return m_SendTime; }
 
-	const unsigned short getMsgSequence() const  { return m_MsgSequence; }
+	 unsigned short getMsgSequence() const  { return m_MsgSequence; }
 	void setMsgSequence(const unsigned short seq) { m_MsgSequence = seq; }
 
 	SendIM &operator=(const SendIM &rhs);
@@ -75,23 +75,23 @@ public:
 	
 	const std::string &getFontName() const { return fontName; }               // font setting
 	void setFontName(std::string &fontName) { this->fontName = fontName; }
-	const char getFontSize() const { return fontSize; }
+	 char getFontSize() const { return fontSize; }
 	void setFontSize(char fontSize); 
-	const short getEncoding() const { return encoding; }
+	 short getEncoding() const { return encoding; }
 	void setEncoding(short encoding) { this->encoding = encoding; }
 
-	const bool isUnderline() const { return underline;}                      // U B I setting
+	 bool isUnderline() const { return underline;}                      // U B I setting
 	void setUnderline(bool underline) ;
-	const bool isItalic() const { return italic; }
+	 bool isItalic() const { return italic; }
 	void setItalic(bool italic);
-	const bool isBold() const { return bold; };
+	 bool isBold() const { return bold; };
 	void setBold(bool bold);
 	
-	const char getBlue() const { return blue; }                         // color setting
+	 char getBlue() const { return blue; }                         // color setting
 	void setBlue(char blue) { this->blue = blue; }
-	const char getGreen() const { return green; }
+	 char getGreen() const { return green; }
 	void setGreen(char green)  {this->green = green; }
-	const char getRed() const { return red; }
+	 char getRed() const { return red; }
 	void setRed(char red) { this->red = red; }
 	
 	/*
@@ -100,14 +100,14 @@ public:
 	*/
 	const std::string &getMessage() const { return message; }              // message you want to send
 	void setMessage(std::string message) { this->message = message; }   // and just put your plain text message here
-	const char getReplyType() const { return replyType; }
+	 char getReplyType() const { return replyType; }
 	void setReplyType(char replyType) { this->replyType = replyType; }
 	void setAutoReply(const bool isNormal);
 		
 	
-	const unsigned char getNumFragments() const { return numFragments; }
-	const unsigned char getSeqOfFragments() const { return seqFragments; }
-	const short getMessageID() const { return messageID; }
+	 unsigned char getNumFragments() const { return numFragments; }
+	 unsigned char getSeqOfFragments() const { return seqFragments; }
+	 short getMessageID() const { return messageID; }
 	
 	void setNumFragments(const unsigned char num) { numFragments = num; }
 	void setSeqOfFragments( const unsigned char seq) { seqFragments = seq; }
@@ -140,8 +140,8 @@ public:
 	SendIMReplyPacket(const SendIMReplyPacket &rhs );
 	virtual ~SendIMReplyPacket() {}
 	
-	const char getReplyCode() const { return replyCode; };
-	const bool isSentOK() const ;
+	 char getReplyCode() const { return replyCode; };
+	 bool isSentOK() const ;
 	
 	SendIMReplyPacket &operator=(const SendIMReplyPacket &rhs );
 
@@ -170,11 +170,11 @@ public:
 	inline void setTransferType(const unsigned char type) { m_TransferType = type; }
 
 	inline const std::string getFileName() const { return m_FileName; }
-	inline const unsigned int getFileSize() const { return m_FileSize; }
-	inline const unsigned short getDirectPort() const { return m_DirectPort; }
-	inline const unsigned short getWanPort() const { return m_WanPort; }
-	inline const unsigned int getWanIp() const { return m_WanIp; }
-	inline const unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned int getFileSize() const { return m_FileSize; }
+	inline unsigned short getDirectPort() const { return m_DirectPort; }
+	inline unsigned short getWanPort() const { return m_WanPort; }
+	inline unsigned int getWanIp() const { return m_WanIp; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
 
 protected:
 	virtual  int putContents(unsigned char *buf);
@@ -208,11 +208,11 @@ public:
 	inline void setSessionId(const unsigned short session) { m_SessionId = session; }
 
 	inline const std::string getFileName() const { return m_FileName; }
-	inline const unsigned int getFileSize() const { return m_FileSize; }
-	inline const unsigned short getWanPort() const { return m_WanPort; }
-	inline const unsigned int getWanIp() const { return m_WanIp; }
-	inline const unsigned char getTransferType() const { return m_TransferType; }
-	inline const unsigned short getSessionId() const { return m_SessionId; }
+	inline unsigned int getFileSize() const { return m_FileSize; }
+	inline unsigned short getWanPort() const { return m_WanPort; }
+	inline unsigned int getWanIp() const { return m_WanIp; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned short getSessionId() const { return m_SessionId; }
 
 protected:
 	virtual  int putContents(unsigned char *buf);
@@ -240,9 +240,9 @@ public:
 	inline void setConnectMode(const unsigned char mode) { m_ConnectMode = mode; }
 	inline void setSessionId(const unsigned short session) { m_SessionId = session; }
 
-	inline const unsigned char getTransferType() const { return m_TransferType; }
-	inline const unsigned char getConnectMode() const { return m_ConnectMode; }
-	inline const unsigned short getSessionId() const { return m_SessionId; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned char getConnectMode() const { return m_ConnectMode; }
+	inline unsigned short getSessionId() const { return m_SessionId; }
 
 protected:
 	virtual  int putContents(unsigned char *buf);
@@ -282,34 +282,34 @@ public:
 	inline void setLanPort3(const unsigned short port) { m_LanPort3 = port; }
 
 	inline void setSender(const bool sender) { m_IsSender = sender; }
-	inline const bool isSender() const { return m_IsSender; }
+	inline bool isSender() const { return m_IsSender; }
 
-	inline const unsigned char getTransferType() const { return m_TransferType; }
-	inline const unsigned char getConnectMode() const { return m_ConnectMode; }
-	inline const unsigned int getSessionId() const { return m_SessionId; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned char getConnectMode() const { return m_ConnectMode; }
+	inline unsigned int getSessionId() const { return m_SessionId; }
 
-	inline const unsigned int getWanIp1() const { return m_WanIp1; }
-	inline const unsigned short getWanPort1() const { return m_WanPort1; }
-	inline const unsigned int getWanIp2() const { return m_WanIp2; }
-	inline const unsigned short getWanPort2() const { return m_WanPort2; }
-	inline const unsigned int getWanIp3() const { return m_WanIp3; }
-	inline const unsigned short getWanPort3() const { return m_WanPort3; }
+	inline unsigned int getWanIp1() const { return m_WanIp1; }
+	inline unsigned short getWanPort1() const { return m_WanPort1; }
+	inline unsigned int getWanIp2() const { return m_WanIp2; }
+	inline unsigned short getWanPort2() const { return m_WanPort2; }
+	inline unsigned int getWanIp3() const { return m_WanIp3; }
+	inline unsigned short getWanPort3() const { return m_WanPort3; }
 
-	inline const unsigned int getLanIp1() const { return m_LanIp1; }
-	inline const unsigned short getLanPort1() const { return m_LanPort1; }
+	inline unsigned int getLanIp1() const { return m_LanIp1; }
+	inline unsigned short getLanPort1() const { return m_LanPort1; }
 	// in most cases, just leave lan ip 2 & port 2 as default ( 0.0.0.0:0)
-	inline const unsigned int getLanIp2() const { return m_LanIp2; }
-	inline const unsigned short getLanPort2() const { return m_LanPort2; }
-	inline const unsigned int getLanIp3() const { return m_LanIp3; }
-	inline const unsigned short getLanPort3() const { return m_LanPort3; }
+	inline unsigned int getLanIp2() const { return m_LanIp2; }
+	inline unsigned short getLanPort2() const { return m_LanPort2; }
+	inline unsigned int getLanIp3() const { return m_LanIp3; }
+	inline unsigned short getLanPort3() const { return m_LanPort3; }
 
 	inline void setSyncSession(const unsigned int session) { m_SyncSession = session; }
-	inline const unsigned int getSyncSession() const { return m_SyncSession; }
+	inline unsigned int getSyncSession() const { return m_SyncSession; }
 
 	inline void setSyncIp( const unsigned int ip) { m_SyncIp = ip; }
 	inline void setSyncPort(const unsigned short port) { m_SyncPort = port; }
-	inline const unsigned int getSyncIp() const { return m_SyncIp; }
-	inline const unsigned short getSyncPort() const { return m_SyncPort; }
+	inline unsigned int getSyncIp() const { return m_SyncIp; }
+	inline unsigned short getSyncPort() const { return m_SyncPort; }
 
 protected:
 	virtual  int putContents(unsigned char *buf);
@@ -356,11 +356,11 @@ public:
 				{ m_Ip = ip;  m_Port = port; printf("========== ip:%8x, port:%4x\n", ip, 0xffff&port);}
 	inline void setAgentSession(const unsigned int session) { m_Session = session; }
 
-	inline const unsigned char getTransferType() const { return m_TransferType; }
-	inline const unsigned char getConnectMode() const { return m_ConnectMode; }
-	inline const unsigned int getAgentIp() const { return m_Ip; }
-	inline const unsigned short getAgentPort() const { return m_Port; }
-	inline const unsigned int getAgentSession() const { return m_Session; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned char getConnectMode() const { return m_ConnectMode; }
+	inline unsigned int getAgentIp() const { return m_Ip; }
+	inline unsigned short getAgentPort() const { return m_Port; }
+	inline unsigned int getAgentSession() const { return m_Session; }
 
 protected:
 	virtual  int putContents(unsigned char *buf);
@@ -382,28 +382,28 @@ public:
 	OutPacket * copy() { return new SendTempSessionTextIMPacket(*this);}
 	SendTempSessionTextIMPacket &operator=(const SendTempSessionTextIMPacket &rhs);
 
-	const int getReceiver() const { return receiver; };                       // your friend's qq number
+	 int getReceiver() const { return receiver; };                       // your friend's qq number
 	void setReceiver(int receiver) { this->receiver = receiver; }
 
 	const std::string &getFontName() const { return fontName; }               // font setting
 	void setFontName(std::string &fontName) { this->fontName = fontName; }
-	const char getFontSize() const { return fontSize; }
+	 char getFontSize() const { return fontSize; }
 	void setFontSize(char fontSize); 
-	const short getEncoding() const { return encoding; }
+	 short getEncoding() const { return encoding; }
 	void setEncoding(short encoding) { this->encoding = encoding; }
 
-	const bool isUnderline() const { return underline;}                      // U B I setting
+	 bool isUnderline() const { return underline;}                      // U B I setting
 	void setUnderline(bool underline) ;
-	const bool isItalic() const { return italic; }
+	 bool isItalic() const { return italic; }
 	void setItalic(bool italic);
-	const bool isBold() const { return bold; };
+	 bool isBold() const { return bold; };
 	void setBold(bool bold);
 
-	const char getBlue() const { return blue; }                         // color setting
+	 char getBlue() const { return blue; }                         // color setting
 	void setBlue(char blue) { this->blue = blue; }
-	const char getGreen() const { return green; }
+	 char getGreen() const { return green; }
 	void setGreen(char green)  {this->green = green; }
-	const char getRed() const { return red; }
+	 char getRed() const { return red; }
 	void setRed(char red) { this->red = red; }
 
 	/*
@@ -412,7 +412,7 @@ public:
 	*/
 	const std::string &getMessage() const { return message; }              // message you want to send
 	void setMessage(std::string message) { this->message = message; }   // and just put your plain text message here
-	const unsigned char getSubcommand() const { return subcommand; }
+	 unsigned char getSubcommand() const { return subcommand; }
 	void setSubcommand(unsigned char subcommand) { this->subcommand = subcommand; }
 	const std::string &getNick() const { return nick; }
 	void setNick(std::string nick) { this->nick = nick; }
@@ -420,7 +420,7 @@ public:
 	void setSite(std::string site) { this->site = site; }
 	const unsigned char* getAuthInfo() const { return authInfo; }
 	void setAuthInfo(const unsigned char* authInfo, int len);
-	const int getAuthInfoSize() const { return authInfoSize; }
+	 int getAuthInfoSize() const { return authInfoSize; }
 
 protected:
 	virtual int putBody(unsigned char *buf);

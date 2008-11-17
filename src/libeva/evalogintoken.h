@@ -45,11 +45,11 @@ public:
 	InPacket * copy() { return new RequestLoginTokenReplyPacket(*this);}
 	RequestLoginTokenReplyPacket &operator=(const RequestLoginTokenReplyPacket &rhs);
 	
-	const int getTokenLength() const { return length; }
+	 int getTokenLength() const { return length; }
 	const unsigned char *getToken() const { return token; }
 	
-	const bool isReplyOk() const ;
-	const char getReplyCode() const { return replyCode; }
+	 bool isReplyOk() const ;
+	 char getReplyCode() const { return replyCode; }
 protected:
 	virtual void parseBody();
 private:
@@ -79,10 +79,10 @@ public:
 	void setCode(const std::string &code) {  m_Code = code; }
 	void setToken(const unsigned char *token, unsigned short len);
 
-	const unsigned char getType() const { return m_Type; }
+	 unsigned char getType() const { return m_Type; }
 	const std::string &getCode() const { return m_Code; }
 	const unsigned char *getToken() const { return m_Token; }
-	const unsigned short getTokenLength() const { return m_TokenLen; }
+	 unsigned short getTokenLength() const { return m_TokenLen; }
 protected:
 	virtual int putBody(unsigned char *buf);
 private:
@@ -101,14 +101,14 @@ public:
 	
 	RequestLoginTokenExReplyPacket &operator=(const RequestLoginTokenExReplyPacket &rhs);
 
-	const unsigned char getType() const { return m_Type; }
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getType() const { return m_Type; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
 
-	const unsigned short getTokenLength() const { return m_TokenLen; }
+	 unsigned short getTokenLength() const { return m_TokenLen; }
 	const unsigned char *getToken() const { return m_Token; }
 
 	const unsigned char *getData() const { return m_Data; }
-	const unsigned int getDataLength() const { return m_DataLen; }
+	 unsigned int getDataLength() const { return m_DataLen; }
 protected:
 	virtual void parseBody();
 private:
@@ -124,8 +124,8 @@ public:
 
 	ServerDetectorPacket &operator=(const ServerDetectorPacket &rhs);
 	
-	const unsigned int getFromIP() const { return m_FromIP; }
-	const unsigned char getStep() const { return m_Step; }
+	 unsigned int getFromIP() const { return m_FromIP; }
+	 unsigned char getStep() const { return m_Step; }
 
 	static void setFromIP(const unsigned int ip) { m_FromIP = ip; }
 	static void setStep( const unsigned char step) { m_Step = step; }
@@ -144,10 +144,10 @@ public:
 	ServerDetectorReplyPacket(const ServerDetectorReplyPacket &rhs);
 	ServerDetectorReplyPacket &operator=(const ServerDetectorReplyPacket &rhs);
 
-	const unsigned int getRedirectIP() const { return m_IP; }
-	const unsigned short getReplyCode() const { return m_ReplyCode; }
-	const bool isServerReady() const { return m_ReplyCode == QQ_CMD_SERVER_DETECT_REPLY_OK; }
-	const bool needRedirect() const { return m_ReplyCode == QQ_CMD_SERVER_DETECT_REPLY_REDIRECT; }
+	 unsigned int getRedirectIP() const { return m_IP; }
+	 unsigned short getReplyCode() const { return m_ReplyCode; }
+	 bool isServerReady() const { return m_ReplyCode == QQ_CMD_SERVER_DETECT_REPLY_OK; }
+	 bool needRedirect() const { return m_ReplyCode == QQ_CMD_SERVER_DETECT_REPLY_REDIRECT; }
 protected:
 	virtual void parseBody();
 private:

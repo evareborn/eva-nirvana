@@ -94,7 +94,7 @@ const QHostAddress EvaSocket::getSocketAddress( )
 	return QHostAddress();
 }
 
-const unsigned short EvaSocket::getSocketPort( )
+unsigned short EvaSocket::getSocketPort( )
 {
 	if(connectSocket) return connectSocket->port();
 	return 0;
@@ -604,7 +604,7 @@ const QString HttpHeader::getCookie(const QString &name) const
 	return m_Cookies[name];
 }
 
-const unsigned int HttpHeader::getContentLength() 
+unsigned int HttpHeader::getContentLength() 
 {
 	QString strLen = getMetaData(HTTP_CONTENT_LENGTH);
 	bool ok = false;
@@ -614,12 +614,12 @@ const unsigned int HttpHeader::getContentLength()
 		return 0;
 }
 
-const unsigned int HttpHeader::getHeaderLength() const
+unsigned int HttpHeader::getHeaderLength() const
 {
 	return m_HeaderLen;
 }
 
-const unsigned int HttpHeader::getContentsOffset() const
+unsigned int HttpHeader::getContentsOffset() const
 {
 	return m_HeaderLen;
 }

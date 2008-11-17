@@ -33,7 +33,7 @@ public:
 	EvaRequestKeyPacket &operator=(const EvaRequestKeyPacket &rhs);
 	
 	void setRequest(const unsigned char request){ this->request = request; }
-	const unsigned char getRequest() const { return request; }
+	 unsigned char getRequest() const { return request; }
 
 protected:
 	virtual int putBody(unsigned char* buf);
@@ -50,13 +50,13 @@ public:
 	EvaRequestKeyReplyPacket(const EvaRequestKeyReplyPacket &rhs);
 	virtual ~EvaRequestKeyReplyPacket() {};
 	
-	const unsigned char getKeyType() const { return keyType; }
+	 unsigned char getKeyType() const { return keyType; }
 	const unsigned char *getKey() const { return key; }
 	const unsigned char *getToken() const { return token; }
-	const int getTokenLength() const { return tokenLength; }
-	const unsigned char getReplyCode() const { return replyCode; }
+	 int getTokenLength() const { return tokenLength; }
+	 unsigned char getReplyCode() const { return replyCode; }
 	
-	const bool isReplyOK() const { return replyCode == QQ_REQUEST_KEY_REPLY_OK; }
+	 bool isReplyOK() const { return replyCode == QQ_REQUEST_KEY_REPLY_OK; }
 
         EvaRequestKeyReplyPacket &operator=(const EvaRequestKeyReplyPacket &rhs);
 protected:

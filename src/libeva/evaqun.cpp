@@ -96,7 +96,7 @@ QunInfo &QunInfo::operator=(const QunInfo &rhs)
 	return *this;
 }
 
-const bool QunInfo::operator==(const QunInfo &rhs)
+bool QunInfo::operator==(const QunInfo &rhs)
 {
 	return (qunID == rhs.getQunID())       && (externalID == rhs.getExtID()) &&
 		(type == rhs.getType())         && (authType == rhs.getAuthType()) &&
@@ -463,7 +463,7 @@ void QunReplyPacket::parseBody()
 	}
 }
 
-const bool QunReplyPacket::isReplyOK() const
+bool QunReplyPacket::isReplyOK() const
 {
 	return replyCode == QQ_QUN_CMD_REPLY_OK;
 }

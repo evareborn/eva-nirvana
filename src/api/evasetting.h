@@ -60,19 +60,19 @@ public:
 	bool loadSetting();
 	int getLastUserIndex(); // the last user id
 	void setFilename(QString &name);
-	const bool isRememberChecked(const int id);
-	const bool isHiddenChecked(const int id);
+	 bool isRememberChecked(const int id);
+	 bool isHiddenChecked(const int id);
 	
 	const char *getPassword(const int id);
 	QPtrList<LoginRecord> getRecordedList() { return userList; }
 	
-	const int getConnectType(const int id); // 0: udp, 1: tcp,  2: http proxy
-	const int getServer(const int id);
-	const short getPort(const int id);
-	const QString getProxyUsername(const int id);
-	const QCString getProxyParam(const int id);
+	 int getConnectType(const int id); // 0: udp, 1: tcp,  2: http proxy
+	 int getServer(const int id);
+	 short getPort(const int id);
+	 const QString getProxyUsername(const int id);
+	 const QCString getProxyParam(const int id);
 	
-	const QString defaultDownloadDir() { return m_DownloadDir; }
+	 const QString defaultDownloadDir() { return m_DownloadDir; }
 	
 	LoginRecord m_currLoginSetting;
 	

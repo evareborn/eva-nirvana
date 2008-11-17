@@ -64,17 +64,17 @@ EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name,
 
     lblContents = new QLabel( fraContents, "lblContents" );
     lblContents->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)7, 0, 0, lblContents->sizePolicy().hasHeightForWidth() ) );
-    QFont lblContents_font = KGlobalSettings::fixedFont();
-    lblContents->setFont( lblContents_font ); 
+//X     QFont lblContents_font = KGlobalSettings::fixedFont();
+//X     lblContents->setFont( lblContents_font ); 
     lblContents->setFrameShape( QLabel::NoFrame );
     lblContents->setTextFormat( QLabel::PlainText );
     lblContents->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
     layout6->addWidget( lblContents );
 
-    kurllblUrl = new KURLLabel( fraContents, "kurllblUrl" );
-    kurllblUrl->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)1, 0, 0, kurllblUrl->sizePolicy().hasHeightForWidth() ) );
-    kurllblUrl->setFrameShape( KURLLabel::NoFrame );
-    layout6->addWidget( kurllblUrl );
+    qlblUrl = new QLabel( fraContents, "kurllblUrl" );
+    qlblUrl->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)1, 0, 0, qlblUrl->sizePolicy().hasHeightForWidth() ) );
+    qlblUrl->setFrameShape( QLabel::NoFrame );
+    layout6->addWidget( qlblUrl );
 
     fraContentsLayout->addLayout( layout6, 0, 0 );
     layout7->addWidget( fraContents );
@@ -114,7 +114,7 @@ void EvaSysBroadcastUIBase::languageChange()
     lblTitle->setText( i18n( "System Broadcast:" ) );
     //lblContents->setText( tr( "-" ) );
     //kurllblUrl->setText( tr( "-" ) );
-    kurllblUrl->setProperty( "url", QString::null );
+    qlblUrl->setProperty( "url", QString::null );
     btnDetails->setText( i18n( "&More Details" ) );
     btnDetails->setAccel( QKeySequence( tr( "Alt+M" ) ) );
     btnClose->setText( i18n( "&Close" ) );

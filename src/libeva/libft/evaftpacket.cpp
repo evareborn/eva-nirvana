@@ -43,7 +43,7 @@ EvaFTPacket::~EvaFTPacket()
 	if(m_Buffer) delete m_Buffer;
 }
 
-const bool EvaFTPacket::parse()
+bool EvaFTPacket::parse()
 {
 	if(!m_Buffer) return false;
 	int pos = 0;
@@ -58,7 +58,7 @@ const bool EvaFTPacket::parse()
 	return parseBody(m_Buffer + pos, m_BufferLength - pos - (m_HasTags?1:0));
 }
 
-const bool EvaFTPacket::fill(unsigned char *buf, int *len)
+bool EvaFTPacket::fill(unsigned char *buf, int *len)
 {
 	int pos=0;
 	if(m_HasTags){
@@ -93,25 +93,25 @@ void EvaFTPacket::setPacketTag(const unsigned char tag, const unsigned char tail
 	m_Tail = tail;
 }
 
-const int EvaFTPacket::parseHeader(unsigned char */*buf*/)
+int EvaFTPacket::parseHeader(unsigned char */*buf*/)
 {
 	fprintf(stderr, "EvaFTPacket::parseHeader -- Not implemented!\n");
 	return -1;
 }
 
-const bool EvaFTPacket::parseBody(unsigned char */*buf*/, const int /*len*/)
+bool EvaFTPacket::parseBody(unsigned char */*buf*/, const int /*len*/)
 {
 	fprintf(stderr, "EvaFTPacket::parseBody -- Not implemented!\n");
 	return false;
 }
 
-const int EvaFTPacket::fillHeader(unsigned char */*buf*/)
+int EvaFTPacket::fillHeader(unsigned char */*buf*/)
 {
 	fprintf(stderr, "EvaFTPacket::fillHeader -- Not implemented!\n");
 	return -1;
 }
 
-const int EvaFTPacket::fillBody(unsigned char */*buf*/)
+int EvaFTPacket::fillBody(unsigned char */*buf*/)
 {
 	fprintf(stderr, "EvaFTPacket::fillBody -- Not implemented!\n");
 	return -1;
@@ -135,7 +135,7 @@ EvaFTAgentPacket::EvaFTAgentPacket(const short cmd)
 	m_LengthOffset = 3;
 }
 
-const int EvaFTAgentPacket::parseHeader(unsigned char *buf)
+int EvaFTAgentPacket::parseHeader(unsigned char *buf)
 {
 	if(getTag() != QQ_FILE_AGENT_PACKET_TAG || getTail() != QQ_FILE_AGENT_PACKET_TAIL)
 		return -1;
@@ -156,7 +156,7 @@ const int EvaFTAgentPacket::parseHeader(unsigned char *buf)
 	return pos;
 }
 
-const int EvaFTAgentPacket::fillHeader(unsigned char *buf)
+int EvaFTAgentPacket::fillHeader(unsigned char *buf)
 {
 	int pos = 0;
 	pos += EvaUtil::write16(buf + pos, m_Version);
@@ -196,7 +196,7 @@ EvaFTSynPacket::EvaFTSynPacket(const short cmd)
 	m_LengthOffset = 1;
 }
 
-const int EvaFTSynPacket::parseHeader(unsigned char *buf)
+int EvaFTSynPacket::parseHeader(unsigned char *buf)
 {
 	int pos = 0;
 	if(buf[pos++] != m_StartTag) return -1;
@@ -212,7 +212,7 @@ const int EvaFTSynPacket::parseHeader(unsigned char *buf)
 	return pos;
 }
 
-const int EvaFTSynPacket::fillHeader(unsigned char *buf)
+int EvaFTSynPacket::fillHeader(unsigned char *buf)
 {
 	int pos = 0;
 	buf[pos++] = m_StartTag;

@@ -38,7 +38,7 @@
 #include "regiongrabber.h"
 #include "createsmileywindow.h"
 #include "evamainwindow.h"
-#include "evascriptmanager.h"
+//X #include "evascriptmanager.h"
 #include "evacontactmanager.h"
 #include "evachatwindowmanager.h"
 
@@ -121,7 +121,7 @@ void EvaQunChatWindow::setQuickReplyMenu( )
 {
 }
 
-const unsigned int EvaQunChatWindow::getQunID( )
+unsigned int EvaQunChatWindow::getQunID( )
 {
 	if(mQun)
 		return mQun->getQunID();
@@ -662,7 +662,7 @@ void EvaQunChatWindow::hideEvent( QHideEvent * e )
 void EvaQunChatWindow::slotRequestQunMembers( )
 {	
 	//GetContactManager()->fetchQunDetails(mQun->getQunID());
-	GetContactManager()->fetchQunMembersInfo(mQun->getQunID());
+    EvaMain::g_contactManager->fetchQunMembersInfo(mQun->getQunID());
 	//emit requestQunMembers(mQun->getQunID());
 }
 
@@ -911,7 +911,7 @@ void EvaQunChatWindow::slotCustomBtnClick( )
 	printf("Qun sender : %s\n", name.local8Bit().data());
 	if(m_scriptMap.find(name) == m_scriptMap.end()) return;
 	printf("Qun slotCustomBtnClick : %s\n", name.local8Bit().data());
-	GetScriptManager()->customMenuClicked(true, mQun->getExtQunID(), m_scriptMap[name], name); // script name, button name
+//X 	GetScriptManager()->customMenuClicked(true, mQun->getExtQunID(), m_scriptMap[name], name); // script name, button name
 }
 
 void EvaQunChatWindow::slotRequestChat( const unsigned int id )

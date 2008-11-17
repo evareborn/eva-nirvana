@@ -37,31 +37,31 @@ public:
 
 	void setDestFileDir(const QString &dir);
 	void setCheckValues(const unsigned char *fileNameMd5, const unsigned char *fileMd5);
-	const bool setFileInfo(const QString &fileName, const unsigned int size);
+	 bool setFileInfo(const QString &fileName, const unsigned int size);
 
-	const bool saveFragment(const unsigned int offset, const unsigned int len, unsigned char *buf);
-	const unsigned int getFragment(const unsigned int offset, const unsigned int len, unsigned char *buf);
+	 bool saveFragment(const unsigned int offset, const unsigned int len, unsigned char *buf);
+	 unsigned int getFragment(const unsigned int offset, const unsigned int len, unsigned char *buf);
 
-	const bool isFinished();
-	const bool generateDestFile();
+	 bool isFinished();
+	 bool generateDestFile();
 
 	enum ErrorState { ENone, ENotExists, EExists, EWriteFailed, EReadError,
 			EFragCheck, EDupFragment, EInfoOpen, EMd5Error, EError};
-	inline const int getError() { return m_State; }
+	inline int getError() { return m_State; }
 
 	// if loading, return the md5 of source file in your disk,
 	// if saving, return the md5 of dest file in your disk
 	// if size > 10002432 bytes, return md5 of first 10002432 bytes
-	const bool getSourceFileMd5(char *md5);
-	const bool getSourceFileNameMd5(char *md5);
+	 bool getSourceFileMd5(char *md5);
+	 bool getSourceFileNameMd5(char *md5);
 	
 	// if loading, return the size of source file,
 	// if saving, return the received size of dest file, file might not exist
-	const unsigned int getFileSize();
+	 unsigned int getFileSize();
 
-	const bool loadInfoFile();
+	 bool loadInfoFile();
 	// this method used in recovery the last downloading, return the next start offset
-	const unsigned int getNextOffset();
+	 unsigned int getNextOffset();
 
 	inline const QString &getDir() const { return m_DirPath; }
 	inline const QString &getFileName() const { return m_FileName; }
@@ -77,14 +77,14 @@ private:
 	ErrorState m_State;
 	QMap<unsigned int, unsigned int> m_FragInfo;
 
-	const bool isNewFragment(const unsigned int offset, const unsigned int len);
-	const bool updateInfoFile(const unsigned int offset, const unsigned int len);
-	const bool isFileCorrect();
-	const bool isInfoFinished();
+	 bool isNewFragment(const unsigned int offset, const unsigned int len);
+	 bool updateInfoFile(const unsigned int offset, const unsigned int len);
+	 bool isFileCorrect();
+	 bool isInfoFinished();
 
-	static const bool calculateFileMd5(const QString& fullpath, char *md5Buf);
+	static bool calculateFileMd5(const QString& fullpath, char *md5Buf);
 
-	const bool changeFileInfo();
+	 bool changeFileInfo();
 };
 
 #endif //  #ifndef EVACACHEFILE_H

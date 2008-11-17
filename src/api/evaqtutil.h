@@ -84,11 +84,11 @@ public:
 	void setSignature(const std::string sig, const unsigned int time) { mSignature = sig; mSigModiTime = time; }
 	
 	const std::list<std::string> getGroupNames() const { return groupNames; }
-	const ContactInfo getMyInfo() const { return myInfo; }
-	const FriendList getMyFriendList() const { return list; }
-	const unsigned long long getExtraInfo() const { return mExtraInfo; }
+	 ContactInfo getMyInfo() const { return myInfo; }
+	 FriendList getMyFriendList() const { return list; }
+	 unsigned long long getExtraInfo() const { return mExtraInfo; }
 	const std::string getSignature() const { return mSignature;}
-	const unsigned int getSignatureTime() const { return mSigModiTime;}
+	 unsigned int getSignatureTime() const { return mSigModiTime;}
 private:
 	std::list<std::string> groupNames;
 	ContactInfo myInfo;
@@ -115,7 +115,7 @@ public:
 	void setPicList( const std::list<CustomizedPic> &list) { picList = list; }
 	std::list<CustomizedPic> getPicList() { return picList; }
 	void setQunID(const unsigned int id) { qunID = id; }
-	const unsigned int getQunID() const { return qunID; }
+	 unsigned int getQunID() const { return qunID; }
 private:
 	std::list<CustomizedPic> picList;
 	unsigned int qunID;
@@ -128,7 +128,7 @@ public:
 	void setPicList( const std::list<OutCustomizedPic> &list) { picList = list; }
 	std::list<OutCustomizedPic> getPicList() { return picList; }
 	void setQunID(const unsigned int id) { qunID = id; }
-	const unsigned int getQunID() const { return qunID; }
+	 unsigned int getQunID() const { return qunID; }
 private:
 	std::list<OutCustomizedPic> picList;
 	unsigned int qunID;
@@ -145,7 +145,7 @@ public:
 	QString getTmpFileName() { return tmpFileName; }
 	
 	void setQunID(const unsigned int id) { qunID = id; }
-	const unsigned int getQunID() const { return qunID; }
+	 unsigned int getQunID() const { return qunID; }
 private:
 	unsigned int qunID;
 	QString fileName;
@@ -160,9 +160,9 @@ public:
 	void setQQ( const unsigned int id) { mId = id; }
 	void setImages( const QImage on, const QImage off) { imgOn = on; imgOff = off; }
 	
-	const unsigned int getQQ() { return mId; }
-	const QImage getOnImage() const { return imgOn; }
-	const QImage getOffImage() const { return imgOff; }
+	 unsigned int getQQ() { return mId; }
+	 QImage getOnImage() const { return imgOn; }
+	 QImage getOffImage() const { return imgOff; }
 private:
 	unsigned int mId;
 	QImage imgOn;
@@ -210,16 +210,16 @@ public:
 	static const QString generateCustomSmiley(const QString &source, const QString &destDir, const bool withThumbnail = false);
 	
 	// static method for calculating md5 of a file, should be the absolute path. note: char *md5 must be allocated before calling this method
-	static const bool getFileMD5(const QString &fileName, char *md5);
+	static bool getFileMD5(const QString &fileName, char *md5);
 	
 	// convert MD5 into string expression, all converted string are in upper case
 	static const QString md5ToString(const char *md5);
 	
 	// static method for copying source to dest directory, should be the absolute path
-	static const bool copyFile(const QString &source, const QString &dest);
+	static bool copyFile(const QString &source, const QString &dest);
 	
 	// static method for renaming the source file to dest file name, should be the absolute path, note that: this method will delete source file
-	static const bool rename(const QString &source, const QString &dest);
+	static bool rename(const QString &source, const QString &dest);
 
 	// starting the thread
 	virtual void run();

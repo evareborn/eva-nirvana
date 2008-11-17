@@ -48,7 +48,7 @@ public:
     bool removeTab(int key);
 
     void changeTabTo(int key);
-    const int numTabs() const { return m_d.size(); }
+     int numTabs() const { return m_d.size(); }
 
     void setGridColor(const QColor &c) { m_gridColor = c; }
     void setSelectedColor(const QColor &c) { m_selectedColor = c; }

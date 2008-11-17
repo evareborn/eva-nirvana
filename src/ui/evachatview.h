@@ -27,7 +27,7 @@
 #include <qdatetime.h>
 #include <qcolor.h>
 
-class KPopupMenu;
+class QPopupMenu;
 class MenuPrivateData;
 //class KAction;
 
@@ -60,7 +60,7 @@ private:
 					bool underline, bool italic, bool bold, QString contents);
 	QString wrapNickName(QString &nick, QDateTime time, QColor color, bool isNormal);
 	
-	KPopupMenu *menu;
+	QPopupMenu *menu;
 	MenuPrivateData *d;
 	KAction *copyAction;
 	QString buffer;

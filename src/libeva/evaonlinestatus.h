@@ -34,21 +34,21 @@ public:
 	
 	FriendOnlineEntry *copy() { return new FriendOnlineEntry(*this);}
 	
-	const unsigned int getQQ() const;
-	const unsigned int getIP() const;
-	const unsigned short getPort() const;
-	const char getStatus() const;
-	const char getUnknown1_4() const;    // bit 4
-	const char getUnknown2_11() const;   // bit 11
-	const short getUnknown3_13_14() const;  // bit 13-14
+	 unsigned int getQQ() const;
+	 unsigned int getIP() const;
+	 unsigned short getPort() const;
+	 char getStatus() const;
+	 char getUnknown1_4() const;    // bit 4
+	 char getUnknown2_11() const;   // bit 11
+	 short getUnknown3_13_14() const;  // bit 13-14
 	const unsigned char * getUnknownKey() const;
 	
 	
-	const short getUnknown4_31_32() const { return unknown31_32; }
-	const char getExtFlag() const { return extFlag; }
-	const char getCommFlag() const { return commFlag; }
-	const short getUnknown5_35_36() const { return unknown35_36; }
-	const char getEnd() const { return ending; }
+	 short getUnknown4_31_32() const { return unknown31_32; }
+	 char getExtFlag() const { return extFlag; }
+	 char getCommFlag() const { return commFlag; }
+	 short getUnknown5_35_36() const { return unknown35_36; }
+	 char getEnd() const { return ending; }
 	
 	int numOfBytes;
 	int readData(unsigned char * buf);
@@ -75,7 +75,7 @@ public:
 	OutPacket * copy() { return new GetOnlineFriendsPacket(*this);}
 	GetOnlineFriendsPacket &operator=(const GetOnlineFriendsPacket &rhs);
 	
-	const unsigned char getStartPosition() const { return startPosition; };
+	 unsigned char getStartPosition() const { return startPosition; };
 	
 	void setStartPosition(const unsigned char position) { startPosition = position; };
 
@@ -93,7 +93,7 @@ public:
 	GetOnlineFriendReplyPacket(const GetOnlineFriendReplyPacket &rhs);
 	virtual ~GetOnlineFriendReplyPacket() {} 
 	
-	const unsigned char getPosition() const { return position; }
+	 unsigned char getPosition() const { return position; }
 	const onlineList &getOnlineFriendList() const { return onlineFriends; }
 	GetOnlineFriendReplyPacket &operator=(const GetOnlineFriendReplyPacket &rhs);
 protected:
@@ -111,17 +111,17 @@ public:
 	FriendChangeStatusPacket(const FriendChangeStatusPacket &rhs);
 	virtual ~FriendChangeStatusPacket();
 
-	const unsigned int getQQ() const;
-	const unsigned int getIP() const;
-	const unsigned short getPort() const;
-	const char getStatus() const;
-	const char getUnknown1_4() const;    // bit 4
-	const char getUnknown2_11() const;   // bit 11
-	const short getUnknown3_13_14() const;  // bit 13-14
+	 unsigned int getQQ() const;
+	 unsigned int getIP() const;
+	 unsigned short getPort() const;
+	 char getStatus() const;
+	 char getUnknown1_4() const;    // bit 4
+	 char getUnknown2_11() const;   // bit 11
+	 short getUnknown3_13_14() const;  // bit 13-14
 	const unsigned char *getUnknownKey() const;
 	
 	// this is not that useful, just means the message's receiver should hold this account
-	const unsigned int getMyQQ() const { return myQQNum;}
+	 unsigned int getMyQQ() const { return myQQNum;}
 	FriendChangeStatusPacket &operator=(const FriendChangeStatusPacket &rhs);
 protected:
 	void parseBody();
@@ -141,7 +141,7 @@ public:
 	OutPacket * copy() { return new ChangeStatusPacket(*this);}
 	ChangeStatusPacket &operator=(const ChangeStatusPacket &rhs);
 
-	const char getOnlineStatus() const { return myStatus; }
+	 char getOnlineStatus() const { return myStatus; }
 	void setOnlineStatus( const char status) { myStatus = status; }
 	void setMiscStatus( const unsigned int status ) { miscStatus = status; }
 protected:
@@ -159,8 +159,8 @@ public:
 	ChangeStatusReplyPacket(const ChangeStatusReplyPacket &rhs);
 	virtual ~ChangeStatusReplyPacket() {}
 	
-	const char getReplyCode() const { return replyCode; };
-	const bool isAccepted() const;
+	 char getReplyCode() const { return replyCode; };
+	 bool isAccepted() const;
 	ChangeStatusReplyPacket &operator=(const ChangeStatusReplyPacket &rhs);
 protected:
 	void parseBody();

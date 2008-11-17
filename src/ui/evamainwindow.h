@@ -45,26 +45,26 @@ protected:
 
 class QResizeEvent;
 class QListViewItem;
-class KPopupMenu;
+class QPopupMenu;
 class KHTMLPart;
 class EvaContactListView;
 class EvaQunsListView;
 class EvaRecentContactsListView;
 class EvaScriptWidget;
 
-class EvaMainWindow : public EvaMainUIBase, virtual public EvaDCOPViewInterface
+class EvaMainWindow : public EvaMainUIBase// , virtual public EvaDCOPViewInterface
 {
 	Q_OBJECT
 public:
-	EvaMainWindow(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 ); // | WDestructiveClose
+	EvaMainWindow( EvaMain* evaapp, QWidget* parent = 0, const char* name = 0, WFlags fl = 0); // | WDestructiveClose
 	~EvaMainWindow();
 	
 	void setMainInfo(const unsigned int id, const QString &nick, QPixmap *p);
 	QRect tipRect(const QPoint &pos);
 	QString myInfoTip();
-	const unsigned int getQQ() const { return qqNum; }
-	void setSystemMenu( KPopupMenu *sys);
-	void setStatusMenu( KPopupMenu *status);
+	unsigned int getQQ() const { return qqNum; }
+	void setSystemMenu( QPopupMenu *sys);
+	void setStatusMenu( QPopupMenu *status);
 	
 	void setPosAndSize();
 	const QPoint &getPosition() const { return nowPosition; }
@@ -93,18 +93,18 @@ public:
 	void UpdateLoginInfo(int value, const QString &msg);
 
 	/// DCOP Actions calls
-	int  addTab(QString scriptName, QString name, QString image, QString contents);
+//X 	int  addTab(QString scriptName, QString name, QString image, QString contents);
 	//void removeTab( int id); // it is in public slots
-	void removeTabs(QString scriptName);
-	bool updateTab(int id, QString contents);
-	void addButton(QString scriptName, QString buttonName, QString image, QString tip);
-	void removeButton(QString scriptName, QString buttonName);
-	void removeButtons(QString scriptName);
-	bool isTabExisted(int id);
-	void bringToFront(int id);
-	void openChatWindow(unsigned int id, bool isQun);
-	void updateStatusBar( QString message);
-	void openUrl(int id, QString url);
+//X 	void removeTabs(QString scriptName);
+//X 	bool updateTab(int id, QString contents);
+//X 	void addButton(QString scriptName, QString buttonName, QString image, QString tip);
+//X 	void removeButton(QString scriptName, QString buttonName);
+//X 	void removeButtons(QString scriptName);
+//X 	bool isTabExisted(int id);
+//X 	void bringToFront(int id);
+//X 	void openChatWindow(unsigned int id, bool isQun);
+//X 	void updateStatusBar( QString message);
+//X 	void openUrl(int id, QString url);
 
 public slots:
 	void changeToOnline(unsigned int id);
@@ -164,14 +164,15 @@ private slots:
 	void slotStatusClicked();
 
 private:
+        EvaMain* g_eva;
 	QPoint  nowPosition;
 	QSize   nowSize;
 	unsigned int qqNum;
-	QMap<int, EvaScriptWidget *> m_customTabs;
-	QMap<int, QString> m_tabScriptMap;
+//X 	QMap<int, EvaScriptWidget *> m_customTabs;
+//X 	QMap<int, QString> m_tabScriptMap;
 
-	KPopupMenu *sysMenu;
-	KPopupMenu *statusMenu;
+	QPopupMenu *sysMenu;
+	QPopupMenu *statusMenu;
 
 	QPixmap *pixOnline;
 	QPixmap *pixOffline;
@@ -193,7 +194,7 @@ private:
 	void loadQuns();
 	void loadRecentContacts();
 	
-	EvaScriptWidget *getCustomTab( int id );
+//X 	EvaScriptWidget *getCustomTab( int id );
 	
 	friend class EvaMain;
 };

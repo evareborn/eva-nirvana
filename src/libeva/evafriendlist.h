@@ -47,16 +47,16 @@ public:
 	QQFriend(const unsigned int qqid, const unsigned short qqFace);
 	QQFriend(const QQFriend &rhs);
 	
-	const unsigned int getQQ() const { return qqNum; }
-	const unsigned short getFace() const { return face; }
-	const unsigned char getAge() const { return age; }
-	const char getGender() const { return gender; }
+	 unsigned int getQQ() const { return qqNum; }
+	 unsigned short getFace() const { return face; }
+	 unsigned char getAge() const { return age; }
+	 char getGender() const { return gender; }
 	const std::string &getNick() const { return nick; } 
-	const char getExtFlag() const { return extFlag; }
-	const char getCommonFlag() const { return commonFlag; }
-	const long getLoginTime() const { return loginTime; }
-	const long getIdleTime() const { return idleTime; }
-	const long getLastRefreshTime() const { return lastRefreshTime; }
+	 char getExtFlag() const { return extFlag; }
+	 char getCommonFlag() const { return commonFlag; }
+	 long getLoginTime() const { return loginTime; }
+	 long getIdleTime() const { return idleTime; }
+	 long getLastRefreshTime() const { return lastRefreshTime; }
 	
 	void setAge(const unsigned char age) { this->age = age; }
 	void setGender(const char gender) { this->gender = gender; }
@@ -64,20 +64,20 @@ public:
 	void setExtFlag(const char flag) { extFlag = flag; }
 	void setCommonFlag(const char flag) {commonFlag = flag; }
 	
-	const bool isMember() const { return (commonFlag & 0x2) != 0; }
-	const bool isBoy() const { return gender == QQ_FRIEND_GENDER_GG;}           // aboves from FriendItem
+	 bool isMember() const { return (commonFlag & 0x2) != 0; }
+	 bool isBoy() const { return gender == QQ_FRIEND_GENDER_GG;}           // aboves from FriendItem
 
-	const unsigned int getIP() const { return IP; }
-	const unsigned short getPort() const { return port;}
-	const char getStatus() const { return status;}
-	const char getUnknown1_4() const { return unknown4;}    // bit 4
-	const char getUnknown2_11() const { return unknown11;}   // bit 11
-	const short getUnknown3_13_14() const { return unknown13_14;}  // bit 13-14
+	 unsigned int getIP() const { return IP; }
+	 unsigned short getPort() const { return port;}
+	 char getStatus() const { return status;}
+	 char getUnknown1_4() const { return unknown4;}    // bit 4
+	 char getUnknown2_11() const { return unknown11;}   // bit 11
+	 short getUnknown3_13_14() const { return unknown13_14;}  // bit 13-14
 	const unsigned char * getUnknownKey() const { return unknownKey;}   
-	const short getUnknown4_31_32() const { return unknown31_32; }
-	const char getOnlineExtFlag() const { return onlineExtFlag; }
-	const char getOnlineCommFlag() const { return onlineCommonFlag; }
-	const short getUnknown5_35_36() const { return unknown35_36; }      // aboves from FriendOnlineEntry
+	 short getUnknown4_31_32() const { return unknown31_32; }
+	 char getOnlineExtFlag() const { return onlineExtFlag; }
+	 char getOnlineCommFlag() const { return onlineCommonFlag; }
+	 short getUnknown5_35_36() const { return unknown35_36; }      // aboves from FriendOnlineEntry
 	
 	
 	void setFace( const unsigned short faceCode ) { face = faceCode; m_evaUpdateFlag |= FaceChanged; } // these 7 funcs update status of a 
@@ -97,7 +97,7 @@ public:
 	void setLevel(const unsigned short l ) { level = l;}
 	void setHoursToLevelUp(const unsigned short time ) { hoursToLevelUp = time;}
 	
-	const short getVersion() const { return clientVersion; }    
+	 short getVersion() const { return clientVersion; }    
 	void setVersion( const short version) { clientVersion = version; } // set it once got msg from buddy
 	const unsigned char *getFileSessionKey() const { return fileSessionKey; }
 	void setFileSessionKey( const unsigned char *key)                // set it once got msg from buddy
@@ -110,20 +110,20 @@ public:
 	void setUserInformation( const ContactInfo &info);   // once got user info, set it and update some info
 	
 	void setGroupIndex( const int index) { groupIndex = index; }
-	const int getGroupIndex() const { return groupIndex; }
+	 int getGroupIndex() const { return groupIndex; }
 	
 	void setExtraInfo(const unsigned int info) { mExtraInfo = info; }
-	const unsigned long long getExtraInfo() const { return mExtraInfo; }
-	const bool hasSignature() const { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
-	const bool hasQQTang() const { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
-	const bool hasQQAlbum() const { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
-	const bool hasPalEntry() const { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
-	const bool hasUserHead() const { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
+	 unsigned long long getExtraInfo() const { return mExtraInfo; }
+	 bool hasSignature() const { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
+	 bool hasQQTang() const { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
+	 bool hasQQAlbum() const { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
+	 bool hasPalEntry() const { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
+	 bool hasUserHead() const { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
 	
 	void setSignature(const std::string sig, const unsigned int time) 
 			{ mSignature = sig;  mSignatureModifyTime = time; m_evaUpdateFlag |= SignatureChanged; }
 	const std::string &getSignature() const { return mSignature; }
-	const unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
+	 unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
 
 	void setMemo( const MemoItem &memo ) { m_Memo = memo; m_evaUpdateFlag |= MemoChanged; }
 	const MemoItem &getMemo() const { return m_Memo; }
@@ -136,21 +136,21 @@ public:
 	int operator<(const QQFriend &rhs) const ;
 
 	void setSequence(const unsigned short seq) { m_Sequence = seq; }
-	const unsigned short getSequence() const { return m_Sequence; }
-	const unsigned short getNextSequence() { return ++m_Sequence; }
+	 unsigned short getSequence() const { return m_Sequence; }
+	 unsigned short getNextSequence() { return ++m_Sequence; }
 
-	const int getChatFontSize() const { return m_ChatFontSize; }
-	const int getChatFontColor() const { return m_ChatFontColor; }
-	const int getChatFontRed()     const { return (int)(( m_ChatFontColor>>16) & 0xff); }
-	const int getChatFontGreen() const { return (int)(( m_ChatFontColor>>8) & 0xff); }
-	const int getChatFontBlue()   const { return (int)(  m_ChatFontColor & 0xff); }
+	 int getChatFontSize() const { return m_ChatFontSize; }
+	 int getChatFontColor() const { return m_ChatFontColor; }
+	 int getChatFontRed()     const { return (int)(( m_ChatFontColor>>16) & 0xff); }
+	 int getChatFontGreen() const { return (int)(( m_ChatFontColor>>8) & 0xff); }
+	 int getChatFontBlue()   const { return (int)(  m_ChatFontColor & 0xff); }
 
 	void setChatFontSize( const int size) { m_ChatFontSize = size; }
 	void setChatFontColor(  const int color) { m_ChatFontColor = color; }
 	void setChatFontColor(const int red, const int green, const int blue) {
 			m_ChatFontColor = (( 0xff << 24) | ( ( red & 0xff) << 16) | ( (green & 0xff) << 8) | ( blue & 0xff) ); }
 
-	const unsigned int getEvaUpdateFlag() const { return m_evaUpdateFlag;}
+	 unsigned int getEvaUpdateFlag() const { return m_evaUpdateFlag;}
 	inline void inactiveEvaUpdateFlag( const unsigned int bit);
 	inline int isNickChanged();
 	inline int isFaceChanged();
@@ -222,7 +222,7 @@ class FriendList{
 public:
     FriendList() {}
     ~FriendList() { privateList.clear(); }	
-    const bool hasFriend(const unsigned int id);
+     bool hasFriend(const unsigned int id);
     QQFriend *getFriend(const unsigned int id);
     bool deleteFriend(const unsigned int id);
     void addFriend(const QQFriend &frd);
@@ -242,8 +242,8 @@ public:
     bool addOnlineFriendEntryTo( const unsigned int id, const FriendOnlineEntry & entry);
     bool addContactInfoTo( const unsigned int id, const ContactInfo &info);
     
-    const int numberOfFriends() const { return privateList.size(); }
-    const int numberOfOnlines() ;
+     int numberOfFriends() const { return privateList.size(); }
+     int numberOfOnlines() ;
     std::list<QQFriend> getFriendsInGroupIndexOf( const int index);
     std::list<QQFriend> getAllFriends( const unsigned int myId = 0);
     std::map<unsigned int, QQFriend> &getAllFriendsMap() { return privateList; }

@@ -33,12 +33,12 @@ class EvaBuddyItem : public EvaListViewItem
 public:
     EvaBuddyItem( const QQFriend& buddy, QListViewItem *parent);
 
-    const unsigned int QQ();
+     unsigned int QQ();
     const QQFriend &getFriend() const { return m_buddy; }
 
     void setNumOfMessages(const int n) { m_numOfMessages = n; }
-    const int numOfMessages() const { return m_numOfMessages; }
-    const bool hasMessage() { return (m_numOfMessages != 0); }
+     int numOfMessages() const { return m_numOfMessages; }
+     bool hasMessage() { return (m_numOfMessages != 0); }
 
     void nickChanged();
     void onlineChanged();
@@ -61,7 +61,7 @@ class EvaGroupItem : public EvaListViewItem
 public:
 	EvaGroupItem( int groupIndex, QListView *parent);
 	
-	const int groupIndex() const { return m_groupIndex; }
+	 int groupIndex() const { return m_groupIndex; }
 	void update();
 	QString tip();
 	bool hasMessage();
@@ -75,7 +75,7 @@ protected:
 private:
 	int m_groupIndex;
 
-	const int countOnlineFriends();
+	 int countOnlineFriends();
 };
 
 class EvaContactListView : public EvaListView
@@ -90,7 +90,7 @@ public:
 	void changeGroupTo(const unsigned int id, const int index);
 
 	void deleteBuddy(const unsigned int id);
-	const int numOfGroups() const { return m_groups.size(); }
+	 int numOfGroups() const { return m_groups.size(); }
 signals:
 	void groupDeleted(const int);  // paremeter is the group index
 	//void groupAdded(QString, int); // group name & index
@@ -160,11 +160,11 @@ class EvaQunListViewItem : public EvaListViewItem
 {
 public:
 	EvaQunListViewItem( Qun * q, QListView *parent);
-	const QString name();
-	const unsigned int getQunID() const;
+	 const QString name();
+	 unsigned int getQunID() const;
 	void newMessage();
 	void getMessage();
-	const int numOfMessages() { return m_numOfMessages; }
+	 int numOfMessages() { return m_numOfMessages; }
 
 	void update();
 	QString tip();
@@ -218,19 +218,19 @@ class EvaRecentContactLVItem : public EvaListViewItem
 {
 public:
 	EvaRecentContactLVItem( const bool isQun, QQFriend *f, Qun * q, QListView *parent);
-	const bool isQun() const { return m_type == E_LVIQun; }
+	 bool isQun() const { return m_type == E_LVIQun; }
 
 	// Buddy methods
-	const unsigned int QQ();
+	 unsigned int QQ();
 	QQFriend * getFriend() { return m_buddy; }
 
 	void newMessage(const unsigned int t, bool isMyWord = false);
 	void getMessage();
-	const int numOfMessages() { return m_numOfMessages; }
+	 int numOfMessages() { return m_numOfMessages; }
 
 	// Qun methods
-	const QString QunName();
-	const unsigned int getQunID() const;
+	 const QString QunName();
+	 unsigned int getQunID() const;
 
 	void updateIcon(QPixmap *p);
 	void update();

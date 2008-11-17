@@ -38,8 +38,8 @@ SizeTip::SizeTip( QWidget *parent, const char *name )
 
   //setPalette( QToolTip::palette() );
   setPalette( QPalette(Qt::yellow, QColor(20,190,255)));
-  QRect deskR = KGlobalSettings::desktopGeometry( QPoint( 0, 0 ) );
-  move(deskR.topLeft());
+//X   QRect deskR = KGlobalSettings::desktopGeometry( QPoint( 0, 0 ) );
+//X   move(deskR.topLeft());
 }
 
 void SizeTip::setTip( const QRect &rect )
@@ -54,19 +54,19 @@ void SizeTip::setTip( const QRect &rect )
   positionTip( rect );
 }
 
-void SizeTip::positionTip( const QRect &rect )
+void SizeTip::positionTip( const QRect &/*rect*/ )
 {
   QRect tipRect = geometry();
   tipRect.moveTopLeft( QPoint( 0, 0 ) );
 
-  if ( rect.intersects( tipRect ) )
-  {
-    QRect deskR = KGlobalSettings::desktopGeometry( QPoint( 0, 0 ) );
-
-    tipRect.moveCenter( QPoint( deskR.width()/2, deskR.height()/2 ) );
-    if ( !rect.contains( tipRect, true ) && rect.intersects( tipRect ) )
-      tipRect.moveBottomRight( geometry().bottomRight() );
-  }
+//X   if ( rect.intersects( tipRect ) )
+//X   {
+//X     QRect deskR = KGlobalSettings::desktopGeometry( QPoint( 0, 0 ) );
+//X 
+//X     tipRect.moveCenter( QPoint( deskR.width()/2, deskR.height()/2 ) );
+//X     if ( !rect.contains( tipRect, true ) && rect.intersects( tipRect ) )
+//X       tipRect.moveBottomRight( geometry().bottomRight() );
+//X   }
 
   move( tipRect.topLeft() );
 }

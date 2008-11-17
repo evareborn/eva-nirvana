@@ -130,15 +130,15 @@ public:
 	};
 	
 	// save Qun information method	
-	const bool saveQunList(QObject *receiver, QunList &list);
-	const bool loadQunList(/*QObject *receiver*/);
+	 bool saveQunList(QObject *receiver, QunList &list);
+	 bool loadQunList(/*QObject *receiver*/);
 	
 	// the group names include user creating ones and the first one "buddy list"
-	const bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
+	 bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
 				unsigned short extraInfo, std::string sig, unsigned int sigTime);
-	const bool loadBuddyList(/*QObject * receiver*/);
+	 bool loadBuddyList(/*QObject * receiver*/);
 	
-	const bool saveMessage(const int buddy, const int sender, QString sNick, 
+	 bool saveMessage(const int buddy, const int sender, QString sNick, 
 			const int receiver, QString rNick,
 			const bool isNormal, 
 			const QString message, 
@@ -150,15 +150,15 @@ public:
 	std::list<chatMessage> getMessages(const int buddy, const int page, const QDateTime starttime, const QDateTime endtime, 
 						const bool isQunMsg = false);
 	
-	const bool saveSysMessage(const short msgType, const unsigned char type, const int fromQQ, const int toQQ, 
+	 bool saveSysMessage(const short msgType, const unsigned char type, const int fromQQ, const int toQQ, 
 				const QString message, const int internalQunID = 0, const unsigned int commander = 0,
 					const unsigned char *code = 0, const unsigned short codeLen = 0,
 					const unsigned char *token = 0, const unsigned short tokenLen = 0);
 	std::list<sysMessage> getSysMessages( const int page); // page number starts from 0
 	sysMessage getLastSysMessage();
 	
-	const bool saveSettings();
-	const bool loadSettings();
+	 bool saveSettings();
+	 bool loadSettings();
 	void loadDefaultSettings();
 	
 	void setThemeDir(const QString &dir) { themeDir = dir; }
@@ -178,21 +178,21 @@ public:
 	
 	const QString &getThemeDir() const { return themeDir; }
 	const QString &getSoundDir() const { return soundDir; }
-	const int getPageSize() const { return pageSize; }
+	 int getPageSize() const { return pageSize; }
 	const QSize &getFaceSize() const { return faceSize; }
-	const bool isShowSystemBroadcastEnabled() const { return showQQBroadcast; }
-	const bool isShowSystemNewsEnabled() const { return m_ShowQQNews; }
+	 bool isShowSystemBroadcastEnabled() const { return showQQBroadcast; }
+	 bool isShowSystemNewsEnabled() const { return m_ShowQQNews; }
 
-	const bool isShowMessageTipEnabled() const { return showMessageTipWindow;}
-	const bool isShowBudyOnlineNotifyEnabled() const { return showBudyOnlineNotifyWindow;}
-	const bool isShowOnlineEnabled() const { return showOnlineUsers;}
-	const bool isSendKeyEnterEnabled() const { return isSendKeyEnter; }
-	const bool isSoundEnabled() const { return playSound;}
-	const bool isAutoReplyEnabled() const { return autoReply; }
-	const bool isShowSmileyInNickName() const { return m_ShowSmileyInNickName; }
-	const bool isShowSignatureInSeperateLine() const { return m_ShowSignatureInSeperateLine; }
+	 bool isShowMessageTipEnabled() const { return showMessageTipWindow;}
+	 bool isShowBudyOnlineNotifyEnabled() const { return showBudyOnlineNotifyWindow;}
+	 bool isShowOnlineEnabled() const { return showOnlineUsers;}
+	 bool isSendKeyEnterEnabled() const { return isSendKeyEnter; }
+	 bool isSoundEnabled() const { return playSound;}
+	 bool isAutoReplyEnabled() const { return autoReply; }
+	 bool isShowSmileyInNickName() const { return m_ShowSmileyInNickName; }
+	 bool isShowSignatureInSeperateLine() const { return m_ShowSignatureInSeperateLine; }
 	
-	const int getAutoReplySelectedIndex() const { return autoSelectedIndex; }
+	 int getAutoReplySelectedIndex() const { return autoSelectedIndex; }
 	const QString &getSelectedAutoReply();
 	const QString &getQuickReplyMessageAt(const int index);
 	void addAutoReplyMessage(const QString &message);
@@ -204,13 +204,13 @@ public:
 	const std::list<QString> &getAutoReplyList();
 	const std::list<QString> &getQuickReplyList();
 
-	const QString getPictureCacheDir() const { return pictureCacheDir; }
+	 QString getPictureCacheDir() const { return pictureCacheDir; }
 	void setPictureCacheDir(const QString path) { pictureCacheDir = path; }
 
-	const QString getCustomSmileyDir() const { return customSmileyDir; }
+	 QString getCustomSmileyDir() const { return customSmileyDir; }
 	void setCustomSmileyDir(const QString path) { customSmileyDir = path; }
 
-	const QString getUserHeadDir() const { return userHeadDir; }
+	 QString getUserHeadDir() const { return userHeadDir; }
 	void setUserHeadDir(const QString path) { userHeadDir = path; }	
 	
 	const KShortcut &getMessageShortcut() const { return shortcut; }
@@ -264,46 +264,46 @@ public:
 
 	// get buddy font settings
 	const QColor &getBuddyNameColor () const { return m_BuddyNameColor; }
-	const bool isBuddyNameBold() const { return m_BuddyNameFontB; }
-	const bool isBuddyNameUnderline() const { return m_BuddyNameFontU; }
-	const bool isBuddyNameItalic() const { return m_BuddyNameFontI; }
+	 bool isBuddyNameBold() const { return m_BuddyNameFontB; }
+	 bool isBuddyNameUnderline() const { return m_BuddyNameFontU; }
+	 bool isBuddyNameItalic() const { return m_BuddyNameFontI; }
 
 	const QColor &getBuddySigColor () const { return m_BuddySigColor; }
-	const bool isBuddySigBold() const { return m_BuddySigFontB; }
-	const bool isBuddySigUnderline() const { return m_BuddySigFontU; }
-	const bool isBuddySigItalic() const { return m_BuddySigFontI; }
+	 bool isBuddySigBold() const { return m_BuddySigFontB; }
+	 bool isBuddySigUnderline() const { return m_BuddySigFontU; }
+	 bool isBuddySigItalic() const { return m_BuddySigFontI; }
 
 	const QColor &getBuddyFlashColor () const { return m_BuddyFlashColor; }
-	const bool isBuddyFlashBold() const { return m_BuddyFlashFontB; }
-	const bool isBuddyFlashUnderline() const { return m_BuddyFlashFontU; }
-	const bool isBuddyFlashItalic() const { return m_BuddyFlashFontI; }
+	 bool isBuddyFlashBold() const { return m_BuddyFlashFontB; }
+	 bool isBuddyFlashUnderline() const { return m_BuddyFlashFontU; }
+	 bool isBuddyFlashItalic() const { return m_BuddyFlashFontI; }
 
 	// get Qun font settings
 	const QColor &getQunNameColor () const { return m_QunNameColor; }
-	const bool isQunNameBold() const { return m_QunNameFontB; }
-	const bool isQunNameUnderline() const { return m_QunNameFontU; }
-	const bool isQunNameItalic() const { return m_QunNameFontI; }
+	 bool isQunNameBold() const { return m_QunNameFontB; }
+	 bool isQunNameUnderline() const { return m_QunNameFontU; }
+	 bool isQunNameItalic() const { return m_QunNameFontI; }
 
 	const QColor &getQunFlashColor () const { return m_QunFlashColor; }
-	const bool isQunFlashBold() const { return m_QunFlashFontB; }
-	const bool isQunFlashUnderline() const { return m_QunFlashFontU; }
-	const bool isQunFlashItalic() const { return m_QunFlashFontI; }
+	 bool isQunFlashBold() const { return m_QunFlashFontB; }
+	 bool isQunFlashUnderline() const { return m_QunFlashFontU; }
+	 bool isQunFlashItalic() const { return m_QunFlashFontI; }
 
 	// get Group font settings
 	const QColor &getGroupNameColor() const { return m_GroupNameColor; }
-	const bool isGroupNameBold() const { return m_GroupNameFontB; }
-	const bool isGroupNameUnderline() const { return m_GroupNameFontU; }
-	const bool isGroupNameItalic() const { return m_GroupNameFontI; }
+	 bool isGroupNameBold() const { return m_GroupNameFontB; }
+	 bool isGroupNameUnderline() const { return m_GroupNameFontU; }
+	 bool isGroupNameItalic() const { return m_GroupNameFontI; }
 
 	const QColor &getGroupFlashColor () const { return m_GroupFlashColor; }
-	const bool isGroupFlashBold() const { return m_GroupFlashFontB; }
-	const bool isGroupFlashUnderline() const { return m_GroupFlashFontU; }
-	const bool isGroupFlashItalic() const { return m_GroupFlashFontI; }
+	 bool isGroupFlashBold() const { return m_GroupFlashFontB; }
+	 bool isGroupFlashUnderline() const { return m_GroupFlashFontU; }
+	 bool isGroupFlashItalic() const { return m_GroupFlashFontI; }
 
 	const QColor &getGroupCountColor() const { return m_GroupCountColor; }
-	const bool isGroupOnlineCountBold() const { return m_GroupOnlineCountFontB; }
-	const bool isGroupOnlineCountUnderline() const { return m_GroupOnlineCountFontU; }
-	const bool isGroupOnlineCountItalic() const { return m_GroupOnlineCountFontI; }
+	 bool isGroupOnlineCountBold() const { return m_GroupOnlineCountFontB; }
+	 bool isGroupOnlineCountUnderline() const { return m_GroupOnlineCountFontU; }
+	 bool isGroupOnlineCountItalic() const { return m_GroupOnlineCountFontI; }
 
 	int getIdleMaxTime() const { return idleMaxTime; }
 
@@ -318,15 +318,15 @@ public:
 	const BuddyInfoCacheItem removeToBeAddedBuddy(const unsigned int id);
 
 	void addToRejectForever(const unsigned int id);
-	const bool removeFromRejectForever(const unsigned int id);
-	const bool isInRejectForever(const unsigned int id);
+	 bool removeFromRejectForever(const unsigned int id);
+	 bool isInRejectForever(const unsigned int id);
 
 	void addToQunRejectForever(const unsigned int id, const unsigned int qq);
-	const bool removeFromQunRejectForever(const unsigned int id, const unsigned int qq = 0);// if qq is 0, remove all members of qun id
-	const bool isInQunRejectForever(const unsigned int id, const unsigned int qq);
+	 bool removeFromQunRejectForever(const unsigned int id, const unsigned int qq = 0);// if qq is 0, remove all members of qun id
+	 bool isInQunRejectForever(const unsigned int id, const unsigned int qq);
 
 	void setRecentContactListSize(const int size);
-	const int recentContactListSize();
+	 int recentContactListSize();
 	std::list<RecentContact> getRecentContacts ();
 	void updateRecentContact(std::list<RecentContact>& list);
 	
@@ -340,8 +340,8 @@ public:
 private:
 	const QString getUserHomeDir();
 	const QString getEvaSettingDir();
-	const QString getEvaUserDir();
-	const bool isDirExisted(const QString &dir);
+	const  QString getEvaUserDir();
+	 bool isDirExisted(const QString &dir);
 	bool createDefaultDirs();
 	bool loadOldProfile();
 	int qqNum;

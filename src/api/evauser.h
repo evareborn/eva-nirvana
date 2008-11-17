@@ -90,11 +90,11 @@ public:
 	virtual ~EvaUser();
 	
 	enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
-	const unsigned int getQQ() const { return qqNum; }
+	unsigned int getQQ() const { return qqNum; }
 	const char *getMd5Password() const { return md5Password; }
 	
 	void setStatus(const UserStatus status) { this->status = status; }
-	const UserStatus getStatus() const { return status; }
+	UserStatus getStatus() const { return status; }
 	static char getStatusCode(const UserStatus status) ;
 	
 	void setDetails(const ContactInfo &details) { this->details = details; }
@@ -113,11 +113,11 @@ public:
 	void setLevel(const unsigned short l ) { level = l;}
 	void setHoursToLevelUp(const unsigned short time ) { hoursToLevelUp = time;}
 		
-	const bool newGroup(const std::string &name);
+	bool newGroup(const std::string &name);
 	void clearGroupNames();
 	void setGroupNames(const std::list<std::string> &groups);
 	void removeGroupName(const int index);
-	const int getGroupIndexOf(const std::string &name);
+	int getGroupIndexOf(const std::string &name);
 	void updateGroupName(const std::string &newName, const int index);
 	
 	void setQunGroupName(const std::string &name) { qunName = name; }
@@ -139,28 +139,28 @@ public:
 	EvaUserSetting *getSetting() { return setting; }
 	KConfig *config(const QString &group);
 	
-	const bool loadGroupedBuddyList();
-	const bool saveGroupedBuddyList();
+	 bool loadGroupedBuddyList();
+	 bool saveGroupedBuddyList();
 	void setBuddyLoadedEnabled( const bool v) { isBuddyListLoaded = v; }
-	const bool isBuddiesLoaded() const { return isBuddyListLoaded; }
+	 bool isBuddiesLoaded() const { return isBuddyListLoaded; }
 
 	QunList *getQunList() { return &qunList; }
 	void setQunList( const QunList &l) { qunList = l; }
-	const bool loadQunList();
-	const bool saveQunList();
-	const bool isQunLoaded() const { return isQunListLoaded; }
+	 bool loadQunList();
+	 bool saveQunList();
+	 bool isQunLoaded() const { return isQunListLoaded; }
 	
 	void setExtraInfo( const unsigned long long info) { mExtraInfo = info; }
-	const unsigned long long getExtraInfo() const { return mExtraInfo; }
-	const bool hasSignature() { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
-	const bool hasQQTang() { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
-	const bool hasQQAlbum() { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
-	const bool hasPalEntry() { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
-	const bool hasUserHead() { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
+	 unsigned long long getExtraInfo() const { return mExtraInfo; }
+	 bool hasSignature() { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
+	 bool hasQQTang() { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
+	 bool hasQQAlbum() { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
+	 bool hasPalEntry() { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
+	 bool hasUserHead() { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
 		
 	void setSignature(const std::string sig, const unsigned int time) { mSignature = sig;  mSignatureModifyTime = time; }
 	const std::string &getSignature() const { return mSignature; }
-	const unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
+	 unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
 	
 	//EvaLoginProcess *loginManager() { return mLoginManager; }
 
@@ -171,18 +171,18 @@ public:
 	void setLastLoginIp(const unsigned int ip) { m_LastLoginIp = ip; }
 	void setLastLoginTime(const unsigned int time) { m_LastLoginTime = time; }
 
-	const unsigned int getLoginWanIp() const { return m_LoginIp; }
-	const unsigned short getLoginWanPort() const { return m_LoginPort; }
-	const unsigned int getLoginLanIp() const { return m_LanIp; }
-	const unsigned short getLoginLanPort() const { return m_LanPort; }
-	const unsigned int getLastLoginIp() const { return m_LastLoginIp; }
-	const unsigned int getLastLoginTime() const { return m_LastLoginTime; }
+	 unsigned int getLoginWanIp() const { return m_LoginIp; }
+	 unsigned short getLoginWanPort() const { return m_LoginPort; }
+	 unsigned int getLoginLanIp() const { return m_LanIp; }
+	 unsigned short getLoginLanPort() const { return m_LanPort; }
+	 unsigned int getLastLoginIp() const { return m_LastLoginIp; }
+	 unsigned int getLastLoginTime() const { return m_LastLoginTime; }
 
-	const bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
+	 bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
 	void addLoginVerifyInfo(const GraphicVerifyCode &info);
-	const GraphicVerifyCode getLoginVerifyInfo();
+	 GraphicVerifyCode getLoginVerifyInfo();
 	GraphicVerifyCode getNextLoginVerifyInfo();
-	const int getNumVerifyCodes() const { return m_CodeList.size(); }
+	 int getNumVerifyCodes() const { return m_CodeList.size(); }
 	void clearAllVerifyCodes();
 
 // DCOP calls

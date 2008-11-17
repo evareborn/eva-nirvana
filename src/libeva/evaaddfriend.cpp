@@ -91,7 +91,7 @@ AddFriendReplyPacket &AddFriendReplyPacket::operator=(const AddFriendReplyPacket
 void AddFriendReplyPacket::parseBody()
 {
 	int index=0;			
-	while(decryptedBuf[index++] != 0x1f);
+	while(decryptedBuf[index++] != 0x1f) ;
 #ifdef WIN32
 	char* qqstr; qqstr=(char*)_alloca(index+1);
 #else
@@ -168,7 +168,7 @@ AddFriendAuthReplyPacket & AddFriendAuthReplyPacket::operator =( const AddFriend
 	return *this;
 }
 
-const bool AddFriendAuthReplyPacket::isSentOK( ) const
+bool AddFriendAuthReplyPacket::isSentOK( ) const
 {
 	return replyCode == QQ_ADD_FRIEND_AUTH_REPLY_OK;
 }
@@ -234,7 +234,7 @@ DeleteFriendReplyPacket & DeleteFriendReplyPacket::operator =( const DeleteFrien
 	return *this;
 }
 
-const bool DeleteFriendReplyPacket::isDeleted( ) const
+bool DeleteFriendReplyPacket::isDeleted( ) const
 {
 	return replyCode == QQ_DELETE_FRIEND_REPLY_OK;
 }
@@ -301,7 +301,7 @@ DeleteMeReplyPacket & DeleteMeReplyPacket::operator =( const DeleteMeReplyPacket
 	return *this;
 }
 
-const bool DeleteMeReplyPacket::isDeleted( ) const
+bool DeleteMeReplyPacket::isDeleted( ) const
 {
 	return replyCode == QQ_DELETE_ME_REPLY_OK;
 }

@@ -43,7 +43,7 @@ public:
 	inline void setBuddyQQ(const int id) { m_Id = id; }
 	inline void setIp(const unsigned int ip) { m_Ip = ip; }
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 private:
 	unsigned char *m_Token;
 	int m_TokenLength;
@@ -57,18 +57,18 @@ class EvaFTAgentCreateReply : public EvaFTAgentPacket
 public:
 	EvaFTAgentCreateReply(const unsigned char *buf, const int len);
 	
-	inline const bool isConnected() const { return m_ReplyCode==QQ_FILE_AGENT_CREATE_OK; }
-	const unsigned short getReplyCode() const { return m_ReplyCode; }
+	inline bool isConnected() const { return m_ReplyCode==QQ_FILE_AGENT_CREATE_OK; }
+	 unsigned short getReplyCode() const { return m_ReplyCode; }
 
 	// if isConnect() returns true, the followings are for the server you are connecting with
 	// otherwise, they will be another proper server's ip and port
 	// also, getSessionId() will return the session id for this operation
-	inline const unsigned int getIp() const { return m_Ip; }
-	inline const unsigned short getPort() const { return m_Port; }
+	inline unsigned int getIp() const { return m_Ip; }
+	inline unsigned short getPort() const { return m_Port; }
 
 	const std::string &getMessage() const { return m_ErrMessage; }
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 private:
 	unsigned short m_ReplyCode;
 	unsigned int m_Ip;
@@ -84,7 +84,7 @@ public:
 	~EvaFTAgentLogin();
 	void setFileAgentToken(const unsigned char *token, const int len);
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 private:
 	unsigned char *m_Token;
 	int m_TokenLength;
@@ -96,9 +96,9 @@ class EvaFTAgentLoginReply : public EvaFTAgentPacket
 public:
 	EvaFTAgentLoginReply(const unsigned char *buf, const int len);
 	~EvaFTAgentLoginReply() {};
-	inline const bool isConnected() const { return m_ReplyCode==QQ_FILE_AGENT_OPERATION_OK ;}
+	inline bool isConnected() const { return m_ReplyCode==QQ_FILE_AGENT_OPERATION_OK ;}
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 private:
 	unsigned int m_ReplyCode;
 };
@@ -121,7 +121,7 @@ public:
 	// ask start at offset
 	inline void setOffset(const unsigned int offset) { m_StartOffset = offset; }
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 private:
 	int m_Type;
 
@@ -150,23 +150,23 @@ public:
 	//inline const bool isTransferNow() const { return m_ReplyCode == QQ_FILE_AGENT_OPERATION_OK; }
 
 	// ask sender to sending next 50 packets
-	inline const bool isReceivedOk() const { return m_NextReplyCode == 0x02; }
+	inline bool isReceivedOk() const { return m_NextReplyCode == 0x02; }
 
 	// tell receiver the file information, sequence always be 0x0001
 	const unsigned char * getFileMd5();
 	const unsigned char * getFileNameMd5();
 	inline const std::string &getFileName() const { return m_FileName; }
-	inline const unsigned int getFileSize() const { return m_FileSize; }
+	inline unsigned int getFileSize() const { return m_FileSize; }
 
 	// data packet, also you should check the sequence number
 	// the file info has the number 1, the data packet starts 2 till
 	// the last packet
-	inline const unsigned int getDataLength() const { return m_DataLength; }
+	inline unsigned int getDataLength() const { return m_DataLength; }
 	//void getData(unsigned char *buf);
-	inline const unsigned char *getData() const { return m_Data; }
+	inline unsigned char *getData() const { return m_Data; }
 	 
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 private:
 	int m_Type;
 
@@ -194,7 +194,7 @@ public:
 	EvaFTAgentAckReady();
 	~EvaFTAgentAckReady();
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 };
 
 
@@ -203,9 +203,9 @@ class EvaFTAgentAskReady : public EvaFTAgentPacket
 public:
 	EvaFTAgentAskReady(const unsigned char *buf, const int len);
 	~EvaFTAgentAskReady() {};
-	inline const bool isAskReady() const { return m_ReplyCode==QQ_FILE_AGENT_OPERATION_OK ;}
+	inline bool isAskReady() const { return m_ReplyCode==QQ_FILE_AGENT_OPERATION_OK ;}
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 private:
 	unsigned int m_ReplyCode;
 };
@@ -217,7 +217,7 @@ public:
 	EvaFTAgentStart();
 	~EvaFTAgentStart();
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 };
 
 
@@ -227,7 +227,7 @@ public:
 	EvaFTAgentStartReply(const unsigned char *buf, const int len);
 	~EvaFTAgentStartReply() {};
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 };
 
 
@@ -242,7 +242,7 @@ public:
 	void setFileAgentToken(const unsigned char *token, const int len);
 	inline void setBuddyQQ(const int id) { m_BuddyId = id; }
 protected:
-	const int fillBody(unsigned char *buf);
+	 int fillBody(unsigned char *buf);
 private:
 	unsigned char *m_Token;
 	int m_TokenLength;
@@ -254,13 +254,13 @@ class EvaFTSynCreateReply : public EvaFTSynPacket
 public:
 	EvaFTSynCreateReply(const unsigned char *buf, const int len);
 	
-	inline const bool isSuccessful() const { return m_ReplyCode==QQ_FILE_AGENT_CREATE_OK; }
-	const unsigned short getReplyCode() const { return m_ReplyCode; }
+	inline bool isSuccessful() const { return m_ReplyCode==QQ_FILE_AGENT_CREATE_OK; }
+	 unsigned short getReplyCode() const { return m_ReplyCode; }
 
-	inline const unsigned int getIp() const { return m_Ip; }
-	inline const unsigned short getPort() const { return m_Port; }
+	inline unsigned int getIp() const { return m_Ip; }
+	inline unsigned short getPort() const { return m_Port; }
 protected:
-	const bool parseBody(unsigned char *buf, const int len);
+	 bool parseBody(unsigned char *buf, const int len);
 private:
 	unsigned short m_ReplyCode;
 	unsigned int m_Ip;

@@ -108,7 +108,7 @@ Packet &Packet::operator=(const Packet &rhs)
         return *this;	
 }
 
-const int Packet::hashCode() 
+int Packet::hashCode() 
 {
 	return ((int)sequence << 16) | command;
 }
@@ -499,7 +499,7 @@ void InPacket::setInPacket( const InPacket * packet )
 	memcpy(decryptedBuf, packet->getBody(), bodyLength);        
 }
 
-const bool InPacket::parse( )
+bool InPacket::parse( )
 {
 	if(bodyLength){
 		parseBody();

@@ -391,7 +391,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout12->addWidget( tbtnAlbum, 2, 0 );
 	
-	kpbUpdateShow = new KPushButton( privateLayoutWidget, "kpbUpdateShow" );
+	kpbUpdateShow = new QPushButton( privateLayoutWidget, "kpbUpdateShow" );
 	
 	layout12->addWidget( kpbUpdateShow, 5, 0 );
 	
@@ -729,7 +729,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	lblShortKey = new QLabel( privateLayoutWidget_5, "lblShortKey" );
 	layout51_2->addWidget( lblShortKey );
 	
-	kkbtnShortKey = new KKeyButton( privateLayoutWidget_5, "kkbtnShortKey" );
+	kkbtnShortKey = new QPushButton( privateLayoutWidget_5, "kkbtnShortKey" );
 	layout51_2->addWidget( kkbtnShortKey );
 	spacer19 = new QSpacerItem( 21, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout51_2->addItem( spacer19 );

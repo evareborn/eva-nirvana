@@ -42,8 +42,8 @@ public:
 	const QString fixed()  const; // thumbnail name
 	const QString &shortcut()  const { return m_Shortcut; } // shortcut 
 	const QString &tip()  const { return m_Tip; } // tip
-	const int numFrames()  const { return m_Frames; } // number of frames
-	const int group()  const { return m_GroupId; } // group id of this custom smiley
+	 int numFrames()  const { return m_Frames; } // number of frames
+	 int group()  const { return m_GroupId; } // group id of this custom smiley
 
 	void setOrg(const QString &name) { m_OrgName = name; }
 	void setShortcut(const QString &shortcut) { m_Shortcut = shortcut; }
@@ -87,7 +87,7 @@ public:
 	bool moveChildrenTo(const int srcIndex, const int destIndex);
 
 	int groupIndex( const QString &name);
-	const int numGroups();
+	 int numGroups();
 	QString groupName(const int groupIndex); // id starts from 0
 	QStringList groupNames();
 	FaceList groupMembers(const int groupIndex);

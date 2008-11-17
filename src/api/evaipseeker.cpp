@@ -63,7 +63,7 @@ EvaIPSeeker::~EvaIPSeeker()
 //check if QQWry.dat exists
 //param: null
 //return: true or false
-const bool EvaIPSeeker::isQQWryExisted()
+bool EvaIPSeeker::isQQWryExisted()
 {
   ipFile.open(fileName.c_str(), ios::in);
   if(!ipFile)
@@ -82,7 +82,7 @@ unsigned int EvaIPSeeker::searchIP(const unsigned int ip)
 {
   unsigned int startIP;
   unsigned int endIP;
-  unsigned int midIP,mOffset;
+  unsigned int midIP,mOffset = 0;
   int r;
   unsigned int i,j;
 

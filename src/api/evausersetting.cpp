@@ -33,6 +33,7 @@
 #include <kdebug.h>
 
 EvaUserSetting::EvaUserSetting(const int id)
+    : m_WinSize( 200, 500 )
 {
 	qqNum = id;
 	isUserDirExisted=false;
@@ -51,20 +52,20 @@ EvaUserSetting::EvaUserSetting(const int id)
 	if(!createDefaultDirs())
 		printf("error, cannot create user directory!\n");
 	
-	m_config = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	m_config = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
 	
 	m_NeedRepaint = true;
 }
 
 EvaUserSetting::~EvaUserSetting()
 {
-	if(m_config){
-		m_config->sync();
-		delete m_config;
-	}
+//X 	if(m_config){
+//X 		m_config->sync();
+//X 		delete m_config;
+//X 	}
 }
 
-const bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
+bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
 				unsigned short extraInfo, std::string sig, unsigned int sigTime)
 {
 	if(!isDirExisted(getEvaUserDir())){
@@ -85,7 +86,7 @@ const bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::strin
 	return true;
 }
 
-const bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
+bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
 {
 	if(!isDirExisted(getEvaUserDir()))
 		return false;
@@ -244,7 +245,7 @@ const bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
 	//return true;
 }
 
-const bool EvaUserSetting::saveMessage(const int buddy, const int sender, QString sNick, 
+bool EvaUserSetting::saveMessage(const int buddy, const int sender, QString sNick, 
 			const int receiver, QString rNick,
 			const bool isNormal, 
 			const QString message, 
@@ -460,7 +461,7 @@ std::list<EvaUserSetting::chatMessage> EvaUserSetting::getMessages(const int bud
 	return list;
 }
 
-const bool EvaUserSetting::saveSysMessage(const short msgType, const unsigned char type, const int fromQQ, const int toQQ, 
+bool EvaUserSetting::saveSysMessage(const short msgType, const unsigned char type, const int fromQQ, const int toQQ, 
 					const QString message, const int internalQunID, const unsigned int commander,
 					const unsigned char *code, const unsigned short codeLen,
 					const unsigned char *token, const unsigned short tokenLen)
@@ -648,7 +649,7 @@ EvaUserSetting::sysMessage EvaUserSetting::getLastSysMessage()
 	return m;
 }
 
-const bool EvaUserSetting::saveSettings()
+bool EvaUserSetting::saveSettings()
 {
 	if(!isDirExisted(getEvaUserDir())){
 		QDir d;
@@ -656,132 +657,132 @@ const bool EvaUserSetting::saveSettings()
 			return false;
 	}
 
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "General");
-	cfg->writeEntry("DISPLAY_QQ_BROADCAST", showQQBroadcast);
-	cfg->writeEntry("DISPLAY_QQ_NEWS", m_ShowQQNews);
-	cfg->writeEntry("DISPLAY_TIP_MESSAGE_TIP_WINDOW", showMessageTipWindow);
-	cfg->writeEntry("DISPLAY_BUDDY_ONLINE_NOTIFY", showBudyOnlineNotifyWindow);
-	cfg->writeEntry("DISPLAY_ONLINE_BUDDIES", showOnlineUsers);
-	cfg->writeEntry("SEND_KEY", isSendKeyEnter);
-	cfg->writeEntry("PLAY_SOUND", playSound);
-	cfg->writeEntry("SHOW_SMILEY_IN_NICK", m_ShowSmileyInNickName);
-	cfg->writeEntry("SHOW_SIG_IN_SEPERATE_LINE", m_ShowSignatureInSeperateLine);
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Font");
-	cfg->writeEntry("BUDDY_NAME_COLOR", m_BuddyNameColor);
-	cfg->writeEntry("BUDDY_NAME_FONT_B", m_BuddyNameFontB);
-	cfg->writeEntry("BUDDY_NAME_FONT_U", m_BuddyNameFontU);
-	cfg->writeEntry("BUDDY_NAME_FONT_I", m_BuddyNameFontI);
-
-	cfg->writeEntry("BUDDY_SIGNATURE_COLOR", m_BuddySigColor);
-	cfg->writeEntry("BUDDY_SIGNATURE_FONT_B", m_BuddySigFontB);
-	cfg->writeEntry("BUDDY_SIGNATURE_FONT_U", m_BuddySigFontU);
-	cfg->writeEntry("BUDDY_SIGNATURE_FONT_I", m_BuddySigFontI);
-
-	cfg->writeEntry("BUDDY_FLASH_COLOR", m_BuddyFlashColor);
-	cfg->writeEntry("BUDDY_FLASH_FONT_B", m_BuddyFlashFontB);
-	cfg->writeEntry("BUDDY_FLASH_FONT_U", m_BuddyFlashFontU);
-	cfg->writeEntry("BUDDY_FLASH_FONT_I", m_BuddyFlashFontI);
-
-	// save Qun font settings
-	cfg->writeEntry("QUN_NAME_COLOR", m_QunNameColor);
-	cfg->writeEntry("QUN_NAME_FONT_B", m_QunNameFontB);
-	cfg->writeEntry("QUN_NAME_FONT_U", m_QunNameFontU);
-	cfg->writeEntry("QUN_NAME_FONT_I", m_QunNameFontI);
-
-	cfg->writeEntry("QUN_FLASH_COLOR", m_QunFlashColor);
-	cfg->writeEntry("QUN_FLASH_FONT_B", m_QunFlashFontB);
-	cfg->writeEntry("QUN_FLASH_FONT_U", m_QunFlashFontU);
-	cfg->writeEntry("QUN_FLASH_FONT_I", m_QunFlashFontI);
-
-	// save group font settings
-	cfg->writeEntry("GROUP_NAME_COLOR", m_GroupNameColor);
-	cfg->writeEntry("GROUP_NAME_FONT_B", m_GroupNameFontB);
-	cfg->writeEntry("GROUP_NAME_FONT_U", m_GroupNameFontU);
-	cfg->writeEntry("GROUP_NAME_FONT_I", m_GroupNameFontI);
-
-	cfg->writeEntry("GROUP_ONLINE_COUNT_COLOR", m_GroupCountColor);
-	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_B", m_GroupOnlineCountFontB);
-	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_U", m_GroupOnlineCountFontU);
-	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_I", m_GroupOnlineCountFontI);
-
-	cfg->writeEntry("GROUP_FLASH_COLOR", m_GroupFlashColor);
-	cfg->writeEntry("GROUP_FLASH_FONT_B", m_GroupFlashFontB);
-	cfg->writeEntry("GROUP_FLASH_FONT_U", m_GroupFlashFontU);
-	cfg->writeEntry("GROUP_FLASH_FONT_I", m_GroupFlashFontI);
-
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Theme");
-	cfg->writeEntry("THEME_DIR", themeDir);
-	cfg->writeEntry("SOUND_DIR", soundDir);
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Reply");
-	cfg->writeEntry("AUTO_REPLY_SELECTED_INDEX", autoSelectedIndex);
-	std::list<QString>::iterator iter;
-	QStringList strList;
-	for(iter = autoList.begin(); iter!=autoList.end(); ++iter){
-		strList += (*iter);
-	}
-	cfg->writeEntry("AUTO_REPLY", strList, '\255');
-	strList.clear();
-	for(iter = quickList.begin(); iter!=quickList.end(); ++iter){
-		strList += (*iter);
-	}
-	cfg->writeEntry("QUICK_REPLY", strList, '\255');	
-	delete groupSaver;
-
-	groupSaver = new KConfigGroupSaver(cfg, "Others");
-	cfg->writeEntry("FACE_SIZE", faceSize);
-	cfg->writeEntry("MESSAGE_PAGE_SIZE", pageSize);
-	cfg->writeEntry("MESSAGE_SHORTCUT", shortcut.toString());
-	cfg->writeEntry("WIN_GEOMETRY_POINT", m_WinLeftTop);
-	cfg->writeEntry("WIN_GEOMETRY_SIZE", m_WinSize);
-	cfg->writeEntry("MAX_IDLE_TIME", idleMaxTime);
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Cached_ToBeAdded_Buddies");
-	cfg->writeEntry("NUM_BUDDIES", m_CachedToBeAddedBuddy.size());
-	std::map<unsigned int, QString>::iterator itr;
-	int num = 0;
-	for(itr = m_CachedToBeAddedBuddy.begin(); itr!=m_CachedToBeAddedBuddy.end(); ++itr){
-		cfg->writeEntry(QString("QQ_%1").arg(num++), itr->second);
-	}	
-	delete groupSaver;
-
-	groupSaver = new KConfigGroupSaver(cfg, "Reject_Forever");
-	cfg->writeEntry("QQ_REJECT_LIST_SIZE", m_RejectForever.size());
-	std::list<unsigned int>::iterator rejectIter;
-	num = 0;
-	for(rejectIter = m_RejectForever.begin(); rejectIter!=m_RejectForever.end(); ++rejectIter){
-		cfg->writeEntry(QString("QQ_%1").arg(num++), (unsigned int)(*rejectIter));
-	}
-	delete groupSaver;
-
-	groupSaver = new KConfigGroupSaver(cfg, "Qun_Reject_Forever");
-	cfg->writeEntry("QUN_REJECT_LIST_SIZE", m_QunRejectForever.size());
-	std::map<unsigned int, std::list<unsigned int> >::iterator qunRejectIter;
-	num = 0;
-	for(qunRejectIter = m_QunRejectForever.begin(); qunRejectIter!=m_QunRejectForever.end(); ++qunRejectIter){
-		cfg->writeEntry(QString("Qun_%1").arg(num++), qunRejectIter->first);
-		cfg->writeEntry("QUN_REJECT_MEMBER_SIZE", (qunRejectIter->second).size());
-		int memberCount = 0;
-		for(rejectIter = qunRejectIter->second.begin(); rejectIter!= qunRejectIter->second.end(); ++rejectIter){
-			cfg->writeEntry(QString("Qun_QQ_%1").arg(memberCount++), (unsigned int)(*rejectIter));
-		}
-	}
-	delete groupSaver;
-
-	//cfg->sync();
-	delete cfg;
+//X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "General");
+//X 	cfg->writeEntry("DISPLAY_QQ_BROADCAST", showQQBroadcast);
+//X 	cfg->writeEntry("DISPLAY_QQ_NEWS", m_ShowQQNews);
+//X 	cfg->writeEntry("DISPLAY_TIP_MESSAGE_TIP_WINDOW", showMessageTipWindow);
+//X 	cfg->writeEntry("DISPLAY_BUDDY_ONLINE_NOTIFY", showBudyOnlineNotifyWindow);
+//X 	cfg->writeEntry("DISPLAY_ONLINE_BUDDIES", showOnlineUsers);
+//X 	cfg->writeEntry("SEND_KEY", isSendKeyEnter);
+//X 	cfg->writeEntry("PLAY_SOUND", playSound);
+//X 	cfg->writeEntry("SHOW_SMILEY_IN_NICK", m_ShowSmileyInNickName);
+//X 	cfg->writeEntry("SHOW_SIG_IN_SEPERATE_LINE", m_ShowSignatureInSeperateLine);
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Font");
+//X 	cfg->writeEntry("BUDDY_NAME_COLOR", m_BuddyNameColor);
+//X 	cfg->writeEntry("BUDDY_NAME_FONT_B", m_BuddyNameFontB);
+//X 	cfg->writeEntry("BUDDY_NAME_FONT_U", m_BuddyNameFontU);
+//X 	cfg->writeEntry("BUDDY_NAME_FONT_I", m_BuddyNameFontI);
+//X 
+//X 	cfg->writeEntry("BUDDY_SIGNATURE_COLOR", m_BuddySigColor);
+//X 	cfg->writeEntry("BUDDY_SIGNATURE_FONT_B", m_BuddySigFontB);
+//X 	cfg->writeEntry("BUDDY_SIGNATURE_FONT_U", m_BuddySigFontU);
+//X 	cfg->writeEntry("BUDDY_SIGNATURE_FONT_I", m_BuddySigFontI);
+//X 
+//X 	cfg->writeEntry("BUDDY_FLASH_COLOR", m_BuddyFlashColor);
+//X 	cfg->writeEntry("BUDDY_FLASH_FONT_B", m_BuddyFlashFontB);
+//X 	cfg->writeEntry("BUDDY_FLASH_FONT_U", m_BuddyFlashFontU);
+//X 	cfg->writeEntry("BUDDY_FLASH_FONT_I", m_BuddyFlashFontI);
+//X 
+//X 	// save Qun font settings
+//X 	cfg->writeEntry("QUN_NAME_COLOR", m_QunNameColor);
+//X 	cfg->writeEntry("QUN_NAME_FONT_B", m_QunNameFontB);
+//X 	cfg->writeEntry("QUN_NAME_FONT_U", m_QunNameFontU);
+//X 	cfg->writeEntry("QUN_NAME_FONT_I", m_QunNameFontI);
+//X 
+//X 	cfg->writeEntry("QUN_FLASH_COLOR", m_QunFlashColor);
+//X 	cfg->writeEntry("QUN_FLASH_FONT_B", m_QunFlashFontB);
+//X 	cfg->writeEntry("QUN_FLASH_FONT_U", m_QunFlashFontU);
+//X 	cfg->writeEntry("QUN_FLASH_FONT_I", m_QunFlashFontI);
+//X 
+//X 	// save group font settings
+//X 	cfg->writeEntry("GROUP_NAME_COLOR", m_GroupNameColor);
+//X 	cfg->writeEntry("GROUP_NAME_FONT_B", m_GroupNameFontB);
+//X 	cfg->writeEntry("GROUP_NAME_FONT_U", m_GroupNameFontU);
+//X 	cfg->writeEntry("GROUP_NAME_FONT_I", m_GroupNameFontI);
+//X 
+//X 	cfg->writeEntry("GROUP_ONLINE_COUNT_COLOR", m_GroupCountColor);
+//X 	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_B", m_GroupOnlineCountFontB);
+//X 	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_U", m_GroupOnlineCountFontU);
+//X 	cfg->writeEntry("GROUP_ONLINE_COUNT_FONT_I", m_GroupOnlineCountFontI);
+//X 
+//X 	cfg->writeEntry("GROUP_FLASH_COLOR", m_GroupFlashColor);
+//X 	cfg->writeEntry("GROUP_FLASH_FONT_B", m_GroupFlashFontB);
+//X 	cfg->writeEntry("GROUP_FLASH_FONT_U", m_GroupFlashFontU);
+//X 	cfg->writeEntry("GROUP_FLASH_FONT_I", m_GroupFlashFontI);
+//X 
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Theme");
+//X 	cfg->writeEntry("THEME_DIR", themeDir);
+//X 	cfg->writeEntry("SOUND_DIR", soundDir);
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Reply");
+//X 	cfg->writeEntry("AUTO_REPLY_SELECTED_INDEX", autoSelectedIndex);
+//X 	std::list<QString>::iterator iter;
+//X 	QStringList strList;
+//X 	for(iter = autoList.begin(); iter!=autoList.end(); ++iter){
+//X 		strList += (*iter);
+//X 	}
+//X 	cfg->writeEntry("AUTO_REPLY", strList, '\255');
+//X 	strList.clear();
+//X 	for(iter = quickList.begin(); iter!=quickList.end(); ++iter){
+//X 		strList += (*iter);
+//X 	}
+//X 	cfg->writeEntry("QUICK_REPLY", strList, '\255');	
+//X 	delete groupSaver;
+//X 
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Others");
+//X 	cfg->writeEntry("FACE_SIZE", faceSize);
+//X 	cfg->writeEntry("MESSAGE_PAGE_SIZE", pageSize);
+//X 	cfg->writeEntry("MESSAGE_SHORTCUT", shortcut.toString());
+//X 	cfg->writeEntry("WIN_GEOMETRY_POINT", m_WinLeftTop);
+//X 	cfg->writeEntry("WIN_GEOMETRY_SIZE", m_WinSize);
+//X 	cfg->writeEntry("MAX_IDLE_TIME", idleMaxTime);
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Cached_ToBeAdded_Buddies");
+//X 	cfg->writeEntry("NUM_BUDDIES", m_CachedToBeAddedBuddy.size());
+//X 	std::map<unsigned int, QString>::iterator itr;
+//X 	int num = 0;
+//X 	for(itr = m_CachedToBeAddedBuddy.begin(); itr!=m_CachedToBeAddedBuddy.end(); ++itr){
+//X 		cfg->writeEntry(QString("QQ_%1").arg(num++), itr->second);
+//X 	}	
+//X 	delete groupSaver;
+//X 
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Reject_Forever");
+//X 	cfg->writeEntry("QQ_REJECT_LIST_SIZE", m_RejectForever.size());
+//X 	std::list<unsigned int>::iterator rejectIter;
+//X 	num = 0;
+//X 	for(rejectIter = m_RejectForever.begin(); rejectIter!=m_RejectForever.end(); ++rejectIter){
+//X 		cfg->writeEntry(QString("QQ_%1").arg(num++), (unsigned int)(*rejectIter));
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Qun_Reject_Forever");
+//X 	cfg->writeEntry("QUN_REJECT_LIST_SIZE", m_QunRejectForever.size());
+//X 	std::map<unsigned int, std::list<unsigned int> >::iterator qunRejectIter;
+//X 	num = 0;
+//X 	for(qunRejectIter = m_QunRejectForever.begin(); qunRejectIter!=m_QunRejectForever.end(); ++qunRejectIter){
+//X 		cfg->writeEntry(QString("Qun_%1").arg(num++), qunRejectIter->first);
+//X 		cfg->writeEntry("QUN_REJECT_MEMBER_SIZE", (qunRejectIter->second).size());
+//X 		int memberCount = 0;
+//X 		for(rejectIter = qunRejectIter->second.begin(); rejectIter!= qunRejectIter->second.end(); ++rejectIter){
+//X 			cfg->writeEntry(QString("Qun_QQ_%1").arg(memberCount++), (unsigned int)(*rejectIter));
+//X 		}
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	//cfg->sync();
+//X 	delete cfg;
 	return true;
 }
 
-const bool EvaUserSetting::loadSettings()
+bool EvaUserSetting::loadSettings()
 {
 	if(!isDirExisted(getEvaUserDir())){
 		return false;
@@ -795,163 +796,163 @@ const bool EvaUserSetting::loadSettings()
 		saveSettings();
 	}
 	
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "General");
-	showQQBroadcast = cfg->readBoolEntry("DISPLAY_QQ_BROADCAST", true);
-	m_ShowQQNews = cfg->readBoolEntry("DISPLAY_QQ_NEWS", true);
-	showMessageTipWindow = cfg->readBoolEntry("DISPLAY_TIP_MESSAGE_TIP_WINDOW", true);
-	showBudyOnlineNotifyWindow = cfg->readBoolEntry("DISPLAY_BUDDY_ONLINE_NOTIFY", true);
-	showOnlineUsers = cfg->readBoolEntry("DISPLAY_ONLINE_BUDDIES", false);
-	isSendKeyEnter = cfg->readBoolEntry("SEND_KEY", false);
-	playSound = cfg->readBoolEntry("PLAY_SOUND", true);
-	m_ShowSmileyInNickName = cfg->readBoolEntry("SHOW_SMILEY_IN_NICK", false);
-	m_ShowSignatureInSeperateLine = cfg->readBoolEntry("SHOW_SIG_IN_SEPERATE_LINE", false);
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Font");
-	m_BuddyNameColor = cfg->readColorEntry("BUDDY_NAME_COLOR", &Qt::black);
-	m_BuddyNameFontB = cfg->readBoolEntry("BUDDY_NAME_FONT_B", false);
-	m_BuddyNameFontU = cfg->readBoolEntry("BUDDY_NAME_FONT_U", false);
-	m_BuddyNameFontI = cfg->readBoolEntry("BUDDY_NAME_FONT_I", false);
-
-	m_BuddySigColor = cfg->readColorEntry("BUDDY_SIGNATURE_COLOR", &Qt::gray);
-	m_BuddySigFontB = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_B", false);
-	m_BuddySigFontU = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_U", false);
-	m_BuddySigFontI = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_I", false);
-
-	m_BuddyFlashColor = cfg->readColorEntry("BUDDY_FLASH_COLOR", &Qt::red);
-	m_BuddyFlashFontB = cfg->readBoolEntry("BUDDY_FLASH_FONT_B", false);
-	m_BuddyFlashFontU = cfg->readBoolEntry("BUDDY_FLASH_FONT_U", false);
-	m_BuddyFlashFontI = cfg->readBoolEntry("BUDDY_FLASH_FONT_I", false);
-
-	m_QunNameColor = cfg->readColorEntry("QUN_NAME_COLOR", &Qt::black);
-	m_QunNameFontB = cfg->readBoolEntry("QUN_NAME_FONT_B", false);
-	m_QunNameFontU = cfg->readBoolEntry("QUN_NAME_FONT_U", false);
-	m_QunNameFontI = cfg->readBoolEntry("QUN_NAME_FONT_I", false);
-
-	m_QunFlashColor = cfg->readColorEntry("QUN_FLASH_COLOR", &Qt::red);
-	m_QunFlashFontB = cfg->readBoolEntry("QUN_FLASH_FONT_B", false);
-	m_QunFlashFontU = cfg->readBoolEntry("QUN_FLASH_FONT_U", false);
-	m_QunFlashFontI = cfg->readBoolEntry("QUN_FLASH_FONT_I", false);
-
-	m_GroupNameColor = cfg->readColorEntry("GROUP_NAME_COLOR", &Qt::black);
-	m_GroupNameFontB = cfg->readBoolEntry("GROUP_NAME_FONT_B", false);
-	m_GroupNameFontU = cfg->readBoolEntry("GROUP_NAME_FONT_U", false);
-	m_GroupNameFontI = cfg->readBoolEntry("GROUP_NAME_FONT_I", false);
-
-	m_GroupCountColor = cfg->readColorEntry("GROUP_ONLINE_COUNT_COLOR", &Qt::blue);
-	m_GroupOnlineCountFontB = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_B", false);
-	m_GroupOnlineCountFontU = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_U", false);
-	m_GroupOnlineCountFontI = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_I", false);
-
-	m_GroupFlashColor = cfg->readColorEntry("GROUP_FLASH_COLOR", &Qt::red);
-	m_GroupFlashFontB = cfg->readBoolEntry("GROUP_FLASH_FONT_B", false);
-	m_GroupFlashFontU = cfg->readBoolEntry("GROUP_FLASH_FONT_U", false);
-	m_GroupFlashFontI = cfg->readBoolEntry("GROUP_FLASH_FONT_I", false);
-
-	delete groupSaver;
-	
-	groupSaver = new KConfigGroupSaver(cfg, "Theme");
-	themeDir = cfg->readEntry("THEME_DIR");
-	soundDir = cfg->readEntry("SOUND_DIR");
-	delete groupSaver;
-
-		
-	autoList.clear();
-	quickList.clear();
-	groupSaver = new KConfigGroupSaver(cfg, "Reply");
-	autoSelectedIndex = cfg->readNumEntry("AUTO_REPLY_SELECTED_INDEX");
-	QStringList strList;
-	strList = cfg->readListEntry("AUTO_REPLY", '\255');
-	if(strList.size()){
-		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
-			autoList.push_back(*iter);
-	} else {
-		autoList.push_back(QString(i18n("Sorry, I am working.")));
-		autoList.push_back(QString(i18n("Having dinner now./fa")));
-		autoList.push_back(QString(i18n("I am not available now, sorry.")));	
-	}
-	
-	strList.clear();
-	strList = cfg->readListEntry("QUICK_REPLY", '\255');
-	if(strList.size()){
-		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
-			quickList.push_back(*iter);
-	} else {
-		quickList.push_back(QString(i18n("Oh.")));
-		quickList.push_back(QString(i18n("OK, OK, I got you.")));
-		quickList.push_back(QString(i18n("/jy , really?")));	
-	}
-	delete groupSaver;
-
-	groupSaver = new KConfigGroupSaver(cfg, "Others");
-	QSize size(16, 16);
-	faceSize = cfg->readSizeEntry("FACE_SIZE", &size);
-	pageSize = cfg->readNumEntry("MESSAGE_PAGE_SIZE", 25);
-	QString shortkey = cfg->readEntry("MESSAGE_SHORTCUT") ;
-	if(shortkey.isEmpty())
-		shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
-	else{
-		if(!shortcut.init(shortkey))
-			shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
-	}
-	QPoint p(600, 100); 
-	m_WinLeftTop = cfg->readPointEntry("WIN_GEOMETRY_POINT", &p);
-	QSize winSize(195, 376);
-	m_WinSize = cfg->readSizeEntry("WIN_GEOMETRY_SIZE", &winSize);
-	idleMaxTime = cfg->readNumEntry("MAX_IDLE_TIME", 5);
-	delete groupSaver;
-
-	m_CachedToBeAddedBuddy.clear();
-	groupSaver = new KConfigGroupSaver(cfg, "Cached_ToBeAdded_Buddies");
-	int num = cfg->readNumEntry("NUM_BUDDIES", 0);
-	QString buddyInfo;
-	QStringList items;
-	bool ok;
-	for(int i = 0; i< num; i++){
-		buddyInfo = cfg->readEntry(QString("QQ_%1").arg(i));
-		if(!buddyInfo.isEmpty()){
-			items = QStringList::split(",", buddyInfo);
-			unsigned int id = items[0].toUInt(&ok);
-			if(ok)
-				m_CachedToBeAddedBuddy[id] = buddyInfo;
-		}
-	}
-	delete groupSaver;
-
-	m_RejectForever.clear();
-	groupSaver = new KConfigGroupSaver(cfg, "Reject_Forever");
-	num = cfg->readNumEntry("QQ_REJECT_LIST_SIZE", 0);
-	unsigned int id = 0;
-	for(int i = 0; i< num; i++){
-		id = cfg->readUnsignedNumEntry( QString("QQ_%1").arg(i));
-		printf("read id: %d\n", id);
-		if(id){
-			m_RejectForever.push_back(id);
-		}
-	}
-	delete groupSaver;
-
-	m_QunRejectForever.clear();
-	unsigned int tmpQun, tmpQQ;
-	int memberCount;
-	groupSaver = new KConfigGroupSaver(cfg, "Qun_Reject_Forever");
-	num = cfg->readNumEntry("QUN_REJECT_LIST_SIZE", 0);
-	for(int q = 0; q < num; q++){
-		tmpQun = cfg->readNumEntry(QString("Qun_%1").arg(q), 0);
-		memberCount = cfg->readNumEntry("QUN_REJECT_MEMBER_SIZE", 0);
-		std::list<unsigned int> members;
-		for(int i = 0; i < memberCount; i++){
-			tmpQQ = cfg->readNumEntry( QString("Qun_QQ_%1").arg(i), 0);
-			members.push_back(tmpQQ);
-		}
-		m_QunRejectForever[tmpQun] = members;
-	}
-	delete groupSaver;
-
-	//cfg->sync();
-	delete cfg;
+//X //X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "General");
+//X 	showQQBroadcast = cfg->readBoolEntry("DISPLAY_QQ_BROADCAST", true);
+//X 	m_ShowQQNews = cfg->readBoolEntry("DISPLAY_QQ_NEWS", true);
+//X 	showMessageTipWindow = cfg->readBoolEntry("DISPLAY_TIP_MESSAGE_TIP_WINDOW", true);
+//X 	showBudyOnlineNotifyWindow = cfg->readBoolEntry("DISPLAY_BUDDY_ONLINE_NOTIFY", true);
+//X 	showOnlineUsers = cfg->readBoolEntry("DISPLAY_ONLINE_BUDDIES", false);
+//X 	isSendKeyEnter = cfg->readBoolEntry("SEND_KEY", false);
+//X 	playSound = cfg->readBoolEntry("PLAY_SOUND", true);
+//X 	m_ShowSmileyInNickName = cfg->readBoolEntry("SHOW_SMILEY_IN_NICK", false);
+//X 	m_ShowSignatureInSeperateLine = cfg->readBoolEntry("SHOW_SIG_IN_SEPERATE_LINE", false);
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Font");
+//X 	m_BuddyNameColor = cfg->readColorEntry("BUDDY_NAME_COLOR", &Qt::black);
+//X 	m_BuddyNameFontB = cfg->readBoolEntry("BUDDY_NAME_FONT_B", false);
+//X 	m_BuddyNameFontU = cfg->readBoolEntry("BUDDY_NAME_FONT_U", false);
+//X 	m_BuddyNameFontI = cfg->readBoolEntry("BUDDY_NAME_FONT_I", false);
+//X 
+//X 	m_BuddySigColor = cfg->readColorEntry("BUDDY_SIGNATURE_COLOR", &Qt::gray);
+//X 	m_BuddySigFontB = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_B", false);
+//X 	m_BuddySigFontU = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_U", false);
+//X 	m_BuddySigFontI = cfg->readBoolEntry("BUDDY_SIGNATURE_FONT_I", false);
+//X 
+//X 	m_BuddyFlashColor = cfg->readColorEntry("BUDDY_FLASH_COLOR", &Qt::red);
+//X 	m_BuddyFlashFontB = cfg->readBoolEntry("BUDDY_FLASH_FONT_B", false);
+//X 	m_BuddyFlashFontU = cfg->readBoolEntry("BUDDY_FLASH_FONT_U", false);
+//X 	m_BuddyFlashFontI = cfg->readBoolEntry("BUDDY_FLASH_FONT_I", false);
+//X 
+//X 	m_QunNameColor = cfg->readColorEntry("QUN_NAME_COLOR", &Qt::black);
+//X 	m_QunNameFontB = cfg->readBoolEntry("QUN_NAME_FONT_B", false);
+//X 	m_QunNameFontU = cfg->readBoolEntry("QUN_NAME_FONT_U", false);
+//X 	m_QunNameFontI = cfg->readBoolEntry("QUN_NAME_FONT_I", false);
+//X 
+//X 	m_QunFlashColor = cfg->readColorEntry("QUN_FLASH_COLOR", &Qt::red);
+//X 	m_QunFlashFontB = cfg->readBoolEntry("QUN_FLASH_FONT_B", false);
+//X 	m_QunFlashFontU = cfg->readBoolEntry("QUN_FLASH_FONT_U", false);
+//X 	m_QunFlashFontI = cfg->readBoolEntry("QUN_FLASH_FONT_I", false);
+//X 
+//X 	m_GroupNameColor = cfg->readColorEntry("GROUP_NAME_COLOR", &Qt::black);
+//X 	m_GroupNameFontB = cfg->readBoolEntry("GROUP_NAME_FONT_B", false);
+//X 	m_GroupNameFontU = cfg->readBoolEntry("GROUP_NAME_FONT_U", false);
+//X 	m_GroupNameFontI = cfg->readBoolEntry("GROUP_NAME_FONT_I", false);
+//X 
+//X 	m_GroupCountColor = cfg->readColorEntry("GROUP_ONLINE_COUNT_COLOR", &Qt::blue);
+//X 	m_GroupOnlineCountFontB = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_B", false);
+//X 	m_GroupOnlineCountFontU = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_U", false);
+//X 	m_GroupOnlineCountFontI = cfg->readBoolEntry("GROUP_ONLINE_COUNT_FONT_I", false);
+//X 
+//X 	m_GroupFlashColor = cfg->readColorEntry("GROUP_FLASH_COLOR", &Qt::red);
+//X 	m_GroupFlashFontB = cfg->readBoolEntry("GROUP_FLASH_FONT_B", false);
+//X 	m_GroupFlashFontU = cfg->readBoolEntry("GROUP_FLASH_FONT_U", false);
+//X 	m_GroupFlashFontI = cfg->readBoolEntry("GROUP_FLASH_FONT_I", false);
+//X 
+//X 	delete groupSaver;
+//X 	
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Theme");
+//X 	themeDir = cfg->readEntry("THEME_DIR");
+//X 	soundDir = cfg->readEntry("SOUND_DIR");
+//X 	delete groupSaver;
+//X 
+//X 		
+//X 	autoList.clear();
+//X 	quickList.clear();
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Reply");
+//X 	autoSelectedIndex = cfg->readNumEntry("AUTO_REPLY_SELECTED_INDEX");
+//X 	QStringList strList;
+//X 	strList = cfg->readListEntry("AUTO_REPLY", '\255');
+//X 	if(strList.size()){
+//X 		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
+//X 			autoList.push_back(*iter);
+//X 	} else {
+//X 		autoList.push_back(QString(i18n("Sorry, I am working.")));
+//X 		autoList.push_back(QString(i18n("Having dinner now./fa")));
+//X 		autoList.push_back(QString(i18n("I am not available now, sorry.")));	
+//X 	}
+//X 	
+//X 	strList.clear();
+//X 	strList = cfg->readListEntry("QUICK_REPLY", '\255');
+//X 	if(strList.size()){
+//X 		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
+//X 			quickList.push_back(*iter);
+//X 	} else {
+//X 		quickList.push_back(QString(i18n("Oh.")));
+//X 		quickList.push_back(QString(i18n("OK, OK, I got you.")));
+//X 		quickList.push_back(QString(i18n("/jy , really?")));	
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Others");
+//X 	QSize size(16, 16);
+//X 	faceSize = cfg->readSizeEntry("FACE_SIZE", &size);
+//X 	pageSize = cfg->readNumEntry("MESSAGE_PAGE_SIZE", 25);
+//X 	QString shortkey = cfg->readEntry("MESSAGE_SHORTCUT") ;
+//X 	if(shortkey.isEmpty())
+//X 		shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
+//X 	else{
+//X 		if(!shortcut.init(shortkey))
+//X 			shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
+//X 	}
+//X 	QPoint p(600, 100); 
+//X 	m_WinLeftTop = cfg->readPointEntry("WIN_GEOMETRY_POINT", &p);
+//X 	QSize winSize(195, 376);
+//X 	m_WinSize = cfg->readSizeEntry("WIN_GEOMETRY_SIZE", &winSize);
+//X 	idleMaxTime = cfg->readNumEntry("MAX_IDLE_TIME", 5);
+//X 	delete groupSaver;
+//X 
+//X 	m_CachedToBeAddedBuddy.clear();
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Cached_ToBeAdded_Buddies");
+//X 	int num = cfg->readNumEntry("NUM_BUDDIES", 0);
+//X 	QString buddyInfo;
+//X 	QStringList items;
+//X 	bool ok;
+//X 	for(int i = 0; i< num; i++){
+//X 		buddyInfo = cfg->readEntry(QString("QQ_%1").arg(i));
+//X 		if(!buddyInfo.isEmpty()){
+//X 			items = QStringList::split(",", buddyInfo);
+//X 			unsigned int id = items[0].toUInt(&ok);
+//X 			if(ok)
+//X 				m_CachedToBeAddedBuddy[id] = buddyInfo;
+//X 		}
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	m_RejectForever.clear();
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Reject_Forever");
+//X 	num = cfg->readNumEntry("QQ_REJECT_LIST_SIZE", 0);
+//X 	unsigned int id = 0;
+//X 	for(int i = 0; i< num; i++){
+//X 		id = cfg->readUnsignedNumEntry( QString("QQ_%1").arg(i));
+//X 		printf("read id: %d\n", id);
+//X 		if(id){
+//X 			m_RejectForever.push_back(id);
+//X 		}
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	m_QunRejectForever.clear();
+//X 	unsigned int tmpQun, tmpQQ;
+//X 	int memberCount;
+//X 	groupSaver = new KConfigGroupSaver(cfg, "Qun_Reject_Forever");
+//X 	num = cfg->readNumEntry("QUN_REJECT_LIST_SIZE", 0);
+//X 	for(int q = 0; q < num; q++){
+//X 		tmpQun = cfg->readNumEntry(QString("Qun_%1").arg(q), 0);
+//X 		memberCount = cfg->readNumEntry("QUN_REJECT_MEMBER_SIZE", 0);
+//X 		std::list<unsigned int> members;
+//X 		for(int i = 0; i < memberCount; i++){
+//X 			tmpQQ = cfg->readNumEntry( QString("Qun_QQ_%1").arg(i), 0);
+//X 			members.push_back(tmpQQ);
+//X 		}
+//X 		m_QunRejectForever[tmpQun] = members;
+//X 	}
+//X 	delete groupSaver;
+//X 
+//X 	//cfg->sync();
+//X 	delete cfg;
 	return true; 
 }
 
@@ -1181,7 +1182,7 @@ const QString EvaUserSetting::getEvaUserDir()
 	return getEvaSettingDir() + "/" + QString::number(qqNum);
 }
 	
-const bool EvaUserSetting::isDirExisted(const QString &dir)
+bool EvaUserSetting::isDirExisted(const QString &dir)
 {
 	QDir d;
 	if (d.exists(dir))
@@ -1190,7 +1191,7 @@ const bool EvaUserSetting::isDirExisted(const QString &dir)
 		return false;
 }
 
-const bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
+bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
 {
 	if(!isDirExisted(getEvaUserDir())){
 		QDir d;
@@ -1210,7 +1211,7 @@ const bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
 	return true;
 }
 
-const bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
+bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
 {
 	if(!isDirExisted(getEvaUserDir()))
 		return false;
@@ -1469,7 +1470,7 @@ void EvaUserSetting::addToRejectForever( const unsigned int id )
 	m_RejectForever.push_back(id);
 }
 
-const bool EvaUserSetting::removeFromRejectForever( const unsigned int id )
+bool EvaUserSetting::removeFromRejectForever( const unsigned int id )
 {
 	std::list<unsigned int>::iterator iter;
 
@@ -1482,7 +1483,7 @@ const bool EvaUserSetting::removeFromRejectForever( const unsigned int id )
 	return false;
 }
 
-const bool EvaUserSetting::isInRejectForever( const unsigned int id )
+bool EvaUserSetting::isInRejectForever( const unsigned int id )
 {
 	std::list<unsigned int>::iterator iter;
 
@@ -1510,7 +1511,7 @@ void EvaUserSetting::addToQunRejectForever( const unsigned int id, const unsigne
 	m_QunRejectForever[id] = list;
 }
 
-const bool EvaUserSetting::removeFromQunRejectForever( const unsigned int id, const unsigned int qq )
+bool EvaUserSetting::removeFromQunRejectForever( const unsigned int id, const unsigned int qq )
 {
 	std::map<unsigned int, std::list<unsigned int> >::iterator iter = m_QunRejectForever.find(id);
 
@@ -1535,7 +1536,7 @@ const bool EvaUserSetting::removeFromQunRejectForever( const unsigned int id, co
 	return false;;
 }
 
-const bool EvaUserSetting::isInQunRejectForever( const unsigned int id, const unsigned int qq )
+bool EvaUserSetting::isInQunRejectForever( const unsigned int id, const unsigned int qq )
 {
 	std::map<unsigned int, std::list<unsigned int> >::iterator iter = m_QunRejectForever.find(id);
 
@@ -1569,75 +1570,77 @@ void EvaUserSetting::updateRecentContact( std::list<RecentContact>& list )
 		return;
 	}
 
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
-	cfg->writeEntry("RECENT_LIST", s, '\255');
-	delete groupSaver;
-	delete cfg;	
+//X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
+//X 	cfg->writeEntry("RECENT_LIST", s, '\255');
+//X 	delete groupSaver;
+//X 	delete cfg;	
 }
 
 std::list< RecentContact > EvaUserSetting::getRecentContacts( )
 {
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
-	QStringList s = cfg->readListEntry( "RECENT_LIST", '\255');
+//X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
+//X 	QStringList s = cfg->readListEntry( "RECENT_LIST", '\255');
 	std::list< RecentContact > list;
-	RecentContact contact;
-	printf("recent size: %d\n", s.size());
-	if(s.size()){
-		for(QStringList::Iterator iter = s.begin(); iter != s.end(); ++iter){
-			QString line = (*iter);
-			QStringList parts = QStringList::split("_", line);
-			if(parts.size() != 3) continue;
-			
-			if(parts[0] == "QQ")
-				contact.isQun = false;
-			else
-				contact.isQun = true;
-
-			bool ok;
-			contact.id = parts[1].toUInt(&ok);
-			if(!ok) continue;
-			contact.time = parts[2].toUInt(&ok);
-			if(ok)
-				list.push_back(contact);
-		}
-	}
-	cfg->sync();
-	delete groupSaver;
-	delete cfg;
+//X 	RecentContact contact;
+//X 	printf("recent size: %d\n", s.size());
+//X 	if(s.size()){
+//X 		for(QStringList::Iterator iter = s.begin(); iter != s.end(); ++iter){
+//X 			QString line = (*iter);
+//X 			QStringList parts = QStringList::split("_", line);
+//X 			if(parts.size() != 3) continue;
+//X 			
+//X 			if(parts[0] == "QQ")
+//X 				contact.isQun = false;
+//X 			else
+//X 				contact.isQun = true;
+//X 
+//X 			bool ok;
+//X 			contact.id = parts[1].toUInt(&ok);
+//X 			if(!ok) continue;
+//X 			contact.time = parts[2].toUInt(&ok);
+//X 			if(ok)
+//X 				list.push_back(contact);
+//X 		}
+//X 	}
+//X 	cfg->sync();
+//X 	delete groupSaver;
+//X 	delete cfg;
 
 	return list;
 }
 
-void EvaUserSetting::setRecentContactListSize( const int size )
+void EvaUserSetting::setRecentContactListSize( const int /*size*/ )
 {
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
-	cfg->writeEntry("RECENT_MAX_SIZE", size);
-	cfg->sync();
-	delete groupSaver;
-	delete cfg;
+//X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
+//X 	cfg->writeEntry("RECENT_MAX_SIZE", size);
+//X 	cfg->sync();
+//X 	delete groupSaver;
+//X 	delete cfg;
 }
 
-const int EvaUserSetting::recentContactListSize( )
+int EvaUserSetting::recentContactListSize( )
 {
-	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
-	
-	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
-	int size = cfg->readNumEntry("RECENT_MAX_SIZE", 10);
-	delete groupSaver;
-	delete cfg;
-	return size;
+//X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
+//X 	
+//X 	KConfigGroupSaver *groupSaver = new KConfigGroupSaver(cfg, "Recent_Contacts");
+//X 	int size = cfg->readNumEntry("RECENT_MAX_SIZE", 10);
+//X 	delete groupSaver;
+//X 	delete cfg;
+//X 	return size;
+        return 0;
 }
 
-KConfig *EvaUserSetting::config( const QString &group )
+KConfig *EvaUserSetting::config( const QString &/*group*/ )
 {
+    return NULL;
 	//printf("EvaUserSetting::config: %s\n", group.local8Bit().data());
-	m_config->setGroup(group);
-	return m_config;
+//X 	m_config->setGroup(group);
+//X 	return m_config;
 }
 

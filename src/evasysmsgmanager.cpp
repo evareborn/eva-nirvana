@@ -237,7 +237,7 @@ void EvaSysMsgManager::slotQunSysMessage( const unsigned int id, const unsigned 
 				EvaMain::g_ChatWindowManager->slotQunJoinEvent(id, imType,sender, commander);
 			}
 			//m_PacketManager->doRequestQunInfo( id);
-			GetContactManager()->fetchQunDetails(id);
+			EvaMain::g_contactManager->fetchQunDetails(id);
 			break;
 		case QQ_RECV_IM_CREATE_QUN:
 		case QQ_RECV_IM_APPROVE_JOIN_QUN:
@@ -246,7 +246,7 @@ void EvaSysMsgManager::slotQunSysMessage( const unsigned int id, const unsigned 
 			emit qunListChanged();
 			emit sysMessage();
 			//m_PacketManager->doRequestQunInfo( id);
-			GetContactManager()->fetchQunDetails(id);
+			EvaMain::g_contactManager->fetchQunDetails(id);
 			break;
 		case QQ_RECV_IM_DELETED_FROM_QUN:
 			if( sender == EvaMain::user->getQQ()) {
@@ -264,12 +264,12 @@ void EvaSysMsgManager::slotQunSysMessage( const unsigned int id, const unsigned 
 					EvaMain::g_ChatWindowManager->slotQunJoinEvent(id, imType,sender, 0);
 				}
 				//m_PacketManager->doRequestQunInfo( id);
-				GetContactManager()->fetchQunDetails(id);
+				EvaMain::g_contactManager->fetchQunDetails(id);
 			}
 			break;
 		case QQ_RECV_IM_SET_QUN_ADMIN:
 			//m_PacketManager->doRequestQunInfo( id);
-			GetContactManager()->fetchQunDetails(id);
+			EvaMain::g_contactManager->fetchQunDetails(id);
 			emit sysMessage();
 			break;
 		case QQ_RECV_IM_REQUEST_JOIN_QUN:

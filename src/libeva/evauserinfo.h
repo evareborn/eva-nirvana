@@ -47,7 +47,7 @@ public:
 	const std::string &at(const Info_Index index) const { return infos[index]; }
 	const std::string &at(const int index) const { return infos[index]; }  // note this method will not test if out of index range!
 	const stringList &details() const {  return infos; };
-	const uint count() const { return infos.size(); }
+	 uint count() const { return infos.size(); }
 	
 	void setDetails(const stringList &strList) { infos = strList; }
 	bool operator== ( const ContactInfo &rhs ) const;
@@ -68,7 +68,7 @@ public:
 	GetUserInfoPacket &operator=(const GetUserInfoPacket &rhs);
 	
 	void setUserQQ(const int qqNum) { this->qqNum = qqNum; }
-	const int getUserQQ() const { return qqNum; }
+	 int getUserQQ() const { return qqNum; }
 protected:
 	virtual int putBody(unsigned char *buf); 
      
@@ -109,7 +109,7 @@ public:
 	
 	const std::string getPassword() const { return currentPwd; }
 	const std::string getNewPassword() const { return newPwd; }
-	const ContactInfo getContactInfo() const { return newInfo; }
+	 ContactInfo getContactInfo() const { return newInfo; }
 protected:
 	virtual int putBody(unsigned char *buf);
 private:
@@ -129,7 +129,7 @@ public:
 	InPacket *copy() { return new ModifyInfoReplyPacket(*this);}
 	ModifyInfoReplyPacket &operator=(const ModifyInfoReplyPacket &rhs);	
 	
-	const bool isAccepted() const { return accepted; }
+	 bool isAccepted() const { return accepted; }
 protected:
 	virtual void parseBody();
 private:

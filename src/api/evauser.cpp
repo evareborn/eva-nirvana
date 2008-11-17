@@ -110,7 +110,7 @@ char EvaUser::getStatusCode(const UserStatus status)
 	return statusCode;
 }
 
-const bool EvaUser::newGroup( const std::string & name )
+bool EvaUser::newGroup( const std::string & name )
 {
 	groupNames.push_back(name);
 	return true;
@@ -141,7 +141,7 @@ void EvaUser::removeGroupName(const int index)
 	groupNames.erase(iter);
 }
 
-const int EvaUser::getGroupIndexOf(const std::string &name)
+int EvaUser::getGroupIndexOf(const std::string &name)
 {
 	std::list<std::string>::iterator iter;
 	int i=0;	
@@ -185,7 +185,7 @@ const std::string EvaUser::groupNameAtIndex( const int index )
 	return *iter;
 }
 
-const bool EvaUser::loadGroupedBuddyList()
+bool EvaUser::loadGroupedBuddyList()
 {
 	if(setting->loadBuddyList()){
 		isBuddyListLoaded = true;
@@ -195,7 +195,7 @@ const bool EvaUser::loadGroupedBuddyList()
 	return isBuddyListLoaded;
 }
 
-const bool EvaUser::saveGroupedBuddyList()
+bool EvaUser::saveGroupedBuddyList()
 {
 	return setting->saveBuddyList(this, groupNames, details, myFriends, mExtraInfo, mSignature, mSignatureModifyTime);
 }
@@ -220,7 +220,7 @@ void EvaUser::customEvent( QCustomEvent * e )
 	}
 }
 
-const bool EvaUser::loadQunList( )
+bool EvaUser::loadQunList( )
 {
 	if(setting->loadQunList()){
 		isQunListLoaded = true;
@@ -230,7 +230,7 @@ const bool EvaUser::loadQunList( )
 	return isQunListLoaded;
 }
 
-const bool EvaUser::saveQunList( )
+bool EvaUser::saveQunList( )
 {
 	return setting->saveQunList(this, qunList);
 }
@@ -241,7 +241,7 @@ void EvaUser::addLoginVerifyInfo( const GraphicVerifyCode & info )
 	m_CodeList.push_back(info);
 }
 
-const GraphicVerifyCode EvaUser::getLoginVerifyInfo( )
+GraphicVerifyCode EvaUser::getLoginVerifyInfo( )
 {
 	GraphicVerifyCode code;
 	if(m_CodeList.empty()) return code;

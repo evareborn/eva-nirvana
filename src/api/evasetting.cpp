@@ -263,7 +263,7 @@ int EvaSetting::getLastUserIndex( )
 	return lastIndex;
 }
 
-const bool EvaSetting::isRememberChecked(const int id)
+bool EvaSetting::isRememberChecked(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){
@@ -272,7 +272,7 @@ const bool EvaSetting::isRememberChecked(const int id)
 	return false;
 }
 
-const bool EvaSetting::isHiddenChecked(const int id)
+bool EvaSetting::isHiddenChecked(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){
@@ -299,7 +299,7 @@ const char *EvaSetting::getPassword(const int id)
 	return "";
 }
 
-const int EvaSetting::getConnectType(const int id) // 0: udp, 1: tcp,  2: http proxy
+int EvaSetting::getConnectType(const int id) // 0: udp, 1: tcp,  2: http proxy
 {
 	int index = findUser(id);
 	int type = 0;
@@ -315,7 +315,7 @@ const int EvaSetting::getConnectType(const int id) // 0: udp, 1: tcp,  2: http p
 	return type;
 }
 
-const int EvaSetting::getServer(const int id)
+int EvaSetting::getServer(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){
@@ -324,7 +324,7 @@ const int EvaSetting::getServer(const int id)
 	return 0;	
 }
 
-const short EvaSetting::getPort(const int id)
+short EvaSetting::getPort(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){

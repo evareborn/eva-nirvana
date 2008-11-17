@@ -610,7 +610,7 @@ const QString EvaHelper::generateCustomSmiley( const QString & source, const QSt
 	return strMD5 +"." + destExt;
 }
 
-const bool EvaHelper::getFileMD5( const QString & fileName, char *md5)
+bool EvaHelper::getFileMD5( const QString & fileName, char *md5)
 {
 	if(!md5) return false;
 	QFileInfo info(fileName);
@@ -648,7 +648,7 @@ const QString EvaHelper::md5ToString(const char *md5)
 	return strMd5;
 }
 
-const bool EvaHelper::copyFile( const QString & source, const QString & dest )
+bool EvaHelper::copyFile( const QString & source, const QString & dest )
 {
 	QFileInfo info(source);
 	if(!info.exists()) return false;
@@ -687,7 +687,7 @@ const bool EvaHelper::copyFile( const QString & source, const QString & dest )
 	return true;
 }
 
-const bool EvaHelper::rename( const QString & source, const QString & dest )
+bool EvaHelper::rename( const QString & source, const QString & dest )
 {
 	QDir destFile(source);
 	if(!destFile.exists(source)){

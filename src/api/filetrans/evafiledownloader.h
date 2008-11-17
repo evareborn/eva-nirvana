@@ -58,13 +58,13 @@ public:
 	void setBuddyQQ(const unsigned int id) { m_Id = id; }
 	void setTransferType(const unsigned char type) { m_TransferType = type; }
 	
-	const unsigned int getOldSession() const { return m_OldSession; }
-	const unsigned int getAgentSession() const { return m_Session; }
-	const unsigned int getAgentIp() const { return m_Ip; }
-	const unsigned short getAgentPort() const { return m_Port; }
+	unsigned int getOldSession() const { return m_OldSession; }
+	unsigned int getAgentSession() const { return m_Session; }
+	unsigned int getAgentIp() const { return m_Ip; }
+	unsigned short getAgentPort() const { return m_Port; }
 	const unsigned char * getMyFileAgentKey() const { return m_Key; }
-	const unsigned int getBuddyQQ() const { return m_Id; }
-	const unsigned char getTransferType() const { return m_TransferType; }
+	unsigned int getBuddyQQ() const { return m_Id; }
+	unsigned char getTransferType() const { return m_TransferType; }
 private:
 	unsigned int m_Id;
 	unsigned int m_OldSession;
@@ -85,11 +85,11 @@ public:
 	void setTimeElapsed(const int sec) { m_TimeElapsed = sec; }
 	void setBuddyQQ(const unsigned int id) { m_Id = id; }
 
-	const unsigned int getSession() const { return m_Session; }
-	const unsigned int getFileSize() const { return m_FileSize; }
-	const unsigned int getBytesSent() const { return m_BytesSent; }
-	const int getTimeElapsed() const { return m_TimeElapsed; }
-	const unsigned int getBuddyQQ() const { return m_Id; }
+	unsigned int getSession() const { return m_Session; }
+	unsigned int getFileSize() const { return m_FileSize; }
+	unsigned int getBytesSent() const { return m_BytesSent; }
+	int getTimeElapsed() const { return m_TimeElapsed; }
+	unsigned int getBuddyQQ() const { return m_Id; }
 private:
 	unsigned int m_Id;
 	unsigned int m_Session;
@@ -106,9 +106,9 @@ public:
 	void setOldSession(const unsigned int s) { m_OldSession = s; }
 	void setNewSession(const unsigned int s) { m_NewSession = s; }
 
-	const unsigned int getBuddyQQ() const { return m_Id; }
-	const unsigned int getOldSession() const { return m_OldSession; }
-	const unsigned int getNewSession() const { return m_NewSession; }
+	unsigned int getBuddyQQ() const { return m_Id; }
+	unsigned int getOldSession() const { return m_OldSession; }
+	unsigned int getNewSession() const { return m_NewSession; }
 private:
 	unsigned int m_Id;
 	unsigned int m_OldSession;
@@ -128,13 +128,13 @@ public:
 	void setFileSize(const unsigned int size) { m_Size = size; }
 	void setTransferType(const unsigned char type) { m_TransferType = type; }
 
-	const unsigned int getBuddyQQ() const { return m_Id; }
-	const unsigned int getSession() const { return m_Session; }
-	const EvaFileStatus getStatus() const { return m_Status; }
-	const QString getDir() const { return m_Dir; }
-	const QString getFileName() const { return m_FileName; }
-	const unsigned int getFileSize() const { return m_Size; }
-	const unsigned char getTransferType() const { return m_TransferType; }
+	 unsigned int getBuddyQQ() const { return m_Id; }
+	 unsigned int getSession() const { return m_Session; }
+	 EvaFileStatus getStatus() const { return m_Status; }
+	 QString getDir() const { return m_Dir; }
+	 QString getFileName() const { return m_FileName; }
+	 unsigned int getFileSize() const { return m_Size; }
+	 unsigned char getTransferType() const { return m_TransferType; }
 	
 private:
 	unsigned int m_Id;
@@ -158,14 +158,14 @@ public:
 	void setMyPort(const unsigned short port) { m_MyPort = port; }
 	void setBuddyQQ(const unsigned int id) { m_Id = id; }
 
-	const unsigned int getSession() const { return m_Session; }
-	const unsigned int getSynSession() const { return m_SynSession; }
-	const unsigned int getIp() const { return m_Ip; }
-	const unsigned short getPort() const { return m_Port; }
-	const unsigned int getMyIp() const { return m_MyIp; }
-	const unsigned short getMyPort() const { return m_MyPort; }
+	 unsigned int getSession() const { return m_Session; }
+	 unsigned int getSynSession() const { return m_SynSession; }
+	 unsigned int getIp() const { return m_Ip; }
+	 unsigned short getPort() const { return m_Port; }
+	 unsigned int getMyIp() const { return m_MyIp; }
+	 unsigned short getMyPort() const { return m_MyPort; }
 
-	const unsigned int getBuddyQQ() const { return m_Id; }
+	 unsigned int getBuddyQQ() const { return m_Id; }
 private:
 	unsigned int m_Id;
 	unsigned int m_Session;
@@ -198,18 +198,18 @@ public:
 	inline void setFileName(const QString &file) { m_FileName = file; }
 	inline void setTransferType(const unsigned char type) { m_TransferType = type; }
 
-	inline const unsigned int getBuddyQQ() const { return m_Id; }
-	inline const unsigned int getQQ() const { return m_MyId; }
-	inline const unsigned int getSession() const { return m_Session; }
-	inline const QString getFileName() const { return m_FileName; }
-	inline const unsigned char getTransferType() const { return m_TransferType; }
+	inline unsigned int getBuddyQQ() const { return m_Id; }
+	inline unsigned int getQQ() const { return m_MyId; }
+	inline unsigned int getSession() const { return m_Session; }
+	inline QString getFileName() const { return m_FileName; }
+	inline unsigned char getTransferType() const { return m_TransferType; }
 
-	inline const bool isSender() const { return m_IsSender; }
+	inline bool isSender() const { return m_IsSender; }
 	inline void stop() { m_ExitNow = true; }
 
 	void setDir(const QString &dir);
-	const QString getDir() const;
-	const unsigned int getFileSize();
+	 QString getDir() const;
+	 unsigned int getFileSize();
 
 	const QValueList<QString> &getDirList() const { return m_DirList; }
 	const QValueList<QString> &getFileNameList() const { return m_FileNameList; }
@@ -397,7 +397,7 @@ private:
 	void processDataBuffer(const unsigned short seq, const unsigned char *data, const unsigned int len);
 	void checkBuffer(const unsigned short seq);
 
-	const bool parsePacket(EvaFTAgentPacket *packet);
+	 bool parsePacket(EvaFTAgentPacket *packet);
 };
 
 class EvaFTSynPacket;
@@ -462,7 +462,7 @@ private:
 	void processCreateReply(EvaFTSynCreateReply *packet);
 	//void processRegisterReply(EvaFTAgentAskReady *packet);
 
-	const bool parsePacket(EvaFTSynPacket *packet);
+	 bool parsePacket(EvaFTSynPacket *packet);
 
 private slots:
 	void slotDnsReady();

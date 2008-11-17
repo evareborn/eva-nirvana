@@ -76,7 +76,7 @@ EvaChatView::EvaChatView( QWidget * parent, const char * name )
 	: KHTMLPart(parent, name), menu(NULL), d(0), buffer(""), m_isScrollAtBottom(true)
 {
 	//setOnlyLocalReferences(true);
-	menu = new KPopupMenu(0, "popup");
+	menu = new QPopupMenu(0, "popup");
 	copyAction = KStdAction::copy( this, SLOT(copy()), actionCollection());
 	copyAction->setText(i18n("&Copy Text"));
 	copyAction->setShortcut( KShortcut("Ctrl+C"));
@@ -260,10 +260,10 @@ void EvaChatView::slotPopupMenu( const QString & _url, const QPoint & point )
 		}
 #ifdef HAS_KONQUEROR
 		// Fill search provider entries
-		KConfig config("kuriikwsfilterrc");
-		config.setGroup("General");
-		const QString defaultEngine = config.readEntry("DefaultSearchEngine", "google");
-		const char keywordDelimiter = config.readNumEntry("KeywordDelimiter", ':');
+//X 		KConfig config("kuriikwsfilterrc");
+//X 		config.setGroup("General");
+//X 		const QString defaultEngine = config.readEntry("DefaultSearchEngine", "google");
+//X 		const char keywordDelimiter = config.readNumEntry("KeywordDelimiter", ':');
 		
 
 		// default search provider
@@ -297,7 +297,7 @@ void EvaChatView::slotPopupMenu( const QString & _url, const QPoint & point )
 
 		// favorite search providers
 		QStringList favoriteEngines;
-		favoriteEngines = config.readListEntry("FavoriteSearchEngines"); // for KDE 3.2 API compatibility
+//X 		favoriteEngines = config.readListEntry("FavoriteSearchEngines"); // for KDE 3.2 API compatibility
 		if(favoriteEngines.isEmpty())
 			favoriteEngines << "google" << "google_groups" << "google_news" << "webster" << "dmoz" << "wikipedia";
 		

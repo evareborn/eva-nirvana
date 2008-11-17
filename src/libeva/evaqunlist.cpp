@@ -47,7 +47,7 @@ void TmpQun::addMember( const unsigned int qqNum )
 	memberList.push_back(qqNum);
 }
 
-const bool TmpQun::removeMember( const unsigned int qqNum )
+bool TmpQun::removeMember( const unsigned int qqNum )
 {
 	std::list<unsigned int>::iterator iter;
 	for(iter=memberList.begin(); iter!=memberList.end(); ++iter){
@@ -253,7 +253,7 @@ std::list<unsigned int> Qun::getNextMembers()
 	return list;
 }
 
-const  bool Qun::isAdmin( const unsigned int id)
+bool Qun::isAdmin( const unsigned int id)
 {
 	std::list<FriendItem>::iterator iter;
 	for(iter = memberList.begin(); iter!= memberList.end(); ++iter){
@@ -266,7 +266,7 @@ const  bool Qun::isAdmin( const unsigned int id)
 	return false;
 }
 
-const bool Qun::hasMember(const unsigned int id)
+bool Qun::hasMember(const unsigned int id)
 {
 	std::list<FriendItem>::iterator iter;
 	for(iter = memberList.begin(); iter!= memberList.end(); ++iter){
@@ -431,7 +431,7 @@ Qun * QunList::next( )
 	return &(*m_iter);
 }
 
-const unsigned int QunList::getQunExtID( const unsigned int id )
+unsigned int QunList::getQunExtID( const unsigned int id )
 {
 	Qun *q = getQun(id);
 	if(q)

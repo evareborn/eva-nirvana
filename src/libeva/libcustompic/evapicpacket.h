@@ -55,27 +55,27 @@ public:
 	
 	EvaPicPacket &operator=(const EvaPicPacket &rhs);
 	
-	const int hashCode();
+	 int hashCode();
 	static void setQQ(const unsigned int id) { myQQ = id; }
 	static unsigned int getQQ() { return myQQ;}
 	
-	const unsigned char getHeader() const { return header; }
-	const unsigned char getTail() const { return tail; }
-	const unsigned short getSource() const { return source; }
-	const unsigned short getCommand() const { return command; }
-	const unsigned short getSequence() const { return sequence; }
+	 unsigned char getHeader() const { return header; }
+	 unsigned char getTail() const { return tail; }
+	 unsigned short getSource() const { return source; }
+	 unsigned short getCommand() const { return command; }
+	 unsigned short getSequence() const { return sequence; }
 	
-	const int getCryptPosition() const { return cryptPosition; }
+	 int getCryptPosition() const { return cryptPosition; }
 	
 	static void setFileAgentKey(const unsigned char *key);
 	static void clearKey();
 	void setKey(const unsigned char *key);
 	
-	const bool isValid() const { return header==FAMILY_05_TAG && tail==FAMILY_05_TAIL ;}
-	const unsigned short getPacketLength() const { return packetLength; }
+	 bool isValid() const { return header==FAMILY_05_TAG && tail==FAMILY_05_TAIL ;}
+	 unsigned short getPacketLength() const { return packetLength; }
 protected:
 	void setCryptPosition(const int position) {cryptPosition = position; }
-	const int parseHeader(unsigned char *buf);
+	 int parseHeader(unsigned char *buf);
 	static unsigned char *fileAgentKey;
 	static unsigned int myQQ;
 
@@ -100,10 +100,10 @@ public:
 	
 	EvaPicOutPacket &operator=(const EvaPicOutPacket &rhs);
 	
-	const int getResendCount() const { return resendCount; }
-	const bool fill(unsigned char *buf, int *len);
-	const bool needAck() const { return mNeedAck; };
-	const bool needResend() { return (--resendCount) != 0; }
+	 int getResendCount() const { return resendCount; }
+	 bool fill(unsigned char *buf, int *len);
+	 bool needAck() const { return mNeedAck; };
+	 bool needResend() { return (--resendCount) != 0; }
 protected:
 	virtual int putBody(unsigned char *buf);
 private:
@@ -124,7 +124,7 @@ public:
 	virtual ~EvaPicInPacket();
 	
         void parse() { parseBody(); }
-	const int getLength() const { return bodyLength; };
+	 int getLength() const { return bodyLength; };
 	unsigned char * getBody() const { return decryptedBuf; };
         void setInPacket(const EvaPicInPacket *packet);
 	

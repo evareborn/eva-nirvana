@@ -68,7 +68,7 @@ const QHostAddress &EvaNetwork::getHostAddress() const
 	return socket->getHostAddress();
 }
 
-const short EvaNetwork::getHostPort() const
+short EvaNetwork::getHostPort() const
 {
 	return socket->getHostPort();
 }
@@ -161,7 +161,7 @@ const QHostAddress EvaNetwork::getSocketIp( )
 	return QHostAddress();
 }
 
-const unsigned int EvaNetwork::getSocketPort( )
+unsigned int EvaNetwork::getSocketPort( )
 {
 	if(socket) return socket->getSocketPort();
 	return 0;

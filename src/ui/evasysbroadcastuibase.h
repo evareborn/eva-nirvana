@@ -44,7 +44,8 @@ public:
     QFrame* fraContents;
     QLabel* lblTitle;
     QLabel* lblContents;
-    KURLLabel* kurllblUrl;
+//    KURLLabel* kurllblUrl;
+    QLabel* qlblUrl;
     QPushButton* btnDetails;
     QPushButton* btnClose;
 

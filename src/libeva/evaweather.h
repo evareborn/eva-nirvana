@@ -47,9 +47,9 @@ public:
 	WeatherOpPacket &operator=( const WeatherOpPacket &rhs );
 
 	void setSubCommand(const unsigned char subCommand) { this->subCommand=subCommand; }
-	const unsigned char getSubCommand() const { return subCommand; }
+	 unsigned char getSubCommand() const { return subCommand; }
 	void setIP(const unsigned int ip) { this->ip=ip; }
-	const unsigned int getIP() const { return ip; }
+	 unsigned int getIP() const { return ip; }
 protected:
 	virtual int putBody(unsigned char* buf);
 private:
@@ -67,12 +67,12 @@ public:
 	Weather &operator=(const Weather &rhs);
 	Weather *copy() { Weather* w=new Weather(); *w=*this; return w;}
 
-	const int getTime() const { return time; }
-	const string getShortDesc() const { return shortDesc; }
-	const string getWind() const { return wind; }
-	const int getLowTemperature() const { return lowTemperature; }
-	const int getHighTemperature() const { return highTemperature; }
-	const string getHint() const { return hint; }
+	 int getTime() const { return time; }
+	 string getShortDesc() const { return shortDesc; }
+	 string getWind() const { return wind; }
+	 int getLowTemperature() const { return lowTemperature; }
+	 int getHighTemperature() const { return highTemperature; }
+	 string getHint() const { return hint; }
 	virtual int parseBean(unsigned char* buf);
 private:
 	int time;
@@ -96,10 +96,10 @@ public:
 	InPacket *copy() { return new WeatherOpReplyPacket(*this); }
 	WeatherOpReplyPacket &operator=(const WeatherOpReplyPacket &rhs);
 
-	const unsigned char getSubCommand() const { return subCommand; }
-	const unsigned char getReplyCode() const { return replyCode; }	
-	const string getProvince() const { return province; }
-	const string getCity() const { return city; }
+	 unsigned char getSubCommand() const { return subCommand; }
+	 unsigned char getReplyCode() const { return replyCode; }	
+	 string getProvince() const { return province; }
+	 string getCity() const { return city; }
 	list<Weather> getWeathers() const { return weathers; }
 protected:
 	virtual void parseBody();

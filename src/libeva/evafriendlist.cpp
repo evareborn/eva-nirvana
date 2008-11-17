@@ -246,7 +246,7 @@ void QQFriend::setOnlineTime(const unsigned int time )
 }
 /*  ======================================================= */
 
-const bool FriendList::hasFriend(const unsigned int id) 
+bool FriendList::hasFriend(const unsigned int id) 
 {
 	std::map<unsigned int, QQFriend>::iterator iter;
 	iter = getFriendPosition(id);
@@ -379,7 +379,7 @@ bool FriendList::addContactInfoTo( const unsigned int id, const ContactInfo &inf
 	return true;
 }
 
-const int FriendList::numberOfOnlines()
+int FriendList::numberOfOnlines()
 {
 	int onlines = 0;
         std::map<unsigned int, QQFriend>::iterator iter;

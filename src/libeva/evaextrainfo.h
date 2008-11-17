@@ -36,7 +36,7 @@ public:
 	RequestExtraInfoPacket &operator=(const RequestExtraInfoPacket &rhs);
 	
 	void setOffset(const unsigned short offset) { mOffset = offset; }
-	const unsigned short getOffset() const { return mOffset; }
+	 unsigned short getOffset() const { return mOffset; }
 protected:
 	virtual int putBody(unsigned char *buf);
 private:
@@ -51,8 +51,8 @@ public:
 	RequestExtraInfoReplyPacket(const RequestExtraInfoReplyPacket &rhs);
 	virtual ~RequestExtraInfoReplyPacket(){};
  
-	const unsigned char getReplyCode() const { return mReplyCode; }
-	const unsigned short getOffset() const { return mOffset; }
+	 unsigned char getReplyCode() const { return mReplyCode; }
+	 unsigned short getOffset() const { return mOffset; }
 	const std::map<unsigned int, unsigned long long> &getMembers() const { return mMembers; }
 	
 	RequestExtraInfoReplyPacket &operator=(const RequestExtraInfoReplyPacket &rhs);
@@ -75,7 +75,7 @@ public:
 	SignaturePacket &operator=(const SignaturePacket &rhs);
 	
 	void setType(const unsigned char type) { mType = type; }
-	const unsigned char getType() const { return mType; }
+	 unsigned char getType() const { return mType; }
 	const std::map<unsigned int, unsigned int> &getMembers() const { return mMembers; }
 	void setMembers(const std::map<unsigned int, unsigned int> &list) { mMembers = list; }
 	//Only used for downloading single contact signature
@@ -105,11 +105,11 @@ public:
 	SignatureReplyPacket(const SignatureReplyPacket &rhs);
 	virtual ~SignatureReplyPacket(){};
  
-	const unsigned char getType() const { return mType; }
-	const char getReplyCode() const { return mReplyCode; }
-	const bool isChangeAccepted() const { return mReplyCode == 0x00; }
+	 unsigned char getType() const { return mType; }
+	 char getReplyCode() const { return mReplyCode; }
+	 bool isChangeAccepted() const { return mReplyCode == 0x00; }
 	
-	const unsigned int nextStartID() const { return mNextStartId; }
+	 unsigned int nextStartID() const { return mNextStartId; }
 	const std::map<unsigned int, SignatureElement> &getMembers() const { return mMembers; }
 	
 	SignatureReplyPacket &operator=(const SignatureReplyPacket &rhs);

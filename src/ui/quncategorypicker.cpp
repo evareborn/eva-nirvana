@@ -63,41 +63,41 @@ const QString QunCategory::getDescription(const unsigned short code)
 	return ret;
 }
 
-const bool QunCategory::loadList( )
+bool QunCategory::loadList( )
 {
 	list.clear();
-	QString filePath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/qun-category"));
-	
-	QFile file(filePath);    
-	if(!file.open(IO_ReadOnly)){
-		return false;
-	}
-	
-	QTextStream stream(&file);
-	stream.setCodec(QTextCodec::codecForName("GB18030"));
-	QString line;
-	QStringList lineList;
-	
-	while(!stream.atEnd()){
-		line = stream.readLine().stripWhiteSpace();
-			
-		lineList = QStringList::split(",", line);
-		
-		if(lineList.size() != 3)
-			continue;
-		
-		bool ok;
-		QunCategoryElement element;
-		element.code = (unsigned short)(lineList[0].stripWhiteSpace().toInt(&ok));
-		if(!ok) continue;
-		
-		element.parent = (unsigned short)(lineList[1].stripWhiteSpace().toInt(&ok));
-		if(!ok) continue;
-		
-		element.name = lineList[2].stripWhiteSpace();
-		list[element.code]=element;
-	}
-	file.close();
+//X 	QString filePath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/qun-category"));
+//X 	
+//X 	QFile file(filePath);    
+//X 	if(!file.open(IO_ReadOnly)){
+//X 		return false;
+//X 	}
+//X 	
+//X 	QTextStream stream(&file);
+//X 	stream.setCodec(QTextCodec::codecForName("GB18030"));
+//X 	QString line;
+//X 	QStringList lineList;
+//X 	
+//X 	while(!stream.atEnd()){
+//X 		line = stream.readLine().stripWhiteSpace();
+//X 			
+//X 		lineList = QStringList::split(",", line);
+//X 		
+//X 		if(lineList.size() != 3)
+//X 			continue;
+//X 		
+//X 		bool ok;
+//X 		QunCategoryElement element;
+//X 		element.code = (unsigned short)(lineList[0].stripWhiteSpace().toInt(&ok));
+//X 		if(!ok) continue;
+//X 		
+//X 		element.parent = (unsigned short)(lineList[1].stripWhiteSpace().toInt(&ok));
+//X 		if(!ok) continue;
+//X 		
+//X 		element.name = lineList[2].stripWhiteSpace();
+//X 		list[element.code]=element;
+//X 	}
+//X 	file.close();
 	return true; 
 }
 
@@ -186,7 +186,7 @@ void QunCategoryPicker::slotCancelClicked()
 	close();
 }
 
-const unsigned short QunCategoryPicker::getCategoryCode()
+unsigned short QunCategoryPicker::getCategoryCode()
 {
 	unsigned short code = 12; // 12 is "tech union", we set it as default
 	

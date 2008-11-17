@@ -32,7 +32,7 @@ public:
 	void setQQList(const std::list<unsigned int> &l)	 { mList = l; }
 	std::list<unsigned int> getQQList() { return mList; }
 protected:
-	virtual const bool fillBody(unsigned char *buf, int *len);
+	virtual bool fillBody(unsigned char *buf, int *len);
 private:
 	std::list<unsigned int> mList;
 };
@@ -49,11 +49,11 @@ public:
 	EvaUHInfoReply( const unsigned char *buf, const int len);
 	virtual ~EvaUHInfoReply() {}
 
-	const int numInfoItems() { return mList.size(); }
+	int numInfoItems() { return mList.size(); }
 	std::list<UHInfoItem> getInfoItems() { return mList; }
-	const bool isSuccessful() const { return replyCode == 0x00; }
+	bool isSuccessful() const { return replyCode == 0x00; }
 protected:
-	virtual const bool parseBody();
+	virtual bool parseBody();
 private:
 	unsigned char replyCode;
 	std::list<UHInfoItem> mList;
@@ -69,7 +69,7 @@ public:
 	void setFileInfo(const unsigned  int start, const unsigned  int end) 
 		{ mStart = start; mEnd = end; }
 protected:
-	virtual const bool fillBody(unsigned char *buf, int *len);
+	virtual bool fillBody(unsigned char *buf, int *len);
 private:
 	int mId;
 	unsigned int mSessionId;
@@ -82,15 +82,15 @@ public:
 	EvaUHTransferReply( const unsigned char *buf, const int len);
 	virtual ~EvaUHTransferReply() {}
 
-	const int getQQ() const { return mId; }
-	const unsigned int getSessionId() const { return mSessionId; }
-	const unsigned int getFileSize() const { return mFileSize; }
-	const unsigned int getStart() const { return mStart; }
-	const unsigned int getPartSize() const { return mPartSize; }
+	 int getQQ() const { return mId; }
+	 unsigned int getSessionId() const { return mSessionId; }
+	 unsigned int getFileSize() const { return mFileSize; }
+	 unsigned int getStart() const { return mStart; }
+	 unsigned int getPartSize() const { return mPartSize; }
 	const unsigned char *getPartData() const { return mPartData; }
 
 protected:
-	virtual const bool parseBody();
+	virtual bool parseBody();
 private:
 	int mId;
 	unsigned int mSessionId;

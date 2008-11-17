@@ -60,20 +60,21 @@ void EvaServers::fetchAddress( bool isUdp )
 	int num = 0;
 	if(m_bIsFirst){
 		m_bIsFirst = false;
-		KConfig* config = new KConfig( (QDir::homeDirPath() + "/.eva/eva.cfg") );
-		config->setGroup("General");
-		QString type = config->readEntry("Server Type");
-		if(!type.isEmpty()){
-			QHostAddress addr(config->readEntry("Server IP"));
-			if(!addr.isNull()) {
-				if( (type == "UDP" && isUdp) ||
-						(type == "TCP" && !isUdp)){
-					emit isReady(addr);
-					return;
-				}
-			}
-		}
-		delete config;
+//X 		KConfig* config = new KConfig( (QDir::homeDirPath() + "/.eva/eva.cfg") );
+//X 		config->setGroup("General");
+//X 		QString type = config->readEntry("Server Type");
+//X 		if(!type.isEmpty()){
+//X 			QHostAddress addr(config->readEntry("Server IP"));
+//X 			if(!addr.isNull()) {
+//X 				if( (type == "UDP" && isUdp) ||
+//X 						(type == "TCP" && !isUdp)){
+//X 					emit isReady(addr);
+//X 					return;
+//X 				}
+//X 			}
+//X 		}
+//X 		delete config;
+                
 	}
 				
 	if(isUdp){

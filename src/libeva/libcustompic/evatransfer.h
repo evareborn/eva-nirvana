@@ -33,19 +33,19 @@ public:
 	
 	EvaPicTransferPacket &operator=(const EvaPicTransferPacket &rhs);
 	
-	const unsigned int getSessionID() const {return sessionID; }
+	 unsigned int getSessionID() const {return sessionID; }
 	const unsigned char *getMD5() const { return md5;}
 	const std::string &getFileName() const { return fileName; }
-	const unsigned int getImageLength() const { return imageLength; }
+	 unsigned int getImageLength() const { return imageLength; }
 	
 	const unsigned char *getFragment() const { return fragment; }
-	const unsigned short getFragmentLength() const { return fragLength; }
+	 unsigned short getFragmentLength() const { return fragLength; }
 	
-	const bool isDataPacket() const { return isData; }
-	const bool isLastPacket() const { return isLast; }
+	 bool isDataPacket() const { return isData; }
+	 bool isLastPacket() const { return isLast; }
 	
-	const bool isRequestSend() const { return requestSend; }
-	const bool isDataReply() const { return dataReply; }
+	 bool isRequestSend() const { return requestSend; }
+	 bool isDataReply() const { return dataReply; }
 	
 	void setSessionID(const unsigned int id) { sessionID=id;}
 	
@@ -89,14 +89,14 @@ public:
 	
 	EvaPicTransferReplyPacket &operator=(const EvaPicTransferReplyPacket &rhs);
 	
-	const unsigned int getSessionID() const { return sessionID; }
+	 unsigned int getSessionID() const { return sessionID; }
 	const unsigned char *getMd5() const { return md5; }
 	const unsigned char *getFileNameMd5() const { return fileNameMd5; }
 	const std::string &getFileName() const { return fileName; }
-	const unsigned int getImageLength() const { return imageLength; }
+	 unsigned int getImageLength() const { return imageLength; }
 	
 	const unsigned char *getData() const { return data; }
-	const unsigned int getDataLength() const { return dataLength; }
+	 unsigned int getDataLength() const { return dataLength; }
 protected:
 	void parseBody();
 private:

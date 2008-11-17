@@ -113,7 +113,7 @@ RequestLoginTokenReplyPacket & RequestLoginTokenReplyPacket::operator =( const R
 	return *this;
 }
 
-const bool RequestLoginTokenReplyPacket::isReplyOk( )  const
+bool RequestLoginTokenReplyPacket::isReplyOk( )  const
 {
 	return replyCode == QQ_REQUEST_LOGIN_TOKEN_REPLY_OK;
 }

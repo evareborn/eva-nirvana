@@ -43,7 +43,7 @@ public:
 	GroupNameOpPacket &operator=(const GroupNameOpPacket &rhs);
 	
 	const std::list<std::string> getGroups() const { return groups; }
-	const char getType() const { return type; }
+	char getType() const { return type; }
 	
 	void setGroups(const std::list<std::string> &l) { groups = l; }	
 	void setType(const char type);
@@ -66,8 +66,8 @@ public:
 	GroupNameOpReplyPacket &operator=( const GroupNameOpReplyPacket &rhs );
 	
 	const std::list<std::string> getGroupNames() const { return groupNames; }
-	const char getType() const { return type; }
-	const bool isDownloadReply() const ;// otherwise, upload reply
+	 char getType() const { return type; }
+	 bool isDownloadReply() const ;// otherwise, upload reply
 protected:	
 	virtual void parseBody();
 private:
@@ -85,14 +85,14 @@ public:
 		
 	DownloadFriendEntry &operator=(const DownloadFriendEntry &rhs);
 	
-	const int readData(const char *buf);
-	const int numberOfBytesRead() const { return 6; }
+	 int readData(const char *buf);
+	 int numberOfBytesRead() const { return 6; }
 	
-	const unsigned int getQQ() const { return qqNum; }
-	const char getType() const { return type; }
-	const uint8_t getGroupID() const { return groupID; }
+	 unsigned int getQQ() const { return qqNum; }
+	 char getType() const { return type; }
+	 uint8_t getGroupID() const { return groupID; }
 	
-	const bool isQun() const ;
+	 bool isQun() const ;
 private:	
 	unsigned int qqNum;
 	char type;
@@ -112,7 +112,7 @@ public:
 	virtual OutPacket * copy() { return new DownloadGroupFriendPacket(*this); }
 
 	void setStartID(const unsigned int start) { startID = start; }
-	const unsigned int getStartID() const { return startID; }
+	 unsigned int getStartID() const { return startID; }
 protected:
 	virtual int putBody(unsigned char* buf);
 private:
@@ -132,7 +132,7 @@ public:
 	DownloadGroupFriendReplyPacket &operator=( const DownloadGroupFriendReplyPacket &rhs);
 	virtual void parseBody();
 	
-	const unsigned int getNextStartID() const { return nextStartID; }
+	 unsigned int getNextStartID() const { return nextStartID; }
 	const std::list<DownloadFriendEntry> &getGroupedFriends() const { return friends; }
 private:
 	unsigned int nextStartID;
@@ -174,8 +174,8 @@ public:
 	
 	virtual void parseBody();
 	
-	const bool uploadOk() { return replyCode == 0; }
-	const uint8_t getReplyCode() const { return replyCode; }
+	 bool uploadOk() { return replyCode == 0; }
+	 uint8_t getReplyCode() const { return replyCode; }
 private:
 	uint8_t replyCode;
 };

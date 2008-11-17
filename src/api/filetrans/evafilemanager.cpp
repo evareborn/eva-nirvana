@@ -55,7 +55,7 @@ void EvaFileManager::setMyProxyInfo(const QHostAddress addr, const short port, c
 	m_IsProxySet = true;
 }
 
-const bool EvaFileManager::newSession(const unsigned int id, const unsigned int session, 
+bool EvaFileManager::newSession(const unsigned int id, const unsigned int session, 
 				const QValueList<QString> &dirList, 
 				const QValueList<QString> &filenameList,
 				const QValueList<unsigned int> &sizeList,
@@ -83,7 +83,7 @@ const bool EvaFileManager::newSession(const unsigned int id, const unsigned int 
 	return true;
 }
 
-const bool EvaFileManager::changeToAgent(const unsigned int id, const unsigned int session)
+bool EvaFileManager::changeToAgent(const unsigned int id, const unsigned int session)
 {
 	EvaFileThread *thread = getThread(id, session);
 	if(!thread) return false;
@@ -183,7 +183,7 @@ void EvaFileManager::updateIp(const unsigned int id, const unsigned int session,
 	if(thread) thread->setBuddyIp(ip);
 }
 
-const bool EvaFileManager::startSession(const unsigned int id, const unsigned int session)
+bool EvaFileManager::startSession(const unsigned int id, const unsigned int session)
 {
 	EvaFileThread *thread = getThread(id, session);
 	if(!thread){
@@ -208,14 +208,14 @@ const QString EvaFileManager::getFileName(const unsigned int id, const unsigned 
 	return file;
 }
 
-const unsigned int EvaFileManager::getFileSize(const unsigned int id, const unsigned int session)
+unsigned int EvaFileManager::getFileSize(const unsigned int id, const unsigned int session)
 {
 	EvaFileThread *thread = getThread(id, session);
 	if(!thread) return 0;
 	return thread->getFileSize();
 }
 
-const unsigned char EvaFileManager::getTransferType(const unsigned int id, const unsigned int session)
+unsigned char EvaFileManager::getTransferType(const unsigned int id, const unsigned int session)
 {
 	EvaFileThread *thread = getThread(id, session);
 	if(!thread) return 0;
@@ -332,7 +332,7 @@ void EvaFileManager::slotFileTransferResume( const unsigned int id, const unsign
 	if(thread) thread->askResumeLastDownload(isResume);
 }
 
-const bool EvaFileManager::isSender(const unsigned int id, const unsigned int session, bool *isExisted)
+bool EvaFileManager::isSender(const unsigned int id, const unsigned int session, bool *isExisted)
 {
 	EvaFileThread *thread = getThread(id, session);
 	if(!thread){

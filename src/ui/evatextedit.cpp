@@ -21,14 +21,14 @@
 #include <qevent.h>
 
 EvaTextEdit::EvaTextEdit(const QString &text, const QString &context, QWidget *parent, const char *name):
-		KTextEdit(text, context, parent, name), isEnterSend(false)
+		QTextEdit(text, context, parent, name), isEnterSend(false)
 {
 	setAutoFormatting(QTextEdit::AutoNone);
 	setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
 }
 
 EvaTextEdit::EvaTextEdit(QWidget *parent, const char * name):
-		KTextEdit(parent, name), isEnterSend(false)
+		QTextEdit(parent, name), isEnterSend(false)
 {
 	setAutoFormatting(QTextEdit::AutoNone);
 	setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
@@ -57,7 +57,7 @@ void EvaTextEdit::keyPressEvent(QKeyEvent *e)
     	    }
 	}
     }
-    KTextEdit::keyPressEvent(e);
+    QTextEdit::keyPressEvent(e);
     if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){	
         QString txt = text();
         txt.replace("</p>\n<p>", "<br />");

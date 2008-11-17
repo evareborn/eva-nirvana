@@ -24,15 +24,17 @@
 #include <qobject.h>
 #include <qdatetime.h>
 #include <qstringlist.h>
+#include <qapplication.h>
 #include <inttypes.h>
 #include <qhostaddress.h>
 #include <qvaluelist.h>
-#include <dcopobject.h>
+#include <qpopupmenu.h>
+//#include <dcopobject.h>
 
 #include "config.h"
 #include "libeva/evamemo.h"
 #include "evaidt.h"
-#include "evadcopactions.h"
+//#include "evadcopactions.h"
 
 // FIXME: wanna integrate with kwallet? why not then?
 //#include <kwallet.h>
@@ -45,13 +47,13 @@
 
 
 // External classes?
-class KPopupMenu;
-class KHelpMenu;
+class QPopupMenu;
+//X class QHelpMenu;
 class QTextCodec;
 class QTimer;
 //class KAboutData;
 //class KAboutApplication;
-class KGlobalAccel;
+//class KGlobalAccel;
 
 class EvaUser;
 class EvaConnecter;
@@ -61,7 +63,9 @@ class EvaGlobal;
 class EvaImageResource;
 class EvaSetting;
 class EvaAddingManager;
+class EvaContactManager;
 class EvaSysMsgManager;
+class EvaLoginManager;
 
 class EvaLoginWindow;
 class EvaMainWindow;
@@ -77,11 +81,14 @@ class EvaNotifyEvent;
 //class Wallet;
 
 
-class EvaMain : public QObject, virtual public EvaDCOPActionsInterface
+//X class EvaMain : public QObject//, virtual public EvaDCOPActionsInterface
+//class EvaMain : public QObject//, virtual public EvaDCOPActionsInterface
+class EvaMain : public QObject
 {
 	Q_OBJECT
 
 public:
+        static EvaMain* getEvaMain();
 	EvaMain();
 	~EvaMain();
 
@@ -114,6 +121,10 @@ public:
 
 	// the main guy, with your friend list in
 	static EvaMainWindow *g_mainWin;
+ 
+        static EvaLoginManager *g_loginManager;
+ 
+        static EvaContactManager *g_contactManager;
 
 	// transferring files manager
 	EvaFileManager *m_FileManager;
@@ -140,7 +151,7 @@ private:
 	void processCLIArgs();
 	
 	// initialize user custom settings
-	void initSettings();
+	bool initSettings();
 
 	// initialize user customized leaving messages
 	void initUserLeaveMenu();
@@ -189,14 +200,14 @@ private:
 	EvaSetting *sysSetting;
 	
 	// system tray menu
-	KPopupMenu *sysMenu;
-	KHelpMenu *m_helpMenu;
+	QPopupMenu *sysMenu;
+//X 	QHelpMenu *m_helpMenu;
 
 	// user status setting menu, appeared both in main window and tray menu
-	KPopupMenu *statusMenu;
+	QPopupMenu *statusMenu;
 
 	// user status setting submenu, custumized leaving auto-reply messages
-	KPopupMenu *autoMenu;
+	QPopupMenu *autoMenu;
 
 	// login window, first one you will see
 	EvaLoginWindow *loginWin;
@@ -204,8 +215,8 @@ private:
 // 	// the main guy, with your friend list in
 // 	EvaMainWindow *mainWin;	
 
-	// system tray icon
-	EvaSystemTray *tray;
+//X 	// system tray icon
+//X 	EvaSystemTray *tray;
 
 	// login retry times
 	int numLoginRetry;
@@ -214,7 +225,7 @@ private:
 	bool isClientSet;
 
 	// accelerate key, maybe officially CTRL+ALT+Z
-	KGlobalAccel *accelKey;
+	//KGlobalAccel *accelKey;
 
 	// FIXME: wanna integrate with kwallet? why not then?
 	//KWallet::Wallet *_wallet;
@@ -380,6 +391,6 @@ private slots:
 	friend class EvaMainWindow;
 };
 
-extern EvaMain *g_eva;
+//X extern EvaMain *g_eva;
 #endif
 

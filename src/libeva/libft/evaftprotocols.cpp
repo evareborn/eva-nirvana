@@ -46,7 +46,7 @@ void EvaFTAgentCreate::setFileAgentToken(const unsigned char *token, const int l
 	m_TokenLength = len;
 }
 
-const int EvaFTAgentCreate::fillBody(unsigned char *buf)
+int EvaFTAgentCreate::fillBody(unsigned char *buf)
 {
 	if(!m_Token) return -1;
 	int pos=0;
@@ -77,7 +77,7 @@ EvaFTAgentCreateReply::EvaFTAgentCreateReply(const unsigned char *buf, const int
 {
 }
 
-const bool EvaFTAgentCreateReply::parseBody( unsigned char *buf, const int len)
+bool EvaFTAgentCreateReply::parseBody( unsigned char *buf, const int len)
 {
 	int rawLen = 256;
 	unsigned char *raw = new unsigned char[256];
@@ -149,7 +149,7 @@ void EvaFTAgentLogin::setFileAgentToken(const unsigned char *token, const int le
 	m_TokenLength = len;
 }
 
-const int EvaFTAgentLogin::fillBody(unsigned char *buf)
+int EvaFTAgentLogin::fillBody(unsigned char *buf)
 {
 	if(!m_Token) return -1;
 	int pos=0;
@@ -176,7 +176,7 @@ EvaFTAgentLoginReply::EvaFTAgentLoginReply(const unsigned char *buf, const int l
 {
 }
 
-const bool EvaFTAgentLoginReply::parseBody(unsigned char *buf, const int len)
+bool EvaFTAgentLoginReply::parseBody(unsigned char *buf, const int len)
 {
 	int rawLen = 256;
 	unsigned char *raw = new unsigned char[256];
@@ -234,7 +234,7 @@ void EvaFTAgentTransfer::setData(const unsigned char *data, const unsigned int l
 	memcpy(m_Data, data, m_DataLength);
 }
 
-const int EvaFTAgentTransfer::fillBody(unsigned char *buf)
+int EvaFTAgentTransfer::fillBody(unsigned char *buf)
 {
 	int pos=4; // ignore unknown 4 bytes
 	int start = pos;
@@ -300,7 +300,7 @@ const unsigned char * EvaFTAgentTransferReply::getFileNameMd5()
 }
 
 
-const bool EvaFTAgentTransferReply::parseBody( unsigned char *buf, const int len)
+bool EvaFTAgentTransferReply::parseBody( unsigned char *buf, const int len)
 {
 	int pos=4; // 4 unknown bytes
 	int contentsLen = EvaUtil::read16(buf+pos); pos += 2;
@@ -358,7 +358,7 @@ EvaFTAgentAckReady::~EvaFTAgentAckReady()
 {
 }
 
-const int EvaFTAgentAckReady::fillBody(unsigned char *buf)
+int EvaFTAgentAckReady::fillBody(unsigned char *buf)
 {
 	int pos=0;
 	unsigned char *raw = new unsigned char [4];
@@ -381,7 +381,7 @@ EvaFTAgentAskReady::EvaFTAgentAskReady(const unsigned char *buf, const int len)
 {
 }
 
-const bool EvaFTAgentAskReady::parseBody(unsigned char *buf, const int len)
+bool EvaFTAgentAskReady::parseBody(unsigned char *buf, const int len)
 {
 	int rawLen = 256;
 	unsigned char *raw = new unsigned char[256];
@@ -411,7 +411,7 @@ EvaFTAgentStart::~EvaFTAgentStart()
 {
 }
 
-const int EvaFTAgentStart::fillBody(unsigned char *buf)
+int EvaFTAgentStart::fillBody(unsigned char *buf)
 {
 	int pos=0;
 	unsigned char *raw = new unsigned char [2];
@@ -437,7 +437,7 @@ EvaFTAgentStartReply::EvaFTAgentStartReply(const unsigned char *buf, const int l
 {
 }
 
-const bool EvaFTAgentStartReply::parseBody(unsigned char *buf, const int len)
+bool EvaFTAgentStartReply::parseBody(unsigned char *buf, const int len)
 {
 	int rawLen = 256;
 	unsigned char *raw = new unsigned char[256];
@@ -490,7 +490,7 @@ void EvaFTSynCreate::setFileAgentToken(const unsigned char *token, const int len
 	m_TokenLength = len;
 }
 
-const int EvaFTSynCreate::fillBody(unsigned char *buf)
+int EvaFTSynCreate::fillBody(unsigned char *buf)
 {
 	if(!m_Token) return -1;
 	int pos=0;
@@ -520,7 +520,7 @@ EvaFTSynCreateReply::EvaFTSynCreateReply(const unsigned char *buf, const int len
 {
 }
 
-const bool EvaFTSynCreateReply::parseBody( unsigned char *buf, const int len)
+bool EvaFTSynCreateReply::parseBody( unsigned char *buf, const int len)
 {
 	int rawLen = 256;
 	unsigned char *raw = new unsigned char[256];

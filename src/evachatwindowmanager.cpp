@@ -29,7 +29,7 @@
 #include "evaresource.h"
 #include "evaqtutil.h"
 #include "evahtmlparser.h"
-#include "evascriptmanager.h"
+//X #include "evascriptmanager.h"
 
 #include <qmessagebox.h>
 #include <qapplication.h>
@@ -160,7 +160,7 @@ void EvaChatWindowManager::slotReceivedMessage(unsigned int sender, bool isNorma
 		const char blue, const char green, const char red)
 {	
 	// notify script
-	GetScriptManager()->notifyMessage( false, sender, time, message);
+//X 	GetScriptManager()->notifyMessage( false, sender, time, message);
 	
 	EvaChatWindow *win = getWindow(sender);
 	if(win && win->isVisible()){
@@ -262,9 +262,9 @@ void EvaChatWindowManager::slotReceivedQunMessage( unsigned int qunID, unsigned 
 						const char blue, const char green, const char red )
 {
 	// notify script
-	int extId = EvaMain::user->getQunList()->getQunExtID(qunID);
+//X 	int extId = EvaMain::user->getQunList()->getQunExtID(qunID);
 	
-	GetScriptManager()->notifyMessage( true, extId, time, message);
+//X 	GetScriptManager()->notifyMessage( true, extId, time, message);
 	EvaQunChatWindow *win = getQunWindow(qunID);
 	if(win && win->isVisible()){
 		win->slotReceivedMessage(qunID, senderQQ, message, time, size, u, i, b, blue, green, red);

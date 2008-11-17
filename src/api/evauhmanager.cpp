@@ -48,22 +48,22 @@ class EvaUHFile {
 public:
 	EvaUHFile(unsigned int id);
 	~EvaUHFile();
-	const bool setFileInfo(const char *md5, unsigned int sid);
-	const bool setFileBlock(const unsigned int numPackets, const unsigned int packetNum, 
+	 bool setFileInfo(const char *md5, unsigned int sid);
+	 bool setFileBlock(const unsigned int numPackets, const unsigned int packetNum, 
 			const unsigned int fileSize, const unsigned int partStart, 
 			const unsigned int partSize, const unsigned char *buf);
 	
 	const QString getMd5String() const;
-	const unsigned int getQQ() const { return mId; }
-	const int getSessionId() const { return mSessionId; }
+	 unsigned int getQQ() const { return mId; }
+	 int getSessionId() const { return mSessionId; }
 	
 	// is this file downloaded sucessfully?
-	const bool isFinished();
+	 bool isFinished();
 	// return session id, and assign the start and size, return 0 means md5 wrong, 
 	// need redownloading this file again, or no session available
-	const unsigned int nextBlock(unsigned int *start, unsigned int *size);
+	 unsigned int nextBlock(unsigned int *start, unsigned int *size);
 	
-	const bool isMD5Correct();
+	 bool isMD5Correct();
 	void save(QString &dir);
 	void initSettings();
 private:
@@ -88,7 +88,7 @@ EvaUHFile::~EvaUHFile()
 	if(mBuffer) delete mBuffer;
 }
 
-const bool EvaUHFile::setFileInfo(const char *_md5, unsigned int sid)
+bool EvaUHFile::setFileInfo(const char *_md5, unsigned int sid)
 {
 	if(mSessionId) return false;
 	memcpy(md5, _md5, 16);
@@ -96,7 +96,7 @@ const bool EvaUHFile::setFileInfo(const char *_md5, unsigned int sid)
 	return true;
 }
 
-const bool EvaUHFile::setFileBlock(const unsigned int numPackets, const unsigned int /*packetNum*/, 
+bool EvaUHFile::setFileBlock(const unsigned int numPackets, const unsigned int /*packetNum*/, 
 			const unsigned int fileSize, const unsigned int partStart, 
 			const unsigned int partSize, const unsigned char *buf)
 {
@@ -128,7 +128,7 @@ const QString EvaUHFile::getMd5String() const
 	return EvaHelper::md5ToString(md5);
 }
 
-const bool EvaUHFile::isFinished()
+bool EvaUHFile::isFinished()
 {
 	if(!flags) return false;
 	bool result = true;
@@ -143,7 +143,7 @@ const bool EvaUHFile::isFinished()
 
 // return session id, and assign the start and size, return 0 means md5 wrong, 
 // need redownloading this file again, no session available
-const unsigned int EvaUHFile::nextBlock(unsigned int *start, unsigned int *size)
+unsigned int EvaUHFile::nextBlock(unsigned int *start, unsigned int *size)
 {
 	if(!flags){
 		*start = 0xffffffff;
@@ -168,7 +168,7 @@ const unsigned int EvaUHFile::nextBlock(unsigned int *start, unsigned int *size)
 	return mSessionId;
 }
 
-const bool EvaUHFile::isMD5Correct()
+bool EvaUHFile::isMD5Correct()
 {
 	if(!mBuffer)
 		return false;

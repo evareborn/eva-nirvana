@@ -33,6 +33,7 @@
 // passing a connected EvaConnecter in, otherwise whenever sending a packet will cause an exception
 class QTimer;
 class EvaConnecter;
+class EvaMain;
 class QTextCodec;
 class EvaLoginManager;
 class EvaContactManager;
@@ -45,7 +46,7 @@ typedef struct {
 class EvaPacketManager : public QObject {
 	Q_OBJECT
 public:
-	EvaPacketManager(EvaUser *user, EvaConnecter *connecter);
+	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* evapp);
 	~EvaPacketManager();
 	
 	EvaUser *getUser() { return user; }
@@ -53,7 +54,7 @@ public:
 	
 	QStringList convertDetails(const ContactInfo &info);
 	
-	const int getNumOnlineUsers() const { return numOnlineUsers; }
+	 int getNumOnlineUsers() const { return numOnlineUsers; }
 public slots:
 	void doRequestLoginToken();
 	void doRequestLoginTokenEx( const QString &code = "");
@@ -286,6 +287,7 @@ signals:
 private:
 
 	QTextCodec *codec;
+        EvaMain* g_eva;
 	EvaUser *user;
 	EvaConnecter *connecter;
 	QTimer *timer; // keep online and get online friends
@@ -312,7 +314,7 @@ private:
 	
 	void saveBuddyQQ(const unsigned int id, const short seq);
 	void removeSequence(const short seq);
-	const int getSavedBuddyQQ(const short seq);
+	 int getSavedBuddyQQ(const short seq);
 	
 	void doGetGroupedFriends(int start = 0);
 	

@@ -69,48 +69,48 @@ std::list< CityListElement > CityList::getCityList( unsigned short province )
 	return results;
 }
 
-const bool CityList::loadList( )
+bool CityList::loadList( )
 {
 	list.clear();
-	QString filePath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/citylist"));
-	QFile file(filePath);    
-	if(!file.open(IO_ReadOnly)){
-		return false;
-	}
-	
-	QTextStream stream(&file);
-	stream.setCodec(QTextCodec::codecForName("GB18030"));
-	QString line;
-	QStringList lineList;
-	
-	std::list<CityListElement> tmpList;
-	unsigned int tmpProv;
-	unsigned int province = 1;
-	while(!stream.atEnd()){
-		line = stream.readLine().stripWhiteSpace();
-			
-		lineList = QStringList::split(",", line);
-				
-		if(lineList.size() != 3)
-			continue;
-		
-		bool ok;
-		CityListElement element;
-		tmpProv = (unsigned short)(lineList[0].stripWhiteSpace().toInt(&ok));
-		if(!ok) continue;
-		
-		if( tmpProv != province){	
-			list[province++] = tmpList;
-			tmpList.clear();
-		}
-		
-		element.city = (unsigned short)(lineList[1].stripWhiteSpace().toInt(&ok));
-		if(!ok) continue;
-		element.name = lineList[2].stripWhiteSpace();
-		tmpList.push_back(element);	//store the city informations to list
-	}
-	list[province] = tmpList;
-	file.close();
+//X 	QString filePath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/citylist"));
+//X 	QFile file(filePath);    
+//X 	if(!file.open(IO_ReadOnly)){
+//X 		return false;
+//X 	}
+//X 	
+//X 	QTextStream stream(&file);
+//X 	stream.setCodec(QTextCodec::codecForName("GB18030"));
+//X 	QString line;
+//X 	QStringList lineList;
+//X 	
+//X 	std::list<CityListElement> tmpList;
+//X 	unsigned int tmpProv;
+//X 	unsigned int province = 1;
+//X 	while(!stream.atEnd()){
+//X 		line = stream.readLine().stripWhiteSpace();
+//X 			
+//X 		lineList = QStringList::split(",", line);
+//X 				
+//X 		if(lineList.size() != 3)
+//X 			continue;
+//X 		
+//X 		bool ok;
+//X 		CityListElement element;
+//X 		tmpProv = (unsigned short)(lineList[0].stripWhiteSpace().toInt(&ok));
+//X 		if(!ok) continue;
+//X 		
+//X 		if( tmpProv != province){	
+//X 			list[province++] = tmpList;
+//X 			tmpList.clear();
+//X 		}
+//X 		
+//X 		element.city = (unsigned short)(lineList[1].stripWhiteSpace().toInt(&ok));
+//X 		if(!ok) continue;
+//X 		element.name = lineList[2].stripWhiteSpace();
+//X 		tmpList.push_back(element);	//store the city informations to list
+//X 	}
+//X 	list[province] = tmpList;
+//X 	file.close();
 	return true; 
 }
 /*----------------------------------------------------------*/
@@ -1012,7 +1012,7 @@ void EvaSearchWindow::slotSecondListChanged(int index)
 	}	
 }
 
-const unsigned short EvaSearchWindow::getCategoryCode()
+unsigned short EvaSearchWindow::getCategoryCode()
 {
 	unsigned short code = 12; // 12 is "tech union", we set it as default
 	

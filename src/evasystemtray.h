@@ -21,63 +21,63 @@
 #ifndef EVASYSTEMTRAY_H
 #define EVASYSTEMTRAY_H
 
-#include <ksystemtray.h>
+//#include <qsystemtrayicon.h>
 #include <qvaluestack.h>
 
 class EvaImageResource;
-class KPopupMenu;
+class QPopupMenu;
 class QMouseEvent;
 class QTimer;
 class QPixmap;
 
-class EvaSystemTray : public KSystemTray
+class EvaSystemTray// : public QSystemTray
 {
-	Q_OBJECT
-public:
-	EvaSystemTray(QWidget* parent = 0, const char* name = 0);
-	EvaSystemTray():KSystemTray() {}
-	~EvaSystemTray();
-	
-	void setImagesResource(EvaImageResource *res = 0);
-	void setupMenus(KPopupMenu *sys, KPopupMenu *status);
-	void reset();
-public slots:	
-	void changeToolTip(const unsigned int id, const QString &nick, const short face);
-	void setOnline();
-	void setOffline();
-	void setLeave();
-	void setInvisible();
-	void setLoginWaiting();
-	
-	void newTxtMessage(const unsigned int id, short face = 0);
-	void gotTxtMessage(const unsigned int id);
-	void newSysMessage();
-	void gotSysMessage();
-	int getSenderID();
-signals:
-	void requestChat(const unsigned int id);
-	void requestQunChat(const unsigned int id);
-	void requestSystemMessage();
-protected:
-	virtual void mousePressEvent(QMouseEvent *e);
-	virtual void mouseDoubleClickEvent( QMouseEvent *me );
-private:
-	EvaImageResource *images;
-	KPopupMenu *sysMenu;
-	KPopupMenu *statusMenu;
-	QTimer *blinkTimer;
-	QTimer *clickTimer;
-	QPixmap *statusPix;
-	bool isBlinkOn;
-	
-	QValueStack<int> messageStack; // store user qq id or -1 for system message
-	QValueStack<int> iconStack; // store the corresponding face number or -1 for system message icon
-	
-	void setIconTo(QPixmap *pix);
-private slots:
-	void slotTimeout();
-	void slotClickTimeout();
-	void minMaxAction();
+//X 	Q_OBJECT
+//X public:
+//X 	EvaSystemTray(QWidget* parent = 0, const char* name = 0);
+//X 	EvaSystemTray():QSystemTray() {}
+//X 	~EvaSystemTray();
+//X 	
+//X 	void setImagesResource(EvaImageResource *res = 0);
+//X 	void setupMenus(QPopupMenu *sys, QPopupMenu *status);
+//X 	void reset();
+//X public slots:	
+//X 	void changeToolTip(const unsigned int id, const QString &nick, const short face);
+//X 	void setOnline();
+//X 	void setOffline();
+//X 	void setLeave();
+//X 	void setInvisible();
+//X 	void setLoginWaiting();
+//X 	
+//X 	void newTxtMessage(const unsigned int id, short face = 0);
+//X 	void gotTxtMessage(const unsigned int id);
+//X 	void newSysMessage();
+//X 	void gotSysMessage();
+//X 	int getSenderID();
+//X signals:
+//X 	void requestChat(const unsigned int id);
+//X 	void requestQunChat(const unsigned int id);
+//X 	void requestSystemMessage();
+//X protected:
+//X 	virtual void mousePressEvent(QMouseEvent *e);
+//X 	virtual void mouseDoubleClickEvent( QMouseEvent *me );
+//X private:
+//X 	EvaImageResource *images;
+//X 	QPopupMenu *sysMenu;
+//X 	QPopupMenu *statusMenu;
+//X 	QTimer *blinkTimer;
+//X 	QTimer *clickTimer;
+//X 	QPixmap *statusPix;
+//X 	bool isBlinkOn;
+//X 	
+//X 	QValueStack<int> messageStack; // store user qq id or -1 for system message
+//X 	QValueStack<int> iconStack; // store the corresponding face number or -1 for system message icon
+//X 	
+//X 	void setIconTo(QPixmap *pix);
+//X private slots:
+//X 	void slotTimeout();
+//X 	void slotClickTimeout();
+//X 	void minMaxAction();
 };
 
 #endif

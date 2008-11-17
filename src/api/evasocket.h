@@ -77,17 +77,17 @@ public:
 	EvaSocket(const QHostAddress &host, const short port, const Type type = UDP);
 	~EvaSocket();
 	
-	const Type getConnectType() const { return connectionType; }
+	 Type getConnectType() const { return connectionType; }
 		
 	void setHost( const QHostAddress &address, const short port);
 	const QHostAddress &getHostAddress() const { return server; }
-	const short getHostPort() const { return serverPort; }
-	const Status getStatus() const { return connectionStatus; }
+	 short getHostPort() const { return serverPort; }
+	 Status getStatus() const { return connectionStatus; }
 	
 	bool write(const char *buf, const int len);
 	bool read(char *buf, int len);
-	const QHostAddress getSocketAddress();
-	const unsigned short getSocketPort();
+	 const QHostAddress getSocketAddress();
+	 unsigned short getSocketPort();
 	void setWriteNotifierEnabled(bool enabled);
 
 public slots:	
@@ -132,7 +132,7 @@ public:
 	bool doInitConnecting();
 	bool doAuthConnecting();
 	
-	const ProxyStatus getProxyStatus() const { return status; }
+	 ProxyStatus getProxyStatus() const { return status; }
 signals:
 	void dataArrived(int);
 	void proxyEvent( int );
@@ -200,7 +200,7 @@ public:
 	const QString getReplyCode() const;
 	const QMap<QString, QString> &getCookies() const;
 	const QString getCookie(const QString &name) const;
-	const unsigned int getContentLength() ;
+	 unsigned int getContentLength() ;
 
 	/** 
 	 *  return the length of the header including the last
@@ -209,14 +209,14 @@ public:
 	 *         this will always return 0 when construct
          *         a HTTP header
          */
-	const unsigned int getHeaderLength() const;
+	 unsigned int getHeaderLength() const;
 	/** It behaves essentially like the above function.*/
-	const unsigned int getContentsOffset() const;
+	 unsigned int getContentsOffset() const;
 protected:
 	/** set one field of the header */
 	void setMetaData(const QString &field, const QString &value);
 	/** get value of a specifed field */
-	const QString getMetaData(const QString &field) const;
+	const  QString getMetaData(const QString &field) const;
 private:
 	unsigned int m_HeaderLen;
 	unsigned int m_ContentLen;
@@ -257,9 +257,9 @@ public:
 	/** return true if the received data contains a HTTP header,
 	    otherwise, false.
 	*/
-	const bool hasHeader() const { return m_Header.getHeaderLength() != 0; }
+	 bool hasHeader() const { return m_Header.getHeaderLength() != 0; }
 	
-	const HttpHeader getHeader() const { return m_Header; }
+	 HttpHeader getHeader() const { return m_Header; }
 
 signals:
 	/** if there is no IODevice used, this signal will be emitted 

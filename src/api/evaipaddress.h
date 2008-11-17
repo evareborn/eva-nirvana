@@ -41,8 +41,8 @@
 	
 	void setAddress(const uint32_t ip);
 	void setAddress(const std::string &strIP);
-	const bool isValid() const;
-	const uint32_t IP() const;
+	bool isValid() const;
+	uint32_t IP() const;
 	const std::string toString();
 	EvaIPAddress &operator= (const EvaIPAddress &rhs);
 private:

@@ -61,8 +61,8 @@ private:
 	unsigned int id;
 	
 
-	const bool UpdateData( const bool );
-	const QString getClientKeyString();
+	bool UpdateData( const bool );
+	QString getClientKeyString();
 
 	void closeEvent(QCloseEvent *e);
 signals:

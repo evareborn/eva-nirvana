@@ -245,7 +245,7 @@ ReceivedNormalIM::ReceivedNormalIM(const ReceivedNormalIM &rhs)
 	underline = rhs.isUnderline();
 }
 
-const bool ReceivedNormalIM::isNormalReply() const
+bool ReceivedNormalIM::isNormalReply() const
 {
 	return replyType == QQ_IM_NORMAL_REPLY;
 }
@@ -1043,7 +1043,7 @@ ReceivedTempSessionTextIMPacket & ReceivedTempSessionTextIMPacket::operator =( c
 	return *this;
 }
 
-void ReceivedTempSessionTextIMPacket::parseData( const unsigned char * buf, const int len )
+void ReceivedTempSessionTextIMPacket::parseData( const unsigned char * buf, const int /*len*/ )
 {
 	int pos=0;
 	int len2=0;
@@ -1137,7 +1137,7 @@ TempSessionOpReplyPacket & TempSessionOpReplyPacket::operator =( const TempSessi
 	return *this;
 }
 
-void TempSessionOpReplyPacket::parseData( const unsigned char * buf, const int len )
+void TempSessionOpReplyPacket::parseData( const unsigned char * buf, const int /*len*/ )
 {
 	int pos=0;
 
@@ -1171,12 +1171,12 @@ ReceivedQQMailPacket::ReceivedQQMailPacket( const ReceivedQQMailPacket & rhs )
 	*this = rhs;
 }
 
-ReceivedQQMailPacket & ReceivedQQMailPacket::operator =( const ReceivedQQMailPacket & rhs )
+ReceivedQQMailPacket & ReceivedQQMailPacket::operator =( const ReceivedQQMailPacket & /*rhs*/ )
 {
 	return *this;
 }
 
-void ReceivedQQMailPacket::parseData( const unsigned char * buf, const int len )
+void ReceivedQQMailPacket::parseData( const unsigned char * buf, const int /*len*/ )
 {
 	int pos=1;
 	int len2=0;

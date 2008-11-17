@@ -51,7 +51,7 @@ public:
 	static void setupImages(EvaImageResource *res);
 	static void setQuickReplyMessages(const std::list<QString> &list);
 	void setQuickReplyMenu();
-	const unsigned int getQunID();
+	unsigned int getQunID();
 	void showMessages();	
 	void appendText(const QString &txt);
 

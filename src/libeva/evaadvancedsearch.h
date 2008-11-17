@@ -30,14 +30,14 @@
  	AdvancedUser();
 	~AdvancedUser(){}
 	
-	const int getQQ() const { return m_QQNum; }
-	const int getGenderIndex() const { return m_GenderIndex; }
-	const int getAge() const { return m_Age; }
-	const bool isOnline() const { return (m_Online == 0x01)? true:false; }
+	 int getQQ() const { return m_QQNum; }
+	 int getGenderIndex() const { return m_GenderIndex; }
+	 int getAge() const { return m_Age; }
+	 bool isOnline() const { return (m_Online == 0x01)? true:false; }
 	const std::string getNick() const { return m_Nick; }
-	const int getProvinceIndex() const { return m_ProvinceIndex; }
-	const int getCityIndex() const { return m_CityIndex; }
-	const int getFace() const { return m_Face; }
+	 int getProvinceIndex() const { return m_ProvinceIndex; }
+	 int getCityIndex() const { return m_CityIndex; }
+	 int getFace() const { return m_Face; }
 	
 	void setQQ( const int id ) { m_QQNum = id; }
 	void setGenderIndex( const int genderIndex ) { m_GenderIndex = genderIndex; }
@@ -68,13 +68,13 @@ public:
 	EvaAdvancedSearchPacket( EvaAdvancedSearchPacket &rhs );
 	virtual ~EvaAdvancedSearchPacket(){}
 	
-	const bool getSearchOnline() const { return m_SearchOnline; }
-	const bool getHasCam() const { return m_HasCam; }
-	const int getPage() const { return m_Page; }
-	const int getAgeIndex() const { return m_AgeIndex; }
-	const int getGenderIndex() const { return m_GenderIndex; }
-	const int getProvinceIndex() const { return m_ProvinceIndex; }
-	const int getCityIndex() const { return m_CityIndex; }
+	 bool getSearchOnline() const { return m_SearchOnline; }
+	 bool getHasCam() const { return m_HasCam; }
+	 int getPage() const { return m_Page; }
+	 int getAgeIndex() const { return m_AgeIndex; }
+	 int getGenderIndex() const { return m_GenderIndex; }
+	 int getProvinceIndex() const { return m_ProvinceIndex; }
+	 int getCityIndex() const { return m_CityIndex; }
 	
 	void setSearchOnline( const bool online ) { m_SearchOnline = online; }
 	void setHasCam( const bool hasCam ) { m_HasCam = hasCam; }
@@ -107,10 +107,10 @@ public:
 	EvaAdvancedSearchReplyPacket(const EvaAdvancedSearchReplyPacket &rhs); 
 	virtual ~EvaAdvancedSearchReplyPacket(){}
 	
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
-	const int getPage() const { return m_Page; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
+	 int getPage() const { return m_Page; }
 	const std::list<AdvancedUser> getUsers() const { return m_Users; }
-	const bool isFinished() const { return m_Finished; }
+	 bool isFinished() const { return m_Finished; }
 	
 	void setReplyCode( const unsigned char replyCode ) { m_ReplyCode = replyCode; }
 	void setPage( const int page ) { m_Page = page; }

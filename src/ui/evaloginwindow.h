@@ -35,19 +35,19 @@ public:
 	enum Type{UDP, TCP, HTTP_Proxy};
 	void setLogo(const QPixmap *);
 	void setEvaSetting(EvaSetting *setting);
-	const int getQQ() const;
-	const QString getPassword() const;
+	 int getQQ() const;
+	 QString getPassword() const;
 	const char * getMd5Password() const;
-	const bool isHiddenLoginMode() const;
-	const bool isRememberChecked() const;
+	 bool isHiddenLoginMode() const;
+	 bool isRememberChecked() const;
 	
-	const Type getConnectionType() const;
-	const QString getProxyIP() const;
-	const int getProxyPort() const;
-	const QString getProxyUserName() const;
-	const QString getProxyPassword() const;
+	 Type getConnectionType() const;
+	 QString getProxyIP() const;
+	 int getProxyPort() const;
+	 QString getProxyUserName() const;
+	 QString getProxyPassword() const;
 	
-	const QCString getProxyParam();
+	 QCString getProxyParam();
 public slots:
 	virtual void cancelClickSlot();
 	virtual void loginClickSlot();

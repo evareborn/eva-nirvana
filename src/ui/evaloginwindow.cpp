@@ -69,22 +69,22 @@ void EvaLoginWindow::setEvaSetting(EvaSetting *s)
 	iniRecords( );
 }
 
-const int EvaLoginWindow::getQQ() const
+int EvaLoginWindow::getQQ() const
 {
 	return qqNum;
 }
 
-const QString EvaLoginWindow::getPassword() const
+QString EvaLoginWindow::getPassword() const
 {
 	return lePwd->text();
 }
 
-const bool EvaLoginWindow::isHiddenLoginMode() const
+bool EvaLoginWindow::isHiddenLoginMode() const
 {
 	return chbLoginMode->isOn();
 }
 
-const bool EvaLoginWindow::isRememberChecked() const
+bool EvaLoginWindow::isRememberChecked() const
 {
 	return chbRecordPwd->isOn();
 }
@@ -94,7 +94,7 @@ const char * EvaLoginWindow::getMd5Password() const
 	return md5Pwd;
 }
 
-const EvaLoginWindow::Type EvaLoginWindow::getConnectionType() const
+EvaLoginWindow::Type EvaLoginWindow::getConnectionType() const
 {
 	int index = cbbLoginType->currentItem();
 	if(index == 0) return UDP;
@@ -103,27 +103,27 @@ const EvaLoginWindow::Type EvaLoginWindow::getConnectionType() const
 	return UDP;
 }
 
-const QString EvaLoginWindow::getProxyIP() const
+QString EvaLoginWindow::getProxyIP() const
 {
 	return leIP->text();
 }
 
-const int EvaLoginWindow::getProxyPort() const
+int EvaLoginWindow::getProxyPort() const
 {
 	return port;
 }
 
-const QString EvaLoginWindow::getProxyUserName() const
+QString EvaLoginWindow::getProxyUserName() const
 {
 	return leUserName->text();
 }
 
-const QString EvaLoginWindow::getProxyPassword() const
+QString EvaLoginWindow::getProxyPassword() const
 {
 	return lePassword->text();
 }
 
-const QCString EvaLoginWindow::getProxyParam()
+QCString EvaLoginWindow::getProxyParam()
 {
 	return proxyParam;
 }

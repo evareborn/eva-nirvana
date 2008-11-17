@@ -44,6 +44,7 @@ enum Status{
 	ESCM_ALLLEVELS,       //!< when \c fetchAllLevel was called
 };
 
+class EvaMain;
 class EvaPacketManager;
 class GetFriendListReplyPacket;
 class GroupNameOpReplyPacket;
@@ -63,7 +64,7 @@ class EvaGetLevelReplyPacket;
 class EvaContactManager// : public QObject
 {
 public:
-	EvaContactManager();
+	EvaContactManager( EvaMain* evaapp );
 	virtual ~EvaContactManager();
 	
 	void setPacketManager(EvaPacketManager *pm);
@@ -102,10 +103,11 @@ public:
 	inline const std::map<unsigned int, QunMember> &getQunMembers();
 
 	inline const ContactInfo &getContactInfo();
-	inline const bool IsContactsReady();
+	inline bool IsContactsReady();
 private:
 	bool m_downloadAll;
 	bool m_contactsReady;
+        EvaMain* g_eva;
 	Status m_status;
 	EvaPacketManager *m_packetManager;
 	
@@ -147,9 +149,9 @@ inline const std::map<unsigned int, int> &EvaContactManager::getGroupedContacts(
 inline const QunInfo &EvaContactManager::getQunInfo() { return m_QunInfo; }
 inline const std::map<unsigned int, QunMember> &EvaContactManager::getQunMembers() { return m_QunMembers; }
 inline const ContactInfo &EvaContactManager::getContactInfo() { return m_ContactInfo; }
-inline const bool EvaContactManager::IsContactsReady() { return m_contactsReady; }
+inline bool EvaContactManager::IsContactsReady() { return m_contactsReady; }
 inline const QunList &EvaContactManager::getQunList() { return m_QunList; }
 
-EvaContactManager *GetContactManager();
+//X EvaContactManager *GetContactManager();
 		
 #endif // EVACONTACTMANAGER_H

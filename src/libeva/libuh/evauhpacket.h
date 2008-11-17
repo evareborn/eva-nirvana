@@ -38,20 +38,20 @@ public:
 	virtual ~EvaUHPacket();
 	
 	// for incoming packets	
-	const bool parse();
+	 bool parse();
 	// for outcoming packets
-	const bool fill(unsigned char *buf, int *len);
+	 bool fill(unsigned char *buf, int *len);
 
-	const unsigned char getCommand() { return mCommand; }
-	const int getNumPackets() const { return (int)mNumPackets; }
-	const int getPacketNum() const { return (int)mPacketNum; }
+	 unsigned char getCommand() { return mCommand; }
+	 int getNumPackets() const { return (int)mNumPackets; }
+	 int getPacketNum() const { return (int)mPacketNum; }
 	void setNumPackets(const int num) { mNumPackets = (0xff & num); }
 	void setPacketNum(const int num) { mPacketNum = (0xff & num); }
 
-	const bool isDataPacket() { return mIsData; }
+	 bool isDataPacket() { return mIsData; }
 protected:
-	virtual const bool parseBody();
-	virtual const bool fillBody(unsigned char *buf, int *len);
+	virtual bool parseBody();
+	virtual bool fillBody(unsigned char *buf, int *len);
 	int mBodyStart;
 	unsigned char *buffer;
 	int mBufferLen;
@@ -64,8 +64,8 @@ private:
 	unsigned char mCommand;
 	unsigned char mNumPackets;
 	unsigned char mPacketNum; 
-	const int parseHead();
-	const bool fillHead(unsigned char *buf);
+	 int parseHead();
+	 bool fillHead(unsigned char *buf);
 };
 
 #endif // EVAUSERHEADPACKET_H

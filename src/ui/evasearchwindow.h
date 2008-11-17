@@ -43,10 +43,10 @@ class CityList
 {
 public:
 	CityList();	
-	const bool isLoaded() { return isOK; }
+	bool isLoaded() { return isOK; }
 	std::list<CityListElement> getCityList(unsigned short province);
 private:
-	const bool loadList();
+	bool loadList();
 	bool isOK;
 	std::map<unsigned short, std::list< CityListElement > > list;
 };
@@ -64,7 +64,7 @@ public slots:
 	void slotSearchUsersReady(const bool, const std::list<OnlineUser>);
 	void slotAdvancedSearchReady(const int, const bool, const std::list<AdvancedUser>);
 	void slotQunSearchReady(const std::list<QunInfo>, QString);
-	const short unsigned int getCategoryCode();
+	short unsigned int getCategoryCode();
 signals:
 	//void requestBuddyAuthStatus(const int, const short, const QString&);
 	//void requestAddBuddy(const unsigned int, const QString, const unsigned short); // id, nick, faceid, to be removed

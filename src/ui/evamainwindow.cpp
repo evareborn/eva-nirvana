@@ -68,9 +68,10 @@ void MainWindowTip::maybeTip(const QPoint &pos)
 	tip(r, ((EvaMainWindow *)parentWidget())->myInfoTip());
 }
 
-EvaMainWindow::EvaMainWindow(QWidget* parent, const char* name, WFlags fl)
-	: DCOPObject("View")
-		, EvaMainUIBase(parent, name, fl)
+EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name, WFlags fl )
+//X 	: DCOPObject("View")
+        : EvaMainUIBase(parent, name, fl)
+        , g_eva( evaapp )
 	, sysMenu(NULL), statusMenu(NULL)
 	, pixOnline(NULL), pixOffline(NULL), pixLeave(NULL), pixInvisible(NULL)
 {
@@ -108,7 +109,7 @@ EvaMainWindow::EvaMainWindow(QWidget* parent, const char* name, WFlags fl)
 
 EvaMainWindow::~EvaMainWindow()
 {
-	m_customTabs.clear();
+//X 	m_customTabs.clear();
 }
 
 void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPixmap *pix)
@@ -139,7 +140,7 @@ void EvaMainWindow::slotUpdateBuddyStat()
 	tlQQ->setText(" ( "+ QString::number(onlines) + "/" + QString::number(all) + ")");
 }
 
-void EvaMainWindow::setSystemMenu( KPopupMenu *sys)
+void EvaMainWindow::setSystemMenu( QPopupMenu *sys)
 {
 	if(sys){
 		sysMenu = sys;
@@ -147,7 +148,7 @@ void EvaMainWindow::setSystemMenu( KPopupMenu *sys)
 	}
 }
 
-void EvaMainWindow::setStatusMenu( KPopupMenu *status)
+void EvaMainWindow::setStatusMenu( QPopupMenu *status)
 {
 	if(status){
 		statusMenu = status;
@@ -357,7 +358,7 @@ QString EvaMainWindow::myInfoTip( )
 	//const QQFriend *frd = (EvaMain::user->getFriendList()).getFriend(qqNum); 
 // 	if(!EvaMain::user->loginManager()->isCommandFinished(QQ_CMD_GET_USER_INFO))
 // 		return "Eva";
-	if(!GetLoginManager()->isLoggedIn())
+	if(!g_eva->g_loginManager->isLoggedIn())
 		return "Eva";
 	QString tip = "<qt>";
 	//EvaIPSeeker ipAddr(EvaGlobal::getDirPath().latin1());
@@ -569,8 +570,8 @@ bool EvaMainWindow::removeTab( int id )
 	if(mainDisplay && mainDisplay->tab ){
 		result = mainDisplay->tab->removeTab( id);
 		mainDisplay->tab->changeTabTo(m_recentTabKey);
-		m_customTabs.remove(id);
-		m_tabScriptMap.remove(id);
+//X 		m_customTabs.remove(id);
+//X 		m_tabScriptMap.remove(id);
 	}
 	
 	return result;
@@ -625,120 +626,120 @@ void EvaMainWindow::slotStatusClicked( )
 }
 
 //DCOP functions
-int EvaMainWindow::addTab( QString scriptName, QString name, QString image, QString contents )
-{
-	EvaScriptWidget *view = new EvaScriptWidget(mainDisplay->tab, name);
-	view->setJScriptEnabled( true);
-	view->setJavaEnabled( true);
-	view->setMetaRefreshEnabled( true);
-	view->setPluginsEnabled( true);
+//X int EvaMainWindow::addTab( QString scriptName, QString name, QString image, QString contents )
+//X {
+//X 	EvaScriptWidget *view = new EvaScriptWidget(mainDisplay->tab, name);
+//X 	view->setJScriptEnabled( true);
+//X 	view->setJavaEnabled( true);
+//X 	view->setMetaRefreshEnabled( true);
+//X 	view->setPluginsEnabled( true);
 // 	QObject::connect(view->browserExtension(), 
 // 									 SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),
 // 										view,
 // 									SLOT(openURL( const KURL &)));
-	QPixmap p(image);
-	int id = mainDisplay->tab->addTab(name, p, name, view->view());
-	m_customTabs[id] = view;
-	m_tabScriptMap[id] = scriptName;
-	view->begin();
-	view->write(contents);
-	view->end();
+//X 	QPixmap p(image);
+//X 	int id = mainDisplay->tab->addTab(name, p, name, view->view());
+//X 	m_customTabs[id] = view;
+//X 	m_tabScriptMap[id] = scriptName;
+//X 	view->begin();
+//X 	view->write(contents);
+//X 	view->end();
 // 	QString script = "var browser=navigator.appName\n var b_version=navigator.appVersion\n var version=parseFloat(b_version)\n document.write(\"Browser name: \"+ browser)\n document.write(\"<br />\")\n document.write(\"Browser version: \"+ version)\n";
 // 	bool result = (view->executeScript(DOM::Node(), script)).toBool();
 // 	if(result) printf("script true\n");
 // 	else printf("script false\n");
-	return id;
-}
-
-bool EvaMainWindow::updateTab( int id, QString contents )
-{
+//X 	return id;
+//X }
+//X 
+//X bool EvaMainWindow::updateTab( int id, QString contents )
+//X {
 	//KHTMLView *view = (KHTMLPart *)mainDisplay->tab->getWidget( id);
-	QMap<int, EvaScriptWidget *>::Iterator it = m_customTabs.find( id);
-	if(it == m_customTabs.end()) return false;
-	EvaScriptWidget *view = it.data();
-	if(view){
-		view->begin();
-		view->write(contents);
-		view->end();
-		return true;
-	}
-	return false;
-}
+//X 	QMap<int, EvaScriptWidget *>::Iterator it = m_customTabs.find( id);
+//X 	if(it == m_customTabs.end()) return false;
+//X 	EvaScriptWidget *view = it.data();
+//X 	if(view){
+//X 		view->begin();
+//X 		view->write(contents);
+//X 		view->end();
+//X 		return true;
+//X 	}
+//X 	return false;
+//X }
+//X 
+//X bool EvaMainWindow::isTabExisted( int id )
+//X {
+//X 	if(mainDisplay->tab->getWidget( id))
+//X 		return true;
+//X 	else
+//X 		return false;
+//X }
 
-bool EvaMainWindow::isTabExisted( int id )
-{
-	if(mainDisplay->tab->getWidget( id))
-		return true;
-	else
-		return false;
-}
-
-void EvaMainWindow::bringToFront( int id )
-{
-	//mainDisplay->tab->changeTabTo(id);
-	ShowTab(id);
-}
-
-void EvaMainWindow::openChatWindow( unsigned int id, bool isQun )
-{
-	if(g_eva){
-		if(isQun)
-			g_eva->slotRequestQunChat(id);
-		else
-			g_eva->slotRequestChat( id);
-	}
-}
-
-void EvaMainWindow::addButton( QString scriptName, QString buttonName, QString image, QString tip )
-{
-	EvaMain::g_ChatWindowManager->addButton(scriptName, buttonName, image, tip);
-}
-
-void EvaMainWindow::removeButton( QString scriptName, QString buttonName )
-{
-	EvaMain::g_ChatWindowManager->removeButton(scriptName, buttonName);
-}
-
-void EvaMainWindow::removeButtons(QString scriptName)
-{
-	EvaMain::g_ChatWindowManager->removeButton(scriptName);
-}
-
-void EvaMainWindow::updateStatusBar( QString message )
-{
-	statusBar->lblNotification->setText(message);
-}
-
-void EvaMainWindow::removeTabs( QString scriptName )
-{
-	QMap<int, QString>::Iterator it = m_tabScriptMap.begin();
-	for(it = m_tabScriptMap.begin(); it != m_tabScriptMap.end(); it++){
-		if(it.data() == scriptName)
-			removeTab(it.key());
-	}
-	while(it != m_tabScriptMap.end()){
-		if(it.data() == scriptName){
-			removeTab(it.key());
-			it = m_tabScriptMap.begin();
-		}
-	}
-}
-
-void EvaMainWindow::openUrl( int id, QString _url )
-{
-	if(_url.isEmpty()) return;
-	EvaScriptWidget *part = getCustomTab(id);
-	
-	if(part){
-		KURL url = KURL::fromPathOrURL(_url);
-		part->openURL(url);
-	}
-}
-
-EvaScriptWidget * EvaMainWindow::getCustomTab( int id )
-{
-	QMap<int, EvaScriptWidget *>::Iterator it = m_customTabs.find( id);
-	if(it == m_customTabs.end()) return NULL;
-	return it.data();
-}
-
+//X void EvaMainWindow::bringToFront( int id )
+//X {
+//X 	//mainDisplay->tab->changeTabTo(id);
+//X 	ShowTab(id);
+//X }
+//X 
+//X void EvaMainWindow::openChatWindow( unsigned int id, bool isQun )
+//X {
+//X 	if(g_eva){
+//X 		if(isQun)
+//X 			g_eva->slotRequestQunChat(id);
+//X 		else
+//X 			g_eva->slotRequestChat( id);
+//X 	}
+//X }
+//X 
+//X void EvaMainWindow::addButton( QString scriptName, QString buttonName, QString image, QString tip )
+//X {
+//X 	EvaMain::g_ChatWindowManager->addButton(scriptName, buttonName, image, tip);
+//X }
+//X 
+//X void EvaMainWindow::removeButton( QString scriptName, QString buttonName )
+//X {
+//X 	EvaMain::g_ChatWindowManager->removeButton(scriptName, buttonName);
+//X }
+//X 
+//X void EvaMainWindow::removeButtons(QString scriptName)
+//X {
+//X 	EvaMain::g_ChatWindowManager->removeButton(scriptName);
+//X }
+//X 
+//X void EvaMainWindow::updateStatusBar( QString message )
+//X {
+//X 	statusBar->lblNotification->setText(message);
+//X }
+//X 
+//X void EvaMainWindow::removeTabs( QString scriptName )
+//X {
+//X 	QMap<int, QString>::Iterator it = m_tabScriptMap.begin();
+//X 	for(it = m_tabScriptMap.begin(); it != m_tabScriptMap.end(); it++){
+//X 		if(it.data() == scriptName)
+//X 			removeTab(it.key());
+//X 	}
+//X 	while(it != m_tabScriptMap.end()){
+//X 		if(it.data() == scriptName){
+//X 			removeTab(it.key());
+//X 			it = m_tabScriptMap.begin();
+//X 		}
+//X 	}
+//X }
+//X 
+//X void EvaMainWindow::openUrl( int id, QString _url )
+//X {
+//X 	if(_url.isEmpty()) return;
+//X 	EvaScriptWidget *part = getCustomTab(id);
+//X 	
+//X 	if(part){
+//X 		KURL url = KURL::fromPathOrURL(_url);
+//X 		part->openURL(url);
+//X 	}
+//X }
+//X 
+//X EvaScriptWidget * EvaMainWindow::getCustomTab( int id )
+//X {
+//X 	QMap<int, EvaScriptWidget *>::Iterator it = m_customTabs.find( id);
+//X 	if(it == m_customTabs.end()) return NULL;
+//X 	return it.data();
+//X }
+//X 

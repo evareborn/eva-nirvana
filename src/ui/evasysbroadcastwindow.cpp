@@ -36,7 +36,7 @@ EvaSysBroadcastWindow::EvaSysBroadcastWindow( )
 {
 	QObject::connect(btnDetails, SIGNAL(clicked()), SLOT(slotOpenURL()));
 	QObject::connect(btnClose, SIGNAL(clicked()), SLOT(close()));
-	QObject::connect(kurllblUrl, SIGNAL(leftClickedURL()), SLOT(slotOpenURL()));
+	QObject::connect(qlblUrl, SIGNAL(leftClickedURL()), SLOT(slotOpenURL()));
 
 	//adjustSize();
 	//resize( QSize(315, 157).expandedTo(minimumSizeHint()) );
@@ -63,8 +63,8 @@ void EvaSysBroadcastWindow::setMessage( const QString & msg )
 	m_URL = msg.right( msg.length() - index - 1 - 2);
 
 	lblContents->setText(m_Contents);
-	kurllblUrl->setText( m_URL );
-	kurllblUrl->setProperty( "url", m_URL );
+	qlblUrl->setText( m_URL );
+	qlblUrl->setProperty( "url", m_URL );
 	adjustSize();
 
 	moveToRightBottom( );
@@ -80,7 +80,7 @@ void EvaSysBroadcastWindow::setNews( const QString & title, const QString & brie
 	/// if we show the url link, the layout will be a bit wide,
 	/// so, just hide it. user can still click the "more dettails"
 	/// button anyway
-	kurllblUrl->setHidden( true);
+	qlblUrl->setHidden( true);
 	//kurllblUrl->setText( m_URL );
 	//kurllblUrl->setProperty( "url", m_URL );
 	adjustSize();

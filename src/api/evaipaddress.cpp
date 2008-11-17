@@ -54,12 +54,12 @@ void EvaIPAddress::setAddress(const std::string &strIP)
 	mIP = getIntIP(strIP);
 }
 
-const bool EvaIPAddress::isValid() const
+bool EvaIPAddress::isValid() const
 {
 	return isValidIP;
 }
 
-const uint EvaIPAddress::IP() const
+uint EvaIPAddress::IP() const
 {
 	return mIP;
 }

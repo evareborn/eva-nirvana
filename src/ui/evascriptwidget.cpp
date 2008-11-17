@@ -48,7 +48,7 @@
 #include "evaresource.h"
 #include "evamain.h"
 #include "createsmileywindow.h"
-#include "evascriptmanager.h"
+//X #include "evascriptmanager.h"
 #include "evasetting.h"
 
 /// defines come from khtml/misc/htmltags.h
@@ -467,5 +467,5 @@ void EvaScriptWidget::slotDownloadScriptDone (KIO::Job */*job*/,
 	QString filename = to.url();
 	filename = filename.right(filename.length() - strlen("file://"));
 	
-	GetScriptManager()->slotInstallScript(filename);
+//X 	GetScriptManager()->slotInstallScript(filename);
 }

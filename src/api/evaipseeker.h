@@ -33,7 +33,7 @@ public:
 
   const std::string getIPLocation(const std::string ip);
   const std::string getIPLocation(const unsigned int ip);
-  const bool isQQWryExisted();
+  bool isQQWryExisted();
   
 private:
   unsigned int searchIP(const unsigned int ip);

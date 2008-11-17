@@ -194,6 +194,6 @@ void EvaQunSysMsgWindow::slotJoinQunAuthReply( const unsigned int id, const unsi
 	if(reply!=0x00){
 		kdDebug() << "[EvaQunSysMsgWindow] operation failed" << endl;
 	}
-	GetContactManager()->fetchQunDetails( id);
+        EvaMain::g_contactManager->fetchQunDetails( id);
 	close();
 }

@@ -38,16 +38,16 @@ public:
 	~QunInfo();
 	void clearInfo();
 	
-	const unsigned int getQunID() const { return qunID; }
-	const unsigned int getExtID() const { return externalID; }
-	const unsigned char getType() const { return type;}
-	const unsigned int getCreator() const { return creator; }
-	const unsigned char getAuthType() const { return authType; }
-	const short getUnknown1() const { return unknown1; }
-	const unsigned int getCategory() const { return category; }
-	const unsigned int getVersionID() const { return versionID; }
+	 unsigned int getQunID() const { return qunID; }
+	 unsigned int getExtID() const { return externalID; }
+	 unsigned char getType() const { return type;}
+	 unsigned int getCreator() const { return creator; }
+	 unsigned char getAuthType() const { return authType; }
+	 short getUnknown1() const { return unknown1; }
+	 unsigned int getCategory() const { return category; }
+	 unsigned int getVersionID() const { return versionID; }
 	const std::string getName() const { return name; }
-	const short getUnknown2() const { return unknown2; }
+	 short getUnknown2() const { return unknown2; }
 	const std::string getDescription() const { return description; }
 	const std::string getNotice() const { return notice; }
 	
@@ -65,14 +65,14 @@ public:
 	void setNotice(const std::string &n) { notice = n; }	
 	
 	QunInfo &operator=(const QunInfo &rhs);
-	const bool operator==(const QunInfo &rhs);
+	bool operator==(const QunInfo &rhs);
 	
 	int readTempQunInfo(unsigned char *buf);
 	int readQunInfo(unsigned char *buf);
 	int readQunInfoFromSearchReply(unsigned char *buf);
 
 	// new stuff in 2006 (Qun search reply)
-	const unsigned int getUnknownTokenLength() const { return m_UnknownTokenLength; }
+	 unsigned int getUnknownTokenLength() const { return m_UnknownTokenLength; }
 	const unsigned char *getUnknownToken() const { return m_UnknownToken; }
 private:	
 	// internal Qun ID used in QQ protocol
@@ -107,8 +107,8 @@ public:
 	OutPacket * copy() { return new QunPacket(*this);}
 	QunPacket &operator=(const QunPacket &rhs);
 	
-	const char getQunCommand() const { return qunCommand; }
-	const unsigned int getQunID() const { return qunID; }
+	 char getQunCommand() const { return qunCommand; }
+	 unsigned int getQunID() const { return qunID; }
 	
 	void setQunCommand(const char cmd) { qunCommand = cmd; }
 	void setQunID(const unsigned int id) { qunID = id; }
@@ -134,36 +134,36 @@ public:
 	InPacket * copy() { return new QunReplyPacket(*this);}
 	QunReplyPacket &operator=(const QunReplyPacket &rhs);
 	
-	const char getQunCommand() const { return qunCommand; }
-	const char getReplyCode() const { return replyCode; }
-	const unsigned int getQunID() const { return qunID; }
-	const unsigned int getExtID() const {  return externalID; }
-	const char getType() const { return type; }
-	const unsigned int getParentQunID() const { return parentQunID; }
+	 char getQunCommand() const { return qunCommand; }
+	 char getReplyCode() const { return replyCode; }
+	 unsigned int getQunID() const { return qunID; }
+	 unsigned int getExtID() const {  return externalID; }
+	 char getType() const { return type; }
+	 unsigned int getParentQunID() const { return parentQunID; }
 	const std::string getErrorMessage() const { return errorMessage; }
 	
-	const unsigned char getSearchType() const { return searchType; }
+	 unsigned char getSearchType() const { return searchType; }
 	const QunInfo &getQunInfo() const { return info; }
 	const std::map<unsigned int, QunMember> &getMemberList() const { return memberList; }
 	const std::list<QunInfo> &getQunInfoList() const { return qunInfoList; }
 	const std::list<unsigned int> &getQQNumberList() const { return qunQQNumberList; }
 	const std::list<FriendItem> &getMemberInfoList() const { return memberInfoList; }
-	const unsigned char getJoinReply() const { return joinReply; }
+	 unsigned char getJoinReply() const { return joinReply; }
 	
-	const bool isReplyOK() const;
+	 bool isReplyOK() const;
 	
-	const unsigned int getTargetQQ() const { return targetQQ; }
-	const unsigned char getOpCode() const { return opCode;}
-	const unsigned int getQunVersionID() const { return versionID; }
+	 unsigned int getTargetQQ() const { return targetQQ; }
+	 unsigned char getOpCode() const { return opCode;}
+	 unsigned int getQunVersionID() const { return versionID; }
 	
 	const std::string &getRealName() const { return realName; }
-	const unsigned char getGender() const { return gender; }
+	 unsigned char getGender() const { return gender; }
 	const std::string &getPhone() const { return phone; }
 	const std::string &getEmail() const { return email; }
 	const std::string &getMemo() const { return memo; }
 
-	const unsigned int getCardVersion() const { return m_CardVersion; }
-	const unsigned int getNextStartIndex() const { return m_NextStart; }
+	 unsigned int getCardVersion() const { return m_CardVersion; }
+	 unsigned int getNextStartIndex() const { return m_NextStart; }
 	const std::map<int, std::string> &getRealNames() const { return m_RealNameList; }
 protected:
 	virtual void parseBody();
@@ -303,8 +303,8 @@ public:
 	QunAuthPacket(const QunAuthPacket &rhs);
 	virtual ~QunAuthPacket();
 	
-	const unsigned char getAuthType() const { return type; }
-	const unsigned int getReceiver() const { return receiver; }
+	 unsigned char getAuthType() const { return type; }
+	 unsigned int getReceiver() const { return receiver; }
 	const std::string getMessage() const { return message; }
 	
 	void setAuthType(const unsigned char t) { type = t; }
@@ -312,7 +312,7 @@ public:
 	void setMessage(const std::string &msg) { message = msg; }
 
 	const unsigned char *getCode() const { return m_Code; }
-	const unsigned short getCodeLength() const { return m_CodeLen; }
+	 unsigned short getCodeLength() const { return m_CodeLen; }
 
 	void setCode(const unsigned char *code, const unsigned short len);
 	void setToken(const unsigned char *code, const unsigned short len);
@@ -339,23 +339,23 @@ public:
 	
 	const std::string &getFontName() const { return fontName; }               // font setting
 	void setFontName(std::string &fontName) { this->fontName = fontName; }
-	const char getFontSize() const { return fontSize; }
+	 char getFontSize() const { return fontSize; }
 	void setFontSize(char fontSize); 
-	const short getEncoding() const { return encoding; }
+	 short getEncoding() const { return encoding; }
 	void setEncoding(short encoding) { this->encoding = encoding; }
 
-	const bool isUnderline() const { return underline;}                      // U B I setting
+	 bool isUnderline() const { return underline;}                      // U B I setting
 	void setUnderline(bool underline) ;
-	const bool isItalic() const { return italic; }
+	 bool isItalic() const { return italic; }
 	void setItalic(bool italic);
-	const bool isBold() const { return bold; };
+	 bool isBold() const { return bold; };
 	void setBold(bool bold);
 	
-	const char getBlue() const { return blue; }                         // color setting
+	 char getBlue() const { return blue; }                         // color setting
 	void setBlue(char blue) { this->blue = blue; }
-	const char getGreen() const { return green; }
+	 char getGreen() const { return green; }
 	void setGreen(char green)  {this->green = green; }
-	const char getRed() const { return red; }
+	 char getRed() const { return red; }
 	void setRed(char red) { this->red = red; }
 	
 	/*
@@ -386,9 +386,9 @@ public:
 	OutPacket * copy() { return new QunSendIMExPacket(*this);}
 	QunSendIMExPacket &operator=(const QunSendIMExPacket &rhs);
 	
-	const unsigned char getNumFragments() const { return numFragments; }
-	const unsigned char getSeqOfFragments() const { return seqFragments; }
-	const short getMessageID() const { return messageID; }
+	 unsigned char getNumFragments() const { return numFragments; }
+	 unsigned char getSeqOfFragments() const { return seqFragments; }
+	 short getMessageID() const { return messageID; }
 	
 	void setNumFragments(const unsigned char num) { numFragments = num; }
 	void setSeqOfFragments( const unsigned char seq) { seqFragments = seq; }
@@ -409,8 +409,8 @@ public:
 	QunSearchPacket(const QunSearchPacket &rhs);
 	virtual ~QunSearchPacket() {};
 	
-	const unsigned char getSearchType() const { return type; }
-	const unsigned int getExtID() const { return externalID; }
+	 unsigned char getSearchType() const { return type; }
+	 unsigned int getExtID() const { return externalID; }
 	
 	void setSearchType(const unsigned char t) { type = t; }
 	void setExtID(const int id) { externalID = id; }
@@ -457,7 +457,7 @@ public:
 	QunRequestCardPacket(const QunRequestCardPacket &rhs);
 	virtual ~QunRequestCardPacket(){};
 	
-	const unsigned int getQQ() const { return qqNum; }
+	 unsigned int getQQ() const { return qqNum; }
 	QunRequestCardPacket &operator=(const QunRequestCardPacket &rhs);
 protected:
 	virtual int putBody(unsigned char *buf);
@@ -472,10 +472,10 @@ public:
 	QunModifyCardPacket(const QunModifyCardPacket &rhs);
 	virtual ~QunModifyCardPacket(){};
 	
-	const unsigned int getQQ() const { return qqNum; }
-	const unsigned char getAllowAdminChange() const { return m_AllowAdminChange;}
+	 unsigned int getQQ() const { return qqNum; }
+	 unsigned char getAllowAdminChange() const { return m_AllowAdminChange;}
 	const std::string &getName() const { return name;}
-	const unsigned char getGender() const { return gender; }
+	 unsigned char getGender() const { return gender; }
 	const std::string &getPhone() const { return phone;}
 	const std::string &getEmail() const { return email;}
 	const std::string &getMemo() const { return memo;}
@@ -509,8 +509,8 @@ public:
 	QunAdminOpPacket(const QunAdminOpPacket &rhs);
 	virtual ~QunAdminOpPacket() {};
 	
-	const unsigned int getQQ() const { return qqNum; }
-	const unsigned char getActionCode() const { return action; }
+	 unsigned int getQQ() const { return qqNum; }
+	 unsigned char getActionCode() const { return action; }
 	
 	void setQQ(const unsigned int qq) { qqNum = qq; }
 	void setActionCode( const unsigned char code) { action = code; }
@@ -530,7 +530,7 @@ public:
 	QunTransferPacket(const QunTransferPacket &rhs);
 	virtual ~QunTransferPacket() {};
 	
-	const unsigned int getQQ() const { return qqNum; }
+	 unsigned int getQQ() const { return qqNum; }
 	void setQQ(const unsigned int qq) { qqNum = qq; }
 	
 	QunTransferPacket &operator=(const QunTransferPacket &rhs);
@@ -549,7 +549,7 @@ public:
 	virtual ~QunModifyMemberPacket() {};
 	
 	const std::list<unsigned int> &getMembers() const { return members; }
-	const bool isAdd() const { return mIsAdd; }
+	 bool isAdd() const { return mIsAdd; }
 	
 	void setMembers(const std::list<unsigned int> list) { members=list; }
 	void setAdd( const bool isAdd) { mIsAdd = isAdd; }
@@ -586,8 +586,8 @@ public:
 	void setMembers( const std::list<unsigned int> &members) { qunMembers = members; }
 	
 	const std::string & getName() const { return qunName; }
-	const unsigned short getCategory() const { return qunCategory; }
-	const unsigned char getAuth() const { return qunAuth; }
+	 unsigned short getCategory() const { return qunCategory; }
+	 unsigned char getAuth() const { return qunAuth; }
 	
 	const std::string & getNotice() const { return qunNotice; }
 	const std::string & getDescription() const { return qunDescription; }
@@ -626,7 +626,7 @@ public:
 	virtual ~QunRequestAllRealNames() {};
 
 	void setStartIndex(const unsigned int index) { m_StartIndex = index; }
-	const unsigned int getStartIndex() const { return m_StartIndex; }
+	 unsigned int getStartIndex() const { return m_StartIndex; }
 
 	QunRequestAllRealNames &operator=(const QunRequestAllRealNames &rhs);
 protected:

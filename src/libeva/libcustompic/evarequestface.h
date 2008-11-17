@@ -35,9 +35,9 @@ public:
 	void setSessionID(const unsigned int id) { sessionID= id;}
 	void setFileAgentToken(const unsigned char *token, const int len);
 	
-	const int getQunID() const { return qunID; }
-	const unsigned int getSessionID() const { return sessionID; }
-	const int getTokenLength() const { return tokenLength; }
+	 int getQunID() const { return qunID; }
+	 unsigned int getSessionID() const { return sessionID; }
+	 int getTokenLength() const { return tokenLength; }
 	const unsigned char *getFileAgentToken() const { return fileAgentToken; }
 protected:
 	virtual int putBody(unsigned char *buf);
@@ -57,7 +57,7 @@ public:
 	
 	EvaRequestFaceReplyPacket &operator=(const EvaRequestFaceReplyPacket &rhs);
 	
-	const unsigned int getSessionID() const { return sessionID; }
+	 unsigned int getSessionID() const { return sessionID; }
 protected:
 	virtual void parseBody();
 private:

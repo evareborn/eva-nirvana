@@ -257,7 +257,7 @@ void EvaSysSettingWindow::saveSetting( )
 	userSetting->setFaceSize(QSize(sliderFaceSize->value(), sliderFaceSize->value()));
 	userSetting->setPageSize(sbPageSize->value());
 	
-	userSetting->setMessageShortcut(kkbtnShortKey->shortcut());
+//X 	userSetting->setMessageShortcut(kkbtnShortKey->shortcut());
 
 	userSetting->setBuddyNameColor( wspMainFont->kcbbBuddyNickColor->color() );
 	userSetting->setBuddyNameBold( wspMainFont->chbBuddyNickFontB->isChecked() );
@@ -329,7 +329,7 @@ void EvaSysSettingWindow::loadSetting( const bool isLoadDefault)
 	leThemePath->setText(userSetting->getThemeDir());
 	leSoundPath->setText(userSetting->getSoundDir());
 	
-	kkbtnShortKey->setShortcut(userSetting->getMessageShortcut(), false);
+//X 	kkbtnShortKey->setShortcut(userSetting->getMessageShortcut(), false);
 
 	wspMainFont->kcbbBuddyNickColor->setColor(userSetting->getBuddyNameColor());
 	wspMainFont->chbBuddyNickFontB->setChecked(userSetting->isBuddyNameBold());
@@ -474,9 +474,9 @@ void EvaSysSettingWindow::slotFaceSizeChanged( int value )
 	
 }
 
-void EvaSysSettingWindow::slotCapturedShortcut(const KShortcut &key)
+void EvaSysSettingWindow::slotCapturedShortcut(const KShortcut &/*key*/)
 {
-	kkbtnShortKey->setShortcut(key, false);
+//X 	kkbtnShortKey->setShortcut(key, false);
 }
 
 void EvaSysSettingWindow::slotPbThemeClicked( )

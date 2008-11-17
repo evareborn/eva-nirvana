@@ -37,10 +37,10 @@ public:
 	OnlineUser();
 	~OnlineUser() {}
 	
-	const int getQQ() const { if (qqNum!=0) return qqNum;else return atoi(nick.c_str()); }
+	 int getQQ() const { if (qqNum!=0) return qqNum;else return atoi(nick.c_str()); }
 	void setQQ(const int id){ qqNum = id; }
 	const std::string getNick() const { if (qqNum!=0) return nick;else return province;}
-	const short getFace() const { return face; }
+	 short getFace() const { return face; }
 	const std::string getProvince() const { if (qqNum!=0) return province;else return "";}
 	int readData(unsigned char * buf);
 	OnlineUser &operator=(const OnlineUser &rhs);
@@ -61,17 +61,17 @@ public:
 	
 	void setPage(const int p);
 	void setPage(const std::string p) { page = p; }
-	const int getIntPage() const { return atoi(page.c_str()); }
+	 int getIntPage() const { return atoi(page.c_str()); }
 	const std::string getPage() const { return page; }
 	void setSearchType(const uint8_t type) { searchType = type; }
-	const uint8_t getSearchType() const { return searchType; }
+	 uint8_t getSearchType() const { return searchType; }
 	void setMatchEntireString(const bool match) {  matchEntireString = match; }
-	const bool getMatchEntireString() const { return matchEntireString; }
+	 bool getMatchEntireString() const { return matchEntireString; }
 	void setNick( const std::string &nickname ) { nick = nickname; }
 	const std::string getNick() const { return nick; }
 	void setQQ(const int qqNum);
 	void setQQ(const std::string &id) { qqStr = id; }
-	const int getIntQQ() const { return atoi(qqStr.c_str()); }
+	 int getIntQQ() const { return atoi(qqStr.c_str()); }
 	const std::string getQQ() const { return qqStr; }
 	void setEmail(const std::string &mail) { email = mail; }
 	const std::string getEmail() const { return email; }
@@ -98,7 +98,7 @@ public:
 	~SearchUserReplyPacket() {};
 		
 	const std::list<OnlineUser> getUsers() const { return users; }
-	const bool isFinished() const { return finished; }
+	 bool isFinished() const { return finished; }
 	//void setFinished(const bool f) { finished = f; }
 	
 	SearchUserReplyPacket &operator=(const SearchUserReplyPacket &rhs);

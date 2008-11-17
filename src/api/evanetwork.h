@@ -39,7 +39,7 @@ public:
 	
 	void setServer(const QHostAddress &address, const short port);
 	const QHostAddress &getHostAddress() const;  // if it's Http Proxy, return the proxy's address
-	const short getHostPort() const;
+	short getHostPort() const;
 	
 	void setDestinationServer(const QString &server, const short port); // for Http Proxy only;
         void setAuthParameter(const QString &username, const QString &password);
@@ -52,9 +52,9 @@ public:
 	void setWriteNotifierEnabled(bool enabled);
 
 	void close();
-	const Type connectionType() { return type; }
+	Type connectionType() { return type; }
 	const QHostAddress getSocketIp();
-	const unsigned int getSocketPort();
+	unsigned int getSocketPort();
 signals:
 	void isReady();
 	void dataComming(int);

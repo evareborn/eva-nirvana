@@ -38,7 +38,7 @@ public:
 	EvaAddFriendExPacket &operator=( const EvaAddFriendExPacket &rhs );
 	
 	void setAddQQ(const int id ) { m_AddQQNum = id; }
-	const int getAddQQ() const { return m_AddQQNum; }
+	int getAddQQ() const { return m_AddQQNum; }
 	
 protected:
 	virtual int putBody(unsigned char* buf);
@@ -57,9 +57,9 @@ public:
 	InPacket *copy() { return new EvaAddFriendExReplyPacket(*this); }
 	EvaAddFriendExReplyPacket &operator=(const EvaAddFriendExReplyPacket &rhs);
 	
-	const unsigned int getAddQQ() const { return m_AddQQNum; }
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
-	const unsigned char getAuthStatus() const { return m_AuthStatus; }
+	 unsigned int getAddQQ() const { return m_AddQQNum; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getAuthStatus() const { return m_AuthStatus; }
 	
 	void setAddQQ( const unsigned int id ) { m_AddQQNum = id; }
 	void setAuthStatus( const unsigned char authStatus ) { m_AuthStatus = authStatus; }
@@ -96,25 +96,25 @@ public:
 	const std::string getMessage() const { return m_Message; }
 	void setMessage(const std::string &msg) { m_Message = msg; }
 	
-	const unsigned int getAddQQ() const { return m_AddQQNum; }
+	 unsigned int getAddQQ() const { return m_AddQQNum; }
 	void setAddQQ(const unsigned int id) { m_AddQQNum = id; }
 	
-	const unsigned int getDestGroup() const { return m_DestGroup; }
+	 unsigned int getDestGroup() const { return m_DestGroup; }
 	void setDestGroup(const unsigned int destGroup) { m_DestGroup = destGroup; }
 	
-	const bool getAllowAddReverse() const { return m_AllowAddReverse; }
+	 bool getAllowAddReverse() const { return m_AllowAddReverse; }
 	void setAllowAddReverse( const bool allowAddReverse) { m_AllowAddReverse = allowAddReverse; }
 	
-	const unsigned char getAuthStatus() const { return m_AuthStatus; }
+	 unsigned char getAuthStatus() const { return m_AuthStatus; }
 	void setAuthStatus(const unsigned char authStatus ) { m_AuthStatus = authStatus; }
 	
 	void setAuthCode( const unsigned char *code, const unsigned short len);
 	const unsigned char *getAuthCode() const { return m_AuthCode; }
-	const unsigned short getAuthCodeLength() const { return m_AuthCodeLen; }
+	 unsigned short getAuthCodeLength() const { return m_AuthCodeLen; }
 
 	void setQuestionCode( const unsigned char *code, const unsigned short len);
 	const unsigned char *getQuestionCode() const { return m_QuestionCode; }
-	const unsigned short getQuestionCodeLength() const { return m_QuestionCodeLen; }
+	 unsigned short getQuestionCodeLength() const { return m_QuestionCodeLen; }
 
 protected:		
 	virtual int putBody(unsigned char* buf);
@@ -143,16 +143,16 @@ public:
 	virtual InPacket* copy(){return new EvaAddFriendAuthExReplyPacket(*this);}
 	EvaAddFriendAuthExReplyPacket &operator=(const EvaAddFriendAuthExReplyPacket &rhs);
 	
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
 	void setReplyCode( const unsigned char replyCode ) { m_ReplyCode = replyCode; }
 	
-	const unsigned char getAuthStatus() const { return m_AuthStatus; }
+	 unsigned char getAuthStatus() const { return m_AuthStatus; }
 	void setAuthStatus( const unsigned char authStatus ) { m_AuthStatus = authStatus; }
 		
-	const unsigned int getAddQQ() const { return m_AddQQNum; }
+	 unsigned int getAddQQ() const { return m_AddQQNum; }
 	void setAddQQ( const unsigned int qq ) { m_AddQQNum = qq; }
 	
-	const bool isAddSuccessful() const { return m_ReplyCode == 0x00; }
+	 bool isAddSuccessful() const { return m_ReplyCode == 0x00; }
 	
 protected:
 	virtual void parseBody();
@@ -175,7 +175,7 @@ public:
 	EvaAddFriendGetAuthInfoPacket &operator=( const EvaAddFriendGetAuthInfoPacket &rhs );
 	
 	void setAddID(const unsigned int id ) { m_AddID = id; }
-	const unsigned int getAddID() const { return m_AddID; }
+	 unsigned int getAddID() const { return m_AddID; }
 	
 	void setVerificationStr(  std::string const &str) { m_Verification = str; }
 	const std::string getVerificationStr() const { return m_Verification; }
@@ -184,12 +184,12 @@ public:
 	const std::string & getSessionStr() const { return m_Session; }
 
 	void setSubCommand(const unsigned char cmd) { m_Cmd = cmd; }
-	const unsigned char getSubCommand() const { return m_Cmd; }
+	 unsigned char getSubCommand() const { return m_Cmd; }
 
 	void setSubSubCommand(const unsigned char cmd) { m_SubCmd = cmd; }
-	const unsigned char getSubSubCommand() const { return m_SubCmd; }
+	 unsigned char getSubSubCommand() const { return m_SubCmd; }
 
-	const bool isQun() const { return m_IsQun; }
+	 bool isQun() const { return m_IsQun; }
 protected:
 	virtual int putBody(unsigned char* buf);
 private:
@@ -215,15 +215,15 @@ public:
 	virtual InPacket* copy(){return new EvaAddFriendGetAuthInfoReplyPacket(*this);}
 	EvaAddFriendGetAuthInfoReplyPacket &operator=(const EvaAddFriendGetAuthInfoReplyPacket &rhs);
 	
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
 	void setReplyCode( const unsigned char replyCode ) { m_ReplyCode = replyCode; }	
 
-	const unsigned char getSubCommand() const { return m_Cmd; }
-	const unsigned char getSubSubCommand() const { return m_SubCmd; }
+	 unsigned char getSubCommand() const { return m_Cmd; }
+	 unsigned char getSubSubCommand() const { return m_SubCmd; }
 	const unsigned char *getCode() const { return m_Code; }
-	const int getCodeLength () const { return m_CodeLen; }
+	 int getCodeLength () const { return m_CodeLen; }
 
-	const bool isQun() const { return m_IsQun; }
+	 bool isQun() const { return m_IsQun; }
 protected:
 	virtual void parseBody();
 private:
@@ -261,14 +261,14 @@ public:
 	EvaAddFriendAuthQuestionPacket &operator=( const EvaAddFriendAuthQuestionPacket &rhs );
 	
 	void setAddQQ(const unsigned int id ) { m_AddQQNum = id; }
-	const unsigned int getAddQQ() const { return m_AddQQNum; }
+	 unsigned int getAddQQ() const { return m_AddQQNum; }
 
 	void setAnswer( std::string const &msg) { m_Answer = msg; }
 	const std::string & getAnswer() const { return m_Answer; }
 	void setQuestion( std::string const &msg) { m_Question = msg; }
 	const std::string & getQuestion() const { return m_Question; }
 
-	const unsigned char getAuthStatus() const { return m_AuthStatus; }
+	 unsigned char getAuthStatus() const { return m_AuthStatus; }
 	void setAuthStatus(const unsigned char authStatus ) { m_AuthStatus = authStatus; }
 protected:
 	virtual int putBody(unsigned char* buf);
@@ -292,16 +292,16 @@ public:
 	virtual InPacket* copy(){return new EvaAddFriendAuthQuestionReplyPacket(*this);}
 	EvaAddFriendAuthQuestionReplyPacket &operator=(const EvaAddFriendAuthQuestionReplyPacket &rhs);
 	
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
 	void setReplyCode( const unsigned char replyCode ) { m_ReplyCode = replyCode; }
 	bool isAnswerOK() const { return m_ReplyCode == 0x00; }
 
-	const unsigned char getAuthStatus() const { return m_AuthStatus; }
+	 unsigned char getAuthStatus() const { return m_AuthStatus; }
 	void setAuthStatus(const unsigned char authStatus ) { m_AuthStatus = authStatus; }
 
 	const unsigned char *getCode() const { return m_Code; }
 	const unsigned char *getQuestion() const { return m_Code; }
-	const int getCodeLength () const { return m_CodeLen; }
+	 int getCodeLength () const { return m_CodeLen; }
 
 	void setAnswer( std::string const &msg) { m_Answer = msg; }
 	const std::string & getAnswer() const { return m_Answer; }	

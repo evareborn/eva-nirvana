@@ -22,7 +22,7 @@
 
 #include <ktextedit.h>
 class QKeyEvent;
-class EvaTextEdit : public KTextEdit
+class EvaTextEdit : public QTextEdit
 {
 	Q_OBJECT
 public: 

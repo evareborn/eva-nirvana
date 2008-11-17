@@ -128,13 +128,13 @@ FriendOnlineEntry::~FriendOnlineEntry()
 	delete status; 
 }
 
-const unsigned int FriendOnlineEntry::getQQ() const  { return status->qqNum;}
-const unsigned int FriendOnlineEntry::getIP() const  { return status->ip;}
-const unsigned short FriendOnlineEntry::getPort() const  { return status->port;}
-const char FriendOnlineEntry::getStatus() const  { return status->status;}
-const char FriendOnlineEntry::getUnknown1_4() const  { return status->unknown4;}
-const char FriendOnlineEntry::getUnknown2_11() const  { return status->unknown11;}
-const short FriendOnlineEntry::getUnknown3_13_14() const  { return status->unknown13_14;}
+unsigned int FriendOnlineEntry::getQQ() const  { return status->qqNum;}
+unsigned int FriendOnlineEntry::getIP() const  { return status->ip;}
+unsigned short FriendOnlineEntry::getPort() const  { return status->port;}
+char FriendOnlineEntry::getStatus() const  { return status->status;}
+char FriendOnlineEntry::getUnknown1_4() const  { return status->unknown4;}
+char FriendOnlineEntry::getUnknown2_11() const  { return status->unknown11;}
+short FriendOnlineEntry::getUnknown3_13_14() const  { return status->unknown13_14;}
 const unsigned char * FriendOnlineEntry::getUnknownKey() const  { return status->unknownKey;}
 
 
@@ -142,10 +142,10 @@ int FriendOnlineEntry::readData(unsigned char * buf)
 {
 	status = new FriendStatus();
 	status->readData(buf);
-	unknown31_32 = (short)(buf[31])<<8 + buf[32];
+	unknown31_32 = ( (short)(buf[31])<<8 ) + buf[32];
 	extFlag = buf[33];
 	commFlag = buf[34];
-	unknown35_36 = (short)(buf[35])<<8 + buf[36];
+	unknown35_36 = ( (short)(buf[35])<<8 ) + buf[36];
 	ending = buf[37];
 	numOfBytes = 38;
 	return numOfBytes;
@@ -298,13 +298,13 @@ void FriendChangeStatusPacket::parseBody()
 	myQQNum = ntohl(myQQNum);
 }
 
-const unsigned int FriendChangeStatusPacket::getQQ() const  { return status->qqNum;}
-const unsigned int FriendChangeStatusPacket::getIP() const  { return status->ip;}
-const unsigned short FriendChangeStatusPacket::getPort() const  { return status->port;}
-const char FriendChangeStatusPacket::getStatus() const  { return status->status;}
-const char FriendChangeStatusPacket::getUnknown1_4() const  { return status->unknown4;}
-const char FriendChangeStatusPacket::getUnknown2_11() const  { return status->unknown11;}
-const short FriendChangeStatusPacket::getUnknown3_13_14() const  { return status->unknown13_14;}
+unsigned int FriendChangeStatusPacket::getQQ() const  { return status->qqNum;}
+unsigned int FriendChangeStatusPacket::getIP() const  { return status->ip;}
+unsigned short FriendChangeStatusPacket::getPort() const  { return status->port;}
+char FriendChangeStatusPacket::getStatus() const  { return status->status;}
+char FriendChangeStatusPacket::getUnknown1_4() const  { return status->unknown4;}
+char FriendChangeStatusPacket::getUnknown2_11() const  { return status->unknown11;}
+short FriendChangeStatusPacket::getUnknown3_13_14() const  { return status->unknown13_14;}
 const unsigned char * FriendChangeStatusPacket::getUnknownKey() const  { return status->unknownKey;}
 
 
@@ -365,7 +365,7 @@ void ChangeStatusReplyPacket::parseBody()
     replyCode = decryptedBuf[0];
 }
 
-const bool ChangeStatusReplyPacket::isAccepted() const
+bool ChangeStatusReplyPacket::isAccepted() const
 {
 	return ( replyCode == QQ_CHANGE_STATUS_REPLY_OK);
 }

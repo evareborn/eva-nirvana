@@ -52,14 +52,14 @@ public:
 	~EvaHtmlParser(){};
 	std::list<CustomizedPic> convertToHtml(QString &txt, bool isURLOn = true, bool isAbsImgPath = false,
 						bool useRealFileName = false);
-	const int convertToPlainTxt(QString &html, QString &sendFileNameBase);
+	int convertToPlainTxt(QString &html, QString &sendFileNameBase);
 	void convertToPlainTxt(QString &html, const unsigned int agentSessionID, 
 					const unsigned int agentIP, const unsigned short agentPort );
 	std::list<QString> getCustomImages(const QString html);
 	void parseToAbsPath(QString &html, const QString absPath);
 	void setAbsImagePath(const QString &path,const QString &cachePath = QString::null) 
 				{ absImagePath = path; absCustomCachesPath = cachePath;}
-	const QString getAbsImagePath() const { return absImagePath; }
+	QString getAbsImagePath() const { return absImagePath; }
 private:
 	QString absImagePath;
 	QString absCustomCachesPath;

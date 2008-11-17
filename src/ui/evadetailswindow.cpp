@@ -164,7 +164,7 @@ void EvaDetailsWindow::slotDetailsUpdated( QStringList list)
 	UpdateData(true);
 }	
 	
-const bool EvaDetailsWindow::UpdateData(const bool toShow)
+bool EvaDetailsWindow::UpdateData(const bool toShow)
 {
 	qwUserInfo->leNumber->setText( details[0] );
 	
@@ -305,7 +305,7 @@ void EvaDetailsWindow::slotAlbumClicked( )
 	slotLinkClicked(url);
 }
 
-const QString EvaDetailsWindow::getClientKeyString()
+QString EvaDetailsWindow::getClientKeyString()
 {
 	QString key="";
 	int len = Packet::getClientKeyLength();

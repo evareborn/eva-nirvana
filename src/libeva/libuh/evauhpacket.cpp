@@ -57,7 +57,7 @@ EvaUHPacket::~EvaUHPacket()
 	if(buffer) delete buffer;
 }
 
-const bool EvaUHPacket::parse()
+bool EvaUHPacket::parse()
 {
 	if(mBodyStart == -1) return false;
 	mBodyStart = parseHead();
@@ -65,7 +65,7 @@ const bool EvaUHPacket::parse()
 	return parseBody();
 }
 
-const bool EvaUHPacket::fill(unsigned char *buf, int *len)
+bool EvaUHPacket::fill(unsigned char *buf, int *len)
 {
 	if(!fillHead(buf)) return false;
 	int tmp;
@@ -74,19 +74,19 @@ const bool EvaUHPacket::fill(unsigned char *buf, int *len)
 	return result;
 }
 
-const bool EvaUHPacket::parseBody()
+bool EvaUHPacket::parseBody()
 {
 	fprintf(stderr, "EvaUHPacket::parseBody\n");
 	return false;
 }
 
-const bool EvaUHPacket::fillBody(unsigned char */*buf*/, int */*len*/)
+bool EvaUHPacket::fillBody(unsigned char */*buf*/, int */*len*/)
 {
 	fprintf(stderr, "EvaUHPacket::fillBody\n");
 	return false;
 }
 
-const int EvaUHPacket::parseHead()
+int EvaUHPacket::parseHead()
 {
 	int pos = 0;
 	if(buffer[pos++] != UH_HEAD_TAG) return false;
@@ -112,7 +112,7 @@ const int EvaUHPacket::parseHead()
 	return pos;
 }
 
-const bool EvaUHPacket::fillHead(unsigned char *buf)
+bool EvaUHPacket::fillHead(unsigned char *buf)
 {
 	if(!buf) return false;
 	int pos = 0;

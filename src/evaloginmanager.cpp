@@ -33,15 +33,16 @@
 #include <kdebug.h>
 
 
+//X 
+//X EvaLoginManager *GetLoginManager()
+//X {
+//X 	static EvaLoginManager manager( g_eva );
+//X 	return &manager;
+//X }
 
-EvaLoginManager *GetLoginManager()
-{
-	static EvaLoginManager manager;
-	return &manager;
-}
-
-EvaLoginManager::EvaLoginManager( )
+EvaLoginManager::EvaLoginManager(EvaMain* evaapp )
 	: m_packetManager(NULL)
+        , g_eva( evaapp )  
 	, m_isLoggedIn(false)
 	, m_veriWin(NULL)
 {

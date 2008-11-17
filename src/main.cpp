@@ -20,7 +20,7 @@
 
 
 #include "evamain.h"
-#include <kapplication.h>
+#include <qapplication.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <klocale.h>
@@ -34,57 +34,57 @@ static const char description[] =
 
 static const char version[] = VERSION; // update the version number in configure.in.in and re-generate the configure script;
 
-static KCmdLineOptions options[] =
-{
-	{ "last", I18N_NOOP("Using the last saved settings to login."), 0},
-	{ "u", 0, 0},
-	{ "user <qq number>", I18N_NOOP("QQ number to login."), 0},
-	{ "p", 0, 0},
-	{ "passwd <password>", I18N_NOOP("Password for your QQ number."), 0},
-	{ "m", 0, 0},
-	{ "mode <mode>", I18N_NOOP("Connection mode (one of UDP, TCP or HTTP_PROXY), defaulting to UDP"), "UDP"},
-	{ "pip <IP address>", I18N_NOOP("Proxy server IP address."), 0},
-	{ "pport <proxy port>", I18N_NOOP("Proxy server port number"), 0},
-	{ "pu <proxy username>", I18N_NOOP("Proxy user name if required."), 0},
-	{ "ppw <proxy password>", I18N_NOOP("Proxy password if required."), 0},
-	{ "hide", I18N_NOOP("Select login mode to invisible."), 0},
-	{ "remember", I18N_NOOP("Save password and proxy settings."), 0},
-	KCmdLineLastOption
-};
+//X static KCmdLineOptions options[] =
+//X {
+//X 	{ "last", I18N_NOOP("Using the last saved settings to login."), 0},
+//X 	{ "u", 0, 0},
+//X 	{ "user <qq number>", I18N_NOOP("QQ number to login."), 0},
+//X 	{ "p", 0, 0},
+//X 	{ "passwd <password>", I18N_NOOP("Password for your QQ number."), 0},
+//X 	{ "m", 0, 0},
+//X 	{ "mode <mode>", I18N_NOOP("Connection mode (one of UDP, TCP or HTTP_PROXY), defaulting to UDP"), "UDP"},
+//X 	{ "pip <IP address>", I18N_NOOP("Proxy server IP address."), 0},
+//X 	{ "pport <proxy port>", I18N_NOOP("Proxy server port number"), 0},
+//X 	{ "pu <proxy username>", I18N_NOOP("Proxy user name if required."), 0},
+//X 	{ "ppw <proxy password>", I18N_NOOP("Proxy password if required."), 0},
+//X 	{ "hide", I18N_NOOP("Select login mode to invisible."), 0},
+//X 	{ "remember", I18N_NOOP("Save password and proxy settings."), 0},
+//X 	KCmdLineLastOption
+//X };
 
 int main(int argc, char **argv)
 {
-	KAboutData about("eva", 
-				I18N_NOOP("Eva"), 
-				version,
-				description,
-				 KAboutData::License_GPL, 
-				I18N_NOOP("(c) 2004-2008, yunfan"), 
-				"yunfan_zg@163.com", 
-				"http://www.sourceforge.net/projects/evaq", 
-				"eva.bugs@gmail.com");
-	about.addAuthor( I18N_NOOP("yunfan"), I18N_NOOP("original developer, maintainer"), 
-			"yunfan_zg@163.com","http://www.sourceforge.net/projects/evaq" );
-	about.addAuthor( I18N_NOOP("casper"), I18N_NOOP("developer, memo, system setting ui and IP address converting"), "tlmcasper@163.com" );
-	//about.setBugAddress( "eva.bugs@gmail.com");
-
-	about.addCredit( I18N_NOOP("byakko"), I18N_NOOP("UI patch provider"), "byakko.ang@gmail.com");
-	about.addCredit( I18N_NOOP("caihua"), I18N_NOOP("icon designer"), "13307864987@gx165.com");
-	about.addCredit( I18N_NOOP("Funda Wang"), I18N_NOOP("patch for xdg-user-dir supported"), "fundawang@yeah.net");
-	about.addCredit( I18N_NOOP("Levin Du"), 
-		I18N_NOOP("patch for system setting \nfixed combo box index massing up after \nclicking \"Default\" several times."),
-			"zsdjw@21cn.com");
-	about.addCredit( I18N_NOOP("Minmin"), I18N_NOOP("encapsulating encryption class in C++"), "csdengxm@hotmail.com");  
-	about.addCredit( I18N_NOOP("nwillis"), I18N_NOOP("idle detecting(auto-away) feature"), "neowillis@gmail.com");  
-	about.addCredit( I18N_NOOP("Phytonix"), I18N_NOOP("some original faces & Eva Logo designer."), "yahzee@d3eye.com");
-	about.addCredit( I18N_NOOP("Shixin Zeng"), I18N_NOOP("libeva patch for Windows support."), "shixinzeng@gmail.com");
-	about.addCredit( I18N_NOOP("Stark Wong"), I18N_NOOP("libeva patch for Visual Studio .NET 2002/2003 compiling support.\n2007II new smiley code"), "starkwong@hotmail.com");
-	about.addCredit( I18N_NOOP("zsyddl"), I18N_NOOP("earlier user details window designer"), "morrowren@sina.com" );
-	about.addCredit( I18N_NOOP("swear"), I18N_NOOP("forum maintainer"), "inzaghi1230@hotmail.com");
-
-	KCmdLineArgs::init(argc, argv, &about);
-	KCmdLineArgs::addCmdLineOptions( options );
-	KApplication app;
+//X 	KAboutData about("eva", 
+//X 				I18N_NOOP("Eva"), 
+//X 				version,
+//X 				description,
+//X 				 KAboutData::License_GPL, 
+//X 				I18N_NOOP("(c) 2004-2008, yunfan"), 
+//X 				"yunfan_zg@163.com", 
+//X 				"http://www.sourceforge.net/projects/evaq", 
+//X 				"eva.bugs@gmail.com");
+//X 	about.addAuthor( I18N_NOOP("yunfan"), I18N_NOOP("original developer, maintainer"), 
+//X 			"yunfan_zg@163.com","http://www.sourceforge.net/projects/evaq" );
+//X 	about.addAuthor( I18N_NOOP("casper"), I18N_NOOP("developer, memo, system setting ui and IP address converting"), "tlmcasper@163.com" );
+//X 	//about.setBugAddress( "eva.bugs@gmail.com");
+//X 
+//X 	about.addCredit( I18N_NOOP("byakko"), I18N_NOOP("UI patch provider"), "byakko.ang@gmail.com");
+//X 	about.addCredit( I18N_NOOP("caihua"), I18N_NOOP("icon designer"), "13307864987@gx165.com");
+//X 	about.addCredit( I18N_NOOP("Funda Wang"), I18N_NOOP("patch for xdg-user-dir supported"), "fundawang@yeah.net");
+//X 	about.addCredit( I18N_NOOP("Levin Du"), 
+//X 		I18N_NOOP("patch for system setting \nfixed combo box index massing up after \nclicking \"Default\" several times."),
+//X 			"zsdjw@21cn.com");
+//X 	about.addCredit( I18N_NOOP("Minmin"), I18N_NOOP("encapsulating encryption class in C++"), "csdengxm@hotmail.com");  
+//X 	about.addCredit( I18N_NOOP("nwillis"), I18N_NOOP("idle detecting(auto-away) feature"), "neowillis@gmail.com");  
+//X 	about.addCredit( I18N_NOOP("Phytonix"), I18N_NOOP("some original faces & Eva Logo designer."), "yahzee@d3eye.com");
+//X 	about.addCredit( I18N_NOOP("Shixin Zeng"), I18N_NOOP("libeva patch for Windows support."), "shixinzeng@gmail.com");
+//X 	about.addCredit( I18N_NOOP("Stark Wong"), I18N_NOOP("libeva patch for Visual Studio .NET 2002/2003 compiling support.\n2007II new smiley code"), "starkwong@hotmail.com");
+//X 	about.addCredit( I18N_NOOP("zsyddl"), I18N_NOOP("earlier user details window designer"), "morrowren@sina.com" );
+//X 	about.addCredit( I18N_NOOP("swear"), I18N_NOOP("forum maintainer"), "inzaghi1230@hotmail.com");
+//X 
+//X 	KCmdLineArgs::init(argc, argv, &about);
+//X 	KCmdLineArgs::addCmdLineOptions( options );
+	QApplication app( argc, argv );
 	EvaMain *mainWin = 0;
 
         //KCmdLineArgs *args = KCmdLineArgs::parsedArgs();

@@ -44,10 +44,10 @@ public:
 	void setMemberList(const std::list<unsigned int> &list) { memberList = list; }
 	
 	void addMember(const unsigned int qqNum); // add one more member
-	const bool removeMember(const unsigned int qqNum);
+	 bool removeMember(const unsigned int qqNum);
 	
-	const unsigned int getQunID() const { return qunID; }
-	const unsigned int getParentID() const { return parentID; }
+	 unsigned int getQunID() const { return qunID; }
+	 unsigned int getParentID() const { return parentID; }
 	const std::string &getName() const { return name; }
 	const std::list<unsigned int> &getMemberQQList() const { return memberList; }
 private:
@@ -68,8 +68,8 @@ public:
 	Qun(const Qun &rhs);
 	enum MessageType{Notify, Popup, Numbers, RecordOnly, Reject};
 	Qun &operator=(const Qun &rhs);
-	const unsigned int getQunID() const { return qunID; }
-	const unsigned int getExtQunID() const { return info.getExtID(); }
+	 unsigned int getQunID() const { return qunID; }
+	 unsigned int getExtQunID() const { return info.getExtID(); }
 	const QunInfo &getDetails() const { return info; }
 	const std::list<FriendItem> &getMembers() const { return memberList; }
 	const FriendItem *getMemberDetails(const unsigned int qqNum);
@@ -87,12 +87,12 @@ public:
 	
 	void setMemberArgs(const std::map<unsigned int, QunMember> &list);
 	const std::map<unsigned int, QunMember> &getMemberArgs() const { return memberArgs; }
-	const bool isAdmin( const unsigned int id);
+	 bool isAdmin( const unsigned int id);
 	
-	const int numMembers() const { return memberArgs.size(); }
+	 int numMembers() const { return memberArgs.size(); }
 
-	const int getNumMembers() const { return numTotal; }
-	const int getNumOnline() const { return numOnline; }
+	 int getNumMembers() const { return numTotal; }
+	 int getNumOnline() const { return numOnline; }
 	//these two are numbers of how many members are online / total.
 	
 	void setCardName(const std::string n) { cardName = n; }
@@ -108,23 +108,23 @@ public:
 	const std::string &getCardMemo() const { return cardMemo; }
 	
 	void setMessageType(const MessageType type) { msgType = type; }
-	const MessageType getMessageType() const { return msgType; }
+	 MessageType getMessageType() const { return msgType; }
 	
 	const std::list<TmpQun> &getTmpQunList() const { return tmpQunList; }
 	void addTmpQun(const TmpQun &q);
 	
-	const bool hasTmpQun() const { return tmpQunList.size() != 0; }
+	 bool hasTmpQun() const { return tmpQunList.size() != 0; }
 	
-	const bool hasMember(const unsigned int id);
+	 bool hasMember(const unsigned int id);
 
 	void setRealNamesVersion(const unsigned int v) { m_RealNamesVersion = v; }
-	const unsigned int getRealNamesVersion() const { return m_RealNamesVersion; }
+	 unsigned int getRealNamesVersion() const { return m_RealNamesVersion; }
 
-	const int getChatFontSize() const { return m_ChatFontSize; }
-	const int getChatFontColor() const { return m_ChatFontColor; }
-	const int getChatFontRed()     const { return (int)(( m_ChatFontColor>>16) & 0xff); }
-	const int getChatFontGreen() const { return (int)(( m_ChatFontColor>>8) & 0xff); }
-	const int getChatFontBlue()   const { return (int)(  m_ChatFontColor & 0xff); }
+	 int getChatFontSize() const { return m_ChatFontSize; }
+	 int getChatFontColor() const { return m_ChatFontColor; }
+	 int getChatFontRed()     const { return (int)(( m_ChatFontColor>>16) & 0xff); }
+	 int getChatFontGreen() const { return (int)(( m_ChatFontColor>>8) & 0xff); }
+	 int getChatFontBlue()   const { return (int)(  m_ChatFontColor & 0xff); }
 
 	void setChatFontSize( const int size) { m_ChatFontSize = size; }
 	void setChatFontColor(  const int color) { m_ChatFontColor = color; }
@@ -133,9 +133,9 @@ public:
 	}
 	void resetMemberIterator() { m_memberStartCount = 0; }
 	std::list<unsigned int> getNextMembers();
-	const bool isNextMembersEnd() { return (m_memberStartCount == memberList.size()); }
+	 bool isNextMembersEnd() { return (m_memberStartCount == memberList.size()); }
 	
-	const bool isFirstRefresh () const { return m_bFirstRefresh;}
+	 bool isFirstRefresh () const { return m_bFirstRefresh;}
 	void firstRefreshDone() { m_bFirstRefresh = false; }
 private:
 	unsigned int qunID;
@@ -153,9 +153,9 @@ private:
 	std::string cardEmail;
 	std::string cardMemo;
 
+	unsigned int numOnline;
 	unsigned int m_RealNamesVersion;
 
-	unsigned int numOnline;
 	unsigned int numTotal;
 
 	MessageType msgType;
@@ -177,7 +177,7 @@ public:
 	void update(const Qun &q);
 	Qun *getQun(const unsigned int id);
 	Qun *getQunByExtID(const unsigned int ext);	
-	const unsigned int getQunExtID(const unsigned int id);
+	 unsigned int getQunExtID(const unsigned int id);
 	
 	void setDetails(const QunInfo &info);
 	void setMember(const unsigned int id, const FriendItem &fi);
@@ -193,7 +193,7 @@ public:
 	
 	void setMyQunCardInfo(const unsigned int id, const std::string name, const unsigned char gender, const std::string phone,
 				const std::string email, const std::string memo);
-	const int numQuns() const { return qunList.size(); }
+	 int numQuns() const { return qunList.size(); }
 
 
 	Qun *first();

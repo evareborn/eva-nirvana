@@ -50,7 +50,7 @@ public:
 	static void setupImages(EvaImageResource *res);
 	static void setQuickReplyMessages(const std::list<QString> &list);
 	void setQuickReplyMenu();
-	const unsigned int getBuddyQQ();
+	unsigned int getBuddyQQ();
 	void showMessages();
 
 	static int myQQ;
@@ -136,9 +136,9 @@ private:
 	
 	QMap<unsigned int, QString> m_FileList;
 	QMap<unsigned int, unsigned int> m_FileNoList;
-	const bool addToFileList(const unsigned int session, const QString filename);
+	bool addToFileList(const unsigned int session, const QString filename);
 	QString getFileName(const unsigned int session);
-	const unsigned int getSession(const unsigned int showSession);
+	unsigned int getSession(const unsigned int showSession);
 	void removeFromFileList(const unsigned int session);
 
 	void closeEvent(QCloseEvent *e);	

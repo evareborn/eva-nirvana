@@ -257,7 +257,7 @@ void QunDetailsWindow::slotModifyQunInfo(const unsigned int id, bool ok , QStrin
 {
 	if(id != mQun->getQunID()) return;
 	setWidgetEnabledForInformation(true);
-	GetContactManager()->fetchQunDetails( mQun->getQunID());
+        EvaMain::g_contactManager->fetchQunDetails( mQun->getQunID());
 	QString title = i18n("Eva Modify Qun Inforamtion");
 	if(ok){
 		QMessageBox::information(this, title, i18n("Modify Qun information sucessfully."));

@@ -41,30 +41,31 @@ class EvaImageResource : public QObject
 {
 	Q_OBJECT
 public:
+
 	EvaImageResource();
 	~EvaImageResource();
 	
 	
-	const QString getFacePath() const;
-	const QString getIconPath() ;
-	const QString getSmileyPath() const;
-	const QString getQQShowPath() const;
+	 const QString getFacePath() const;
+	 const QString getIconPath() ;
+	 const QString getSmileyPath() const;
+	 const QString getQQShowPath() const;
 	
-	const int getFaceID(const int fileIndex) const ;
-	const int getFaceFileIndex(const int faceId);
+	 int getFaceID(const int fileIndex) const ;
+	 int getFaceFileIndex(const int faceId);
 	QPixmap *getFace(const int fileIndex, const bool on = true);
 	QPixmap *getFaceByID( const unsigned short faceId, const bool on = true);
 	QPixmap *getIcon(QString name);
-	const QString getIconFullPath(QString name);
-	const QString getSmiley(const int fileIndex);
+	 const QString getIconFullPath(QString name);
+	 const QString getSmiley(const int fileIndex);
 	
 	const QMovie *getLoginMovie();
 	
-	const bool loadImage();
+	 bool loadImage();
 	const QString &getImageRootPath() const { return imageRoot; }
 	void setImageRootPath( QString &path) { imageRoot = path; }
 	
-	const QString getThemePath() const { return themePath; }
+	 QString getThemePath() const { return themePath; }
 	void setThemePath( const QString &path) { themePath = path; }
 
 	QPixmap *getQQShow(const unsigned int id);
@@ -96,6 +97,8 @@ private:
 	QFile qqshowFile;
 	QString qqshowFilename;
 	EvaHttp *http;
+ 
+        QPixmap* BAD_ICON;
 	
 private slots:
 	void slotQQShowDone(bool error);
@@ -127,10 +130,10 @@ public:
 	virtual ~EvaGlobal();
 	
 	static QString &getDirPath();
-	const bool loadImage();
+	 bool loadImage();
         //const bool loadFace();
 	//const bool loadSound();
-	const bool loadEvaSetting();
+	 bool loadEvaSetting();
 	
 	EvaImageResource *getImageResource() { return imgResource;}
 	EvaSoundResource *getSoundResource() { return sndResource;}

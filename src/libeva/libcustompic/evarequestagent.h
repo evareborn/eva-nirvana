@@ -32,10 +32,10 @@ public:
 	
 	EvaRequestAgentPacket &operator=(const EvaRequestAgentPacket &rhs);
 	
-	const unsigned int getQunID() const {return qunID; }
+	 unsigned int getQunID() const {return qunID; }
 	const unsigned char *getMD5() const { return md5;}
 	const std::string &getFileName() const { return fileName; }
-	const unsigned int getImageLength() const { return imageLength; }
+	 unsigned int getImageLength() const { return imageLength; }
 
 	
 	void setQunID(const unsigned int id) { qunID=id;}
@@ -44,7 +44,7 @@ public:
 	void setFileName( const std::string &name) { fileName = name ;}
 	
 	const unsigned char *getFileAgentToken() const { return fileAgentKey; }
-	const unsigned short getTokenLength() const { return tokenLength; }
+	 unsigned short getTokenLength() const { return tokenLength; }
 protected:
 	int putBody(unsigned char *buf);
 private:
@@ -69,10 +69,10 @@ public:
 	
 	RequestAgentReplyPacket &operator=(const RequestAgentReplyPacket &rhs);
 	
-	const unsigned short getReplyCode() const { return replyCode; }
-	const unsigned int getSessionID() const { return sessionID; }
-	const unsigned int getRedirectIP() const { return redirectIP; }
-	const unsigned short getRedirectPort() const { return redirectPort; }
+	 unsigned short getReplyCode() const { return replyCode; }
+	 unsigned int getSessionID() const { return sessionID; }
+	 unsigned int getRedirectIP() const { return redirectIP; }
+	 unsigned short getRedirectPort() const { return redirectPort; }
 	const std::string &getMessage() const { return message; }
 protected:
 	void parseBody();

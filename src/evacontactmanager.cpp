@@ -31,15 +31,16 @@
 #include <qapplication.h>
 #include <kdebug.h>
 
+//X 
+//X EvaContactManager *GetContactManager()
+//X {
+//X 	static EvaContactManager manager;
+//X 	return &manager;
+//X }
 
-EvaContactManager *GetContactManager()
-{
-	static EvaContactManager manager;
-	return &manager;
-}
-
-EvaContactManager::EvaContactManager( )
+EvaContactManager::EvaContactManager( EvaMain* evaapp)
 	: m_contactsReady(false)
+        , g_eva( evaapp )  
 	, m_status(ESCM_NONE)
 	, m_packetManager(NULL)
 {

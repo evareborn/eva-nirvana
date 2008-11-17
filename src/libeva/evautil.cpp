@@ -150,7 +150,7 @@ std::string EvaUtil::convertToSend( const std::string & text)
 	for(uint i=0; i< text.length(); i++){
 		if(text[i] == '/'){
 			offset = i;
-			while(text[offset] != 0x00 && text[++offset]!=' ');
+			while(text[offset] != 0x00 && text[++offset]!=' ') ;
 			if((offset - i)< 14){
 				char code = textToSmiley(text.substr(i,offset-i));
 				if(code){
@@ -216,7 +216,7 @@ std::string EvaUtil::convertToSend(const std::string &text, bool *hasImage)
 	for(uint i=0; i< text.length(); i++){
 		if(text[i] == '/'){
 			offset = i;
-			while(text[offset] != 0x00 && text[++offset]!=' ');
+			while(text[offset] != 0x00 && text[++offset]!=' ') ;
 			if((offset - i)<14){
 				char code = textToSmiley(text.substr(i,offset-i));
 				if(code){

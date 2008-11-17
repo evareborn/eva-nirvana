@@ -33,15 +33,15 @@ public:
 	ReceiveIMPacket(const ReceiveIMPacket &rhs);
 	~ReceiveIMPacket() {};
 	
-	const unsigned int getSender() const { return sender; }
-	const unsigned int getReceiver() const { return receiver; }
-	const int getIntSequence() const { return intSequence; }
-	const unsigned int getSenderIP() const { return senderIP; }
-	const unsigned short getSenderPort() const { return senderPort; }
-	const unsigned short getIMType() const { return type; }
+	 unsigned int getSender() const { return sender; }
+	 unsigned int getReceiver() const { return receiver; }
+	 int getIntSequence() const { return intSequence; }
+	 unsigned int getSenderIP() const { return senderIP; }
+	 unsigned short getSenderPort() const { return senderPort; }
+	 unsigned short getIMType() const { return type; }
 	
 	const char *getReplyKey() const { return replyKey; }
-	const int getBodyLength() const { return (bodyLength - bodyOffset); }
+	 int getBodyLength() const { return (bodyLength - bodyOffset); }
 	const unsigned char *getBodyData() const { return (decryptedBuf + bodyOffset); }
 	
 	static std::string convertToShow(const std::string &src, const unsigned char type = QQ_IM_NORMAL_REPLY);
@@ -69,7 +69,7 @@ public:
 	ReceivedSystemIM( const ReceivedSystemIM &rhs);
 	~ReceivedSystemIM() {};
 	
-	const unsigned char getSystemIMType() const { return systemIMType; }
+	 unsigned char getSystemIMType() const { return systemIMType; }
 	const std::string &getMessage() const { return message; }
 	ReceivedSystemIM &operator=(const ReceivedSystemIM &rhs);
 private:
@@ -87,17 +87,17 @@ public:
 
 	void setNormalIMBase(const NormalIMBase *base);	
 	const unsigned char *getBodyData() const { return bodyBuf; }
-	const int getBodyLength() const { return bodyLength; }
+	 int getBodyLength() const { return bodyLength; }
 	
-	const short getSenderVersion() const { return senderVersion; }
-	const unsigned int getSender() const { return sender; }
-	const unsigned int getReceiver() const { return receiver; }
+	 short getSenderVersion() const { return senderVersion; }
+	 unsigned int getSender() const { return sender; }
+	 unsigned int getReceiver() const { return receiver; }
 	const unsigned char *getBuddyFileSessionKey() const { return fileSessionKey; }
-	const short getNormalIMType() const { return type; }
-	const short getSequence() const { return sequence; }
-	const unsigned int getSendTime() const { return sendTime; }
-	const char getUnknown1() const { return unknown1; }
-	const unsigned short getSenderFace() const { return senderFace; }
+	 short getNormalIMType() const { return type; }
+	 short getSequence() const { return sequence; }
+	 unsigned int getSendTime() const { return sendTime; }
+	 char getUnknown1() const { return unknown1; }
+	 unsigned short getSenderFace() const { return senderFace; }
 	
 	void parseData();
 	
@@ -127,29 +127,29 @@ public:
 	virtual ~ReceivedNormalIM() {};
 	
 	const char *getUnknown2() const { return unknown2; }
-	const char getReplyType() const { return replyType; }
+	 char getReplyType() const { return replyType; }
 	const std::string getMessage() const { return message; }
 	void setMessage(std::string message) { this->message = message; }
-	const bool hasFontAttribute() const { return mHasFontAttribute; }
-	const short getEncoding() const { return encoding; }
-	const char getRed() const { return red; }
-	const char getGreen() const { return green; }
-	const char getBlue() const { return blue; }
-	const char getFontSize() const { return fontSize; }
+	 bool hasFontAttribute() const { return mHasFontAttribute; }
+	 short getEncoding() const { return encoding; }
+	 char getRed() const { return red; }
+	 char getGreen() const { return green; }
+	 char getBlue() const { return blue; }
+	 char getFontSize() const { return fontSize; }
 	const std::string &getFontName() const { return fontName; }
-	const bool isBold() const { return bold; }
-	const bool isItalic() const { return italic; }
-	const bool isUnderline() const { return underline; }
+	 bool isBold() const { return bold; }
+	 bool isItalic() const { return italic; }
+	 bool isUnderline() const { return underline; }
 	
-	const unsigned char getNumFragments() const { return numFragments; }
-	const unsigned char getSeqOfFragments() const { return seqFragments; }
-	const short getMessageID() const { return messageID; }
+	 unsigned char getNumFragments() const { return numFragments; }
+	 unsigned char getSeqOfFragments() const { return seqFragments; }
+	 short getMessageID() const { return messageID; }
 	
 	void setNumFragments(const unsigned char num) { numFragments = num; }
 	void setSeqOfFragments( const unsigned char seq) { seqFragments = seq; }
 	void setMessageID(const short id) { messageID = id; }
 	
-	const bool isNormalReply() const; // true, it is normal reply, otherwise autoreply (because only two values for replyType)
+	 bool isNormalReply() const; // true, it is normal reply, otherwise autoreply (because only two values for replyType)
 	ReceivedNormalIM &operator=(const ReceivedNormalIM &rhs);
 protected:
 	virtual void parseContents(const unsigned char *buf, const int len);
@@ -195,36 +195,36 @@ public:
 	ReceivedQunIM( const ReceivedQunIM &rhs);
 	ReceivedQunIM() {};
 	
-	const short getUnknown1() const { return unknown1; }
+	 short getUnknown1() const { return unknown1; }
 	//const char *getUnknown3() const { return unknown3; }
 
-	const unsigned short getSource() const { return source; }
-	const unsigned int getExtID() const { return externalID; }
-	const unsigned int getQunID() const { return qunID; } // only for temporary Qun message
-	const char getType() const { return type; }
-	const unsigned int getSenderQQ() const { return sender; }
-	const short getSequence() const { return sequence; }
-	const int getSentTime() const { return sentTime; }
-	const unsigned int getVersionID() const { return versionID; }
+	 unsigned short getSource() const { return source; }
+	 unsigned int getExtID() const { return externalID; }
+	 unsigned int getQunID() const { return qunID; } // only for temporary Qun message
+	 char getType() const { return type; }
+	 unsigned int getSenderQQ() const { return sender; }
+	 short getSequence() const { return sequence; }
+	 int getSentTime() const { return sentTime; }
+	 unsigned int getVersionID() const { return versionID; }
 	const std::string getMessage() const { return message; }
 	void setMessage(std::string message) { this->message = message; }
 	
-	const bool hasFontAttribute() const { return mHasFontAttribute; }
-	const short getEncoding() const { return encoding; }
-	const char getRed() const { return red; }
-	const char getGreen() const { return green; }
-	const char getBlue() const { return blue; }
-	const char getFontSize() const { return fontSize; }
+	 bool hasFontAttribute() const { return mHasFontAttribute; }
+	 short getEncoding() const { return encoding; }
+	 char getRed() const { return red; }
+	 char getGreen() const { return green; }
+	 char getBlue() const { return blue; }
+	 char getFontSize() const { return fontSize; }
 	const std::string &getFontName() const { return fontName; }
-	const bool isBold() const { return bold; }
-	const bool isItalic() const { return italic; }
-	const bool isUnderline() const { return underline; }
+	 bool isBold() const { return bold; }
+	 bool isItalic() const { return italic; }
+	 bool isUnderline() const { return underline; }
 	
 	ReceivedQunIM &operator=(const ReceivedQunIM &rhs);
 	
-	const unsigned char getNumFragments() const { return numFragments; }
-	const unsigned char getSeqOfFragments() const { return seqFragments; }
-	const short getMessageID() const { return messageID; }
+	 unsigned char getNumFragments() const { return numFragments; }
+	 unsigned char getSeqOfFragments() const { return seqFragments; }
+	 short getMessageID() const { return messageID; }
 	
 	void setNumFragments(const unsigned char num) { numFragments = num; }
 	void setSeqOfFragments( const unsigned char seq) { seqFragments = seq; }
@@ -282,20 +282,20 @@ public:
 	ReceivedQunIMJoinRequest();
 	~ReceivedQunIMJoinRequest();
 
-	const unsigned int getExtID() const { return externalID; }
-	const unsigned int getSender() const { return sender; }
+	 unsigned int getExtID() const { return externalID; }
+	 unsigned int getSender() const { return sender; }
 	const std::string &getMessage() const { return message; }
-	const char getType() const { return type; }
+	 char getType() const { return type; }
 	// if QQ_RECV_IM_SET_QUN_ADMIN packet, commander will be the 
 	// action. 0: unset admin, 1: set admin
-	const unsigned int getCommander() const { return commander; }  // from starkwong's patch
+	 unsigned int getCommander() const { return commander; }  // from starkwong's patch
 	
 	const unsigned char *getCode() const { return m_Code; }
-	const unsigned short getCodeLength() const { return m_CodeLen; }
+	 unsigned short getCodeLength() const { return m_CodeLen; }
 	void setCode(const unsigned char *code, const unsigned short len);
 
 	const unsigned char *getToken() const { return m_Token; }
-	const unsigned short getTokenLength() const { return m_TokenLen; }
+	 unsigned short getTokenLength() const { return m_TokenLen; }
 	void setToken(const unsigned char *token, const unsigned short len);
 
 	ReceivedQunIMJoinRequest &operator=(const ReceivedQunIMJoinRequest &rhs);
@@ -320,8 +320,8 @@ public:
 	SignatureChangedPacket( const SignatureChangedPacket &rhs);
 	~SignatureChangedPacket() {};
 	
-	const unsigned int getQQ() const { return qq; }
-	const unsigned int getTime() const { return time; }
+	 unsigned int getQQ() const { return qq; }
+	 unsigned int getTime() const { return time; }
 	const std::string &getSignature() const { return signature; }
 	SignatureChangedPacket &operator=(const SignatureChangedPacket &rhs);
 private:
@@ -349,19 +349,19 @@ public:
 	ReceivedFileIM(const ReceivedFileIM &rhs);
 	virtual ~ReceivedFileIM() {};
 	
-	const unsigned char getTransferType() const { return m_TransferType; }
-	const unsigned char getConnectMode() const { return m_ConnectMode; }
+	 unsigned char getTransferType() const { return m_TransferType; }
+	 unsigned char getConnectMode() const { return m_ConnectMode; }
 	//const unsigned short getSessionId() const { return m_SessionId; }
-	const unsigned int getSessionId() const { return m_SessionId; }
-	const unsigned int getWanIp() const { return m_WanIp; }
-	const unsigned short getWanPort() const { return m_WanPort; }
+	 unsigned int getSessionId() const { return m_SessionId; }
+	 unsigned int getWanIp() const { return m_WanIp; }
+	 unsigned short getWanPort() const { return m_WanPort; }
 	//const unsigned short getMajorPort() const { return m_MajorPort; }
 	//const unsigned int getLanIp() const { return m_LanIp; }
 	//const unsigned short getLanPort() const { return m_LanPort; }
 	const unsigned char *getAgentServerKey() const { return m_AgentServerKey; }
 
 	const std::string &getFileName() const { return m_FileName; }
-	const unsigned int getFileSize() const { return m_FileSize; }
+	 unsigned int getFileSize() const { return m_FileSize; }
 	
 	ReceivedFileIM &operator=(const ReceivedFileIM &rhs);
 protected:
@@ -395,28 +395,28 @@ public:
 	ReceivedFileExIpIM(const ReceivedFileExIpIM &rhs);
 	virtual ~ReceivedFileExIpIM() {};
 	
-	const unsigned char getTransferType() const { return m_TransferType; }
-	const unsigned char getConnectMode() const { return m_ConnectMode; }
-	const unsigned int getSessionId() const { return m_SessionId; }
-	const unsigned int getWanIp1() const { return m_WanIp1; }
-	const unsigned int getWanPort1() const { return m_WanPort1; }
-	const unsigned int getWanIp2() const { return m_WanIp2; }
-	const unsigned int getWanPort2() const { return m_WanPort2; }
-	const unsigned int getWanIp3() const { return m_WanIp3; }
-	const unsigned int getWanPort3() const { return m_WanPort3; }
+	 unsigned char getTransferType() const { return m_TransferType; }
+	 unsigned char getConnectMode() const { return m_ConnectMode; }
+	 unsigned int getSessionId() const { return m_SessionId; }
+	 unsigned int getWanIp1() const { return m_WanIp1; }
+	 unsigned int getWanPort1() const { return m_WanPort1; }
+	 unsigned int getWanIp2() const { return m_WanIp2; }
+	 unsigned int getWanPort2() const { return m_WanPort2; }
+	 unsigned int getWanIp3() const { return m_WanIp3; }
+	 unsigned int getWanPort3() const { return m_WanPort3; }
 
-	const unsigned int getLanIp1() const { return m_LanIp1; }
-	const unsigned int getLanPort1() const { return m_LanPort1; }
-	const unsigned int getLanIp2() const { return m_LanIp2; }       // in most cases this is 0
-	const unsigned int getLanPort2() const { return m_LanPort2; }       // in most cases this is 0
-	const unsigned int getLanIp3() const { return m_LanIp3; }
-	const unsigned int getLanPort3() const { return m_LanPort3; }
+	 unsigned int getLanIp1() const { return m_LanIp1; }
+	 unsigned int getLanPort1() const { return m_LanPort1; }
+	 unsigned int getLanIp2() const { return m_LanIp2; }       // in most cases this is 0
+	 unsigned int getLanPort2() const { return m_LanPort2; }       // in most cases this is 0
+	 unsigned int getLanIp3() const { return m_LanIp3; }
+	 unsigned int getLanPort3() const { return m_LanPort3; }
 
-	const unsigned int getSyncIp() const { return m_SyncIp; }
-	const unsigned int getSyncPort() const { return m_SyncPort; }	
-	const unsigned int getSyncSession() const { return m_SyncSession; }
+	 unsigned int getSyncIp() const { return m_SyncIp; }
+	 unsigned int getSyncPort() const { return m_SyncPort; }	
+	 unsigned int getSyncSession() const { return m_SyncSession; }
 
-	const bool isSender() const { return m_IsSender; }
+	 bool isSender() const { return m_IsSender; }
 
 
 	ReceivedFileExIpIM &operator=(const ReceivedFileExIpIM &rhs);
@@ -474,19 +474,19 @@ public:
 	~ReceivedTempSessionTextIMPacket() {};
 	ReceivedTempSessionTextIMPacket &operator=(const ReceivedTempSessionTextIMPacket &rhs);
 
-	const int getSender() const { return sender; }
+	 int getSender() const { return sender; }
 	const std::string getNick() const { return nick; }
 	const std::string getSite() const { return site; }
-	const int getTime() const { return time; }
+	 int getTime() const { return time; }
 	const std::string getMessage() const { return message; }
 	const std::string getFontName() const { return fontname; }
-	const int getFontSize() const { return fontsize; }
-	const bool isBold() const { return bold; }
-	const bool isItalic() const { return italic; }
-	const bool isUnderline() const { return underline; }
-	const unsigned char getRed() const { return red; }
-	const unsigned char getGreen() const { return green; }
-	const unsigned char getBlue() const { return blue; }
+	 int getFontSize() const { return fontsize; }
+	 bool isBold() const { return bold; }
+	 bool isItalic() const { return italic; }
+	 bool isUnderline() const { return underline; }
+	 unsigned char getRed() const { return red; }
+	 unsigned char getGreen() const { return green; }
+	 unsigned char getBlue() const { return blue; }
 private:
 	int sender;
 	std::string nick;
@@ -512,9 +512,9 @@ public:
 	~TempSessionOpReplyPacket() {};
 	TempSessionOpReplyPacket &operator=(const TempSessionOpReplyPacket &rhs);
 
-	const int getReceiver() const { return receiver; }
-	const unsigned char getReplyCode() const { return replyCode; }
-	const unsigned char getSubCommand() const { return subCommand; }
+	 int getReceiver() const { return receiver; }
+	 unsigned char getReplyCode() const { return replyCode; }
+	 unsigned char getSubCommand() const { return subCommand; }
 	const std::string getReplyMessage() const { return replyMessage; }
 private:
 	std::string replyMessage;

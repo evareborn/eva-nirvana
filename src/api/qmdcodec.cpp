@@ -407,10 +407,10 @@ void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
                 count += 4;
             }
             out.data()[didx++] = Base64EncMap[(data[sidx] >> 2) & 077];
-            out.data()[didx++] = Base64EncMap[(data[sidx+1] >> 4) & 017 |
-                                       (data[sidx] << 4) & 077];
-            out.data()[didx++] = Base64EncMap[(data[sidx+2] >> 6) & 003 |
-                                       (data[sidx+1] << 2) & 077];
+            out.data()[didx++] = Base64EncMap[(( data[sidx+1] >> 4) & 017 )  |
+                                       ( (data[sidx] << 4) & 077)] ;
+            out.data()[didx++] = Base64EncMap[( (data[sidx+2] >> 6) & 003 )  |
+                                       ( (data[sidx+1] << 2) & 077)] ;
             out.data()[didx++] = Base64EncMap[data[sidx+2] & 077];
             sidx += 3;
         }
@@ -424,8 +424,8 @@ void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
         out.data()[didx++] = Base64EncMap[(data[sidx] >> 2) & 077];
         if (sidx < len-1)
         {
-            out.data()[didx++] = Base64EncMap[(data[sidx+1] >> 4) & 017 |
-												(data[sidx] << 4) & 077];
+            out.data()[didx++] = Base64EncMap[( (data[sidx+1] >> 4) & 017 ) |
+                ( (data[sidx] << 4) & 077)] ;
             out.data()[didx++] = Base64EncMap[(data[sidx+1] << 2) & 077];
         }
         else
@@ -588,10 +588,10 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
         for (unsigned int end = sidx+line_len; sidx < end; sidx += 3)
         {
             out.data()[didx++] = UUEncMap[(data[sidx] >> 2) & 077];
-            out.data()[didx++] = UUEncMap[(data[sidx+1] >> 4) & 017 |
-                                   (data[sidx] << 4) & 077];
-            out.data()[didx++] = UUEncMap[(data[sidx+2] >> 6) & 003 |
-                                (data[sidx+1] << 2) & 077];
+            out.data()[didx++] = UUEncMap[( (data[sidx+1] >> 4) & 017 ) |
+                                   ( (data[sidx] << 4) & 077)] ;
+            out.data()[didx++] = UUEncMap[( (data[sidx+2] >> 6) & 003 ) |
+                                ( (data[sidx+1] << 2) & 077)] ;
             out.data()[didx++] = UUEncMap[data[sidx+2] & 077];
         }
 
@@ -608,10 +608,10 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
     while (sidx+2 < len)
     {
         out.data()[didx++] = UUEncMap[(data[sidx] >> 2) & 077];
-        out.data()[didx++] = UUEncMap[(data[sidx+1] >> 4) & 017 |
-                               (data[sidx] << 4) & 077];
-        out.data()[didx++] = UUEncMap[(data[sidx+2] >> 6) & 003 |
-                               (data[sidx+1] << 2) & 077];
+        out.data()[didx++] = UUEncMap[( (data[sidx+1] >> 4) & 017 ) |
+                               ( (data[sidx] << 4) & 077)] ;
+        out.data()[didx++] = UUEncMap[(( data[sidx+2] >> 6) & 003 ) |
+                               ( (data[sidx+1] << 2) & 077)] ;
         out.data()[didx++] = UUEncMap[data[sidx+2] & 077];
         sidx += 3;
     }
@@ -619,8 +619,8 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
     if (sidx < len-1)
     {
         out.data()[didx++] = UUEncMap[(data[sidx] >> 2) & 077];
-        out.data()[didx++] = UUEncMap[(data[sidx+1] >> 4) & 017 |
-                               (data[sidx] << 4) & 077];
+        out.data()[didx++] = UUEncMap[( (data[sidx+1] >> 4) & 017 ) |
+                               ( (data[sidx] << 4) & 077)] ;
         out.data()[didx++] = UUEncMap[(data[sidx+1] << 2) & 077];
         out.data()[didx++] = UUEncMap[0];
     }

@@ -35,9 +35,9 @@ public:
 	void setMd5(const unsigned char *value);
 	void setRequestSend( const bool ok) { requestSend = ok; }
 	
-	const unsigned int getSessionID() const { return sessionID; }
+	 unsigned int getSessionID() const { return sessionID; }
 	const unsigned char *getMd5() const { return md5; }
-	const bool isRequestSend() const { return requestSend; }
+	 bool isRequestSend() const { return requestSend; }
 protected:
 	virtual int putBody(unsigned char *buf);
 private:
@@ -55,7 +55,7 @@ public:
 	
 	EvaRequestStartReplyPacket &operator=(const EvaRequestStartReplyPacket &rhs);
 	
-	const unsigned int getSessionID() const { return sessionID; }
+	 unsigned int getSessionID() const { return sessionID; }
 protected:
 	virtual void parseBody();
 private:

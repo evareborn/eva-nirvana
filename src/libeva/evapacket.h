@@ -35,11 +35,11 @@ public:
 	
 	bool operator==(const Packet &rhs)  const;
 	Packet &operator=(const Packet &rhs);
-	const int hashCode() ;
+	 int hashCode() ;
 	
-	const short getVersion() const {   return version;};
-	const short getCommand() const {   return command;};
-	const short getSequence()  const {   return sequence;};
+	 short getVersion() const {   return version;};
+	 short getCommand() const {   return command;};
+	 short getSequence()  const {   return sequence;};
 	
 	
 	void setVersion(const short version) { this->version = version; };
@@ -47,7 +47,7 @@ public:
 	void setSequence(const short sequence) { this->sequence = sequence; };
 	
 
-	static const unsigned int getQQ() { return qqNum; }
+	static unsigned int getQQ() { return qqNum; }
 	static void setQQ(const unsigned int id) { qqNum = id; }
 
 	static void setUDP(bool isUDP) { mIsUDP = isUDP; };
@@ -63,7 +63,7 @@ public:
 	static unsigned int getFileAgentTokenLength() { return fileAgentTokenLength; }
 	static unsigned char *getFileShareToken() { return fileShareToken; }
 	static unsigned char *getClientKey() { return clientKey; }
-	static const int getClientKeyLength() { return clientKeyLength; }
+	static int getClientKeyLength() { return clientKeyLength; }
 	
 	static void clearAllKeys();      // called this after logged out to release memery
 protected:
@@ -78,7 +78,7 @@ protected:
 	static unsigned char *getPasswordKey()  { return passwordKey; }
 	static unsigned char *getFileSessionKey()  { return fileSessionKey; }
 	static unsigned char *getLoginToken() { return loginToken; }
-	static const int getLoginTokenLength() { return loginTokenLength; }
+	static int getLoginTokenLength() { return loginTokenLength; }
 	
 	static void setSessionKey(const unsigned char *skey); 
 	static void setFileSessionKey(const unsigned char *fskey);
@@ -114,11 +114,11 @@ public:
 	OutPacket(const OutPacket &rhs);
 	virtual ~OutPacket() {}
 
-	const int getResendCount() const { return resendCount; }
+	 int getResendCount() const { return resendCount; }
 	
 	bool fill(unsigned char *buf, int *len);
 	bool needAck() const { return mNeedAck; };
-	const bool needResend() { return (--resendCount) != 0; }
+	 bool needResend() { return (--resendCount) != 0; }
 	OutPacket &operator=( const OutPacket &rhs);
 	
 protected:
@@ -141,8 +141,8 @@ public:
 	InPacket(const InPacket &rhs);
 	virtual ~InPacket();
 	
-        const bool parse();
-	const int getLength() const { return bodyLength; };
+         bool parse();
+	 int getLength() const { return bodyLength; };
 	unsigned char * getBody() const { return decryptedBuf; };
         void setInPacket(const InPacket *packet);
 	InPacket &operator=( const InPacket &rhs);

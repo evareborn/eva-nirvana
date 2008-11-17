@@ -610,7 +610,7 @@ int CustomFaceConfig::groupIndex( const QString & name )
 	return index;
 }
 
-const int CustomFaceConfig::numGroups()
+int CustomFaceConfig::numGroups()
 {
 	if(!m_Doc) return 0; // 0 means empty
 	return m_Doc->documentElement().childNodes().count();

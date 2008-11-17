@@ -43,22 +43,22 @@ public:
 	virtual ~EvaFTPacket();
 
 	// for incoming packets
-	const bool parse();
+	 bool parse();
 	// for outcoming packets
-	const bool fill(unsigned char *buf, int *len);
+	 bool fill(unsigned char *buf, int *len);
 
 	// for incoming packets
 	const unsigned char *getBody() const { return m_Buffer; }
-	const int getBodyLength() const { return m_BufferLength; }
+	 int getBodyLength() const { return m_BufferLength; }
 protected:
 	void setPacketTag(const unsigned char tag, const unsigned char tail);
-	virtual const int parseHeader(unsigned char *buf);
-	virtual const bool parseBody(unsigned char *buf, const int len);
-	virtual const int fillHeader(unsigned char *buf);
-	virtual const int fillBody(unsigned char *buf);
+	virtual int parseHeader(unsigned char *buf);
+	virtual bool parseBody(unsigned char *buf, const int len);
+	virtual int fillHeader(unsigned char *buf);
+	virtual int fillBody(unsigned char *buf);
 
-	inline const unsigned char getTag() const { return m_Tag; }
-	inline const unsigned char getTail() const { return m_Tail; }
+	inline unsigned char getTag() const { return m_Tag; }
+	inline unsigned char getTail() const { return m_Tail; }
 
 	int m_HeaderLength;
 	bool m_HasTags;
@@ -83,17 +83,17 @@ public:
 	inline void setCommand(const unsigned short cmd) { m_Command = cmd; }
 	inline void setQQ(const int qq) { m_Id = qq; }
 	inline void setSessionId(const unsigned int sid) { m_Session = sid; }
-	inline const unsigned short getVersion() const { return m_Version; }
-	inline const unsigned short getSequence() const { return m_Sequence; }
-	inline const unsigned short getCommand() const { return m_Command; }
-	inline const int getQQ() const { return m_Id; }
-	inline const unsigned int getSessionId() const { return m_Session; }
+	inline unsigned short getVersion() const { return m_Version; }
+	inline unsigned short getSequence() const { return m_Sequence; }
+	inline unsigned short getCommand() const { return m_Command; }
+	inline int getQQ() const { return m_Id; }
+	inline unsigned int getSessionId() const { return m_Session; }
 
 	void setFileAgentKey(const unsigned char *key);
 protected:
-	const int parseHeader(unsigned char *buf);
+	 int parseHeader(unsigned char *buf);
 	//virtual const bool pareseBody();
-	const int fillHeader(unsigned char *buf);
+	 int fillHeader(unsigned char *buf);
 	//virtual const unsigned int fillBody(unsigned char *buf);
 
 	unsigned char m_FileAgentKey[16];
@@ -115,16 +115,16 @@ public:
 	inline void setCommand(const unsigned short cmd) { m_Command = cmd; }
 	inline void setQQ(const int qq) { m_Id = qq; }
 	inline void setSessionId(const unsigned int sid) { m_Session = sid; }
-	inline const unsigned short getVersion() const { return m_Version; }
-	inline const unsigned short getSequence() const { return m_Sequence; }
-	inline const unsigned short getCommand() const { return m_Command; }
-	inline const int getQQ() const { return m_Id; }
-	inline const unsigned int getSessionId() const { return m_Session; }
+	inline unsigned short getVersion() const { return m_Version; }
+	inline unsigned short getSequence() const { return m_Sequence; }
+	inline unsigned short getCommand() const { return m_Command; }
+	inline int getQQ() const { return m_Id; }
+	inline unsigned int getSessionId() const { return m_Session; }
 
 	void setFileAgentKey(const unsigned char *key);
 protected:
-	const int parseHeader(unsigned char *buf);
-	const int fillHeader(unsigned char *buf);
+	 int parseHeader(unsigned char *buf);
+	 int fillHeader(unsigned char *buf);
 
 	unsigned char m_FileAgentKey[16];
 	unsigned int m_Session;

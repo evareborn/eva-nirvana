@@ -21,9 +21,9 @@ KDE_ICON = eva
 bin_PROGRAMS = eva
 
 # the application source, library search path, and link libraries
-eva_SOURCES = main.cpp evachatwindowmanager.cpp evamain.cpp evadcopactions.skel \
+eva_SOURCES = main.cpp evachatwindowmanager.cpp evamain.cpp \
 			evasystemtray.cpp evaidt.cpp evaaddingmanager.cpp evasysmsgmanager.cpp \
-			evaloginmanager.cpp evacontactmanager.cpp evascriptmanager.cpp evadcoptools.skel
+			evaloginmanager.cpp evacontactmanager.cpp 
 eva_LDFLAGS = $(KDE_RPATH) $(all_libraries)
 eva_LDADD = $(top_builddir)/src/ui/libevaui.la \
 	$(top_builddir)/src/libeva/libeva.la $(top_builddir)/src/api/libevaapi.la \

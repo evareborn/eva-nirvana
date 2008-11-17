@@ -41,7 +41,7 @@ public:
 				QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
 	~EvaFileStatusUIBase();
 	
-	inline const unsigned int getSession() const { return m_Session; }
+	inline unsigned int getSession() const { return m_Session; }
 
 	void setMimePixmap(const QPixmap &pixmap);
 	void setFileName(const QString &fileName);
@@ -49,7 +49,7 @@ public:
 	void updateStatus(const unsigned int size, const unsigned int bytes, const unsigned int time);
 
 	const QString strFileSize(const float size, int precise = 2);
-	inline const bool isFinished() const { return m_IsFinished; }
+	inline bool isFinished() const { return m_IsFinished; }
 signals:
 	void closeRequest(const unsigned int, QWidget *); // send itself to parent
 protected:

@@ -42,7 +42,7 @@ public:
 	void setShareHolder();
 	
 	void setOnline(const bool online);
-	const bool isOnline() const { return mIsOnline; }
+	 bool isOnline() const { return mIsOnline; }
 	const unsigned int &getQQ() const { return qqNum; }
 	const QString &getNick() const { return nick; }
 	

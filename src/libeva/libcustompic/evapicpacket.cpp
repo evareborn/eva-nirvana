@@ -64,12 +64,12 @@ EvaPicPacket::~EvaPicPacket()
 		delete key;
 }
 
-const int EvaPicPacket::hashCode()
+int EvaPicPacket::hashCode()
 {
 	return ((int)sequence << 16) | command;
 }
 
-const int EvaPicPacket::parseHeader(unsigned char *buf)
+int EvaPicPacket::parseHeader(unsigned char *buf)
 {
 	int pos=0;
 	
@@ -150,7 +150,7 @@ EvaPicOutPacket::EvaPicOutPacket(const EvaPicOutPacket &rhs)
 	*this = rhs;
 }
 
-const bool EvaPicOutPacket::fill(unsigned char *buf, int *len) 
+bool EvaPicOutPacket::fill(unsigned char *buf, int *len) 
 {
 	int headerLen = 0, bodyLen=0, encryptedLen = 0;
 	unsigned char *bodyBuf = new unsigned char[MAX_PACKET_SIZE];

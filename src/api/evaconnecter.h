@@ -38,18 +38,18 @@ public:
 	
 	void append(OutPacket *out);
 	InPacket *getInPacket();
-	const unsigned int numOfOutPackets() const { return outPool.count(); }
-	const unsigned int numOfInPackets() const { return inPool.count(); }
+	unsigned int numOfOutPackets() const { return outPool.count(); }
+	unsigned int numOfInPackets() const { return inPool.count(); }
 	void redirectTo(const int ip, const short port);
 	void connect();
         void stop();
 	bool isConnectionReady() const { return connectionReady; }
 	
-        const EvaNetwork::Type getConnectionType() const { return connecter->connectionType(); }
+        EvaNetwork::Type getConnectionType() const { return connecter->connectionType(); }
 	const QHostAddress getSocketIp();
-	const unsigned int getSocketPort();
+	unsigned int getSocketPort();
 	const QHostAddress &getHostAddress() const { return connecter->getHostAddress();}  // if it's Http Proxy, return the proxy's address
-	const short getHostPort() const { return connecter->getHostPort(); }
+	short getHostPort() const { return connecter->getHostPort(); }
 public slots:
 	void slotClientReady();
 

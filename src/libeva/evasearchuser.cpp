@@ -197,7 +197,7 @@ SearchUserReplyPacket & SearchUserReplyPacket::operator =( const SearchUserReply
 
 void SearchUserReplyPacket::parseBody( )
 {
-	if( bodyLength == 0 || decryptedBuf[0] == NULL_FIELD && decryptedBuf[1] == QQ_SEARCH_ALL) {
+	if( bodyLength == 0 || ( decryptedBuf[0] == NULL_FIELD && decryptedBuf[1] == QQ_SEARCH_ALL )) {
 		finished = true;
 		return;
 	}

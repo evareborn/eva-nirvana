@@ -35,11 +35,11 @@ class QunCategory
 {
 public:
 	QunCategory();	
-	const bool isLoaded() { return isOK; }
+	 bool isLoaded() { return isOK; }
 	std::list<QunCategoryElement> getSubList(unsigned short code);
-	const QString getDescription(const unsigned short code);
+	 const QString getDescription(const unsigned short code);
 private:
-	const bool loadList();
+	 bool loadList();
 	bool isOK;
 	std::map<unsigned short, QunCategoryElement> list;
 };
@@ -50,7 +50,7 @@ class QunCategoryPicker : public QunCategoryUI
 public:
 	QunCategoryPicker(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
 	~QunCategoryPicker();
-	const unsigned short getCategoryCode();
+	 unsigned short getCategoryCode();
 signals:
 	void selectCategoryCode(const unsigned short);
 private:

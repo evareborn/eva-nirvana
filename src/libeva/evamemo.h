@@ -51,9 +51,9 @@ public:
 	void setMemo( const MemoItem &memo ) { m_Memo = memo; }
 	void setQQ( const int qq ) { m_Id = qq; } 
 	
-	const unsigned char  getType() const { return m_Type; }
-	const MemoItem getMemo() const { return m_Memo; }
-	const int getQQ() const { return m_Id; }
+	 unsigned char  getType() const { return m_Type; }
+	 MemoItem getMemo() const { return m_Memo; }
+	 int getQQ() const { return m_Id; }
 	
 	void setDetails( const MemoItem &memo);
 	void setDetails( const stringList infos ) { m_Infos = infos; }
@@ -79,9 +79,9 @@ public:
 	EvaMemoReplyPacket &operator=( const EvaMemoReplyPacket &rhs );
 	
 	unsigned char getType() const { return m_Type; }
-	const unsigned char getReplyCode() const { return m_ReplyCode; }
+	 unsigned char getReplyCode() const { return m_ReplyCode; }
 	const MemoItem &getMemo() const { return m_Memo; }
-	const int getQQ() const { return m_Id; }
+	 int getQQ() const { return m_Id; }
 	const stringList &getDetails() const { return m_Infos; }
 	
 	void setType( const unsigned char type ) { m_Type = type; }
@@ -91,7 +91,7 @@ public:
 	void setMemo( const stringList &infos);
 	void setDetails( const stringList &infos ) { m_Infos = infos; }
 	
-	const bool isChangeAccepted() const { return m_ReplyCode == 0x00; }
+	 bool isChangeAccepted() const { return m_ReplyCode == 0x00; }
 	
 protected:
 	virtual void parseBody();

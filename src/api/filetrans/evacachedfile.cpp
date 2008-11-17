@@ -65,7 +65,7 @@ EvaCachedFile::~EvaCachedFile()
 {
 }
 
-const bool EvaCachedFile::setFileInfo(const QString &fileName, const unsigned int size)
+bool EvaCachedFile::setFileInfo(const QString &fileName, const unsigned int size)
 {
 	m_FileName = fileName;
 	m_FileSize = size;
@@ -74,7 +74,7 @@ const bool EvaCachedFile::setFileInfo(const QString &fileName, const unsigned in
 	//return changeFileInfo();
 }
 
-const bool EvaCachedFile::changeFileInfo()
+bool EvaCachedFile::changeFileInfo()
 {
 	m_CachedFileName = m_FileName + CacheFileName_Ext;
 	m_InfoFileName = m_FileName + InfoFileName_Ext;
@@ -115,7 +115,7 @@ const bool EvaCachedFile::changeFileInfo()
  */
 
 
-const bool EvaCachedFile::saveFragment(const unsigned int offset, 
+bool EvaCachedFile::saveFragment(const unsigned int offset, 
 					const unsigned int len, 
 					unsigned char *buf)
 {
@@ -155,7 +155,7 @@ const bool EvaCachedFile::saveFragment(const unsigned int offset,
  * \return the exact bytes of read
  */
 
-const unsigned int EvaCachedFile::getFragment(const unsigned int offset, 
+unsigned int EvaCachedFile::getFragment(const unsigned int offset, 
 						const unsigned int len, 
 						unsigned char *buf)
 {
@@ -183,12 +183,12 @@ void EvaCachedFile::setCheckValues(const unsigned char *fileNameMd5, const unsig
 	memcpy(m_FileMd5, fileMd5, 16);	
 }
 
-const bool EvaCachedFile::isFinished()
+bool EvaCachedFile::isFinished()
 {
 	return isInfoFinished();
 }
 
-const bool EvaCachedFile::isNewFragment(const unsigned int offset, const unsigned int /*len*/)
+bool EvaCachedFile::isNewFragment(const unsigned int offset, const unsigned int /*len*/)
 {
 	if(m_IsLoading) return false;
 	QMap<unsigned int, unsigned int>::Iterator iter;
@@ -201,7 +201,7 @@ const bool EvaCachedFile::isNewFragment(const unsigned int offset, const unsigne
 	return true;
 }
 
-const bool EvaCachedFile::updateInfoFile(const unsigned int offset, const unsigned int len)
+bool EvaCachedFile::updateInfoFile(const unsigned int offset, const unsigned int len)
 {
 	if(m_IsLoading) return false;
 	QFile file(m_DirPath + "/" + m_InfoFileName);
@@ -231,7 +231,7 @@ const bool EvaCachedFile::updateInfoFile(const unsigned int offset, const unsign
 	return true;
 }
 
-const bool EvaCachedFile::loadInfoFile()
+bool EvaCachedFile::loadInfoFile()
 {
 	if(m_IsLoading) return false;
 	QFile file(m_DirPath + "/" + m_InfoFileName);
@@ -284,7 +284,7 @@ const bool EvaCachedFile::loadInfoFile()
 }
 
 // we only test the size of the file
-const bool EvaCachedFile::isInfoFinished()
+bool EvaCachedFile::isInfoFinished()
 {
 	if(m_IsLoading) return false;
 
@@ -299,7 +299,7 @@ const bool EvaCachedFile::isInfoFinished()
 	return false;
 }
 
-const unsigned int EvaCachedFile::getNextOffset()
+unsigned int EvaCachedFile::getNextOffset()
 {
 	if(m_IsLoading) return 0;
 
@@ -311,7 +311,7 @@ const unsigned int EvaCachedFile::getNextOffset()
 	return offset;
 }
 
-const bool EvaCachedFile::isFileCorrect()
+bool EvaCachedFile::isFileCorrect()
 {
 	if(m_IsLoading) return true; // if we are loading file, this would be always true
 
@@ -343,7 +343,7 @@ const bool EvaCachedFile::isFileCorrect()
 	return true;
 }
 
-const bool EvaCachedFile::generateDestFile()
+bool EvaCachedFile::generateDestFile()
 {
 	if(m_IsLoading) return false;
 	if(m_DirPath.isEmpty()) return false;
@@ -389,7 +389,7 @@ const bool EvaCachedFile::generateDestFile()
 	return true;
 }
 
-const bool EvaCachedFile::calculateFileMd5(const QString& fullpath, char *md5Buf)
+bool EvaCachedFile::calculateFileMd5(const QString& fullpath, char *md5Buf)
 {
 	QFileInfo info(fullpath);
 	if(!info.exists()){
@@ -418,14 +418,14 @@ const bool EvaCachedFile::calculateFileMd5(const QString& fullpath, char *md5Buf
 	return true;
 }
 
-const bool EvaCachedFile::getSourceFileMd5(char *md5)
+bool EvaCachedFile::getSourceFileMd5(char *md5)
 {
 	if(!md5) return false;
 	if(m_DirPath.isEmpty() || m_FileName.isEmpty()) return false;
 	return calculateFileMd5(m_DirPath + "/" + m_FileName, md5);
 }
 
-const bool EvaCachedFile::getSourceFileNameMd5(char *md5)
+bool EvaCachedFile::getSourceFileNameMd5(char *md5)
 {
 	if(!md5) return false;
 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
@@ -434,7 +434,7 @@ const bool EvaCachedFile::getSourceFileNameMd5(char *md5)
 	return true;
 }
 
-const unsigned int EvaCachedFile::getFileSize()
+unsigned int EvaCachedFile::getFileSize()
 {
 	if(!m_IsLoading) return m_FileSize;
 	QFileInfo info(m_DirPath + "/" + m_FileName);

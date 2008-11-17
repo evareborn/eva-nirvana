@@ -121,7 +121,7 @@ void GroupNameOpReplyPacket::parseBody()
 	}
 }
 
-const bool GroupNameOpReplyPacket::isDownloadReply() const 
+bool GroupNameOpReplyPacket::isDownloadReply() const 
 { 
 	return type == QQ_DOWNLOAD_GROUP_NAME; 
 } 
@@ -146,7 +146,7 @@ DownloadFriendEntry &DownloadFriendEntry::operator=(const DownloadFriendEntry &r
 	return *this;	
 }
 
-const int DownloadFriendEntry::readData(const char *buf)
+int DownloadFriendEntry::readData(const char *buf)
 {
 	int tmp4;
 	memcpy(&tmp4, buf, 4);  
@@ -156,7 +156,7 @@ const int DownloadFriendEntry::readData(const char *buf)
 	return 6;
 }
 
-const bool DownloadFriendEntry::isQun() const
+bool DownloadFriendEntry::isQun() const
 {
 	return type == QQ_ID_IS_QUN;
 }

@@ -57,7 +57,7 @@ public:
 	EvaGetLevelReplyPacket(const EvaGetLevelReplyPacket &rhs);
 	virtual ~EvaGetLevelReplyPacket(){};
  
-	const unsigned char getReplyCode() const { return replyCode; }
+	unsigned char getReplyCode() const { return replyCode; }
 	const std::list<LevelUserItem> &getLevelList() const { return friends; }
 	
 	EvaGetLevelReplyPacket &operator=(const EvaGetLevelReplyPacket &rhs);

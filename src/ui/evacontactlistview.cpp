@@ -48,7 +48,7 @@ EvaBuddyItem::EvaBuddyItem( const QQFriend& buddy, QListViewItem *parent)
 	update();
 }
 
-const unsigned int EvaBuddyItem::QQ()
+unsigned int EvaBuddyItem::QQ()
 {
 	return m_buddy.getQQ();
 }
@@ -324,8 +324,8 @@ bool EvaGroupItem::hasMessage()
 
 void EvaGroupItem::setOpen(bool o)
 {
-    KConfig* const config = EvaMain::user->config( "Group Open Status" );
-    config->writeEntry(groupName(), o);
+//X     KConfig* const config = EvaMain::user->config( "Group Open Status" );
+//X     config->writeEntry(groupName(), o);
 
     EvaImageResource *images = EvaMain::images;
     QPixmap *p;
@@ -357,7 +357,7 @@ QString EvaGroupItem::groupName()
     return codec->toUnicode(EvaMain::user->groupNameAtIndex(m_groupIndex).c_str());
 }
 
-const int EvaGroupItem::countOnlineFriends()
+int EvaGroupItem::countOnlineFriends()
 {
 	EvaBuddyItem *item = dynamic_cast<EvaBuddyItem *>(firstChild());
 	char s = QQ_FRIEND_STATUS_OFFLINE;
@@ -554,13 +554,13 @@ void EvaContactListView::updateContacts()
 		showAll();
 	
 	// update group online counts
-	KConfig* const config = EvaMain::user->config( "Group Open Status" );
-	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
-	while(it != m_groups.end()){
-		it->second->setOpen( config->readBoolEntry(it->second->groupName(), false) );
-		it->second->update();
-		it++;
-	}
+//X 	KConfig* const config = EvaMain::user->config( "Group Open Status" );
+//X 	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
+//X 	while(it != m_groups.end()){
+//X 		it->second->setOpen( config->readBoolEntry(it->second->groupName(), false) );
+//X 		it->second->update();
+//X 		it++;
+//X 	}
 }
 
 void EvaContactListView::slotFaceSizeChanged()
@@ -1103,7 +1103,7 @@ QString EvaQunListViewItem::tip( )
 }
 
 
-const unsigned int EvaQunListViewItem::getQunID( ) const
+unsigned int EvaQunListViewItem::getQunID( ) const
 {
 	return m_qun->getQunID();
 }
@@ -1292,7 +1292,7 @@ EvaRecentContactLVItem::EvaRecentContactLVItem( const bool isQun, QQFriend * f, 
 	update();
 }
 
-const unsigned int EvaRecentContactLVItem::QQ( )
+unsigned int EvaRecentContactLVItem::QQ( )
 {
 	if(isQun()) return 0;
 
@@ -1319,7 +1319,7 @@ const QString EvaRecentContactLVItem::QunName( )
 	return codec->toUnicode(m_qun->getDetails().getName().c_str());
 }
 
-const unsigned int EvaRecentContactLVItem::getQunID( ) const
+unsigned int EvaRecentContactLVItem::getQunID( ) const
 {
 	if(!isQun()) return 0;
 	return m_qun->getQunID();

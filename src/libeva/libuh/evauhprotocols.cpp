@@ -33,7 +33,7 @@ EvaUHInfoRequest::EvaUHInfoRequest()
 {	
 }
 
-const bool EvaUHInfoRequest::fillBody(unsigned char *buf, int *len)
+bool EvaUHInfoRequest::fillBody(unsigned char *buf, int *len)
 {
 	if(!mList.size()) return false;
 	
@@ -77,7 +77,7 @@ EvaUHInfoReply::EvaUHInfoReply(const unsigned char *buf, const int len)
 {	
 }
 
-const bool EvaUHInfoReply::parseBody()
+bool EvaUHInfoReply::parseBody()
 {
 	int pos= mBodyStart;
 	pos+=8;
@@ -129,7 +129,7 @@ EvaUHTransferRequest::EvaUHTransferRequest()
 {	
 }
 
-const bool EvaUHTransferRequest::fillBody(unsigned char *buf, int *len)
+bool EvaUHTransferRequest::fillBody(unsigned char *buf, int *len)
 {
 	int pos=0, sizeOffset;
 	memset(buf, 0, 8); pos+=8;
@@ -171,7 +171,7 @@ EvaUHTransferReply::EvaUHTransferReply(const unsigned char *buf, const int len)
 {	
 }
 
-const bool EvaUHTransferReply::parseBody()
+bool EvaUHTransferReply::parseBody()
 {
 	// if not data packet, it's a transfer start notification, empty body
 	if(!mIsData)       

@@ -81,12 +81,12 @@ void EvaFileThread::setDir( const QString & dir )
 	m_DirList[0] = m_Dir; // for file transfer, one file each session, not like images
 }
 
-const QString EvaFileThread::getDir() const
+QString EvaFileThread::getDir() const
 {
 	return m_Dir;
 }
 
-const unsigned int EvaFileThread::getFileSize()
+unsigned int EvaFileThread::getFileSize()
 {
 	if(!m_File) return 0;
 	return m_File->getFileSize();
@@ -963,7 +963,7 @@ void EvaAgentDownloader::checkBuffer(const unsigned short seq)
 		m_State = ENone;
 }
 
-const bool EvaAgentDownloader::parsePacket(EvaFTAgentPacket *packet)
+bool EvaAgentDownloader::parsePacket(EvaFTAgentPacket *packet)
 {
 	packet->setFileAgentKey(m_FileAgentKey);
 	return packet->parse();
@@ -1224,7 +1224,7 @@ void EvaUdpUploader::processCreateReply(EvaFTSynCreateReply *packet)
 	delete packet;
 }
 
-const bool EvaUdpUploader::parsePacket( EvaFTSynPacket * packet )
+bool EvaUdpUploader::parsePacket( EvaFTSynPacket * packet )
 {
 	packet->setFileAgentKey(m_FileAgentKey);
 	bool result = packet->parse();

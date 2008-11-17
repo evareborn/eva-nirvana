@@ -32,7 +32,7 @@ public:
 	
 	OutPacket * copy() { return new LoginPacket(*this);}
 	LoginPacket &operator=(const LoginPacket &rhs);
-	const unsigned char getLoginMode() const { return m_LoginMode; }
+	 unsigned char getLoginMode() const { return m_LoginMode; }
 	unsigned char getNumProcess() const { return m_NumProcess; }
 	const unsigned char *getComputerUUID() const { return m_UUID; }
 
@@ -55,19 +55,19 @@ public:
 	
 	InPacket * copy() { return new LoginReplyPacket(*this);}
 	LoginReplyPacket &operator=(const LoginReplyPacket &rhs);
-	const unsigned char getReplyCode() const { return replyCode; };
-	const unsigned int getRedirectedIP() const { return redirectedIP; }
-	const short getRedirectedPort() const { return redirectedPort; }
+	 unsigned char getReplyCode() const { return replyCode; };
+	 unsigned int getRedirectedIP() const { return redirectedIP; }
+	 short getRedirectedPort() const { return redirectedPort; }
 	const std::string &getReplyMessage() const { return replyMessage; }
 	
-	const int getQQ() const { return qqNum; }
-	const unsigned int getMyIP() const { return IP; }
-	const unsigned short getMyPort() const { return port; }
-	const int getLoginTime() const { return loginTime; };
-	const unsigned int getServerIP() const { return serverIP; }
-	const short getServerPort() const { return serverPort; }
-	const unsigned int getLastLoginIP() const { return lastLoginIP; }
-	const int getLastLoginTime() const { return lastLoginTime; }
+	 int getQQ() const { return qqNum; }
+	 unsigned int getMyIP() const { return IP; }
+	 unsigned short getMyPort() const { return port; }
+	 int getLoginTime() const { return loginTime; };
+	 unsigned int getServerIP() const { return serverIP; }
+	 short getServerPort() const { return serverPort; }
+	 unsigned int getLastLoginIP() const { return lastLoginIP; }
+	 int getLastLoginTime() const { return lastLoginTime; }
 	
 protected:
 	virtual void parseBody();
@@ -125,10 +125,10 @@ public:
 	KeepAliveReplyPacket(const KeepAliveReplyPacket &rhs);
 	virtual ~KeepAliveReplyPacket(){};
  
-	const int numOnlineUsers() const { return onlineUsers; }
-	const unsigned int getMyIP() const { return myIP; }
-	const unsigned short getMyPort() const { return myPort; }
-	const unsigned int getTime() const { return m_Time; }
+	 int numOnlineUsers() const { return onlineUsers; }
+	 unsigned int getMyIP() const { return myIP; }
+	 unsigned short getMyPort() const { return myPort; }
+	 unsigned int getTime() const { return m_Time; }
 	
 	KeepAliveReplyPacket &operator=(const KeepAliveReplyPacket &rhs);
 protected:

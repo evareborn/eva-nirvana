@@ -30,9 +30,10 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qdatastream.h>
-#include <kaudioplayer.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+//X #include <kaudioplayer.h>
+#include <qpixmap.h>
+//#include <kglobal.h>
+//#include <kstandarddirs.h>
 
 
 EvaImageResource::EvaImageResource()
@@ -40,6 +41,7 @@ EvaImageResource::EvaImageResource()
 	//imageRoot = qApp->applicationDirPath() + "/images";
 	themePath = "";
 	imageRoot = EvaGlobal::getDirPath() + "/image";
+        BAD_ICON = new QPixmap();
 	isDownloadingQQShow = false;
 	http = new EvaHttp();
 	connect ( http, SIGNAL(requestFinished(bool)), SLOT(slotQQShowDone(bool))); 
@@ -66,14 +68,14 @@ const QString EvaImageResource::getSmileyPath() const
 	return imageRoot + "/smiley";
 }
 
-const int EvaImageResource::getFaceID(const int fileIndex) const
+int EvaImageResource::getFaceID(const int fileIndex) const
 {
 	if(fileIndex<=0 || fileIndex> MaxFaceNumber)
 		return faceId[0];
 	return faceId[fileIndex-1];
 }
 
-const int EvaImageResource::getFaceFileIndex(const int faceId)
+int EvaImageResource::getFaceFileIndex(const int faceId)
 {
 	int index = (faceId<0)?1:faceId/3 + 1;
 	if(index<0 || index> MaxFaceNumber) index = 1;
@@ -97,7 +99,7 @@ QPixmap *EvaImageResource::getFaceByID( const unsigned short faceId, const bool 
 QPixmap *EvaImageResource::getIcon(QString name)
 {
 	QMap<QString, QPixmap>::Iterator iter = iconList.find(name);
-	if(iter== iconList.end()) return NULL;
+	if(iter== iconList.end()) return BAD_ICON;
 	return &(iter.data());
 }
 
@@ -123,7 +125,7 @@ const QMovie *EvaImageResource::getLoginMovie()
 	return &loginMng;
 }
 
-const bool EvaImageResource::loadImage()
+bool EvaImageResource::loadImage()
 {
 	return loadIcon();
 	//return (loadFace() && loadIcon() );
@@ -376,13 +378,13 @@ void EvaSoundResource::playSound(const QString &filename)
 	
 	if(!d.exists(absPath))	return;
 	
-	KAudioPlayer snd(absPath);
-	snd.play();
+//X 	KAudioPlayer snd(absPath);
+//X 	snd.play();
 }
 
 /*  ---------------------------------------------------------------------------------------------- */
 
-QString EvaGlobal::dirPath = "~/eva";
+QString EvaGlobal::dirPath = ".";
 
 EvaGlobal::EvaGlobal()
 {
@@ -402,7 +404,7 @@ QString &EvaGlobal::getDirPath()
 	return dirPath; 
 }
 
-const bool EvaGlobal::loadImage()
+bool EvaGlobal::loadImage()
 {
 	if(!imgResource) return false;
 	return imgResource->loadImage();
@@ -420,7 +422,7 @@ const bool EvaGlobal::loadSound()
 	return sndResource->loadSound();
 }*/
 
-const bool EvaGlobal::loadEvaSetting()
+bool EvaGlobal::loadEvaSetting()
 {
 	if(!system) return false;
 	return system->loadSetting();
@@ -428,7 +430,7 @@ const bool EvaGlobal::loadEvaSetting()
 
 void EvaGlobal::initialize()
 {
-	dirPath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/servers"));
+//	dirPath = KGlobal::dirs()->findResource("data", QString::fromLatin1("eva/servers"));
 // 	QStringList dirs = KGlobal::dirs()->findDirs("data", QString::fromLatin1("eva"));
 // 	for(uint i=0; i<dirs.size(); i++){
 // 		//printf("dir %i:%s\n", i, dirs[i].ascii());

@@ -27,6 +27,7 @@
 class EvaPacketManager;
 class ContactInfo;
 class EvaLoginVeriWindow;
+class EvaMain;
 
 /**
  * \class EvaLoginManager
@@ -55,7 +56,7 @@ class EvaLoginManager : public QObject
 {
 	Q_OBJECT
 public:
-	EvaLoginManager();
+	EvaLoginManager(EvaMain* evaapp);
 	void setPacketManager(EvaPacketManager *pm);
 
 	void login(QHostAddress &server);
@@ -64,6 +65,7 @@ public:
 	inline bool isLoggedIn();
 private:
 	EvaPacketManager *m_packetManager;
+        EvaMain* g_eva;
 
 	enum LoginStatus{
 		EStart,
@@ -99,6 +101,6 @@ private:
 inline bool EvaLoginManager::isLoggedIn() { return m_isLoggedIn; }
 inline void EvaLoginManager::setLoggedOut() { m_isLoggedIn = false; }
 
-EvaLoginManager *GetLoginManager();
+//X EvaLoginManager *GetLoginManager();
 #endif //EVA_LOGIN_MANAGER_H
 

@@ -69,7 +69,7 @@ public:
 	
 	virtual void paintCell( QPainter * painter, const QColorGroup & colourGroup, int column, int width, int align );
 	virtual void paintBranches(QPainter * p, const QColorGroup & cg,int w, int y, int h);
-	const LVIType type() const { return m_type; }
+	LVIType type() const { return m_type; }
 
 protected:
 	LVIType m_type;

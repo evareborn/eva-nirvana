@@ -36,7 +36,7 @@
 #include "regiongrabber.h"
 #include "evamainwindow.h"
 #include "evahistoryviewer.h"
-#include "evascriptmanager.h"
+//X #include "evascriptmanager.h"
 
 #include <qtextcodec.h>
 #include <qrect.h>
@@ -105,7 +105,7 @@ void EvaChatWindow::setQuickReplyMessages(const std::list<QString> &list)
 	quickList = list; 
 }
 
-const unsigned int EvaChatWindow::getBuddyQQ()
+unsigned int EvaChatWindow::getBuddyQQ()
 {
 	return buddy->getQQ();
 }
@@ -749,7 +749,7 @@ QString EvaChatWindow::getFileName( const unsigned int session )
 	return iter.data();
 }
 
-const bool EvaChatWindow::addToFileList( const unsigned int session, const QString filename )
+bool EvaChatWindow::addToFileList( const unsigned int session, const QString filename )
 {
 	QString file = getFileName(session);
 	if(!file.isEmpty()) return false; // if exists  return false;
@@ -757,7 +757,7 @@ const bool EvaChatWindow::addToFileList( const unsigned int session, const QStri
 	return true;
 }
 
-const unsigned int EvaChatWindow::getSession(const unsigned int showSession)
+unsigned int EvaChatWindow::getSession(const unsigned int showSession)
 {
 	QMap<unsigned int, unsigned int>::Iterator iter;
 	for(iter = m_FileNoList.begin(); iter!=m_FileNoList.end(); ++iter){
@@ -1026,7 +1026,7 @@ void EvaChatWindow::slotCustomBtnClick( )
 	printf("sender : %s\n", name.local8Bit().data());
 	if(m_scriptMap.find(name) == m_scriptMap.end()) return;
 	printf("slotCustomBtnClick : %s\n", name.local8Bit().data());
-	GetScriptManager()->customMenuClicked(false, buddy->getQQ(), m_scriptMap[name], name); // script name, button name
+//X 	GetScriptManager()->customMenuClicked(false, buddy->getQQ(), m_scriptMap[name], name); // script name, button name
 }
 
 

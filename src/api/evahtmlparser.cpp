@@ -218,7 +218,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 }
 
 // for personal chatting only
-const int EvaHtmlParser::convertToPlainTxt(QString &html, QString &sendFileNameBase)
+int EvaHtmlParser::convertToPlainTxt(QString &html, QString &sendFileNameBase)
 {
 	QRegExp rx("<img src=\\d\\d?\\d?\\.gif >");
 	QRegExp rx1("\\d\\d?\\d?");

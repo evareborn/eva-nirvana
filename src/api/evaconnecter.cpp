@@ -336,7 +336,7 @@ const QHostAddress EvaConnecter::getSocketIp( )
 	return QHostAddress();
 }
 
-const unsigned int EvaConnecter::getSocketPort( )
+unsigned int EvaConnecter::getSocketPort( )
 {
 	if(connecter) return connecter->getSocketPort();
 	return 0;
