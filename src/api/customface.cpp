@@ -23,7 +23,9 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qtextcodec.h>
-#include <klocale.h>
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 #define XML_FACE_FILE                   "face.xml"
 

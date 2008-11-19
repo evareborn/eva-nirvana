@@ -26,7 +26,10 @@
 #include <qtoolbutton.h>
 #include <qtextedit.h>
 #include <qtimer.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
   
 EvaNotifyWindow::EvaNotifyWindow(QWidget* parent , const char* name, WFlags fl)
 	: EvaNotifyUIBase(parent, name, fl)

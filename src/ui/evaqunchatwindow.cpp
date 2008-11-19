@@ -29,7 +29,7 @@
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evatextedit.h"
-#include "evachatview.h"
+#include "simplechatview.h"
 #include "evaqunlist.h"
 #include "evaqunlistview.h"
 #include "evahistoryviewer.h"
@@ -62,10 +62,10 @@
 #include <qapplication.h>
 #include <qlayout.h>
 
-#include <klocale.h>
-#include <kurl.h>
-#include <kfiledialog.h>
-#include <kapplication.h>
+//X #include <klocale.h>
+//X #include <kurl.h>
+//X #include <kfiledialog.h>
+//X #include <kapplication.h>
 
 #ifndef QQ_MSG_IM_MAX
 #define QQ_MSG_IM_MAX 15000
@@ -78,7 +78,7 @@ bool EvaQunChatWindow::isSentByEnter = false;
 std::list<QString> EvaQunChatWindow::quickList;
 
 EvaQunChatWindow::EvaQunChatWindow( Qun * qun, QWidget * parent, const char * name, WFlags fl )
-	: EvaQunChatUIBase(parent, name, fl), smileyPopup(NULL), fontSelecter(NULL), quickMenu(NULL),
+	: EvaQunChatUIBase(parent, name, fl), smileyPopup(NULL), /*fontSelecter(NULL),*/ quickMenu(NULL),
 	mQun(qun), grabber(NULL), viewer(NULL)
 {
 	codec = QTextCodec::codecForName("GB18030");
@@ -185,7 +185,7 @@ void EvaQunChatWindow::slotAddMessage(unsigned int sender, QString sNick, unsign
 	EvaHtmlParser parser;
 	parser.convertToHtml(message, false, false, true);
 	QString msg = QString::number(sender) + "(" +sNick + ")" + (isNormal?(""):i18n("(Auto-Reply)")) + "  " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
-	kdDebug()  << msg << endl;
+//X 	kdDebug()  << msg << endl;
 	teInput->append(msg);
 }
 
@@ -284,8 +284,8 @@ void EvaQunChatWindow::slotUpdateOnlineMembers()
 
 void EvaQunChatWindow::initObjects( )
 {
-	fontSelecter = new EvaFontSelecter(this);
-	fontSelecter->setColor(Qt::black);
+//X 	fontSelecter = new EvaFontSelecter(this);
+//X 	fontSelecter->setColor(Qt::black);
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector(false);	
 	
@@ -363,7 +363,7 @@ void EvaQunChatWindow::initConnection( )
 	//QObject::connect(tbShowMe, SIGNAL(clicked()), this, SLOT(slotTbShowMeClick()));
 	QObject::connect(teInput, SIGNAL(keyPressed(QKeyEvent *)), this, SLOT(slotInputKeyPress(QKeyEvent *)));
 	
-	QObject::connect(fontSelecter, SIGNAL(fontChanged(QColor, int)), this, SLOT(slotFontChanged(QColor, int)));
+//X 	QObject::connect(fontSelecter, SIGNAL(fontChanged(QColor, int)), this, SLOT(slotFontChanged(QColor, int)));
 	QObject::connect(pbClose, SIGNAL(clicked()), this, SLOT(slotPbCloseClick()));
 	
 	QObject::connect(memberList, SIGNAL(requestBuddyInfo(const unsigned int)), this, SIGNAL(requestDetails(const unsigned int)));
@@ -429,16 +429,16 @@ void EvaQunChatWindow::slotSmileyClick( )
 
 void EvaQunChatWindow::slotFontClick( )
 {
-	if(!fontSelecter) return;
-	if(fontSelecter->isVisible()) 
-		fontSelecter->hide();
-	else{
-		QPoint p = teInput->mapToGlobal(QPoint(0,0));
-		fontSelecter->setSize( mQun->getChatFontSize());
-		fontSelecter->setColor(QColor(mQun->getChatFontColor()) );
-		fontSelecter->setGeometry(p.x() + tbFont->x() , p.y(), fontSelecter->width(), fontSelecter->height());	
-		fontSelecter->show();
-	}
+//X 	if(!fontSelecter) return;
+//X 	if(fontSelecter->isVisible()) 
+//X 		fontSelecter->hide();
+//X 	else{
+//X 		QPoint p = teInput->mapToGlobal(QPoint(0,0));
+//X 		fontSelecter->setSize( mQun->getChatFontSize());
+//X 		fontSelecter->setColor(QColor(mQun->getChatFontColor()) );
+//X 		fontSelecter->setGeometry(p.x() + tbFont->x() , p.y(), fontSelecter->width(), fontSelecter->height());	
+//X 		fontSelecter->show();
+//X 	}
 }
 
 void EvaQunChatWindow::slotQuickReplyClick( )
@@ -674,16 +674,16 @@ void EvaQunChatWindow::slotPictureReady( const QString filename , const QString 
 
 void EvaQunChatWindow::slotImageFileClick( )
 {
-	if(!teInput->isEnabled()) return;
-	QString destDir = EvaMain::user->getSetting()->getPictureCacheDir();
-	QString fileName = KFileDialog::getOpenFileName(destDir,
-			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
-			i18n("select an image file"));
-	if(!fileName.isEmpty()){
-		QString destFile = EvaHelper::generateCustomSmiley(fileName, destDir);
-		if(destFile.isEmpty()) return;
-		slotAddImageToInputEdit(destFile);
-	}
+//X 	if(!teInput->isEnabled()) return;
+//X 	QString destDir = EvaMain::user->getSetting()->getPictureCacheDir();
+//X 	QString fileName = KFileDialog::getOpenFileName(destDir,
+//X 			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
+//X 			i18n("select an image file"));
+//X 	if(!fileName.isEmpty()){
+//X 		QString destFile = EvaHelper::generateCustomSmiley(fileName, destDir);
+//X 		if(destFile.isEmpty()) return;
+//X 		slotAddImageToInputEdit(destFile);
+//X 	}
 }
 
 const std::list<OutCustomizedPic> EvaQunChatWindow::getSendFiles(const std::list<QString> &fileList)

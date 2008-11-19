@@ -45,10 +45,10 @@
 #include <qstringlist.h>
 #include <qtoolbutton.h>
 #include <qtextcodec.h>
-#include <kpushbutton.h>
-#include <krun.h>
-#include <klocale.h>
-#include <kapplication.h>
+//X #include <kpushbutton.h>
+//X #include <krun.h>
+//X #include <klocale.h>
+//X #include <kapplication.h>
 #include <qtabwidget.h>
 #include <qcheckbox.h>
 
@@ -286,7 +286,7 @@ void EvaDetailsWindow::slotLinkClicked( const QString & url )
 	QStringList args;
 	args<<"exec"<< url;
 	//kapp->kdeinitExec("kfmclient",args);
-	KRun::runCommand("konqueror \""+url+"\"");
+//X 	KRun::runCommand("konqueror \""+url+"\"");
 }
 
 void EvaDetailsWindow::slotShopClicked( )

@@ -21,7 +21,7 @@
 #ifndef EVA_DCOP_CONTACTS_INTERFACE_H
 #define EVA_DCOP_CONTACTS_INTERFACE_H
 
-#include <dcopobject.h>
+//X #include <dcopobject.h>
 #include <qstring.h>
 #include <qstringlist.h>
 

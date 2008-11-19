@@ -24,7 +24,10 @@
 #include <qcheckbox.h>
 #include <qdatetime.h>
 #include <qdatetimeedit.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 EvaHistoryViewer::EvaHistoryViewer(const int id, const QString &nickname, EvaUserSetting *userSetting, const bool isQunMsg)
 	: EvaHistoryUIBase(0,0,Qt::WStyle_Customize | Qt::WStyle_Title | Qt::WStyle_SysMenu | Qt::WStyle_Minimize

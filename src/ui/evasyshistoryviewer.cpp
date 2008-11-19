@@ -22,7 +22,10 @@
 
 #include <qpushbutton.h>
 #include <qtable.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 #include <qcheckbox.h>
 #include <qdatetimeedit.h>
 

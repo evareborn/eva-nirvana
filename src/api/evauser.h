@@ -23,7 +23,7 @@
 
 #include "evauserinfo.h"
 #include "evaqunlist.h"
-#include "evadcopcontacts.h"
+// #include "evadcopcontacts.h"
 #include "evausersetting.h"
 #include <qobject.h>
 #include <qstringlist.h>
@@ -81,7 +81,7 @@ class EvaUserSetting;
 class CustomEvent;
 class KConfig;
 
-class EvaUser : public QObject, virtual public EvaDCOPContactsInterface
+class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
 {
 	Q_OBJECT
 public:

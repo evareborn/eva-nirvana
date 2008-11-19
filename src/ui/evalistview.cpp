@@ -35,7 +35,7 @@
 #include <qstyle.h>
 #include <qsimplerichtext.h>
 //#include <qapplication.h>
-#include <klocale.h>
+//X #include <klocale.h>
 
 #define EVA_LV_LEFT_MARGIN     6
 

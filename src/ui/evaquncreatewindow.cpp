@@ -31,9 +31,10 @@
 #include <qlabel.h>
 #include <qwidgetstack.h>
 #include <qbuttongroup.h>
+#include <qmessagebox.h>
 #include <qtable.h>
 #include <qimage.h>
-#include <kmessagebox.h>
+//X #include <kmessagebox.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <qpoint.h>
@@ -43,8 +44,8 @@
 #include "evauser.h"
 #include "evaqunmemberpicker.h"
 #include "quncategorypicker.h"
-#include <kapplication.h>
-#include <klocale.h>
+//X #include <kapplication.h>
+//X #include <klocale.h>
 
 EvaQunCreateWindow::EvaQunCreateWindow( QWidget * parent, const char * name, WFlags fl )
 	: QunCreateUI(parent,name,fl), picker(NULL), qunCategory(0), qunNotice(""), qunDescription("")
@@ -65,20 +66,20 @@ EvaQunCreateWindow::EvaQunCreateWindow( QWidget * parent, const char * name, WFl
 				SLOT(slotPickerMemberClicked(const unsigned int, const bool)));
 	QObject::connect(this, SIGNAL(removeMember(const unsigned int)), picker, SLOT(slotSetMemberOff(const unsigned int)));
 	
-	QRect scr = KApplication::desktop()->screenGeometry();
-	move(scr.center() - rect().center());
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	move(scr.center() - rect().center());
 }
 
 void EvaQunCreateWindow::slotQunCreateDone(const unsigned int id)
 {
-	KMessageBox::information(this, QString(i18n("Qun \"%1\" has been created.")).arg(id), i18n("Qun Operation"));
+	QMessageBox::information(this, QString(i18n("Qun \"%1\" has been created.")).arg(id), i18n("Qun Operation"));
 	pbNext->setEnabled(false);
 	pbCancel->setText(i18n("&Close"));
 }
 
 void EvaQunCreateWindow::slotQunCreateFailed(QString msg)
 {
-	KMessageBox::information(this, msg, i18n("Qun Operation"));
+	QMessageBox::information(this, msg, i18n("Qun Operation"));
 }
 
 void EvaQunCreateWindow::closeEvent( QCloseEvent * event)
@@ -293,13 +294,13 @@ bool EvaQunCreateWindow::processQunDetailsChecking( )
 {
 	qunName = leQunName->text().stripWhiteSpace();
 	if(qunName.isEmpty()){
-		KMessageBox::information(this, i18n("Please input Qun name properly."), i18n("Qun Operation"));
+		QMessageBox::information(this, i18n("Please input Qun name properly."), i18n("Qun Operation"));
 		leQunName->setFocus();
 		return false;
 	}
 	
 	if(!qunCategory){
-		KMessageBox::information(this, i18n("Please select a Qun category."), i18n("Qun Operation"));
+		QMessageBox::information(this, i18n("Please select a Qun category."), i18n("Qun Operation"));
 		tbCategory->setFocus();
 		return false;
 	}

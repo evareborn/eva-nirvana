@@ -23,7 +23,7 @@
 #define EVA_IDLE_TIME_DETECTOR_H
 
 #include <qobject.h>
-#include "config.h"
+//X #include "config.h"
 
 class QTimer;
 

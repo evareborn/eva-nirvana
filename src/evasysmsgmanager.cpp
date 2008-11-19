@@ -34,11 +34,12 @@
 
 #include <qrect.h>
 #include <qtextcodec.h>
+#include <qmessagebox.h>
 
-#include <kmessagebox.h>
-#include <kapp.h>
-#include <kdebug.h>
-#include <klocale.h>
+//X #include <kmessagebox.h>
+//X #include <kapp.h>
+//X #include <kdebug.h>
+//X #include <klocale.h>
 
 EvaSysMsgManager::EvaSysMsgManager( )
 {
@@ -52,7 +53,7 @@ void EvaSysMsgManager::setPacketManager( EvaPacketManager * packetManager )
 {
 	m_PacketManager = packetManager;
 	if(!packetManager){
-		kdDebug() << "[EvaAddingManager] "<< " NULL pointer for packet manager" << endl;
+//X 		kdDebug() << "[EvaAddingManager] "<< " NULL pointer for packet manager" << endl;
 		return;
 	}
 	QObject::connect(m_PacketManager, SIGNAL( receivedQQNews(const QString &, const QString &, const QString &)),
@@ -100,7 +101,7 @@ void EvaSysMsgManager::slotReceivedSysMessage(const unsigned char type, const un
 					const unsigned char *code, const unsigned int codeLen)
 {
 	if(myID != EvaMain::user->getQQ()){
-		kdDebug() << "[EvaSysMsgManager] you shouldn't receive this! This sys message is for QQ(" << myID << ") only!" << endl;
+//X 		kdDebug() << "[EvaSysMsgManager] you shouldn't receive this! This sys message is for QQ(" << myID << ") only!" << endl;
 		return;
 	}
 
@@ -137,16 +138,16 @@ void EvaSysMsgManager::slotReceivedSysMessage(const unsigned char type, const un
 
 void EvaSysMsgManager::slotReceivedVerifyAddingMessageReply(const unsigned int id,
 							const unsigned char reply,
-							const unsigned char flag1,
-							const unsigned char flag2)
+							const unsigned char /*flag1*/,
+							const unsigned char /*flag2*/)
 {
 	if(reply == 0x00){
 		/// reply code -- 0x00: failed,  0x01: sucess
-		KMessageBox::information(0, QString(i18n("Verifying system message for buddy %1 failed.")).arg(id),
+		QMessageBox::information(0, QString(i18n("Verifying system message for buddy %1 failed.")).arg(id),
 			i18n("Eva Search/Add Friend"));
 		return;
 	}
-	kdDebug()  << "[EvaSysMsgManager->slotReceivedVerifyAddingMessageReply] id: " << id << ", flag1: " << flag1 << ", flag2: " << flag2 << endl;
+//X 	kdDebug()  << "[EvaSysMsgManager->slotReceivedVerifyAddingMessageReply] id: " << id << ", flag1: " << flag1 << ", flag2: " << flag2 << endl;
 }
 
 void EvaSysMsgManager::showSysMessage( )
@@ -164,7 +165,7 @@ void EvaSysMsgManager::showSysMessage( const unsigned short msgType, const unsig
 					const unsigned char *code, const unsigned short codeLen,
 					const unsigned char *token, const unsigned short tokenLen)
 {
-	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
 	if(msgType == SYSTEM_MESSAGE_NORMAL){
 		switch(type){
 			case Q_MSG_SYS_EVA_QQ_NEWS:{
@@ -199,7 +200,7 @@ void EvaSysMsgManager::showSysMessage( const unsigned short msgType, const unsig
 				// internalQunID is 1: allow reverse, otherwise 0: not allowed reversely
 				win->setMessage( type, from, message, internalQunID);
 				
-				win->move(scr.center() - win->rect().center());
+//X 				win->move(scr.center() - win->rect().center());
 				win->show();
 				}
 				break;
@@ -214,7 +215,7 @@ void EvaSysMsgManager::showSysMessage( const unsigned short msgType, const unsig
 		win->setCode(code, codeLen);
 		win->setToken(token, tokenLen);
 		
-		win->move(scr.center() - win->rect().center());
+//X 		win->move(scr.center() - win->rect().center());
 		win->show();
 	}
 }

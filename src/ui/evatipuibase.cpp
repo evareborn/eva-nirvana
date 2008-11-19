@@ -29,8 +29,11 @@
 #include <qwhatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <kwin.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <kwin.h>
+//X #include <klocale.h>
 
 EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )

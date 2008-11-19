@@ -31,7 +31,10 @@
 #include <qwhatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a EvaQunMemberPickerUI as a child of 'parent', with the

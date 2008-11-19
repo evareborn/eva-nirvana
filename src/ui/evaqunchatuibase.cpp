@@ -20,7 +20,7 @@
 
 #include "evaqunchatuibase.h"
 #include "evatextedit.h"
-#include "evachatview.h"
+#include "simplechatview.h"
 #include "evaqunlistview.h"
 
 #include <qvariant.h>
@@ -37,9 +37,12 @@
 #include <qpixmap.h>
 #include <qsplitter.h>
 #include <qvaluelist.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
 
-#include <kapplication.h>
+//X #include <klocale.h>
+//X 
+//X #include <kapplication.h>
 
 /*
  *  Constructs a EvaQunChatUIBase as a child of 'parent', with the
@@ -73,8 +76,8 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	splitter = new QSplitter( this, "splitter" );
 	splitter->setOrientation( QSplitter::Vertical );
 
-	chatDisplay = new EvaChatView(splitter, "chatDisplay");
-	chatDisplay->view()->setHScrollBarMode(QScrollView::AlwaysOff);
+	chatDisplay = new SimpleChatView(splitter, "chatDisplay");
+	chatDisplay->setHScrollBarMode(QScrollView::AlwaysOff);
 	//chatDisplay->view()->setMinimumSize(QSize( 0, 170 ) );
 	//layout15->addWidget( chatDisplay->view() );
 
@@ -167,7 +170,7 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	teInput->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)1, 0, 0, teInput->sizePolicy().hasHeightForWidth() ) );
 	teInput->setMinimumSize( QSize( 0, 10 ) );
 	//teInput->setMaximumSize( QSize( 32767, 160 ) );
-	teInput->setHScrollBarMode( KTextEdit::AlwaysOff );
+	teInput->setHScrollBarMode( QTextEdit::AlwaysOff );
 	teInput->setTextFormat(Qt::RichText);
 	lowerLayout->addWidget(teInput);
 
@@ -267,8 +270,8 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	languageChange();
 	resize( QSize(470, 422).expandedTo(minimumSizeHint()) );
 	clearWState( WState_Polished );
-	QRect scr = KApplication::desktop()->screenGeometry();
-	move(scr.center()-rect().center());
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	move(scr.center()-rect().center());
 }
 
 /*

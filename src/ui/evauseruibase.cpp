@@ -31,7 +31,10 @@
 #include <qtextedit.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a EvaUserUIBase as a child of 'parent', with the
@@ -110,7 +113,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
 
     layout12->addWidget( tbtnAlbum, 2, 0 );
 
-    kpbUpdateShow = new KPushButton( privateLayoutWidget, "kpbUpdateShow" );
+    kpbUpdateShow = new QPushButton( privateLayoutWidget, "kpbUpdateShow" );
 
     layout12->addWidget( kpbUpdateShow, 5, 0 );
 

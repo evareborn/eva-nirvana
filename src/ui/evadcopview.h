@@ -20,7 +20,7 @@
 #ifndef EVA_DCOP_VIEW_INTERFACE_H
 #define EVA_DCOP_VIEW_INTERFACE_H
 
-#include <dcopobject.h>
+//X #include <dcopobject.h>
 
 class EvaDCOPViewInterface : virtual public DCOPObject
 {

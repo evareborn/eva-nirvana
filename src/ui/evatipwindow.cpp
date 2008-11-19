@@ -23,11 +23,13 @@
 #include "evaresource.h"
 #include "evahtmlparser.h"
 #include <qlabel.h>
-#include <klocale.h>
-#include <kapplication.h>
+//X #include <klocale.h>
+//X #include <kapplication.h>
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qimage.h>
+ 
+#include "evamain.h"
 
 EvaTipWindow::EvaTipWindow(EvaImageResource *res, const QString nick, const unsigned int id, const short face, const QString &message)
     : EvaTipUIBase(0, 0, WType_TopLevel | WStyle_Customize | WStyle_NoBorder | WStyle_StaysOnTop | WX11BypassWM | WNoAutoErase | WDestructiveClose)
@@ -65,8 +67,8 @@ EvaTipWindow::EvaTipWindow(EvaImageResource *res, const QString nick, const unsi
 	}
 	
 	lblPixmap->setPixmap(*pic);
-	scr = KApplication::desktop()->screenGeometry();
-	setGeometry(scr.right()- width(), scr.bottom(), width(), height());
+//X 	scr = KApplication::desktop()->screenGeometry();
+//X 	setGeometry(scr.right()- width(), scr.bottom(), width(), height());
 		
 	timelast=0;
 	timer = new QTimer(this);

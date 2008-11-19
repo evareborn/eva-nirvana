@@ -33,8 +33,8 @@
 
 #include <qmessagebox.h>
 #include <qapplication.h>
-#include <kwin.h>
-#include <klocale.h>
+//X #include <kwin.h>
+//X #include <klocale.h>
 		
 EvaChatWindowManager::EvaChatWindowManager(EvaImageResource *img, EvaUserSetting *setting, QString myNickname, const int id)
 {
@@ -92,7 +92,7 @@ EvaChatWindow * EvaChatWindowManager::openChatWindow(QQFriend * frd, const bool 
 			win = newWindow(frd);
 			//win->show();
 		}else{
-			KWin::forceActiveWindow(win->winId());
+//X 			KWin::forceActiveWindow(win->winId());
 			return win;
 		}
 	}else{
@@ -167,7 +167,7 @@ void EvaChatWindowManager::slotReceivedMessage(unsigned int sender, bool isNorma
 		win->slotReceivedMessage(sender, isNormal, message, time, size, u, i, b, blue, green, red);
 		win->showMessages();
 		if(!win->isActiveWindow()){
-			KWin::demandAttention(win->winId(), true);
+//X 			KWin::demandAttention(win->winId(), true);
 		}
 		return;
 	}
@@ -195,7 +195,8 @@ void EvaChatWindowManager::slotSendResult(unsigned int id, bool ok)
 		win->slotSendResult(ok);
 	}else{
 		if(!ok)
-			QMessageBox::information(0, i18n("Send Message"), QString(i18n("Send message to \"%1\" failed.")).arg(id));
+//X 			QMessageBox::information(0, i18n("Send Message"), QString(i18n("Send message to \"%1\" failed.")).arg(id));
+			QMessageBox::information(0, "Send Message", QString("Send message to \"%1\" failed.").arg(id));
 	}
 }
 
@@ -270,7 +271,7 @@ void EvaChatWindowManager::slotReceivedQunMessage( unsigned int qunID, unsigned 
 		win->slotReceivedMessage(qunID, senderQQ, message, time, size, u, i, b, blue, green, red);
 		win->showMessages();
 		if(!win->isActiveWindow()){
-			KWin::demandAttention(win->winId(), true);
+//X 			KWin::demandAttention(win->winId(), true);
 		}
 		return;
 	}
@@ -309,7 +310,8 @@ void EvaChatWindowManager::slotQunSendResult( unsigned int id, bool ok ,QString 
 		win->slotSendResult(ok);
 	}else{
 		if(!ok)
-			QMessageBox::information(0, i18n("Send Message Failed"), msg);
+//X 			QMessageBox::information(0, i18n("Send Message Failed"), msg);
+			QMessageBox::information(0, "Send Message Failed", msg);
 	}
 }
 
@@ -323,19 +325,27 @@ void EvaChatWindowManager::slotQunJoinEvent(const unsigned int qunID,
 		QString info;
 		switch(imType){
 			case QQ_RECV_IM_APPROVE_JOIN_QUN:
-				info = QString(i18n("%1 has joined this Qun approved by %2."))
+//X 				info = QString(i18n("%1 has joined this Qun approved by %2."))
+//X 								.arg(sender).arg(commander);
+				info = QString("%1 has joined this Qun approved by %2.")
 								.arg(sender).arg(commander);
 				break;
 			case QQ_RECV_IM_ADDED_TO_QUN:
-				info = QString(i18n("%1 has joined this Qun added by %2."))
+//X 				info = QString(i18n("%1 has joined this Qun added by %2."))
+//X 								.arg(sender).arg(commander);
+				info = QString("%1 has joined this Qun added by %2.")
 								.arg(sender).arg(commander);
 				break;
 			case QQ_RECV_IM_DELETED_FROM_QUN:
-				info = QString(i18n("%1 has quit this Qun.")
-								.arg(sender));
+//X 				info = QString(i18n("%1 has quit this Qun.")
+//X 								.arg(sender));
+				info = QString("%1 has quit this Qun.")
+								.arg(sender);
 				break;
 			default:
-				info = QString(i18n("%1 has done some unknown action on %2."))
+//X 				info = QString(i18n("%1 has done some unknown action on %2."))
+//X 								.arg(commander).arg(sender);
+				info = QString("%1 has done some unknown action on %2.")
 								.arg(commander).arg(sender);
 		}
 		
@@ -401,7 +411,7 @@ void EvaChatWindowManager::openQunChatWindow( Qun * qun )
 			win = newQunWindow(qun);
 			//win->show();
 		}else{
-			KWin::forceActiveWindow(win->winId());
+//X 			KWin::forceActiveWindow(win->winId());
 			return;
 		}
 	}else{
@@ -501,12 +511,12 @@ void EvaChatWindowManager::slotFileNotifyNormalInfo( const unsigned int id, cons
 	if(win) win->slotFileNotifyNormalInfo(session, status, dir, filename, size, transferType);
 }
 
-void EvaChatWindowManager::slotFileStatusNotification( const unsigned int id, const unsigned int session, const KURL & url, 
-				const unsigned int size, const unsigned int bytes, const unsigned int time )
-{
-	EvaChatWindow *win = getWindow(id);
-	if(win) win->slotFileStatusNotification(session, url, size, bytes, time);
-}
+//X void EvaChatWindowManager::slotFileStatusNotification( const unsigned int id, const unsigned int session, const KURL & url, 
+//X 				const unsigned int size, const unsigned int bytes, const unsigned int time )
+//X {
+//X 	EvaChatWindow *win = getWindow(id);
+//X 	if(win) win->slotFileStatusNotification(session, url, size, bytes, time);
+//X }
 
 void EvaChatWindowManager::addButton( QString &scriptName, QString &buttonName, QString &image, QString &tip)
 {

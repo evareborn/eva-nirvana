@@ -46,8 +46,8 @@
 #include "quncategorypicker.h"
 #include "evacontactmanager.h"
 
-#include <kmessagebox.h>
-#include <klocale.h>
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
 
 
 // QunDetailsWindow::QunDetailsWindow(QWidget* parent, const char* name, WFlags fl)
@@ -830,5 +830,5 @@ void QunDetailsWindow::slotUpdateMessageSetting( )
 }
 
 
-#include "qundetailswindow.moc"
+//X #include "qundetailswindow.moc"
 

@@ -26,7 +26,7 @@
 #include <qscrollview.h>
 #include <qtoolbutton.h>
 
-#include <kpushbutton.h>
+//X #include <kpushbutton.h>
 
 #include "evauserinfowidget.h"
 
@@ -61,7 +61,7 @@ public:
     QLabel* lblQQShow;
     //QToolButton* tbtnHome;
     QToolButton* tbtnAlbum;
-    KPushButton* kpbUpdateShow;
+    QPushButton* kpbUpdateShow;
     QToolButton* tbtnShop;
 
     //UserInfo ScrollView 

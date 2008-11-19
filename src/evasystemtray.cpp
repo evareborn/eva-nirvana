@@ -23,7 +23,7 @@
 #include "evauhmanager.h"
 #include "evamain.h"
 #include "evahtmlparser.h"
-#include <kpopupmenu.h>
+//X #include <kpopupmenu.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qevent.h>
@@ -31,8 +31,8 @@
 #include <qtooltip.h>
 #include <qcursor.h>
 #include <qapplication.h>
-#include <kaction.h>
-#include <klocale.h>
+//X #include <kaction.h>
+//X #include <klocale.h>
 
 //X  
 //X EvaSystemTray::EvaSystemTray(QWidget* parent, const char* name) 

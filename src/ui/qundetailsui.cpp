@@ -37,7 +37,10 @@
 #include <qwhatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a QunDetailsUI as a child of 'parent', with the

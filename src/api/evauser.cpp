@@ -29,14 +29,14 @@
 #include <cstdlib>
 #include <qtextcodec.h>
 #include <qevent.h>
-#include <klocale.h>
+//X #include <klocale.h>
 
 std::string EvaUser::qunName = "Qun List";
 std::string EvaUser::anonymousName = "Anonymous";
 std::string EvaUser::blackName = "Black List";
 
 EvaUser::EvaUser(const unsigned int id, const std::string &password)
-	: DCOPObject("Contacts"),
+	: //DCOPObject("Contacts"),
 	QObject()
 {
 	qqNum = id;
@@ -61,7 +61,7 @@ EvaUser::EvaUser(const unsigned int id, const std::string &password)
 }
 
 EvaUser::EvaUser(const unsigned int id, const char *md5Password)
-	: DCOPObject("Contacts")
+//X 	: DCOPObject("Contacts")
 {
 	qqNum = id;
 	

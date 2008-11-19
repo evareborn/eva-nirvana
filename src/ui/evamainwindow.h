@@ -26,13 +26,13 @@
 #include <qtooltip.h>
 #include <qmap.h>
 
-#include <kurl.h>
-#include <khtml_part.h>
+//X #include <kurl.h>
+//X #include <khtml_part.h>
 #include <list>
 #include <string>
 #include "evalistview.h"
 #include "evamain.h"
-#include "evadcopview.h"
+//X #include "evadcopview.h"
 
 class MainWindowTip : public QToolTip{
 public:

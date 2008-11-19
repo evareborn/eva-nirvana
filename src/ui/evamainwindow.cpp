@@ -34,11 +34,11 @@
 #include <qevent.h>
 #include <qcursor.h>
 
-#include <klocale.h>
-#include <kpopupmenu.h>
-#include <khtmlview.h>
-#include <khtml_part.h>
-#include <kdebug.h>
+//X #include <klocale.h>
+//X #include <kpopupmenu.h>
+//X #include <khtmlview.h>
+//X #include <khtml_part.h>
+//X #include <kdebug.h>
 
 #include "evafriendlist.h"
 #include "evauhmanager.h"
@@ -51,7 +51,7 @@
 #include "evadisplaywidget.h"
 #include "evastatusbar.h"
 #include "evachatwindowmanager.h"
-#include "evascriptwidget.h"
+//X #include "evascriptwidget.h"
 
 MainWindowTip::MainWindowTip(QWidget *parent)
 	: QToolTip(parent) 

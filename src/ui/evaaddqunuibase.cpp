@@ -29,8 +29,10 @@
 #include <qgroupbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+ 
+#include "evamain.h"
 
-#include <klocale.h>
+//X #include <klocale.h>
 
 /*
  *  Constructs a EvaAddQunUIBase as a child of 'parent', with the

@@ -30,7 +30,7 @@
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <cstring>
-#include <kdebug.h>
+//X #include <kdebug.h>
 
 #define POOL_CHECK_INTERVAL  2000    /// every 2 second check two pools
 
@@ -95,7 +95,7 @@ void EvaConnecter::redirectTo(const int ip, const short port)
 		connecter->setDestinationServer(QHostAddress(ip).toString(), 443); // always 443 for http proxy
 	      }
 
-	kdDebug() << "[EvaConnecter->redirectTo] "<< QHostAddress(ip).toString() << " : " << (port==-1?connecter->getHostPort():port) <<endl;
+//X 	kdDebug() << "[EvaConnecter->redirectTo] "<< QHostAddress(ip).toString() << " : " << (port==-1?connecter->getHostPort():port) <<endl;
 	connect();
 }
 
@@ -119,7 +119,7 @@ void EvaConnecter::stop()
 	connectionReady = false;
 	isClientSetup = false;
 
-	kdDebug() << "[EvaConnecter] stoped" << endl;
+//X 	kdDebug() << "[EvaConnecter] stoped" << endl;
 }
 
 void EvaConnecter::clearAllPools()
@@ -187,7 +187,7 @@ void EvaConnecter::processDetectReply( InPacket * in )
 	ServerDetectorReplyPacket *packet = new ServerDetectorReplyPacket();
 	packet->setInPacket(in);
 	if( !packet->parse()) {
-		kdDebug() << "[EvaConnecter] server detect reply parse error!" << endl;
+//X 		kdDebug() << "[EvaConnecter] server detect reply parse error!" << endl;
 		delete packet;
 		return;
 	}
@@ -195,7 +195,7 @@ void EvaConnecter::processDetectReply( InPacket * in )
 	if(packet->isServerReady()){
 		m_IsDetecting = false;
         	removePacket(packet->hashCode());
-		kdDebug() << "[EvaConnecter] server " << connecter->getHostAddress().toString() << " is ready." << endl;
+//X 		kdDebug() << "[EvaConnecter] server " << connecter->getHostAddress().toString() << " is ready." << endl;
 		delete packet;
 		emit isReady();
 		return;
@@ -205,7 +205,7 @@ void EvaConnecter::processDetectReply( InPacket * in )
 			ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
 			redirectTo( packet->getRedirectIP(), -1);
 		}else{
-			kdDebug() << "[EvaConnecter] unkown server detect reply ( reply code: " << packet->getReplyCode() << ")" << endl;
+//X 			kdDebug() << "[EvaConnecter] unkown server detect reply ( reply code: " << packet->getReplyCode() << ")" << endl;
 		}
 
 	delete packet;	
@@ -250,7 +250,7 @@ void EvaConnecter::processPacket( char * data, int len )
 {
 	InPacket *packet = new InPacket((unsigned char *)data, len);
 	if(!packet->getLength()){
-		kdDebug() << "[EvaConnecter] Bad packet (cmd: " << packet->getCommand() << "), ignore it" << endl;
+//X 		kdDebug() << "[EvaConnecter] Bad packet (cmd: " << packet->getCommand() << "), ignore it" << endl;
 		delete packet;
 		return;
 	}

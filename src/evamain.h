@@ -31,11 +31,18 @@
 #include <qpopupmenu.h>
 //#include <dcopobject.h>
 
-#include "config.h"
+//X #include "config.h"
 #include "libeva/evamemo.h"
 #include "evaidt.h"
 //#include "evadcopactions.h"
 
+// for portability.
+//
+#ifndef i18n
+# define i18n(x) (QString( x ))
+# define I18N_NOOP(x) (x)
+#endif
+ 
 // FIXME: wanna integrate with kwallet? why not then?
 //#include <kwallet.h>
 

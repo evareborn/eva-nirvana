@@ -26,8 +26,8 @@
 #include <qtimer.h>
 #include <qdir.h>
 
-#include <kdebug.h>
-#include <kconfig.h>
+//X #include <kdebug.h>
+//X #include <kconfig.h>
 
 #include "evamain.h"
 #include "evauser.h"
@@ -190,7 +190,7 @@ void EvaServers::getResultsSlot( )
 	}
 	
 	QHostAddress addr = list[0];
-	kdDebug() << "[DNS reply] " << dns->label() << " ---> " << addr.toString() << endl;
+//X 	kdDebug() << "[DNS reply] " << dns->label() << " ---> " << addr.toString() << endl;
 	emit isReady(addr);
 }
 
@@ -202,7 +202,7 @@ void EvaServers::stopDns( )
 void EvaServers::slotTimeout( )
 {
 	if(m_StopDns) return;
-	kdDebug() << "[DNS timeout] Tencent Server DNS resovling timeout, use default IP instead.";
+//X 	kdDebug() << "[DNS timeout] Tencent Server DNS resovling timeout, use default IP instead.";
 	defaultAddress();
 }
 

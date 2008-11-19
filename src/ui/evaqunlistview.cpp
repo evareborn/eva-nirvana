@@ -26,7 +26,7 @@
 #include <qpixmap.h>
 #include <qpopupmenu.h>
 #include <qsize.h>
-#include <klocale.h>
+//X #include <klocale.h>
 
 
 

@@ -33,7 +33,7 @@ class Qun;
 class CustomFaceSelector;
 class QTextCodec;
 class QKeyEvent;
-class EvaFontSelecter;
+//X class EvaFontSelecter;
 class QPopupMenu;
 class QTimer;
 class QShowEvent;
@@ -119,7 +119,7 @@ private:
 	
 	static std::list<QString> quickList;
 	
-	EvaFontSelecter *fontSelecter;
+//X 	EvaFontSelecter *fontSelecter;
 	QPopupMenu *sendKey;
 	QPopupMenu *quickMenu;
 	

@@ -25,7 +25,7 @@
 #include <qptrlist.h>
 #include <qvaluelist.h>
 #include <qdatetime.h>
-#include <kurl.h>
+//X #include <kurl.h>
 #include <list>
 
 class QQFriend;
@@ -96,8 +96,8 @@ public slots:
 					const QString, const QString, const unsigned int,
 					const unsigned char);
 
-	void slotFileStatusNotification(const unsigned int id, const unsigned int session, const KURL &url, const unsigned int size,
-				const unsigned int bytes, const unsigned int time);
+//X 	void slotFileStatusNotification(const unsigned int id, const unsigned int session, const KURL &url, const unsigned int size,
+//X 				const unsigned int bytes, const unsigned int time);
 signals:
 	void requestDetails(const unsigned int id);
 	void sendMessage(const unsigned int receiver, const bool isNormal, QString &message, const char size, 

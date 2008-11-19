@@ -11,7 +11,7 @@
 #include <qwhatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <klocale.h>
+//X #include <klocale.h>
 #include "evadisplaywidget.h"
 #include "evastatusbar.h"
 //#include "evalistview.h"

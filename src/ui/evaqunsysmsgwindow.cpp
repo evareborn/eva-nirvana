@@ -30,8 +30,8 @@
 #include <qlineedit.h>
 #include <qcheckbox.h>
 
-#include <klocale.h>
-#include <kdebug.h>
+//X #include <klocale.h>
+//X #include <kdebug.h>
 
 #include "evamain.h"
 #include "evauser.h"
@@ -192,7 +192,7 @@ void EvaQunSysMsgWindow::setToken( const unsigned char * token, const unsigned s
 void EvaQunSysMsgWindow::slotJoinQunAuthReply( const unsigned int id, const unsigned char reply )
 {
 	if(reply!=0x00){
-		kdDebug() << "[EvaQunSysMsgWindow] operation failed" << endl;
+//X 		kdDebug() << "[EvaQunSysMsgWindow] operation failed" << endl;
 	}
         EvaMain::g_contactManager->fetchQunDetails( id);
 	close();

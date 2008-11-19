@@ -28,9 +28,9 @@
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qdir.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kdebug.h>
+//X #include <kconfig.h>
+//X #include <klocale.h>
+//X #include <kdebug.h>
 
 EvaUserSetting::EvaUserSetting(const int id)
     : m_WinSize( 200, 500 )
@@ -1043,8 +1043,8 @@ bool EvaUserSetting::loadOldProfile()
 			continue;
 		}
 		if(lineList[0] ==  "MESSAGE_SHORTCUT"){
-			if(!shortcut.init(lineList[1]))
-				shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
+//X 			if(!shortcut.init(lineList[1]))
+//X 				shortcut.init(Qt::CTRL + Qt::ALT + Qt::Key_Z);
 			continue;
 		}
 		if(lineList[0] ==  "PLAY_SOUND"){
@@ -1081,7 +1081,7 @@ void EvaUserSetting::loadDefaultSettings()
 	showBudyOnlineNotifyWindow = true;
 	showOnlineUsers = false;
 	isSendKeyEnter = false;
-	shortcut = KShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Z);
+//X 	shortcut = KShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Z);
 	playSound = true;
 	pageSize = 25;
 	autoReply = true;
@@ -1566,7 +1566,7 @@ void EvaUserSetting::updateRecentContact( std::list<RecentContact>& list )
 
 	unsigned int size = recentContactListSize();
 	if(size < list.size()){
-		kdDebug() << "[EvaUserSetting] recent contact list is out of size limit" << endl;
+//X 		kdDebug() << "[EvaUserSetting] recent contact list is out of size limit" << endl;
 		return;
 	}
 

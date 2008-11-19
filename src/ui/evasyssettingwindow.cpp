@@ -39,10 +39,11 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qfiledialog.h>
-#include <klocale.h>
+//X #include <klocale.h>
 #include <inttypes.h>
 
 #include <qlistview.h>
+#include <qmessagebox.h>
 #include <qheader.h>
 #include <qwidgetstack.h>
 #include <qiconview.h>
@@ -50,11 +51,11 @@
 #include <qtextcodec.h>
 #include <qtimer.h>
 #include <qtoolbutton.h>
-#include <krun.h>
-#include <kpushbutton.h>
-#include <kcolorcombo.h>
-#include <kmessagebox.h>
-#include <kapp.h>
+//X #include <krun.h>
+//X #include <kpushbutton.h>
+//X #include <kcolorcombo.h>
+//X #include <kmessagebox.h>
+//X #include <kapp.h>
 
 EvaImageResource *EvaSysSettingWindow::faces = NULL;
 EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * res, EvaUserSetting * setting , QWidget *parent)
@@ -172,40 +173,40 @@ EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * 
 	QObject::connect( pbQuickNew, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
 	QObject::connect( pbQuickDelete, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
 
-	QObject::connect( wspMainFont->kcbbBuddyNickColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyNickFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyNickFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyNickFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->kcbbBuddyFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddyFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->kcbbBuddySigColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddySigFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddySigFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbBuddySigFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-
-	QObject::connect( wspMainFont->kcbbQunNameColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunNameFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunNameFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunNameFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->kcbbQunFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbQunFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-
-	QObject::connect( wspMainFont->kcbbGroupNameColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupNameFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupNameFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupNameFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->kcbbGroupFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->kcbbGroupOnlineColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupOnlineFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupOnlineFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
-	QObject::connect( wspMainFont->chbGroupOnlineFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbBuddyNickColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyNickFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyNickFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyNickFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbBuddyFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddyFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbBuddySigColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddySigFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddySigFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbBuddySigFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 
+//X 	QObject::connect( wspMainFont->kcbbQunNameColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunNameFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunNameFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunNameFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbQunFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbQunFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 
+//X 	QObject::connect( wspMainFont->kcbbGroupNameColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupNameFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupNameFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupNameFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbGroupFlashColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupFlashFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupFlashFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupFlashFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->kcbbGroupOnlineColor, SIGNAL( activated(int) ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupOnlineFontB, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupOnlineFontU, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
+//X 	QObject::connect( wspMainFont->chbGroupOnlineFontI, SIGNAL( clicked() ), SLOT( slotSysSettingChanged() ) );
 
 	
 	//setup Icon of QQShow 
@@ -259,41 +260,41 @@ void EvaSysSettingWindow::saveSetting( )
 	
 //X 	userSetting->setMessageShortcut(kkbtnShortKey->shortcut());
 
-	userSetting->setBuddyNameColor( wspMainFont->kcbbBuddyNickColor->color() );
-	userSetting->setBuddyNameBold( wspMainFont->chbBuddyNickFontB->isChecked() );
-	userSetting->setBuddyNameUnderline( wspMainFont->chbBuddyNickFontU->isChecked()  );
-	userSetting->setBuddyNameItalic( wspMainFont->chbBuddyNickFontI->isChecked()  );
-	userSetting->setBuddyFlashColor( wspMainFont->kcbbBuddyFlashColor->color()  );
-	userSetting->setBuddyFlashBold( wspMainFont->chbBuddyFlashFontB->isChecked()  );
-	userSetting->setBuddyFlashUnderline( wspMainFont->chbBuddyFlashFontU->isChecked()  );
-	userSetting->setBuddyFlashItalic( wspMainFont->chbBuddyFlashFontI->isChecked()  );
-	userSetting->setBuddySigColor( wspMainFont->kcbbBuddySigColor->color()  );
-	userSetting->setBuddySigBold( wspMainFont->chbBuddySigFontB->isChecked()   );
-	userSetting->setBuddySigUnderline( wspMainFont->chbBuddySigFontU->isChecked()   );
-	userSetting->setBuddySigItalic( wspMainFont->chbBuddySigFontI->isChecked()   );
-
-	userSetting->setQunNameColor( wspMainFont->kcbbQunNameColor->color()  );
-	userSetting->setQunNameBold( wspMainFont->chbQunNameFontB->isChecked()   );
-	userSetting->setQunNameUnderline( wspMainFont->chbQunNameFontU->isChecked()   );
-	userSetting->setQunNameItalic( wspMainFont->chbQunNameFontI->isChecked()   );
-	userSetting->setQunFlashColor( wspMainFont->kcbbQunFlashColor->color()  );
-	userSetting->setQunFlashBold( wspMainFont->chbQunFlashFontB->isChecked()   );
-	userSetting->setQunFlashUnderline( wspMainFont->chbQunFlashFontU->isChecked()   );
-	userSetting->setQunFlashItalic( wspMainFont->chbQunFlashFontI->isChecked()   );
-
-	userSetting->setGroupNameColor( wspMainFont->kcbbGroupNameColor->color()  );
-	userSetting->setGroupNameBold( wspMainFont->chbGroupNameFontB->isChecked()  );
-	userSetting->setGroupNameUnderline( wspMainFont->chbGroupNameFontU->isChecked()  );
-	userSetting->setGroupNameItalic( wspMainFont->chbGroupNameFontI->isChecked() );
-	userSetting->setGroupFlashColor( wspMainFont->kcbbGroupFlashColor->color()  );
-	userSetting->setGroupFlashBold( wspMainFont->chbGroupFlashFontB->isChecked()  );
-	userSetting->setGroupFlashUnderline( wspMainFont->chbGroupFlashFontU->isChecked()  );
-	userSetting->setGroupFlashItalic( wspMainFont->chbGroupFlashFontI->isChecked()  );
-	userSetting->setGroupCountColor( wspMainFont->kcbbGroupOnlineColor->color()  );
-	userSetting->setGroupOnlineCountBold( wspMainFont->chbGroupOnlineFontB->isChecked()  );
-	userSetting->setGroupOnlineCountUnderline( wspMainFont->chbGroupOnlineFontU->isChecked()  );
-	userSetting->setGroupOnlineCountItalic( wspMainFont->chbGroupOnlineFontI->isChecked()  );
-
+//X 	userSetting->setBuddyNameColor( wspMainFont->kcbbBuddyNickColor->color() );
+//X 	userSetting->setBuddyNameBold( wspMainFont->chbBuddyNickFontB->isChecked() );
+//X 	userSetting->setBuddyNameUnderline( wspMainFont->chbBuddyNickFontU->isChecked()  );
+//X 	userSetting->setBuddyNameItalic( wspMainFont->chbBuddyNickFontI->isChecked()  );
+//X 	userSetting->setBuddyFlashColor( wspMainFont->kcbbBuddyFlashColor->color()  );
+//X 	userSetting->setBuddyFlashBold( wspMainFont->chbBuddyFlashFontB->isChecked()  );
+//X 	userSetting->setBuddyFlashUnderline( wspMainFont->chbBuddyFlashFontU->isChecked()  );
+//X 	userSetting->setBuddyFlashItalic( wspMainFont->chbBuddyFlashFontI->isChecked()  );
+//X 	userSetting->setBuddySigColor( wspMainFont->kcbbBuddySigColor->color()  );
+//X 	userSetting->setBuddySigBold( wspMainFont->chbBuddySigFontB->isChecked()   );
+//X 	userSetting->setBuddySigUnderline( wspMainFont->chbBuddySigFontU->isChecked()   );
+//X 	userSetting->setBuddySigItalic( wspMainFont->chbBuddySigFontI->isChecked()   );
+//X 
+//X 	userSetting->setQunNameColor( wspMainFont->kcbbQunNameColor->color()  );
+//X 	userSetting->setQunNameBold( wspMainFont->chbQunNameFontB->isChecked()   );
+//X 	userSetting->setQunNameUnderline( wspMainFont->chbQunNameFontU->isChecked()   );
+//X 	userSetting->setQunNameItalic( wspMainFont->chbQunNameFontI->isChecked()   );
+//X 	userSetting->setQunFlashColor( wspMainFont->kcbbQunFlashColor->color()  );
+//X 	userSetting->setQunFlashBold( wspMainFont->chbQunFlashFontB->isChecked()   );
+//X 	userSetting->setQunFlashUnderline( wspMainFont->chbQunFlashFontU->isChecked()   );
+//X 	userSetting->setQunFlashItalic( wspMainFont->chbQunFlashFontI->isChecked()   );
+//X 
+//X 	userSetting->setGroupNameColor( wspMainFont->kcbbGroupNameColor->color()  );
+//X 	userSetting->setGroupNameBold( wspMainFont->chbGroupNameFontB->isChecked()  );
+//X 	userSetting->setGroupNameUnderline( wspMainFont->chbGroupNameFontU->isChecked()  );
+//X 	userSetting->setGroupNameItalic( wspMainFont->chbGroupNameFontI->isChecked() );
+//X 	userSetting->setGroupFlashColor( wspMainFont->kcbbGroupFlashColor->color()  );
+//X 	userSetting->setGroupFlashBold( wspMainFont->chbGroupFlashFontB->isChecked()  );
+//X 	userSetting->setGroupFlashUnderline( wspMainFont->chbGroupFlashFontU->isChecked()  );
+//X 	userSetting->setGroupFlashItalic( wspMainFont->chbGroupFlashFontI->isChecked()  );
+//X 	userSetting->setGroupCountColor( wspMainFont->kcbbGroupOnlineColor->color()  );
+//X 	userSetting->setGroupOnlineCountBold( wspMainFont->chbGroupOnlineFontB->isChecked()  );
+//X 	userSetting->setGroupOnlineCountUnderline( wspMainFont->chbGroupOnlineFontU->isChecked()  );
+//X 	userSetting->setGroupOnlineCountItalic( wspMainFont->chbGroupOnlineFontI->isChecked()  );
+//X 
 	
 	userSetting->setThemeDir(leThemePath->text());
 	userSetting->setSoundDir(leSoundPath->text());
@@ -331,45 +332,45 @@ void EvaSysSettingWindow::loadSetting( const bool isLoadDefault)
 	
 //X 	kkbtnShortKey->setShortcut(userSetting->getMessageShortcut(), false);
 
-	wspMainFont->kcbbBuddyNickColor->setColor(userSetting->getBuddyNameColor());
-	wspMainFont->chbBuddyNickFontB->setChecked(userSetting->isBuddyNameBold());
-	wspMainFont->chbBuddyNickFontU->setChecked(userSetting->isBuddyNameUnderline());
-	wspMainFont->chbBuddyNickFontI->setChecked(userSetting->isBuddyNameItalic());
-
-	wspMainFont->kcbbBuddyFlashColor->setColor(userSetting->getBuddyFlashColor());
-	wspMainFont->chbBuddyFlashFontB->setChecked(userSetting->isBuddyFlashBold());
-	wspMainFont->chbBuddyFlashFontU->setChecked(userSetting->isBuddyFlashUnderline());
-	wspMainFont->chbBuddyFlashFontI->setChecked(userSetting->isBuddyFlashItalic());
-
-	wspMainFont->kcbbBuddySigColor->setColor(userSetting->getBuddySigColor());
-	wspMainFont->chbBuddySigFontB->setChecked(userSetting->isBuddySigBold());
-	wspMainFont->chbBuddySigFontU->setChecked(userSetting->isBuddySigUnderline());
-	wspMainFont->chbBuddySigFontI->setChecked(userSetting->isBuddySigItalic());
-
-	wspMainFont->kcbbQunNameColor->setColor(userSetting->getQunNameColor());
-	wspMainFont->chbQunNameFontB->setChecked(userSetting->isQunNameBold());
-	wspMainFont->chbQunNameFontU->setChecked(userSetting->isQunNameUnderline());
-	wspMainFont->chbQunNameFontI->setChecked(userSetting->isQunNameItalic());
-
-	wspMainFont->kcbbQunFlashColor->setColor(userSetting->getQunFlashColor());
-	wspMainFont->chbQunFlashFontB->setChecked(userSetting->isQunFlashBold());
-	wspMainFont->chbQunFlashFontU->setChecked(userSetting->isQunFlashUnderline());
-	wspMainFont->chbQunFlashFontI->setChecked(userSetting->isQunFlashItalic());
-
-	wspMainFont->kcbbGroupNameColor->setColor(userSetting->getGroupNameColor());
-	wspMainFont->chbGroupNameFontB->setChecked(userSetting->isGroupNameBold());
-	wspMainFont->chbGroupNameFontU->setChecked(userSetting->isGroupNameUnderline());
-	wspMainFont->chbGroupNameFontI->setChecked(userSetting->isGroupNameItalic());
-
-	wspMainFont->kcbbGroupFlashColor->setColor(userSetting->getGroupFlashColor());
-	wspMainFont->chbGroupFlashFontB->setChecked(userSetting->isGroupFlashBold());
-	wspMainFont->chbGroupFlashFontU->setChecked(userSetting->isGroupFlashUnderline());
-	wspMainFont->chbGroupFlashFontI->setChecked(userSetting->isGroupFlashItalic());
-
-	wspMainFont->kcbbGroupOnlineColor->setColor(userSetting->getGroupCountColor());
-	wspMainFont->chbGroupOnlineFontB->setChecked(userSetting->isGroupOnlineCountBold());
-	wspMainFont->chbGroupOnlineFontU->setChecked(userSetting->isGroupOnlineCountUnderline());
-	wspMainFont->chbGroupOnlineFontI->setChecked(userSetting->isGroupOnlineCountItalic());
+//X 	wspMainFont->kcbbBuddyNickColor->setColor(userSetting->getBuddyNameColor());
+//X 	wspMainFont->chbBuddyNickFontB->setChecked(userSetting->isBuddyNameBold());
+//X 	wspMainFont->chbBuddyNickFontU->setChecked(userSetting->isBuddyNameUnderline());
+//X 	wspMainFont->chbBuddyNickFontI->setChecked(userSetting->isBuddyNameItalic());
+//X 
+//X 	wspMainFont->kcbbBuddyFlashColor->setColor(userSetting->getBuddyFlashColor());
+//X 	wspMainFont->chbBuddyFlashFontB->setChecked(userSetting->isBuddyFlashBold());
+//X 	wspMainFont->chbBuddyFlashFontU->setChecked(userSetting->isBuddyFlashUnderline());
+//X 	wspMainFont->chbBuddyFlashFontI->setChecked(userSetting->isBuddyFlashItalic());
+//X 
+//X 	wspMainFont->kcbbBuddySigColor->setColor(userSetting->getBuddySigColor());
+//X 	wspMainFont->chbBuddySigFontB->setChecked(userSetting->isBuddySigBold());
+//X 	wspMainFont->chbBuddySigFontU->setChecked(userSetting->isBuddySigUnderline());
+//X 	wspMainFont->chbBuddySigFontI->setChecked(userSetting->isBuddySigItalic());
+//X 
+//X 	wspMainFont->kcbbQunNameColor->setColor(userSetting->getQunNameColor());
+//X 	wspMainFont->chbQunNameFontB->setChecked(userSetting->isQunNameBold());
+//X 	wspMainFont->chbQunNameFontU->setChecked(userSetting->isQunNameUnderline());
+//X 	wspMainFont->chbQunNameFontI->setChecked(userSetting->isQunNameItalic());
+//X 
+//X 	wspMainFont->kcbbQunFlashColor->setColor(userSetting->getQunFlashColor());
+//X 	wspMainFont->chbQunFlashFontB->setChecked(userSetting->isQunFlashBold());
+//X 	wspMainFont->chbQunFlashFontU->setChecked(userSetting->isQunFlashUnderline());
+//X 	wspMainFont->chbQunFlashFontI->setChecked(userSetting->isQunFlashItalic());
+//X 
+//X 	wspMainFont->kcbbGroupNameColor->setColor(userSetting->getGroupNameColor());
+//X 	wspMainFont->chbGroupNameFontB->setChecked(userSetting->isGroupNameBold());
+//X 	wspMainFont->chbGroupNameFontU->setChecked(userSetting->isGroupNameUnderline());
+//X 	wspMainFont->chbGroupNameFontI->setChecked(userSetting->isGroupNameItalic());
+//X 
+//X 	wspMainFont->kcbbGroupFlashColor->setColor(userSetting->getGroupFlashColor());
+//X 	wspMainFont->chbGroupFlashFontB->setChecked(userSetting->isGroupFlashBold());
+//X 	wspMainFont->chbGroupFlashFontU->setChecked(userSetting->isGroupFlashUnderline());
+//X 	wspMainFont->chbGroupFlashFontI->setChecked(userSetting->isGroupFlashItalic());
+//X 
+//X 	wspMainFont->kcbbGroupOnlineColor->setColor(userSetting->getGroupCountColor());
+//X 	wspMainFont->chbGroupOnlineFontB->setChecked(userSetting->isGroupOnlineCountBold());
+//X 	wspMainFont->chbGroupOnlineFontU->setChecked(userSetting->isGroupOnlineCountUnderline());
+//X 	wspMainFont->chbGroupOnlineFontI->setChecked(userSetting->isGroupOnlineCountItalic());
 	
 	if(!isLoadDefault){
 		autoList = userSetting->getAutoReplyList();
@@ -404,13 +405,13 @@ void EvaSysSettingWindow::slotPbApplyClicked( )
 		
 		if(m_IsAuthQuestionChanged){
 			if(cbbQuestion->currentText().stripWhiteSpace() == ""){
-				KMessageBox::information(this, i18n( "Question cannot be empty."), i18n( "Modify Personal Details")); 
+				QMessageBox::information(this, i18n( "Question cannot be empty."), i18n( "Modify Personal Details")); 
 				cbbQuestion->setFocus();
 				return;
 			}
 
 			if(leAnswer->text().stripWhiteSpace() == ""){
-				KMessageBox::information(this, i18n( "Answer cannot be empty.."), i18n( "Modify Personal Details")); 
+				QMessageBox::information(this, i18n( "Answer cannot be empty.."), i18n( "Modify Personal Details")); 
 				leAnswer->setFocus();
 				return;
 			}
@@ -421,7 +422,7 @@ void EvaSysSettingWindow::slotPbApplyClicked( )
 		if(UpdateData(false)){
 			if(isSignatureChanged){
 				if(teSignature->text().local8Bit().size() > 100){
-					KMessageBox::information(this, i18n("Signature is too long!"), i18n("Modify Settings"));
+					QMessageBox::information(this, i18n("Signature is too long!"), i18n("Modify Settings"));
 					teSignature->setFocus();
 					return;
 				}
@@ -474,10 +475,10 @@ void EvaSysSettingWindow::slotFaceSizeChanged( int value )
 	
 }
 
-void EvaSysSettingWindow::slotCapturedShortcut(const KShortcut &/*key*/)
-{
-//X 	kkbtnShortKey->setShortcut(key, false);
-}
+//X void EvaSysSettingWindow::slotCapturedShortcut(const KShortcut &/*key*/)
+//X {
+//X //X 	kkbtnShortKey->setShortcut(key, false);
+//X }
 
 void EvaSysSettingWindow::slotPbThemeClicked( )
 {
@@ -789,18 +790,18 @@ bool EvaSysSettingWindow::UpdateData(bool toShow)
 	{
 // 		if(chbChangePwd->isChecked()){
 // 			if(leOldPwd->text().stripWhiteSpace() == ""){
-// 				KMessageBox::information(this, i18n( "enter your current password please."), i18n( "Modify Personal Details")); 
+// 				QMessageBox::information(this, i18n( "enter your current password please."), i18n( "Modify Personal Details")); 
 // 				leOldPwd->setFocus();
 // 				return false;
 // 			}
 // 				
 // 			if(leNewPwd->text() != leNewPwdConfirm->text()){
-// 				KMessageBox::information(this, i18n( "new password mismatch."), i18n( "Modify Personal Details"));
+// 				QMessageBox::information(this, i18n( "new password mismatch."), i18n( "Modify Personal Details"));
 // 				leNewPwdConfirm->setFocus(); 
 // 				return false;
 // 			}
 // 			if(leNewPwd->text().stripWhiteSpace() == ""){
-// 				KMessageBox::information(this, i18n( "Modify Personal Details"), i18n( "new password cannot be empty.")); 
+// 				QMessageBox::information(this, i18n( "Modify Personal Details"), i18n( "new password cannot be empty.")); 
 // 				leNewPwd->setFocus();
 // 				return false;
 // 			}
@@ -909,9 +910,9 @@ void EvaSysSettingWindow::slotSignatureReply(const bool ok)
 void EvaSysSettingWindow::slotUpdateResult(bool ok, bool isSignature)
 {
 	if(ok)
-		KMessageBox::information(this, i18n( "modify settings successfully."), i18n( "Modify Settings"));
+		QMessageBox::information(this, i18n( "modify settings successfully."), i18n( "Modify Settings"));
 	else
-		KMessageBox::information(this, i18n( "failed to modify settings."), i18n( "Modify Settings"));
+		QMessageBox::information(this, i18n( "failed to modify settings."), i18n( "Modify Settings"));
 	if(isSignature && ok)
 		isSignatureChanged=false;
 }
@@ -921,7 +922,7 @@ void EvaSysSettingWindow::slotLinkClicked( const QString & url)
 {
 	QStringList args;
 	args<<"exec"<< url;
-	kapp->kdeinitExec("kfmclient",args);
+//X 	kapp->kdeinitExec("kfmclient",args);
 	//KRun::runCommand("konqueror \""+url+"\"");
 }
 
@@ -1042,7 +1043,7 @@ void EvaSysSettingWindow::slotUpdateAuthSettingResult( const unsigned char auth,
 {
 	if(auth != AUTH_TYPE_QUESTION_SET) return;
 	if(reply != 0x00){
-		KMessageBox::information(0, QString(i18n("Update authentication question failed!")),
+		QMessageBox::information(0, QString(i18n("Update authentication question failed!")),
 			i18n("Modify Personal Details"));
 		return;
 	}

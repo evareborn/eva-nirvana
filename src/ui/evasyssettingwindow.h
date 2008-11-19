@@ -26,7 +26,7 @@
 
 #include "evasyssettinguibase.h"
 
-#include <kkeybutton.h>
+//X #include <kkeybutton.h>
 #include <list>
 
 
@@ -88,7 +88,7 @@ private slots:
 	void slotPbApplyClicked();
 	void slotPbOKClicked();
 	void slotFaceSizeChanged(int value);
-	void slotCapturedShortcut(const KShortcut &key);
+//X 	void slotCapturedShortcut(const KShortcut &key);
 	
 	void slotPbThemeClicked();
 	void slotPbSoundClicked();

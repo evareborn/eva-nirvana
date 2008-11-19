@@ -24,13 +24,14 @@
 #include <qlineedit.h>
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
+#include <qmessagebox.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <qiconset.h>
 #include <qgroupbox.h>
 
-#include <kmessagebox.h>
-#include <klocale.h>
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
 
 #include <list>
 #include <string>
@@ -108,7 +109,7 @@ void EvaAddingQunWindow::slotSendClicked( )
 {	
 	if( !fraAuthGraphic->isHidden() ){
 		if(leCode->text().isEmpty()){
-			KMessageBox::information(0, i18n("Enter the right verification code please."),
+			QMessageBox::information(0, i18n("Enter the right verification code please."),
 				i18n("Eva Search/Add Friend"));
 			leCode->setFocus();
 			return;

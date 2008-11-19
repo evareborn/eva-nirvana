@@ -37,10 +37,11 @@
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qmovie.h>
+#include <qmessagebox.h>
 
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+//X #include <kfiledialog.h>
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
 
 
 CreateSmileyWindow::CreateSmileyWindow( const QString & url, const int groupIndex )
@@ -92,30 +93,30 @@ void CreateSmileyWindow::closeEvent( QCloseEvent * e )
 
 void CreateSmileyWindow::slotSelectImagesClicked( )
 {
-	QString startDir =  QDir::homeDirPath();
-	QStringList fileNames = KFileDialog::getOpenFileNames(startDir,
-			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
-			i18n("select image file(s)"));
-	if(fileNames.count() == 1){
-		m_FileName = fileNames[0];
-		QString file = m_FileName.right( m_FileName.length() - m_FileName.findRev("/") - 1);
-
-		lblSelect->setText(file);
-
-		leShortcut->setEnabled( true);
-		leShortcut->setText(file.left(6));
-
-		leTip->setEnabled( true );
-		leTip->setText(file.left( file.findRev(".") ) );
-	}else{
-		m_MultiFiles = true;
-		lblSelect->setText(i18n("Multi-Files Selected."));
-		m_FileNames = fileNames;
-		leShortcut->setText("");
-		leTip->setText("");
-		leShortcut->setEnabled( false);
-		leTip->setEnabled( false);
-	}
+//X 	QString startDir =  QDir::homeDirPath();
+//X 	QStringList fileNames = KFileDialog::getOpenFileNames(startDir,
+//X 			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
+//X 			i18n("select image file(s)"));
+//X 	if(fileNames.count() == 1){
+//X 		m_FileName = fileNames[0];
+//X 		QString file = m_FileName.right( m_FileName.length() - m_FileName.findRev("/") - 1);
+//X 
+//X 		lblSelect->setText(file);
+//X 
+//X 		leShortcut->setEnabled( true);
+//X 		leShortcut->setText(file.left(6));
+//X 
+//X 		leTip->setEnabled( true );
+//X 		leTip->setText(file.left( file.findRev(".") ) );
+//X 	}else{
+//X 		m_MultiFiles = true;
+//X 		lblSelect->setText(i18n("Multi-Files Selected."));
+//X 		m_FileNames = fileNames;
+//X 		leShortcut->setText("");
+//X 		leTip->setText("");
+//X 		leShortcut->setEnabled( false);
+//X 		leTip->setEnabled( false);
+//X 	}
 }
 
 void CreateSmileyWindow::slotOKClicked( )
@@ -467,11 +468,11 @@ void CustomSmileyManager::slotAddGroupClicked( )
 		if(dir.mkdir( path + name )) // create the dir
 			m_IsChanged = true;
 		else{  // create failed
-			KMessageBox::error( this, i18n( "Cannot create the directory \"%1\". " ).arg( dir.path() ), i18n( "Add Group" ) );
+			QMessageBox::critical( this, QString( i18n( "Cannot create the directory \"%1\". " )).arg( dir.path() ), i18n( "Add Group" ) );
 			return;
 		}
 	} else { // the directory exists, the group name should be used already
-		KMessageBox::error( this, i18n( "A directory named \"%1\" already exists. " ).arg( dir.path() ), i18n( "Directory Exists!" ) );
+		QMessageBox::critical( this, QString( i18n( "A directory named \"%1\" already exists. " )).arg( dir.path() ), i18n( "Directory Exists!" ) );
 		return;
 	}
 	QListViewItem *item = new QListViewItem(lvGroups, lvGroups->lastItem(), name);
@@ -573,7 +574,7 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 			// as all files have been deleted,  we need keep the config file up to date.
 			m_Config->saveXML();
 			if( ! dir.rmdir( dir.path(), true)){
-				KMessageBox::error( this, i18n( "Remove directory \"%1\" failed. " ).arg( dir.path() ),
+				QMessageBox::critical( this, QString( i18n( "Remove directory \"%1\" failed. " )).arg( dir.path() ),
 							i18n( "Remove Directory!" ) );
 			}
 		}
@@ -589,7 +590,7 @@ void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, co
 	if(d->m_OldName == text) return;
 	
 	if( ! m_Config->renameGroup(d->m_OldName, text)){
-		KMessageBox::information( this, i18n( "Cannot rename the group name \"%1\" to \"%2\". " )
+		QMessageBox::information( this, QString( i18n( "Cannot rename the group name \"%1\" to \"%2\". " ))
 									.arg( d->m_OldName).arg( text),
 								i18n( "Rename Group" ) );
 	} else{
@@ -597,7 +598,7 @@ void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, co
 		QDir dir(path + d->m_OldName);
 		if(dir.exists()){
 			if(!dir.rename(path + d->m_OldName, path + text, true)){
-				KMessageBox::error( this, i18n( "Can not change the directory name: %1. " )
+				QMessageBox::critical( this, QString( i18n( "Can not change the directory name: %1. " ) )
 									.arg( dir.path()), i18n("Rename Group") );
 			} else{
 				m_IsChanged = true;
@@ -606,7 +607,7 @@ void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, co
 			if(dir.mkdir( path + text )){
 				m_IsChanged = true;
 			}else
-				KMessageBox::error( this, i18n( "Cannot create the directory: \"%1\". " ).arg( dir.path() ),
+				QMessageBox::critical( this, QString( i18n( "Cannot create the directory: \"%1\". " ) ).arg( dir.path() ),
 							i18n( "Rename Group" ) );
 		}
 	}

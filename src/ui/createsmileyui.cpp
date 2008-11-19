@@ -18,8 +18,11 @@
 #include <qtooltip.h>
 #include <qrect.h>
 #include <qwhatsthis.h>
-#include <klocale.h>
-#include <kapplication.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
+//X #include <kapplication.h>
 
 /*
  *  Constructs a CreateSmileyUI as a child of 'parent', with the
@@ -111,8 +114,8 @@ CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
     resize( QSize(445, 316).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 
-    QRect scr = KApplication::desktop()->screenGeometry();
-    move(scr.center()-rect().center());
+//X     QRect scr = KApplication::desktop()->screenGeometry();
+//X     move(scr.center()-rect().center());
 }
 
 /*

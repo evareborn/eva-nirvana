@@ -29,7 +29,10 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )

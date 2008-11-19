@@ -32,7 +32,7 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qcolor.h>
-#include <kshortcut.h>
+//X #include <kshortcut.h>
 #include <cstring>
 class KConfig;
 
@@ -213,8 +213,8 @@ public:
 	 QString getUserHeadDir() const { return userHeadDir; }
 	void setUserHeadDir(const QString path) { userHeadDir = path; }	
 	
-	const KShortcut &getMessageShortcut() const { return shortcut; }
-	void setMessageShortcut( const KShortcut &key) { shortcut = key; }
+//X 	const KShortcut &getMessageShortcut() const { return shortcut; }
+//X 	void setMessageShortcut( const KShortcut &key) { shortcut = key; }
 	
 	static bool isVersionCorrect(const QString fileName);
 	
@@ -363,7 +363,7 @@ private:
 	bool isSendKeyEnter;
 	bool playSound;
 	bool autoReply;
-	KShortcut shortcut;
+//X 	KShortcut shortcut;
 	int idleMaxTime;
 	
 	QColor m_BuddyNameColor;

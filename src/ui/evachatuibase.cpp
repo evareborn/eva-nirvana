@@ -20,8 +20,8 @@
 
 #include "evachatuibase.h"
 #include "evatextedit.h"
-#include "evachatview.h"
-#include "evafilepanel.h"
+#include "simplechatview.h"
+//X #include "evafilepanel.h"
 
 #include <qvariant.h>
 #include <qpushbutton.h>
@@ -36,9 +36,12 @@
 #include <qsplitter.h>
 #include <qvaluelist.h>
 #include <qframe.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
 
-#include <kapplication.h>
+//X #include <klocale.h>
+//X 
+//X #include <kapplication.h>
 
 EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )
@@ -82,10 +85,10 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	lblSignature->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
 	layout5->addWidget(lblSignature);
 	
-	chatDisplay = new EvaChatView(upperLayoutWidget, "chatDisplay");
-	chatDisplay->view()->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred, 0, 3, chatDisplay->view()->sizePolicy().hasHeightForWidth() ) );
-	chatDisplay->view()->setHScrollBarMode(QScrollView::AlwaysOff);
-	layout5->addWidget( chatDisplay->view() );
+	chatDisplay = new SimpleChatView(upperLayoutWidget, "chatDisplay");
+	chatDisplay->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred, 0, 3, chatDisplay->sizePolicy().hasHeightForWidth() ) );
+	chatDisplay->setHScrollBarMode(QScrollView::AlwaysOff);
+	layout5->addWidget( chatDisplay );
 	
 	
 	lowerLayoutWidget = new QWidget(splitter, "lower");
@@ -189,7 +192,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	kteInput = new EvaTextEdit( lowerLayoutWidget, "kteInput" );
 	kteInput->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)2, (QSizePolicy::SizeType)1, 0, 2, kteInput->sizePolicy().hasHeightForWidth() ) );
 	kteInput->setMinimumSize( QSize( 0, 10 ) );
-	kteInput->setHScrollBarMode( KTextEdit::AlwaysOff );
+	kteInput->setHScrollBarMode( QTextEdit::AlwaysOff );
 	kteInput->setTextFormat(Qt::RichText);
 	lowerLayout->addWidget( kteInput );
 	
@@ -223,10 +226,10 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	m_FilePanelFrame = new QFrame(this, "m_FilePanelFrame");
 	m_FilePanelFrame->setMaximumSize(QSize(115, 200));
 	m_FilePanelFrame->setFrameShape(QFrame::LineEditPanel);
-	m_FilePanelLayout = new QVBoxLayout( m_FilePanelFrame, 2, 2, "m_FilePanelLayout"); // parent, margin, space
+//X 	m_FilePanelLayout = new QVBoxLayout( m_FilePanelFrame, 2, 2, "m_FilePanelLayout"); // parent, margin, space
 		
-	m_FilePanel = new EvaFilePanel(m_FilePanelFrame, "m_FilePanel");
-	m_FilePanelLayout->addWidget(m_FilePanel);
+//X 	m_FilePanel = new EvaFilePanel(m_FilePanelFrame, "m_FilePanel");
+//X 	m_FilePanelLayout->addWidget(m_FilePanel);
 
 	layout19->addWidget(m_FilePanelFrame);
 
@@ -282,8 +285,8 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	resize( QSize(320, 367).expandedTo(minimumSizeHint()) );
 	//resize( QSize(450, 422).expandedTo(minimumSizeHint()) );
 	clearWState( WState_Polished );
-	QRect scr = KApplication::desktop()->screenGeometry();
-	move(scr.center()-rect().center());
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	move(scr.center()-rect().center());
 }
 
 /*

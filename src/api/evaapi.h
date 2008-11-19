@@ -38,7 +38,7 @@
 #include "regiongrabber.h"
 #include "filetrans/evafilemanager.h"
 #include <qtextcodec.h>
-#include <klocale.h>
+//X #include <klocale.h>
 
 enum EVA_NOTIFY
 {
@@ -68,27 +68,48 @@ enum EVA_NOTIFY
 
 static QString s_ENotify[E_Count] =
 {
-	I18N_NOOP("Something error"),
-	I18N_NOOP("Server connected"),
-	I18N_NOOP("Login redirection"),
-	I18N_NOOP("Login failed"),
-	I18N_NOOP("Password wrong"),
-	I18N_NOOP("User logged in"),
-	I18N_NOOP("My details ready"),
-	I18N_NOOP("File agent key ready"),	
-	I18N_NOOP("Login finished"),
-	I18N_NOOP("Downloading contact list"),
-	I18N_NOOP("Downloading contacts finished"),	
-	I18N_NOOP("Downloading group names finished"),
-	I18N_NOOP("Received group index of contacts"),
-	I18N_NOOP("Downloading group index of contacts finished"),
-	I18N_NOOP("Qun information ready"),
-	I18N_NOOP("Qun member information ready"),
-	I18N_NOOP("Contact signature ready"),
-	I18N_NOOP("All contact signatures ready"),
-	I18N_NOOP("Contact level ready"),
-	I18N_NOOP("Login process finished"),
-	""
+//X 	I18N_NOOP("Something error"),
+//X 	I18N_NOOP("Server connected"),
+//X 	I18N_NOOP("Login redirection"),
+//X 	I18N_NOOP("Login failed"),
+//X 	I18N_NOOP("Password wrong"),
+//X 	I18N_NOOP("User logged in"),
+//X 	I18N_NOOP("My details ready"),
+//X 	I18N_NOOP("File agent key ready"),	
+//X 	I18N_NOOP("Login finished"),
+//X 	I18N_NOOP("Downloading contact list"),
+//X 	I18N_NOOP("Downloading contacts finished"),	
+//X 	I18N_NOOP("Downloading group names finished"),
+//X 	I18N_NOOP("Received group index of contacts"),
+//X 	I18N_NOOP("Downloading group index of contacts finished"),
+//X 	I18N_NOOP("Qun information ready"),
+//X 	I18N_NOOP("Qun member information ready"),
+//X 	I18N_NOOP("Contact signature ready"),
+//X 	I18N_NOOP("All contact signatures ready"),
+//X 	I18N_NOOP("Contact level ready"),
+//X 	I18N_NOOP("Login process finished"),
+//X 	""
+	QString("Something error"),
+	QString("Server connected"),
+	QString("Login redirection"),
+	QString("Login failed"),
+	QString("Password wrong"),
+	QString("User logged in"),
+	QString("My details ready"),
+	QString("File agent key ready"),	
+	QString("Login finished"),
+	QString("Downloading contact list"),
+	QString("Downloading contacts finished"),	
+	QString("Downloading group names finished"),
+	QString("Received group index of contacts"),
+	QString("Downloading group index of contacts finished"),
+	QString("Qun information ready"),
+	QString("Qun member information ready"),
+	QString("Contact signature ready"),
+	QString("All contact signatures ready"),
+	QString("Contact level ready"),
+	QString("Login process finished"),
+        ""
 };
 
 #endif //EVAAPI_H

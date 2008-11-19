@@ -25,7 +25,7 @@
 #include "../api/filetrans/evafiledownloader.h"
 #include <qdatetime.h>
 #include <qcolor.h>
-#include <kurl.h>
+//X #include <kurl.h>
 #include <qvaluelist.h>
 #include <qmap.h>
 #include <list>
@@ -36,7 +36,7 @@ class CustomFaceSelector;
 class QTextCodec;
 class QKeyEvent;
 class QCloseEvent;
-class EvaFontSelecter;
+//X class EvaFontSelecter;
 class QPopupMenu;
 class RegionGrabber;
 class EvaHistoryViewer;
@@ -84,8 +84,8 @@ public slots:
 	void slotFileNotifyNormalInfo(const unsigned int, EvaFileStatus,
 					const QString, const QString, const unsigned int,
 					const unsigned char);
-	void slotFileStatusNotification(const unsigned int session, const KURL &url, const unsigned int size,
-				const unsigned int bytes, const unsigned int time);
+//X 	void slotFileStatusNotification(const unsigned int session, const KURL &url, const unsigned int size,
+//X 				const unsigned int bytes, const unsigned int time);
 
 	void slotAddImageToInputEdit( const QString & destFile);
 signals:
@@ -119,7 +119,7 @@ private:
 	static std::list<QString> quickList;
 	QPopupMenu *quickMenu;
 	
-	EvaFontSelecter *fontSelecter;
+//X 	EvaFontSelecter *fontSelecter;
 	QPopupMenu *sendKey;
 	
 	QQFriend *buddy;

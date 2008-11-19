@@ -36,7 +36,7 @@
 #include <qtextstream.h>
 #include <qdns.h>
 #include <qcstring.h>
-#include <kdebug.h>
+//X #include <kdebug.h>
 
 
 
@@ -464,7 +464,7 @@ bool HttpHeader::parseHeader(const QByteArray &data)
 	QString ret = *(lineIt++);
 	QStringList items = QStringList::split(" ", ret);
 	if(items.count() != 3){
-		kdDebug() << "[HttpHeader] Http header unknown: " << ret << endl;
+//X 		kdDebug() << "[HttpHeader] Http header unknown: " << ret << endl;
 		return false;
 	}
 	QStringList::Iterator itemIt = items.begin();
@@ -481,7 +481,7 @@ bool HttpHeader::parseHeader(const QByteArray &data)
 				setMetaData(items[0], items[1]);
 				}
 		} else {
-			kdDebug() << "[HttpHeader] line contains different parts" << ret << endl;
+//X 			kdDebug() << "[HttpHeader] line contains different parts" << ret << endl;
 		}
 	}
 	return true;
@@ -702,7 +702,7 @@ void EvaHttp::get( const QString & path, QIODevice * to )
 	} else{
 		QUrl url(path);
 		if(!url.isValid()){
-			kdDebug() << "[EvaHttp] uri of get is malformed" << endl;
+//X 			kdDebug() << "[EvaHttp] uri of get is malformed" << endl;
 			emit requestFinished(true);
 			return;
 		} else {
@@ -747,7 +747,7 @@ void EvaHttp::parseData( int len )
 	
 	char *readBuffer = new char[len];
 	if(!read(readBuffer, len)){
-		kdDebug() << "[EvaHttp] read data error" << endl;
+//X 		kdDebug() << "[EvaHttp] read data error" << endl;
 		closeConnection();
 		emit requestFinished(true);
 		return;
@@ -761,7 +761,7 @@ void EvaHttp::parseData( int len )
 		bool ok = false;
 		int replyCode = m_Header.getReplyCode().toInt(&ok);
 		if(!ok){
-			kdDebug() << "[EvaHttp] Http reply code error" << endl;
+//X 			kdDebug() << "[EvaHttp] Http reply code error" << endl;
 			closeConnection();
 			emit requestFinished(true);
 			return;
@@ -777,14 +777,14 @@ void EvaHttp::parseData( int len )
 			}
 			break;
 		case 407:  //Proxy Authentication Required
-			kdDebug() << "[EvaHttp] Http reply code 407 (Proxy Authentication Required)" << endl;
+//X 			kdDebug() << "[EvaHttp] Http reply code 407 (Proxy Authentication Required)" << endl;
 			closeConnection();
 			emit requestFinished(true);
 			break;
 		case 501:  // "Not Support"
 		case 502:  // "Proxy Error"
 		default:
-			kdDebug() << "[EvaHttp] Http reply code error" << endl;
+//X 			kdDebug() << "[EvaHttp] Http reply code error" << endl;
 			closeConnection();
 			emit requestFinished(true);
 			break;
@@ -796,7 +796,7 @@ void EvaHttp::parseData( int len )
 			m_BytesReceived = len - m_Header.getHeaderLength();
 			int ret = m_IODevice->writeBlock(buf.data() + m_Header.getContentsOffset(), m_BytesReceived);
 			if(ret == -1 || ret !=  m_BytesReceived ){
-				kdDebug() << "[EvaHttp] write error" << endl;
+//X 				kdDebug() << "[EvaHttp] write error" << endl;
 				closeConnection();
 				emit requestFinished(true);
 				return;
@@ -817,7 +817,7 @@ void EvaHttp::parseData( int len )
 		}else{
 			int ret = m_IODevice->writeBlock(buf.data(), bytesToWrite);
 			if(ret == -1){
-				kdDebug() << "[EvaHttp] write error" << endl;
+//X 				kdDebug() << "[EvaHttp] write error" << endl;
 				closeConnection();
 				emit requestFinished(true);
 				return;
@@ -843,13 +843,13 @@ void EvaHttp::getResultsSlot( )
 {
 	QDns *dns = (QDns *)(QObject::sender());
 	if(dns == 0 ){
-        	kdDebug() << "[EvaHttp] Dns lookup error" << endl;
+//X         	kdDebug() << "[EvaHttp] Dns lookup error" << endl;
 		emit requestFinished(true);
         	return;
 	}
 	QValueList<QHostAddress> list = dns->addresses();
 	if(list.count() == 0 ){
-        	kdDebug() << "[EvaHttp] Dns lookup error - no address" << endl;
+//X         	kdDebug() << "[EvaHttp] Dns lookup error - no address" << endl;
 		emit requestFinished(true);
         	return;
 	}

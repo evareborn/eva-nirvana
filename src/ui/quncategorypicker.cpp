@@ -25,8 +25,8 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qtextcodec.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
+//X #include <kglobal.h>
+//X #include <kstandarddirs.h>
 
 QunCategory::QunCategory( )
 {

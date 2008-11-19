@@ -22,8 +22,8 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qwidgetstack.h>
-#include <kprogress.h>
-#include <klocale.h>
+#include <qprogressbar.h>
+//X #include <klocale.h>
 
 #include "evaapi.h"
 #include "evatabwidget.h"
@@ -41,9 +41,9 @@ EvaLoginPageFrame::EvaLoginPageFrame(QWidget* parent,
 	lblDesc->setAlignment( int( QLabel::WordBreak | QLabel::AlignCenter ) );
 	layout1->addWidget( lblDesc );
 
-	kpgProgress = new KProgress( this, "kpgProgress" );
-	kpgProgress->setTotalSteps(E_LoginProcessDone + 1);
-	layout1->addWidget( kpgProgress );
+	qpbProgress = new QProgressBar( this, "qpbProgress" );
+	qpbProgress->setTotalSteps(E_LoginProcessDone + 1);
+	layout1->addWidget( qpbProgress );
 	spacer2 = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout1->addItem( spacer2 );
 
@@ -57,13 +57,13 @@ EvaLoginPageFrame::~EvaLoginPageFrame()
 
 void EvaLoginPageFrame::setTotalSteps(int max)
 {
-	kpgProgress->setTotalSteps(max);
+	qpbProgress->setTotalSteps(max);
 }
 
 void EvaLoginPageFrame::update(int value, const QString &msg)
 {
 	lblDesc->setText(msg);
-	kpgProgress->setProgress(value);
+	qpbProgress->setProgress(value);
 	adjustSize();
 }
 

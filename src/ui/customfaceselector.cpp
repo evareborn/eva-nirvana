@@ -28,7 +28,7 @@
 #include <qimage.h>
 #include <qbitmap.h>
 #include <qpixmap.h>
-#include <klocale.h>
+//X #include <klocale.h>
 #include <math.h>
 
 #include "../evamain.h"

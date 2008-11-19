@@ -23,7 +23,7 @@
 #include "evachatuibase.h"
 #include "evachatwindow.h"
 #include "evadetailswindow.h"
-#include "evafontselecter.h"
+//#include "evafontselecter.h"
 #include "evahistoryuibase.h"
 #include "evahistoryviewer.h"
 #include "evalistview.h"

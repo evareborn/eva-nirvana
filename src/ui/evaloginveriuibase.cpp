@@ -28,7 +28,10 @@
 #include <qframe.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a EvaLoginVeriUIBase as a child of 'parent', with the

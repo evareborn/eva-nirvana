@@ -29,8 +29,8 @@
 #include "evaapi.h"
 #include "evaloginveriwindow.h"
 #include <qapplication.h>
-#include <kapplication.h>
-#include <kdebug.h>
+//X #include <kapplication.h>
+//X #include <kdebug.h>
 
 
 //X 
@@ -87,7 +87,7 @@ void EvaLoginManager::login( QHostAddress &server)
 	assert(m_packetManager);
 	m_isLoggedIn = false;
 	
-	kdDebug() << "[EvaLoginManager] login starting" << endl;
+//X 	kdDebug() << "[EvaLoginManager] login starting" << endl;
 	//EvaSetting *s = EvaMain::global->getEvaSetting();	
 	ServerDetectorPacket::setStep(0);
 	ServerDetectorPacket::setFromIP(0);
@@ -114,9 +114,9 @@ void EvaLoginManager::loginVerification( )
 	if(m_veriWin->isVisible())
 		m_veriWin->slotImageReady();
 	else{
-		QRect scr = KApplication::desktop()->screenGeometry();
-		//QRect scr = g_mainWin->rect();
-		m_veriWin->move(scr.center() - m_veriWin->rect().center());
+//X 		QRect scr = KApplication::desktop()->screenGeometry();
+//X 		//QRect scr = g_mainWin->rect();
+//X 		m_veriWin->move(scr.center() - m_veriWin->rect().center());
 		m_veriWin->show();
 	}
 }
@@ -162,7 +162,7 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 
 void EvaLoginManager::fileAgentInfoReady( )
 {
-	kdDebug() << "[EvaLoginManager] file agent info ready" << endl;
+//X 	kdDebug() << "[EvaLoginManager] file agent info ready" << endl;
 	if(g_eva && g_eva->m_FileManager){
 		g_eva->m_FileManager->setMyBasicInfo(Packet::getFileAgentKey(),
 						 Packet::getFileAgentToken(), 

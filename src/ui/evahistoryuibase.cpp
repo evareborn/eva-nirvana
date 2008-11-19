@@ -28,7 +28,10 @@
 #include <qlayout.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl )
     : QWidget( parent, name, fl )

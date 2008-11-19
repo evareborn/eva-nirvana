@@ -29,9 +29,9 @@
 #include "evafriendlist.h"
 #include "evatextedit.h"
 #include "evahtmlparser.h"
-#include "evachatview.h"
+#include "simplechatview.h"
 #include "evaipseeker.h"
-#include "evafilepanel.h"
+//X #include "evafilepanel.h"
 #include "evafilestatusuibase.h"
 #include "regiongrabber.h"
 #include "evamainwindow.h"
@@ -44,7 +44,9 @@
 #include <qlayout.h>
 #include <qiconset.h>
 #include <qpixmap.h>
+#include <qsplitter.h>
 #include <qhostaddress.h>
+#include <qmessagebox.h>
 #include <qevent.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
@@ -57,11 +59,11 @@
 #include <qimage.h>
 #include <quuid.h>
 #include <qtimer.h>
-#include <klocale.h>
-#include <kurl.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
-#include <kapplication.h>
+//X #include <klocale.h>
+//X #include <kurl.h>
+//X #include <kfiledialog.h>
+//X #include <kmessagebox.h>
+//X #include <kapplication.h>
 #include <stdio.h>
 
 #ifndef QQ_MSG_IM_MAX
@@ -76,7 +78,7 @@ bool EvaChatWindow::isSentByEnter = false;
 std::list<QString> EvaChatWindow::quickList;
 	
 EvaChatWindow::EvaChatWindow(QQFriend * frd, QWidget* parent, const char* name, WFlags fl)
-	: EvaChatUIBase(parent, name, fl), smileyPopup(NULL), quickMenu(NULL), fontSelecter(NULL),
+	: EvaChatUIBase(parent, name, fl), smileyPopup(NULL), quickMenu(NULL), /*fontSelecter(NULL),*/
 	m_NumImages(0), grabber(NULL), viewer(NULL)
 {
 	//buddy = new QQFriend(*frd);
@@ -135,8 +137,8 @@ void EvaChatWindow::graphicChanged()
 
 void EvaChatWindow::initObjects()
 {
-	if(fontSelecter) delete fontSelecter;
-	fontSelecter = new EvaFontSelecter(this);
+//X 	if(fontSelecter) delete fontSelecter;
+//X 	fontSelecter = new EvaFontSelecter(this);
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector();
 	
@@ -251,8 +253,8 @@ void EvaChatWindow::initConnection()
 	QObject::connect(tbShowMe, SIGNAL(clicked()), this, SLOT(slotTbShowMeClick()));
 	QObject::connect(kteInput, SIGNAL(keyPressed(QKeyEvent *)), this, SLOT(slotInputKeyPress(QKeyEvent *)));
 
-	if(fontSelecter)
-		QObject::connect(fontSelecter, SIGNAL( fontChanged(QColor, int)), this, SLOT(slotFontChanged( QColor, int )));
+//X 	if(fontSelecter)
+//X 		QObject::connect(fontSelecter, SIGNAL( fontChanged(QColor, int)), this, SLOT(slotFontChanged( QColor, int )));
 
 	QObject::connect(pbClose, SIGNAL(clicked()), this, SLOT(slotPbCloseClick()));
 
@@ -265,8 +267,8 @@ void EvaChatWindow::initConnection()
 	QObject::connect(chatDisplay, SIGNAL(fileTransferResume(const unsigned int, const bool)), 
 						SLOT(slotFileTransferResume(const unsigned int, const bool)));
 
-	QObject::connect(m_FilePanel, SIGNAL(closeSession(const unsigned int)),
-					SLOT(slotFilePanelCloseClicked( const unsigned int )));
+//X 	QObject::connect(m_FilePanel, SIGNAL(closeSession(const unsigned int)),
+//X 					SLOT(slotFilePanelCloseClicked( const unsigned int )));
 }
 
 void EvaChatWindow::displaySendingMessage()
@@ -322,7 +324,7 @@ void EvaChatWindow::slotAddMessage(unsigned int , QString sNick, unsigned int , 
 void EvaChatWindow::slotSendResult(bool ok)
 {
 	if(!ok) {
-		KMessageBox::information(this, i18n("message sent failed"), i18n("Message"));
+		QMessageBox::information(this, i18n("message sent failed"), i18n("Message"));
 	} else
 		kteInput->setText("");
 	pbSend->setEnabled(true);
@@ -386,16 +388,16 @@ void EvaChatWindow::slotSmileyClick()
 
 void EvaChatWindow::slotFontClick()
 {
-	if(!fontSelecter) return;
-	if(fontSelecter->isVisible()) 
-		fontSelecter->hide();
-	else{
-		QPoint p = kteInput->mapToGlobal(QPoint(0,0));
-		fontSelecter->setColor( QColor(buddy->getChatFontColor()));
-		fontSelecter->setSize( buddy->getChatFontSize());
-		fontSelecter->setGeometry(p.x() + tbFont->x() , p.y(), fontSelecter->width(), fontSelecter->height());
-		fontSelecter->show();
- 	}
+//X 	if(!fontSelecter) return;
+//X 	if(fontSelecter->isVisible()) 
+//X 		fontSelecter->hide();
+//X 	else{
+//X 		QPoint p = kteInput->mapToGlobal(QPoint(0,0));
+//X 		fontSelecter->setColor( QColor(buddy->getChatFontColor()));
+//X 		fontSelecter->setSize( buddy->getChatFontSize());
+//X 		fontSelecter->setGeometry(p.x() + tbFont->x() , p.y(), fontSelecter->width(), fontSelecter->height());
+//X 		fontSelecter->show();
+//X  	}
 }
 
 void EvaChatWindow::slotQuickReplyClick()
@@ -517,11 +519,11 @@ void EvaChatWindow::slotSend()
 	int numFiles = parser.convertToPlainTxt(toSend, sendFileNameBase);
 	
 	if(toSend == ""){
-		KMessageBox::information(this, i18n("Cannot send empty message."), i18n("Message"));
+		QMessageBox::information(this, i18n("Cannot send empty message."), i18n("Message"));
 		return;
 	}
 	if(strlen(toSend.ascii()) > QQ_MSG_IM_MAX){
-		KMessageBox::information(this, i18n("Message is too long, cannot send."), i18n("Message"));
+		QMessageBox::information(this, i18n("Message is too long, cannot send."), i18n("Message"));
 		return;
 	}
 
@@ -630,30 +632,30 @@ void EvaChatWindow::openSendFileDialog()
 
 void EvaChatWindow::slotFileClick( )
 {
-	if(!kteInput->isEnabled()) return;
-	QString destDir = QDir::homeDirPath();
-	QString fullname = KFileDialog::getOpenFileName(destDir,
-			"* *.png |" + i18n(" all files (*)"), this, 
-			i18n("select a file"));	
-	QString name = fullname.right(fullname.length() - fullname.findRev("/") -1);
-	QFileInfo info(fullname);
-	if(!fullname.isEmpty()){
-		unsigned int session = buddy->getNextSequence();
-		printf("EvaChatWindow::slotFileClick -- next seq: %d\n", session);
-		chatDisplay->showFileNotification(codec->toUnicode(buddy->getNick().c_str()),
-				name, info.size(), session, true);
-		if(!addToFileList(session, name)) return ; // we've already got this request
-		m_FileNoList[session] = session;
-		QValueList<QString> nameList;
-		nameList.append(fullname);
-		QValueList<unsigned int> sizeList;
-		sizeList.append(info.size());
-
-		EvaMainWindow *mainWin = EvaMain::g_mainWin;
-		if(mainWin)
-			mainWin->addBuddyToRecentList( buddy->getQQ(), true);
-		emit fileTransferSend(buddy->getQQ(), session, nameList, sizeList, QQ_TRANSFER_FILE);
-	}
+//X 	if(!kteInput->isEnabled()) return;
+//X 	QString destDir = QDir::homeDirPath();
+//X 	QString fullname = KFileDialog::getOpenFileName(destDir,
+//X 			"* *.png |" + i18n(" all files (*)"), this, 
+//X 			i18n("select a file"));	
+//X 	QString name = fullname.right(fullname.length() - fullname.findRev("/") -1);
+//X 	QFileInfo info(fullname);
+//X 	if(!fullname.isEmpty()){
+//X 		unsigned int session = buddy->getNextSequence();
+//X 		printf("EvaChatWindow::slotFileClick -- next seq: %d\n", session);
+//X 		chatDisplay->showFileNotification(codec->toUnicode(buddy->getNick().c_str()),
+//X 				name, info.size(), session, true);
+//X 		if(!addToFileList(session, name)) return ; // we've already got this request
+//X 		m_FileNoList[session] = session;
+//X 		QValueList<QString> nameList;
+//X 		nameList.append(fullname);
+//X 		QValueList<unsigned int> sizeList;
+//X 		sizeList.append(info.size());
+//X 
+//X 		EvaMainWindow *mainWin = EvaMain::g_mainWin;
+//X 		if(mainWin)
+//X 			mainWin->addBuddyToRecentList( buddy->getQQ(), true);
+//X 		emit fileTransferSend(buddy->getQQ(), session, nameList, sizeList, QQ_TRANSFER_FILE);
+//X 	}
 }
 
 void EvaChatWindow::slotReceivedFileRequest( const unsigned int session, const QString & file,
@@ -693,36 +695,36 @@ void EvaChatWindow::slotReceivedFileRequest( const unsigned int session, const Q
 
 void EvaChatWindow::slotFileTransferAcceptClicked( const unsigned int showSession)
 {	
-	QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+	QString msg = QString( i18n("You have accepted transferring \"%1\", network connecting start, please wait..." )).arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferAccept(buddy->getQQ(), getSession(showSession), "", QQ_TRANSFER_FILE);
 }
 
-void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int showSession )
+void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int /*showSession*/ )
 {
-	unsigned int session = getSession(showSession);
-	QString name = getFileName(session);
-	QString destDir = QDir::homeDirPath() + "/" + name;
-	QString fullname = KFileDialog::getSaveFileName(destDir,
-			"* |" + i18n(" all files (*)"), this, 
-			i18n("Save As"));
-	QString dir = fullname.left(fullname.findRev("/"));
-	//QFileInfo info(fullname);
-	if(!dir.isEmpty()){
-		QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
-		chatDisplay->showInfomation(msg);
-		emit fileTransferAccept(buddy->getQQ(), session, dir, QQ_TRANSFER_FILE);
-	}
+//X 	unsigned int session = getSession(showSession);
+//X 	QString name = getFileName(session);
+//X 	QString destDir = QDir::homeDirPath() + "/" + name;
+//X 	QString fullname = KFileDialog::getSaveFileName(destDir,
+//X 			"* |" + i18n(" all files (*)"), this, 
+//X 			i18n("Save As"));
+//X 	QString dir = fullname.left(fullname.findRev("/"));
+//X 	//QFileInfo info(fullname);
+//X 	if(!dir.isEmpty()){
+//X 		QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+//X 		chatDisplay->showInfomation(msg);
+//X 		emit fileTransferAccept(buddy->getQQ(), session, dir, QQ_TRANSFER_FILE);
+//X 	}
 }
 
 void EvaChatWindow::slotFileTransferCancelClicked( const unsigned int showSession)
 {
 	printf("EvaChatWindow::slotFileTransferCancelClicked -- \n");
-	QString msg = i18n("You have cancelled transferring \"%1\".").arg(getFileName(getSession(showSession)));
+	QString msg = QString( i18n("You have cancelled transferring \"%1\".") ).arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferCancel(buddy->getQQ(), getSession(showSession));
 	removeFromFileList(getSession(showSession));
-	m_FilePanel->closeTab( getSession( showSession));
+//X 	m_FilePanel->closeTab( getSession( showSession));
 }
 
 void EvaChatWindow::slotReceivedFileAccepted(const unsigned int session, const bool isAccepted, 
@@ -738,7 +740,7 @@ void EvaChatWindow::slotReceivedFileAccepted(const unsigned int session, const b
 	
 	QString name = codec->toUnicode(buddy->getNick().c_str());
 	QString action = isAccepted ? i18n("accepted") : i18n("stopped");
-	QString msg = i18n("%1 has %2 transferring \"%3\".").arg(name).arg(action).arg(filename);
+	QString msg = QString( i18n("%1 has %2 transferring \"%3\".") ).arg(name).arg(action).arg(filename);
 	chatDisplay->showInfomation(msg);
 }
 
@@ -789,7 +791,7 @@ void EvaChatWindow::slotFileNotifyNormalInfo( const unsigned int session, EvaFil
 	case ESNone:
 		break;
 	case ESError:{
-		QString msg = i18n("network lost connection or your friend has stopped transferring \"%1\".").arg(filename);
+		QString msg = QString( i18n("network lost connection or your friend has stopped transferring \"%1\".") ).arg(filename);
 		switch(transferType){
 		case QQ_TRANSFER_FILE:{
 			if(getFileName(session).isEmpty()) break;
@@ -814,13 +816,13 @@ void EvaChatWindow::slotFileNotifyNormalInfo( const unsigned int session, EvaFil
 			break; // impossible, compiler would like this
 		}
 		}
-		m_FilePanel->closeTab( session);
+//X 		m_FilePanel->closeTab( session);
 		break;
 	case ESResume:
 		chatDisplay->askResumeMode(filename, session);
 		break;
 	case ESSendFinished:{
-		QString msg = i18n("sending \"%1\" finished.").arg(filename);
+		QString msg = QString( i18n("sending \"%1\" finished.") ).arg(filename);
 		switch(transferType){
 		case QQ_TRANSFER_FILE:
 			chatDisplay->showInfomation(msg);
@@ -842,7 +844,7 @@ void EvaChatWindow::slotFileNotifyNormalInfo( const unsigned int session, EvaFil
 		case QQ_TRANSFER_FILE:{
 			removeFromFileList(session);
 			QString fileLink = "<a href = \"file://" + fullname + "\">" + fullname + "</a>";
-			msg = i18n("receiving file \"%1\" has been finished and saved in %2").arg(filename).arg(fileLink);
+			msg = QString( i18n("receiving file \"%1\" has been finished and saved in %2" )).arg(filename).arg(fileLink);
 			}
 			break;
 		case QQ_TRANSFER_IMAGE:{
@@ -867,15 +869,15 @@ void EvaChatWindow::slotFileTransferResume( const unsigned int session, const bo
 {
 	emit fileTransferResume(buddy->getQQ(), session, isResume);
 }
-
-void EvaChatWindow::slotFileStatusNotification( const unsigned int session, const KURL & url, 
-						const unsigned int size, const unsigned int bytes, 
-						const unsigned int time )
-{
-	if(!m_ShowFrame->isVisible()) slotHideShowsClick();
-	m_FilePanel->updateStatus(session, url, size, bytes, time);
-}
-
+//X 
+//X void EvaChatWindow::slotFileStatusNotification( const unsigned int session, const KURL & url, 
+//X 						const unsigned int size, const unsigned int bytes, 
+//X 						const unsigned int time )
+//X {
+//X 	if(!m_ShowFrame->isVisible()) slotHideShowsClick();
+//X 	m_FilePanel->updateStatus(session, url, size, bytes, time);
+//X }
+//X 
 void EvaChatWindow::slotFilePanelCloseClicked( const unsigned int session)
 {
 	printf("EvaChatWindow::slotFilePanelCloseClicked\n");
@@ -885,11 +887,11 @@ void EvaChatWindow::slotFilePanelCloseClicked( const unsigned int session)
 
 void EvaChatWindow::closeEvent( QCloseEvent * e )
 {
-	if(m_FileList.size() && m_NumImages && KMessageBox::questionYesNo(this,
-			i18n("File transfer is still in process (%1 file(s) left). Closing this window "
+	if(m_FileList.size() && m_NumImages && QMessageBox::question(this,
+			QString( i18n("File transfer is still in process (%1 file(s) left). Closing this window "
 				"will also stop those transfer processes. "
-				"Do you want to close this window?").arg(m_FileList.size()),
-			i18n("Close Window?")) == KMessageBox::No){
+				"Do you want to close this window?") ).arg(m_FileList.size()),
+			i18n("Close Window?")) == QMessageBox::No){
 		e->ignore();
 	} else{
 		QMap<unsigned int, QString>::Iterator iter;
@@ -904,23 +906,23 @@ void EvaChatWindow::closeEvent( QCloseEvent * e )
 
 void EvaChatWindow::slotAddImageClick( )
 {
-	if(!kteInput->isEnabled()) return;
-	QString destDir = QDir::homeDirPath();
-	QString srcFullName = KFileDialog::getOpenFileName(destDir,
-			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
-			i18n("select an image file"));
-	if(!srcFullName.isEmpty()){
-// 		if(!m_NumImages){
-// 			m_ImageFileName = QUuid::createUuid().toString().upper();
-// 		}
-		//QString destFile = m_ImageFileName + QString::number(m_NumImages) + ".jpg";
-		QString destFile = QUuid::createUuid().toString().upper() + ".jpg";
-		QString destFullName = EvaMain::user->getSetting()->getPictureCacheDir() + "/" + destFile ;
-		QPixmap pix(srcFullName);
-		pix.save(destFullName, "JPEG", 100);
-		slotAddImageToInputEdit(destFile);
-		//m_NumImages++;
-	}
+//X 	if(!kteInput->isEnabled()) return;
+//X 	QString destDir = QDir::homeDirPath();
+//X 	QString srcFullName = KFileDialog::getOpenFileName(destDir,
+//X 			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
+//X 			i18n("select an image file"));
+//X 	if(!srcFullName.isEmpty()){
+//X // 		if(!m_NumImages){
+//X // 			m_ImageFileName = QUuid::createUuid().toString().upper();
+//X // 		}
+//X 		//QString destFile = m_ImageFileName + QString::number(m_NumImages) + ".jpg";
+//X 		QString destFile = QUuid::createUuid().toString().upper() + ".jpg";
+//X 		QString destFullName = EvaMain::user->getSetting()->getPictureCacheDir() + "/" + destFile ;
+//X 		QPixmap pix(srcFullName);
+//X 		pix.save(destFullName, "JPEG", 100);
+//X 		slotAddImageToInputEdit(destFile);
+//X 		//m_NumImages++;
+//X 	}
 }
 
 void EvaChatWindow::slotAddImageToInputEdit( const QString & destFile)

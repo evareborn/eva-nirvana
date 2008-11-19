@@ -26,13 +26,14 @@
 #include <qtoolbutton.h>
 #include <qcheckbox.h>
 #include <qpushbutton.h>
+#include <qmessagebox.h>
 #include <qiconset.h>
 //#include <qtextedit.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 
-#include <kmessagebox.h>
-#include <klocale.h>
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
 
 #include <list>
 
@@ -60,7 +61,7 @@ void EvaAddingWindow::initBuddy( )
 	if(m_IsSelectGroupOnly)
 		lblTip->setText("<b>" + QString(i18n("Select a group for %1")).arg(m_ID) + "</b>");
 	else
-		lblTip->setText("<b>" + i18n("Retrieving information from server...") + "</b>");
+		lblTip->setText("<b>" + QString( i18n("Retrieving information from server...")) + "</b>");
 
 	lblTopic->setText(QString(i18n("You are about to add ")) + m_Nick + QString("(%1)").arg(m_ID) );
 	QPixmap *facePic = EvaMain::images->getFaceByID( m_Face);
@@ -147,7 +148,7 @@ void EvaAddingWindow::slotOkClicked( )
 		
 	if( !fraVeriGraphic->isHidden() ){
 		if(leCode->text().isEmpty()){
-			KMessageBox::information(0, i18n("Enter the right verification code please."),
+			QMessageBox::information(0, i18n("Enter the right verification code please."),
 				i18n("Eva Search/Add Friend"));
 			leCode->setFocus();
 			return;
@@ -157,7 +158,7 @@ void EvaAddingWindow::slotOkClicked( )
 	//fraQuestion->setHidden( true);
 	if( !fraQuestion->isHidden() ){
 		if(leAnswer->text().isEmpty()){
-			KMessageBox::information(0, i18n("Enter the answer please."),
+			QMessageBox::information(0, i18n("Enter the answer please."),
 				i18n("Eva Search/Add Friend"));
 			leAnswer->setFocus();
 			return;

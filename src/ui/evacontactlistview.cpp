@@ -34,10 +34,12 @@
 #include <qdragobject.h>
 #include <qtextcodec.h>
 #include <qpopupmenu.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-#include <klocale.h>
-#include <kconfig.h>
+ 
+#include <qmessagebox.h>
+//X #include <kmessagebox.h>
+//X #include <kdebug.h>
+//X #include <klocale.h>
+//X #include <kconfig.h>
 
 EvaBuddyItem::EvaBuddyItem( const QQFriend& buddy, QListViewItem *parent)
     : EvaListViewItem(parent,""),
@@ -124,8 +126,9 @@ void EvaBuddyItem::update( )
 					QPixmap scaledNa = na->convertToImage().smoothScale(QSize(12,12));
 					copyBlt(pixmap, pixmap->width() - scaledNa.width(), pixmap->height()- scaledNa.height(), 
 									&scaledNa, 0, 0, scaledNa.width(), scaledNa.height());
-				} else
-					kdDebug() << "[EvaBuddyItem] Null image of \"NA\"" << endl;
+				} else {
+//X 					kdDebug() << "[EvaBuddyItem] Null image of \"NA\"" << endl;
+                                }
 		}
 		
 		if( !pixmap || pixmap->isNull())
@@ -420,8 +423,8 @@ void EvaGroupItem::update()
 QString EvaGroupItem::tip()
 {
 	QString tip = "<table><tr><td align = left valign = middle><nobr><font color = red><b>"+
-			i18n("Group") + ": </b></font>"+ groupName() +"</nobr><br><b><font color = red>"+ 
-			i18n("Members") +": </font></b>"+ QString::number(childCount()) +
+			QString( i18n("Group") ) + ": </b></font>"+ groupName() +"</nobr><br><b><font color = red>"+ 
+			QString( i18n("Members") ) +": </font></b>"+ QString::number(childCount()) +
 			"</td></tr></table>";
 	return tip;
 }
@@ -776,7 +779,7 @@ void EvaContactListView::newMessage(const unsigned int id)
 	if(it == m_contacts.end()) {
 		QQFriend *f = EvaMain::user->getFriends()->getFriend(id);
 		if(!f) {
-			kdDebug() << "[EvaContactListView] no friend in the friend list" << endl;
+//X 			kdDebug() << "[EvaContactListView] no friend in the friend list" << endl;
 			return;
 		}
 		m_contacts[f->getQQ()] = new EvaBuddyItem(*f, m_groups[f->getGroupIndex()]);
@@ -931,7 +934,7 @@ void EvaContactListView::slotDelBuddy( )
 	if(!b) return;
 	QString info = QString(i18n("Delete friend \"%1\" from your list, are you sure?\n\n")).arg(b->text(0));
 	
-	if(KMessageBox::Cancel == KMessageBox::warningContinueCancel( this,
+	if(QMessageBox::Cancel == QMessageBox::question( this,
 			info, i18n( "Delete a friend" ), i18n( "Deleting" ) ))
 		return;
 	emit requestDelete(b->QQ());
@@ -1336,7 +1339,7 @@ void EvaRecentContactLVItem::update( )
 void EvaRecentContactLVItem::buddyUpdate( )
 {
     if(!m_buddy){
-        kdDebug() << "[EvaRecentContactLVItem] no buddy details available" << endl;
+//X         kdDebug() << "[EvaRecentContactLVItem] no buddy details available" << endl;
         return;
     }
 
@@ -1721,7 +1724,7 @@ void EvaRecentContactsListView::slotDelBuddy( )
 	if(!b) return;
 	QString info = QString(i18n("Delete friend \"%1\" from your list, are you sure?\n\n")).arg(b->text(0));
 	
-	if(KMessageBox::Cancel == KMessageBox::warningContinueCancel( this,
+	if(QMessageBox::Cancel == QMessageBox::question( this,
 			info, i18n( "Delete a friend" ), i18n( "Deleting" ) ))
 		return;
 	emit requestDelete(b->QQ());

@@ -32,11 +32,13 @@ class QToolButton;
 class QLabel;
 class QLineEdit;
 class EvaTextEdit;
-class EvaChatView;
+class QTextEdit;
+//X class EvaChatView;
+class SimpleChatView;
 class QPushButton;
 class QSplitter;
 class QFrame;
-class EvaFilePanel;
+//X class EvaFilePanel;
 
 class EvaChatUIBase : public QWidget
 {
@@ -50,7 +52,7 @@ public:
 	QLabel* lblIP;
 	QLineEdit* leIP;
 	QLabel* lblSignature;
-	EvaChatView *chatDisplay;
+	SimpleChatView *chatDisplay;
 	QWidget *lowerLayoutWidget;
 	QToolButton* tbSmiley;
 	QToolButton* tbFont;
@@ -75,7 +77,7 @@ public:
 	QToolButton* tbShowMe;
 	QSplitter* splitter;
 
-	EvaFilePanel *m_FilePanel;
+//X 	EvaFilePanel *m_FilePanel;
 	QFrame *m_FilePanelFrame;
 
 protected:

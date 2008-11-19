@@ -67,7 +67,7 @@
 //X #include <kpopupmenu.h>
 //X #include <kiconloader.h>
 //X #include <kdebug.h>
-#include <kconfig.h>
+//X #include <kconfig.h>
 //X #include <assert.h>
 
 #define MaxRetryTimes  5
@@ -2313,10 +2313,10 @@ void EvaMain::slotNotifyTransferStatus(const unsigned int id, const unsigned int
 				const unsigned int bytesSent, const int time)
 {
 	printf("Buddy:%d\tsession:0x%8x size:%d\t sent:%d\ttime:%d secs\n", id, session, size, bytesSent, time);
-	KURL url;
-	url.setPath(m_FileManager->getFileName(id, session, true));
-	if(g_ChatWindowManager) 
-		g_ChatWindowManager->slotFileStatusNotification(id, session, url, size, bytesSent, time);
+//X 	QURL url;
+//X 	url.setPath(m_FileManager->getFileName(id, session, true));
+//X 	if(g_ChatWindowManager) 
+//X 		g_ChatWindowManager->slotFileStatusNotification(id, session, url, size, bytesSent, time);
 }
 
 void EvaMain::slotReceivedFileAgentInfo( const unsigned int id, const unsigned int oldSession,
@@ -2610,7 +2610,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			break;
 		case E_QunInfoFinished:
 		{	
-			kdDebug() << "[EvaMain] Qun Info ready" << endl;
+//X 			kdDebug() << "[EvaMain] Qun Info ready" << endl;
 			g_mainWin->UpdateLoginInfo(E_QunInfoFinished + 1, s_ENotify[E_QunInfoFinished]);
 			const Qun *qun = user->getQunList()->getQun((unsigned int)(e->m_param));
 			if(qun){
@@ -2620,7 +2620,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		}
 			break;
 		case E_QunMemberFinished:
-			kdDebug() << "[EvaMain] Qun Member ready" << endl;
+//X 			kdDebug() << "[EvaMain] Qun Member ready" << endl;
 			g_mainWin->UpdateLoginInfo(E_QunMemberFinished + 1, s_ENotify[E_QunMemberFinished]);
 			g_ChatWindowManager->slotQunMemberInfoReady((unsigned int)(e->m_param));
 			break;

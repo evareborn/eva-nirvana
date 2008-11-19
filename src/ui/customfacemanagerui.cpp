@@ -22,8 +22,10 @@
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qrect.h>
-#include <klocale.h>
-#include <kapplication.h>
+ 
+#include "evamain.h"
+//X #include <klocale.h>
+//X #include <kapplication.h>
 
 static const unsigned char image0_data[] = { 
     0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
@@ -484,8 +486,8 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     resize( QSize(521, 382).expandedTo(minimumSizeHint()) );
     clearWState( WState_Polished );
 
-    QRect scr = KApplication::desktop()->screenGeometry();
-    move(scr.center()-rect().center());
+//X     QRect scr = KApplication::desktop()->screenGeometry();
+//X     move(scr.center()-rect().center());
 }
 
 /*

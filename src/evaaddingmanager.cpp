@@ -25,17 +25,18 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+#include <qmessagebox.h>
 
 #include <qrect.h>
 #include <qurl.h>
 #include <qtextcodec.h>
 #include <qpixmap.h>
 
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kdebug.h>
-#include <kapp.h>
-
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
+//X #include <kdebug.h>
+//X #include <kapp.h>
+//X 
 #include "evamain.h"
 #include "evauser.h"
 #include "evaresource.h"
@@ -56,8 +57,8 @@ EvaAddingManager::EvaAddingManager( )
 	m_ID = 0;
 	m_Qun = QunInfo();
 	m_AddingDialog = new EvaAddingWindow();
-	QRect scr = KApplication::desktop()->screenGeometry();
-	m_AddingDialog->move(scr.center() - m_AddingDialog->rect().center());
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	m_AddingDialog->move(scr.center() - m_AddingDialog->rect().center());
 
 	//TODO: we should setup a info manager to handle all details request including Qun
 	QObject::connect(m_AddingDialog, SIGNAL(requestDetails(const unsigned int)), SIGNAL(requestDetails(const unsigned int)));
@@ -67,7 +68,7 @@ EvaAddingManager::EvaAddingManager( )
 	QObject::connect(m_AddingDialog, SIGNAL(groupSelected(const int)), SLOT(slotAccepAndAdd(const int)));
 
 	m_AddingQunDialog = new EvaAddingQunWindow;
-	m_AddingQunDialog->move(scr.center() - m_AddingQunDialog->rect().center());
+//X 	m_AddingQunDialog->move(scr.center() - m_AddingQunDialog->rect().center());
 
 	//TODO: we should setup a info manager to handle all details request including Qun
 	QObject::connect(m_AddingQunDialog, SIGNAL(requestDetails(const unsigned int)), SIGNAL(requestDetails(const unsigned int)));
@@ -94,7 +95,7 @@ void EvaAddingManager::setPacketManager( EvaPacketManager * packetManager )
 {
 	m_PacketManager = packetManager;
 	if(!packetManager){
-		kdDebug() << "[EvaAddingManager] "<< " NULL pointer for packet manager" << endl;
+//X 		kdDebug() << "[EvaAddingManager] "<< " NULL pointer for packet manager" << endl;
 		return;
 	}
 	m_ID = 0;
@@ -132,14 +133,16 @@ void EvaAddingManager::setPacketManager( EvaPacketManager * packetManager )
 // 	QObject::connect(m_AddingQunDialog, SIGNAL(requestQunDetails(const unsigned int)),
 // 			m_PacketManager, SLOT(doRequestQunInfo(const unsigned int)));
 	
-	kdDebug() << "[EvaAddingManager] "<< " connected with packet manager" << endl;
+//X 	kdDebug() << "[EvaAddingManager] "<< " connected with packet manager" << endl;
 }
 
 void EvaAddingManager::slotAddBuddy(const unsigned int id, const QString nick, const unsigned short face)
 {
 	if(m_ID) {
-		KMessageBox::information(0, i18n("Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later."),
-			i18n("Eva Search/Add Friend"));
+//X 		QMessageBox::information(0, i18n("Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later."),
+//X 			i18n("Eva Search/Add Friend"));
+		QMessageBox::information(0, "Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later.",
+			"Eva Search/Add Friend");
 		return;
 	}
 	m_IsAddingQun = false;
@@ -183,8 +186,10 @@ void EvaAddingManager::addingFinished( )
 void EvaAddingManager::slotAddBuddyExReply( const unsigned int id, const unsigned char reply, const unsigned char auth )
 {
 	if(id !=  m_ID) {
-		KMessageBox::information(0, QString(i18n("You are adding %1, cannot process %2 request.")).arg(m_ID).arg(id),
-			i18n("Eva Search/Add Friend"));
+//X 		QMessageBox::information(0, QString(i18n("You are adding %1, cannot process %2 request.")).arg(m_ID).arg(id),
+//X 			i18n("Eva Search/Add Friend"));
+		QMessageBox::information(0, QString("You are adding %1, cannot process %2 request.").arg(m_ID).arg(id),
+			"Eva Search/Add Friend");
 		return;
 	}
 	switch(reply){
@@ -248,8 +253,10 @@ void EvaAddingManager::slotAuthInfoReply( const unsigned char cmd, const unsigne
 	if(cmd == AUTH_INFO_CMD_CODE){
 		printf(" auth info cmd code reply\n");
 		if(reply == 0x01){
-			KMessageBox::information(0, QString(i18n("Incorrect verification code, try again please!")),
-				i18n("Eva Search/Add Friend"));
+//X 			QMessageBox::information(0, QString(i18n("Incorrect verification code, try again please!")),
+//X 				i18n("Eva Search/Add Friend"));
+			QMessageBox::information(0, QString("Incorrect verification code, try again please!"),
+				"Eva Search/Add Friend");
 			m_AddingDialog->leCode->setFocus();
 			return;
 		}
@@ -281,8 +288,10 @@ void EvaAddingManager::slotAuthInfoReply( const unsigned char cmd, const unsigne
 			}
 			break;
 		default:
-			KMessageBox::information(0, QString(i18n("Unknown auth reply type (%1), adding failed.")).arg(reply),
-				i18n("Eva Search/Add Friend"));
+//X 			QMessageBox::information(0, QString(i18n("Unknown auth reply type (%1), adding failed.")).arg(reply),
+//X 				i18n("Eva Search/Add Friend"));
+			QMessageBox::information(0, QString("Unknown auth reply type (%1), adding failed.").arg(reply),
+				"Eva Search/Add Friend");
 			addingFinished();
 			return;
 	}
@@ -307,7 +316,7 @@ void EvaAddingManager::slotRequestQuestionReply( const unsigned char auth, const
 
 	if(auth == AUTH_TYPE_QUESTION_REQUEST){
 		if(reply == 0x01){
-			kdDebug() << "[EvaAddingManager] user question set as empty"<< endl;
+//X 			kdDebug() << "[EvaAddingManager] user question set as empty"<< endl;
 			///FIXME: if user doesn't set the answer(or an empty answer,
 			///  we will get here, so how will we do?
 		}
@@ -315,8 +324,10 @@ void EvaAddingManager::slotRequestQuestionReply( const unsigned char auth, const
 	}
 	if(auth == AUTH_TYPE_QUESTION_ANSWER){
 		if(reply == 0x01){
-			KMessageBox::information(0, QString(i18n("Incorrect answer, try again please!")),
-				i18n("Eva Search/Add Friend"));
+//X 			KMessageBox::information(0, QString(i18n("Incorrect answer, try again please!")),
+//X 				i18n("Eva Search/Add Friend"));
+			QMessageBox::information(0, QString("Incorrect answer, try again please!"),
+				"Eva Search/Add Friend");
 			m_AddingDialog->leAnswer->setFocus();
 			return;
 		}
@@ -399,7 +410,7 @@ void EvaAddingManager::requestGraphic( )
 	}
 	
 	if ( !m_GraphicFile.open( IO_WriteOnly ) ) {
-		kdDebug() << "[EvaAddingManager] cannot create the image" << endl;
+//X 		kdDebug() << "[EvaAddingManager] cannot create the image" << endl;
 		return;
 	}
 
@@ -421,7 +432,7 @@ void EvaAddingManager::slotGraphicDone( bool error )
 		m_GraphicFile.close();
 	}
 	if(error){
-		kdDebug() << "[EvaAddingManager] get auth graphic file error" << endl;
+//X 		kdDebug() << "[EvaAddingManager] get auth graphic file error" << endl;
 		addingFinished();
 		return;
 	}
@@ -569,8 +580,10 @@ void EvaAddingManager::slotAddFriendAuthExReply( const unsigned int id, const un
 			break;
 		default:
 			if(!ok)
-				KMessageBox::information(0, QString(i18n("Adding %1(%2) failed.")).arg(m_Nick).arg(m_ID),
-							i18n("Eva Search/Add Friend"));
+//X 				KMessageBox::information(0, QString(i18n("Adding %1(%2) failed.")).arg(m_Nick).arg(m_ID),
+//X 							i18n("Eva Search/Add Friend"));
+				QMessageBox::information(0, QString("Adding %1(%2) failed.").arg(m_Nick).arg(m_ID),
+							"Eva Search/Add Friend");
 			addingFinished();
 			break;
 	}
@@ -599,8 +612,10 @@ void EvaAddingManager::slotAccepAndAdd( const int /*index*/)
 void EvaAddingManager::slotAddQun( const QunInfo & info )
 {
 	if(m_Qun.getQunID() || m_ID ) {
-		KMessageBox::information(0, i18n("Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later."),
-			i18n("Eva Search/Add Friend"));
+//X 		KMessageBox::information(0, i18n("Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later."),
+//X 			i18n("Eva Search/Add Friend"));
+		QMessageBox::information(0, "Adding friend/Qun in progress\nonly adding one at a time is allowed, please try later.",
+			"Eva Search/Add Friend");
 		return;
 	}
 	m_IsAddingQun = true;
@@ -658,8 +673,10 @@ void EvaAddingManager::slotJoinQunAuthReply(const unsigned int id, const unsigne
 // 		addingFinished();
 // 	}
 	if(reply == 0x01){	
-		KMessageBox::information(0, i18n("Qun operation failed."),
-			i18n("Eva Search/Add Friend"));
+//X 		KMessageBox::information(0, i18n("Qun operation failed."),
+//X 			i18n("Eva Search/Add Friend"));
+		QMessageBox::information(0, "Qun operation failed.",
+			"Eva Search/Add Friend");
 	}
 	emit joinQunAuthReply(id, reply);
 	addingFinished();

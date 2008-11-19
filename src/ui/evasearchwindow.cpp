@@ -28,6 +28,7 @@
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
+#include <qmessagebox.h>
 #include <qtable.h>
 #include <qcheckbox.h>
 #include <qtoolbutton.h>
@@ -39,14 +40,14 @@
 #include <qcombobox.h>
 #include <qstringlist.h>
 #include <qrect.h>
-#include <kmessagebox.h>
-#include <krun.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstandarddirs.h>
-#include <kapp.h>
+//X #include <kmessagebox.h>
+//X #include <krun.h>
+//X #include <klocale.h>
+//X #include <kglobal.h>
+//X #include <kstandarddirs.h>
+//X #include <kapp.h>
 
-#include "../evamain.h"
+#include "evamain.h"
 #include "../evaaddingmanager.h"
 #include "evaqunlist.h"
 #include "qundetailswindow.h"
@@ -363,7 +364,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 			case B_FRDCENTER:{
 				QStringList args;
 				args<<"exec"<< "http://love.qq.com/";
-				kapp->kdeinitExec("kfmclient",args);
+//X 				kapp->kdeinitExec("kfmclient",args);
 				}
 				break;
 			}
@@ -371,7 +372,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 			//we are now on the search result page, click the button means send a auth request message
 			//to selected user. the auth dialog should called here
 			if(m_SelectedBasicUser.getQQ() == 0){
-				KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+				QMessageBox::information((QWidget *) 0,
 				i18n("Please select a user."),
 				i18n("Eva - Search/Add"));
 				return;
@@ -396,7 +397,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 		}else{
 			//we are now on the advanced search result page, click the button means send a auth request//message to selected user. the auth dialog should called here
 			if(m_SelectedAdvancedUser.getQQ() == 0){
-				KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+				QMessageBox::information((QWidget *) 0,
 				i18n("Please select a user."),
 				i18n("Eva - Search/Add"));
 				return;
@@ -415,13 +416,13 @@ void EvaSearchWindow::slotPbSearchClicked()
 				case Q_ALUMNI:{
 					QStringList args;
 					args<<"exec"<< "http://school.qq.com/";
-					kapp->kdeinitExec("kfmclient",args);
+//X 					kapp->kdeinitExec("kfmclient",args);
 					}
 					break;
 				case Q_CATEGORY:{
 					QStringList args;
 					args << "exec" << "http://jump.qq.com/clienturl_simp_18";
-					kapp->kdeinitExec("kfmclient",args);
+//X 					kapp->kdeinitExec("kfmclient",args);
 					//QString url = "http://group.qq.com/cgi-bin/group_classify?catalog="+QString::number(getCategoryCode()); 
 					//KRun::runCommand("konqueror \""+url+"\"");
 					}
@@ -437,7 +438,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 			//we are now on the search result page, click the button means send a auth request message
 			//to selected user. the auth dialog should called here
 			if(m_SelectedQun.getQunID() == 0){
-				KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+				QMessageBox::information((QWidget *) 0,
 				i18n("Please select a Qun."),
 				i18n("Eva - Search/Add"));
 				return;
@@ -480,7 +481,7 @@ void EvaSearchWindow::processBasicSearch(const bool isSearchAll, const QString i
 	}
 	else{
 		if(id.isEmpty() && nick.isEmpty() && email.isEmpty()){
-			KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+			QMessageBox::information((QWidget *) 0,
 				i18n("Search conditions can not be empty."),
 				i18n("Eva - Search/Add"));
 			leQQNum->setFocus();
@@ -490,7 +491,7 @@ void EvaSearchWindow::processBasicSearch(const bool isSearchAll, const QString i
 		bool ok;
 		m_Id.toInt(&ok);
 		if(!ok && !m_Id.isEmpty()){
-			KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+			QMessageBox::information((QWidget *) 0,
 				i18n("QQ number is incorrect."),
 				i18n("Eva - Search/Add"));
 			leQQNum->setFocus();
@@ -707,7 +708,7 @@ void EvaSearchWindow::slotTbBSDetailsClicked()
 {
 	//if user click the "details" button without any selected item, then show the message box
 	if(tbBSResult->numRows()!=0 && m_SelectedBasicUser.getQQ() == 0){
-		KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+		QMessageBox::information((QWidget *) 0,
 				i18n("Please select a user."),
 				i18n("Eva - Search/Add"));
 		return;
@@ -852,7 +853,7 @@ void EvaSearchWindow::slotTbASDetailsClicked()
 {
 	//if user click the "details" button without any selected item, then show the message box
 	if(tbASResult->numRows()!=0 && m_SelectedAdvancedUser.getQQ() == 0){
-		KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+		QMessageBox::information((QWidget *) 0,
 				i18n("Please select a user."),
 				i18n("Eva - Search/Add"));
 		return;
@@ -912,7 +913,7 @@ void EvaSearchWindow::processQunSearch(const QString &qunNum)
 {
 	printf("qun search clicked\n");
 	if(qunNum.isEmpty()){
-		KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+		QMessageBox::information((QWidget *) 0,
                               i18n("Qun Num can not be empty."),
                               i18n("Eva - Search/Add"));
 		leQunNum->setFocus();
@@ -922,7 +923,7 @@ void EvaSearchWindow::processQunSearch(const QString &qunNum)
 	bool ok;
 	int extQunNum = qunNum.toInt(&ok);
 	if(!ok){
-		KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+		QMessageBox::information((QWidget *) 0,
                               i18n("Qun Num is incorrect."),
                               i18n("Eva - Search/Add"));
 		leQunNum->setFocus();
@@ -1049,7 +1050,7 @@ void EvaSearchWindow::slotTbQSDetailsClicked()
 {
 	//if user click the "details" button without any selected item, then show the message box
 	if(tbBSResult->numRows()!=0 && m_SelectedQun.getQunID() == 0){
-		KMessageBox::messageBox((QWidget *) 0,KMessageBox::Information,
+		QMessageBox::information((QWidget *) 0,
 				i18n("Please select a Qun."),
 				i18n("Eva - Search/Add"));
 		return;
@@ -1059,7 +1060,7 @@ void EvaSearchWindow::slotTbQSDetailsClicked()
 	QunDetailsWindow *win = new QunDetailsWindow(qun, false);
 	delete qun;
 
-	QRect scr = KApplication::desktop()->screenGeometry();
-	win->move(scr.center() - win->rect().center());
+//X 	QRect scr = KApplication::desktop()->screenGeometry();
+//X 	win->move(scr.center() - win->rect().center());
 	win->show();
 }

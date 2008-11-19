@@ -25,11 +25,13 @@
 #include <qstringlist.h>
 
 #include <qdesktopwidget.h>
+ 
+#include "evamain.h"
 
-#include <kapp.h>
-#include <kurllabel.h>
-#include <kapplication.h>
-#include <klocale.h>
+//X #include <kapp.h>
+//X #include <kurllabel.h>
+//X #include <kapplication.h>
+//X #include <klocale.h>
 
 EvaSysBroadcastWindow::EvaSysBroadcastWindow( )
 	: EvaSysBroadcastUIBase()
@@ -46,7 +48,7 @@ void EvaSysBroadcastWindow::slotOpenURL()
 {
 	QStringList args;
 	args<<"exec"<< m_URL;
-	kapp->kdeinitExec("kfmclient",args);
+//X 	kapp->kdeinitExec("kfmclient",args);
 
 	close();
 }
@@ -90,8 +92,8 @@ void EvaSysBroadcastWindow::setNews( const QString & title, const QString & brie
 
 void EvaSysBroadcastWindow::moveToRightBottom( )
 {
-	QDesktopWidget *desktop = KApplication::desktop();
-	QRect scr = desktop->screenGeometry();
-	setGeometry(scr.right()- width(), scr.bottom() - height(), width(), height());	
+//X 	QDesktopWidget *desktop = KApplication::desktop();
+//X 	QRect scr = desktop->screenGeometry();
+//X 	setGeometry(scr.right()- width(), scr.bottom() - height(), width(), height());	
 }
 

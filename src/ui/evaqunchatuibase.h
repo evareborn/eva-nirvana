@@ -35,7 +35,7 @@ class QFrame;
 class KSqueezedTextLabel;
 class QLabel;
 class EvaTextEdit;
-class EvaChatView;
+class SimpleChatView;
 class QListView;
 class EvaQunListView;
 class QSplitter;
@@ -49,7 +49,7 @@ public:
 	~EvaQunChatUIBase();
 	
 	QToolButton* tbQunDetails;
-	EvaChatView* chatDisplay;
+	SimpleChatView* chatDisplay;
 	QWidget *lowerLayoutWidget;
 	QToolButton* tbSmiley;
 	QToolButton* tbFont;

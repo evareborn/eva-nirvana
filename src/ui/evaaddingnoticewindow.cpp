@@ -29,6 +29,7 @@
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qbuttongroup.h>
+#include <qmessagebox.h>
 #include <qframe.h>
 #include <qpixmap.h>
 #include <qiconset.h>
@@ -36,9 +37,9 @@
 #include <qtextcodec.h>
 #include <qevent.h>
 
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kdebug.h>
+//X #include <kmessagebox.h>
+//X #include <klocale.h>
+//X #include <kdebug.h>
 
 #include "../evamain.h"
 #include "evaresource.h"
@@ -175,7 +176,7 @@ void EvaAddingNoticeWindow::processSettings()
 			}
 			break;
 		default:{
-			kdDebug() << "[EvaAddingNoticeWindow] unknown type: " << m_Type << endl;
+//X 			kdDebug() << "[EvaAddingNoticeWindow] unknown type: " << m_Type << endl;
 			}
 			break;
 	}
@@ -246,7 +247,7 @@ void EvaAddingNoticeWindow::processAddingRequest( )
 		return;
 	}
 
-	KMessageBox::information(0, i18n("Select one of the three actions to perform please."), i18n("Eva Search/Add Friend"));
+	QMessageBox::information(0, i18n("Select one of the three actions to perform please."), i18n("Eva Search/Add Friend"));
 
 
 }
@@ -279,7 +280,7 @@ void EvaAddingNoticeWindow::slotAddAuthActionReply( const unsigned int id, const
 				action = i18n("unknown");
 				break;
 		}
-		KMessageBox::information(0, QString(i18n("Operation %1 failed.")).arg(action), i18n("Eva Search/Add Friend"));
+		QMessageBox::information(0, QString(i18n("Operation %1 failed.")).arg(action), i18n("Eva Search/Add Friend"));
 	}
 }
 

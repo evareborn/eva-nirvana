@@ -26,7 +26,10 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a QunCategoryUI as a child of 'parent', with the

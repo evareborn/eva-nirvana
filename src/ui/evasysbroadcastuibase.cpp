@@ -24,14 +24,16 @@
 #include <qpushbutton.h>
 #include <qframe.h>
 #include <qlabel.h>
-#include <kurllabel.h>
+//X #include <kurllabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
+ 
+#include "evamain.h"
 
-#include <klocale.h>
-#include <kurllabel.h>
-#include <kglobalsettings.h>
+//X #include <klocale.h>
+//X #include <kurllabel.h>
+//X #include <kglobalsettings.h>
 
 /*
  *  Constructs a EvaSysBroadcastUIBase as a child of 'parent', with the

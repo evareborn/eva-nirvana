@@ -32,13 +32,13 @@
 #include <qcombobox.h>
 #include <qgroupbox.h>
 #include <qtoolbutton.h>
-#include <kpushbutton.h>
+//X #include <kpushbutton.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
 #include <qslider.h>
-#include <kkeybutton.h>
+//X #include <kkeybutton.h>
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
@@ -46,7 +46,7 @@
 #include <qpixmap.h>
 
 #include <qiconview.h>
-#include <klocale.h>
+//X #include <klocale.h>
 
 #include "../evamain.h"
 #include "evaresource.h"
@@ -887,8 +887,8 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wspReplyLayout->addItem( spacer27, 1, 0 );
 	wsSetting->addWidget( wspReply, 6 );
 	
-	wspMainFont = new MainListFontSettingUIBase(wsSetting,  "wspFont" );
-	wsSetting->addWidget(wspMainFont, 7);
+//X 	wspMainFont = new MainListFontSettingUIBase(wsSetting,  "wspFont" );
+//X 	wsSetting->addWidget(wspMainFont, 7);
 	
 	layout55->addWidget( wsSetting );
 	layout57->addLayout( layout55 );

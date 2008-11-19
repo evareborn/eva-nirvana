@@ -31,7 +31,10 @@
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 /*
  *  Constructs a EvaAddingNoticeUIBase as a child of 'parent', with the

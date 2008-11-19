@@ -29,7 +29,7 @@
 #include <qdatetime.h>
 #include <qtimer.h>
 #include <qtextcodec.h>
-#include <kdebug.h>
+//X #include <kdebug.h>
 #include <stdlib.h>
 #include <map>
 
@@ -331,10 +331,10 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 	{
 	case QQ_LOGIN_REPLY_OK:
 		{
-		kdDebug() << "[EvaPacketManager] user \"" << user->getQQ()
-				<< "\" logged in from "
-				<< QHostAddress(packet->getMyIP()).toString()
-				<< ":" << packet->getMyPort()<< endl;
+//X 		kdDebug() << "[EvaPacketManager] user \"" << user->getQQ()
+//X 				<< "\" logged in from "
+//X 				<< QHostAddress(packet->getMyIP()).toString()
+//X 				<< ":" << packet->getMyPort()<< endl;
 // 		printf("EvaPacketManager::processLoginReply -- \n");
 // 		for(int i=0; i<packet->getLength(); i++){
 // 			if(!(i%8)) printf("\n%d: ",i);
@@ -2567,8 +2567,8 @@ void EvaPacketManager::slotConnectReady( )
 	EvaNotifyEvent *event = new EvaNotifyEvent(E_SvrConnected);
 	QApplication::postEvent(g_eva, event);
 
-	kdDebug() << "[QQ: " << user->getQQ() << "] start logging in server \"" 
-				<< connecter->getHostAddress().toString()  << "\" ..." << endl;
+//X 	kdDebug() << "[QQ: " << user->getQQ() << "] start logging in server \"" 
+//X 				<< connecter->getHostAddress().toString()  << "\" ..." << endl;
 	doLogin();
 }
 

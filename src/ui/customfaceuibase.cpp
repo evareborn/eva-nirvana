@@ -28,7 +28,9 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qwhatsthis.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+//X #include <klocale.h>
 
 
 CustomFaceUIBase::CustomFaceUIBase( QWidget* parent, const char* name, WFlags fl )

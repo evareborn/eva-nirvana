@@ -29,7 +29,7 @@
 #include "evaapi.h"
 #include <assert.h>
 #include <qapplication.h>
-#include <kdebug.h>
+//X #include <kdebug.h>
 
 //X 
 //X EvaContactManager *GetContactManager()
@@ -171,7 +171,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 	assert(packet);
 	if( m_status != ESCM_GROUPEDBUDDIES) return;
 	
-	kdDebug() << "[EvaContactManager] download group reply" << endl;
+//X 	kdDebug() << "[EvaContactManager] download group reply" << endl;
 	
 	std::list<DownloadFriendEntry> friends = packet->getGroupedFriends();
 	std::list<DownloadFriendEntry>::iterator iter;
@@ -189,7 +189,8 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 			m_QunList.add(q);
 		}
 	}
-	QString msg = QString(i18n("%1")).arg(m_GroupedContacts.size());
+//X 	QString msg = QString(i18n("%1")).arg(m_GroupedContacts.size());
+	QString msg = QString("%1").arg(m_GroupedContacts.size());
 	notifyEvent(E_GroupContactsReceived, msg);
 	
 	int nextID = packet->getNextStartID();
@@ -197,7 +198,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 		//connecter->append(new DownloadGroupFriendPacket(nextID));		
 		m_packetManager->doGetGroupedFriends(nextID);
 	}else{
-		kdDebug() << "[EvaContactManager] Grouped friends done (" << m_QunList.numQuns() << " Quns)" << endl;
+//X 		kdDebug() << "[EvaContactManager] Grouped friends done (" << m_QunList.numQuns() << " Quns)" << endl;
 		//emit friendGroupsReady();
 		//QunList *qunList = user->getQunList();
 		//if(qunList && qunList->numQuns()){
@@ -227,7 +228,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 
 void EvaContactManager::fetchQunDetails( const unsigned int id )
 {
-	kdDebug()<< "[EvaContactManager] getting Qun details(" << id << ")" << endl;
+//X 	kdDebug()<< "[EvaContactManager] getting Qun details(" << id << ")" << endl;
 	m_status = ESCM_QUNDETAILS;
 	m_QunInfo.clearInfo();
 	m_QunMembers.clear();
@@ -286,12 +287,12 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 
 void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirst/* = true*/)
 {
-	kdDebug() << "fetchQunMembersInfo" << endl;
+//X 	kdDebug() << "fetchQunMembersInfo" << endl;
 	EvaUser *user = EvaMain::user;
 	assert(user);
 	Qun *qun = user->getQunList()->getQun(id);
 	if(!qun){
-		kdDebug() << "[EvaContactManager] Qun " << id << " doesn't exit" << endl;
+//X 		kdDebug() << "[EvaContactManager] Qun " << id << " doesn't exit" << endl;
 		return;
 	}else {
 		if(isFirst)
@@ -327,7 +328,7 @@ void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirs
 // 		i++;
 // 	}
 	toSend = qun->getNextMembers();
-	kdDebug() << "to Send size:"<< toSend.size() << endl;
+//X 	kdDebug() << "to Send size:"<< toSend.size() << endl;
 	if(toSend.size()){
 		m_packetManager->doRequestQunMemberInfo(id, toSend);
 	}
@@ -335,7 +336,7 @@ void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirs
 
 void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 {
-	kdDebug() << "processQunMemberReply" << endl;
+//X 	kdDebug() << "processQunMemberReply" << endl;
 	EvaUser *user = EvaMain::user;
 	assert(user);
 	assert(packet);
@@ -373,13 +374,13 @@ void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 // 				}
 // 			}
 		} else {  // Still some members needed
-			kdDebug() << "[EvaContactManager] Qun(" << packet->getQunID() 
-					<< ") got " 
-					<< m_QunMemberCount 
-					<< " members(totally " 
-					<<  q->numMembers() 
-					<< ")" 
-					<< endl;
+//X 			kdDebug() << "[EvaContactManager] Qun(" << packet->getQunID() 
+//X 					<< ") got " 
+//X 					<< m_QunMemberCount 
+//X 					<< " members(totally " 
+//X 					<<  q->numMembers() 
+//X 					<< ")" 
+//X 					<< endl;
 			fetchQunMembersInfo(packet->getQunID(), false);
 		}
 	}
@@ -393,7 +394,7 @@ void EvaContactManager::fetchDetail( const unsigned int id )
 
 void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * packet )
 {
-	kdDebug()<<"[EvaContactManager] got user info" << endl;
+//X 	kdDebug()<<"[EvaContactManager] got user info" << endl;
 	EvaUser *user = EvaMain::user;
 	assert(user);
 	assert(packet);

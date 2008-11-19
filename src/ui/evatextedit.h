@@ -19,8 +19,10 @@
  ***************************************************************************/
 #ifndef EVATEXTEDIT_H
 #define EVATEXTEDIT_H
+ 
+#include <qtextedit.h>
 
-#include <ktextedit.h>
+//X #include <ktextedit.h>
 class QKeyEvent;
 class EvaTextEdit : public QTextEdit
 {

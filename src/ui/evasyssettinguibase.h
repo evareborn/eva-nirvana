@@ -25,7 +25,7 @@
 #include <qdialog.h>
 
 #include <qlistview.h>
-#include "mainlistfontsettinguibase.h"
+//X #include "mainlistfontsettinguibase.h"
 
 class QVBoxLayout;
 class QHBoxLayout;
@@ -192,7 +192,7 @@ public:
     
     QIconView* ivFace;
 
-    MainListFontSettingUIBase *wspMainFont;
+//X     MainListFontSettingUIBase *wspMainFont;
 protected:
     QGridLayout* EvaSysSettingUIBaseLayout;
     QVBoxLayout* layout57;

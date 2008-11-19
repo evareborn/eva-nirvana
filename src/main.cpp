@@ -21,9 +21,9 @@
 
 #include "evamain.h"
 #include <qapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <klocale.h>
+//X #include <kaboutdata.h>
+//X #include <kcmdlineargs.h>
+//X #include <klocale.h>
 
 #ifdef HAVE_CONFIG_H
  #include "config.h"
@@ -32,7 +32,7 @@
 static const char description[] =
 	I18N_NOOP("An IM Client Under KDE Using QQ IM Protocol.");
 
-static const char version[] = VERSION; // update the version number in configure.in.in and re-generate the configure script;
+static const char version[] = EVA_VERSION; // update the version number in configure.in.in and re-generate the configure script;
 
 //X static KCmdLineOptions options[] =
 //X {

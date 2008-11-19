@@ -33,7 +33,10 @@
 #include <qmessagebox.h>
 #include <qlabel.h>
 #include <qhostaddress.h>
-#include <klocale.h>
+ 
+#include "evamain.h"
+
+//X #include <klocale.h>
 
 EvaLoginWindow::EvaLoginWindow(QWidget* parent, const char* name, bool modal, WFlags fl)
     : LoginUIBase(parent,name, modal,fl), qqNum(0), port(0)

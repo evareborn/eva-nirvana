@@ -26,7 +26,7 @@
 #include "evamainwindow.h"
 
 class QLabel;
-class KProgress;
+class QProgressBar;
 class QSpacerItem;
 class QVBoxLayout;
 class QGridLayout;
@@ -44,7 +44,7 @@ public:
 	void update(int value, const QString &msg);
 private:
 	QLabel* lblDesc;
-	KProgress* kpgProgress;
+	QProgressBar* qpbProgress;
 	QVBoxLayout* layout1;
 	QSpacerItem* spacer1;
 	QSpacerItem* spacer2;
