@@ -394,6 +394,8 @@ private slots:
 	//void slotLoginVerification();
 	void slotBuddyAdded(const unsigned int id, const QString nick, const unsigned short face, const int group);
 	void slotShowScriptManager();
+ 
+public:
 	
 	friend class EvaMainWindow;
 };
