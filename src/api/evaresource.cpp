@@ -30,6 +30,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qdatastream.h>
+#include <qsound.h>
 //X #include <kaudioplayer.h>
 #include <qpixmap.h>
 //#include <kglobal.h>
@@ -355,9 +356,9 @@ EvaSoundResource::EvaSoundResource()
 
 void EvaSoundResource::playNewMessage()
 {
-	playSound("msg.wav");
+    playSound( "msg.wav" );
 }
-
+ 
 void EvaSoundResource::playSysMessage()
 {
 	playSound("system.wav");
@@ -378,13 +379,15 @@ void EvaSoundResource::playSound(const QString &filename)
 	
 	if(!d.exists(absPath))	return;
 	
+        printf( "playin sound %s\n", absPath.ascii() );
 //X 	KAudioPlayer snd(absPath);
 //X 	snd.play();
+        QSound::play( absPath );
 }
 
 /*  ---------------------------------------------------------------------------------------------- */
 
-QString EvaGlobal::dirPath = ".";
+QString EvaGlobal::dirPath = QDir::current().absPath();
 
 EvaGlobal::EvaGlobal()
 {
@@ -441,10 +444,11 @@ void EvaGlobal::initialize()
 		QFileInfo fi;
 		fi.setFile(QString(getenv("_")));
 		dirPath = fi.dirPath(true);
-	}else
-		dirPath = dirPath.left(dirPath.length() - strlen("/servers"));
+        }
+//X 	}else
+//X 		dirPath = dirPath.left(dirPath.length() - strlen("/servers"));
 
-	//printf("found data path: %s\n", dirPath.ascii());
+	printf("found data path: %s\n", dirPath.ascii());
 	initImage();
 	initSound();
 	initEvaSetting();

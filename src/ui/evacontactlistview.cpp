@@ -564,6 +564,13 @@ void EvaContactListView::updateContacts()
 //X 		it->second->update();
 //X 		it++;
 //X 	}
+	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
+	while(it != m_groups.end()){
+		it->second->setOpen( false );
+		it->second->update();
+		it++;
+	}
+
 }
 
 void EvaContactListView::slotFaceSizeChanged()

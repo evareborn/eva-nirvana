@@ -2,6 +2,7 @@
 
 #include "evamain.h"
 #include "api/evaresource.h"
+#include "api/evahtmlparser.h"
 #include "ui/simplechatview.h"
  
 class EvaImageResource;
@@ -37,16 +38,32 @@ SimpleChatView::~SimpleChatView()
 //X 	if(d) delete d;
 }
 
-void SimpleChatView::append( QString & /*nick*/, QDateTime /*time*/, QColor /*nameColor*/, bool /*isNormal*/, 
-				QColor /*msgColor*/, Q_UINT8 /*size*/, 
-				bool /*underline*/, bool /*italic*/, bool /*bold*/, QString contents )
+void SimpleChatView::append( QString & nick, QDateTime time, QColor nameColor, bool isNormal, 
+				QColor msgColor, Q_UINT8 size, 
+				bool underline, bool italic, bool bold, QString contents )
 {
-//X 	QString msg = wrapNickName(nick, time, nameColor, isNormal) + 
-//X 			wrapFontAttributes(msgColor, size, underline, italic, bold, contents);
-//X 	updateContents(msg);
-    updateContents( contents );
+	QString msg = wrapNickName(nick, time, nameColor, isNormal) + 
+			wrapFontAttributes(msgColor, size, underline, italic, bold, contents);
+	updateContents(msg);
 }
 
+QString SimpleChatView::wrapNickName(QString &nick, QDateTime time, QColor color, bool isNormal)
+{	
+	QString htmlName = nick;
+	EvaHtmlParser parser;
+	parser.setAbsImagePath(EvaMain::images->getSmileyPath());
+	parser.convertToHtml(htmlName, false, true);
+	QString msg = "<span style=\"font-size: 9pt; color: " + color.name() +"\">" + htmlName + " ";
+	if(!isNormal)
+		msg+=i18n("(Auto-Reply)");
+
+	QDateTime current = QDateTime::currentDateTime();
+	QString dateFormat = "hh:mm:ss";
+	if(current.date() != time.date())
+		dateFormat = "yyyy-MM-dd hh:mm:ss";
+	msg+="  "+time.toString(dateFormat) + "</span><br>";
+	return msg;
+}
 void SimpleChatView::updateContents( const QString & contents )
 {
 	//QString newMsg = contents;

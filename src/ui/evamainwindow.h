@@ -46,7 +46,7 @@ protected:
 class QResizeEvent;
 class QListViewItem;
 class QPopupMenu;
-class KHTMLPart;
+//X class KHTMLPart;
 class EvaContactListView;
 class EvaQunsListView;
 class EvaRecentContactsListView;
