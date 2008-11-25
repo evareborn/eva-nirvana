@@ -22,13 +22,15 @@
 
 #include <cstring>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 //X #include <klocale.h>
 //X #include <kdebug.h>

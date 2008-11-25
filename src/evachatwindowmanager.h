@@ -22,8 +22,8 @@
 
 #include "../api/filetrans/evafiledownloader.h"
 #include <qobject.h>
-#include <qptrlist.h>
-#include <qvaluelist.h>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
 #include <qdatetime.h>
 //X #include <kurl.h>
 #include <list>
@@ -118,14 +118,14 @@ signals:
 	//void requestQunMembers(const unsigned int);
 	void requestQunRealNames(const unsigned int);
 
-	void fileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-				const QValueList<unsigned int>, const unsigned char);
+	void fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+				const Q3ValueList<unsigned int>, const unsigned char);
 	void fileTransferAccept(const unsigned int, const unsigned int, const QString, const unsigned char);
 	void fileTransferCancel(const unsigned int, const unsigned int);
 	void fileTransferResume(const unsigned int, const unsigned int, const bool);
 private:
 	EvaChatWindow *newWindow(QQFriend *frd);
-	QPtrList<EvaChatWindow> windowList;
+	Q3PtrList<EvaChatWindow> windowList;
 	typedef struct{
 		unsigned int sender;
 		bool isNormal;
@@ -136,12 +136,12 @@ private:
 		char blue, green, red;
 	} Message;
 	
-	QPtrList<Message> messageQueue;
+	Q3PtrList<Message> messageQueue;
 	EvaUserSetting *userSetting;
 	
 	// here is all qun windows' structure
 	EvaQunChatWindow *newQunWindow(Qun *qun);
-	QPtrList<EvaQunChatWindow> qunWindowList;
+	Q3PtrList<EvaQunChatWindow> qunWindowList;
 	typedef struct{
 		unsigned int qunID;
 		unsigned int sender;
@@ -151,7 +151,7 @@ private:
 		bool u, i, b;
 		char blue, green, red;
 	} QunMessage;
-	QPtrList<QunMessage> qunMessageQueue;
+	Q3PtrList<QunMessage> qunMessageQueue;
 	
 	typedef struct{
 		QString script;

@@ -20,10 +20,12 @@
 #include "evahistoryviewer.h"
 
 #include <qpushbutton.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qcheckbox.h>
 #include <qdatetime.h>
-#include <qdatetimeedit.h>
+#include <q3datetimeedit.h>
+//Added by qt3to4:
+#include <QCloseEvent>
  
 #include "evamain.h"
 

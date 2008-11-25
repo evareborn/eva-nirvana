@@ -25,6 +25,13 @@
 #include "evahtmlparser.h"
 #include <qdatetime.h>
 #include <qcolor.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QShowEvent>
+#include <QPixmap>
+#include <Q3PopupMenu>
+#include <QHideEvent>
+#include <QKeyEvent>
 #include <list> 
 
 class EvaImageResource;
@@ -34,7 +41,7 @@ class CustomFaceSelector;
 class QTextCodec;
 class QKeyEvent;
 //X class EvaFontSelecter;
-class QPopupMenu;
+class Q3PopupMenu;
 class QTimer;
 class QShowEvent;
 class QCloseEvent;
@@ -46,7 +53,7 @@ class EvaQunChatWindow : public EvaQunChatUIBase
 {
 	Q_OBJECT
 public:
-	EvaQunChatWindow(Qun * qun, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaQunChatWindow(Qun * qun, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	~EvaQunChatWindow();
 	static void setupImages(EvaImageResource *res);
 	static void setQuickReplyMessages(const std::list<QString> &list);
@@ -120,8 +127,8 @@ private:
 	static std::list<QString> quickList;
 	
 //X 	EvaFontSelecter *fontSelecter;
-	QPopupMenu *sendKey;
-	QPopupMenu *quickMenu;
+	Q3PopupMenu *sendKey;
+	Q3PopupMenu *quickMenu;
 	
 	Qun *mQun;
 	QTextCodec *codec;

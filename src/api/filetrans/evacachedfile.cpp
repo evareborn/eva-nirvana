@@ -25,7 +25,10 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3CString>
 #include <cstring>
+#include <QDataStream>
 
 #define InfoFileName_Ext       ".info"
 #define CacheFileName_Ext      ".cache"
@@ -127,7 +130,7 @@ bool EvaCachedFile::saveFragment(const unsigned int offset,
 
 	QString fullpath = m_DirPath + "/" + m_CachedFileName;
 	QFile file(fullpath);
-	if(!file.open(IO_Raw | IO_WriteOnly | IO_Append)){
+	if(!file.open(QIODevice::Unbuffered | QIODevice::WriteOnly | QIODevice::Append)){
 		printf("EvaCachedFile::saveFragment -- cannot open \"%s\"!\n", fullpath.ascii());
 		return false;
 	}
@@ -163,7 +166,7 @@ unsigned int EvaCachedFile::getFragment(const unsigned int offset,
 
 	unsigned int bytesRead = 0;
 	QFile file(m_DirPath + "/" + m_FileName);
-	if(!file.open(IO_Raw | IO_ReadOnly)){
+	if(!file.open(QIODevice::Unbuffered | QIODevice::ReadOnly)){
 		printf("EvaCachedFile::getFragment -- \"%s\" dosen't exist!\n", m_FileName.ascii());
 		return bytesRead;
 	}
@@ -205,7 +208,7 @@ bool EvaCachedFile::updateInfoFile(const unsigned int offset, const unsigned int
 {
 	if(m_IsLoading) return false;
 	QFile file(m_DirPath + "/" + m_InfoFileName);
-	if(!file.open(IO_WriteOnly | IO_Truncate)){
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Truncate)){
 		fprintf(stderr, "EvaCachedFile::updateInfoFile -- cannot update info file!\n");
 		m_State = EInfoOpen;
 		return false;
@@ -235,7 +238,7 @@ bool EvaCachedFile::loadInfoFile()
 {
 	if(m_IsLoading) return false;
 	QFile file(m_DirPath + "/" + m_InfoFileName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		fprintf(stderr, "EvaCachedFile::loadInfoFile -- no info file available.\n");
 		m_State = EInfoOpen;
 		return false;
@@ -351,11 +354,11 @@ bool EvaCachedFile::generateDestFile()
 	QString destFileName = m_DirPath + "/" + m_FileName;
 	QFile cached(cachedFileName);
 	QFile dest(destFileName);
-	if(!cached.open(IO_ReadOnly)){
+	if(!cached.open(QIODevice::ReadOnly)){
 		fprintf(stderr, "EvaCachedFile::generateDestFile -- cannot open cached file \"%s\"!\n", cachedFileName.ascii());
 		return false;
 	}
-	if(!dest.open(IO_WriteOnly)){
+	if(!dest.open(QIODevice::WriteOnly)){
 		fprintf(stderr, "EvaCachedFile::generateDestFile -- cannot create destination file \"%s\"!\n", destFileName.ascii());
 		return false;
 	}
@@ -402,7 +405,7 @@ bool EvaCachedFile::calculateFileMd5(const QString& fullpath, char *md5Buf)
 	char *buf = new char[len];
 
 	QFile file(fullpath);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		printf("EvaCachedFile::calculateFileMd5 -- \"%s\" dosen't exist!\n", fullpath.ascii());
 		delete []buf;
 		return false;
@@ -429,7 +432,7 @@ bool EvaCachedFile::getSourceFileNameMd5(char *md5)
 {
 	if(!md5) return false;
 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	QCString tmp = codec->fromUnicode(m_FileName);
+	Q3CString tmp = codec->fromUnicode(m_FileName);
 	memcpy(md5, EvaUtil::doMd5(tmp.data(), tmp.length()), 16);
 	return true;
 }

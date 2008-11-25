@@ -27,10 +27,15 @@
 #include <qwidget.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qtextedit.h>
+#include <q3whatsthis.h>
+#include <q3textedit.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -43,7 +48,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
  */
-EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFlags fl )
+EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : QDialog( parent, name, modal, fl )
 {
     if ( !name )
@@ -64,10 +69,10 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     twTabMain->setGeometry( QRect( 5, 5, 501, 320 ) );
     twTabMain->setMargin( 10 );
 
-    svMain = new QScrollView( twTabMain, "svMain" );
+    svMain = new Q3ScrollView( twTabMain, "svMain" );
     svMain->setStaticBackground ( TRUE );
-    svMain->setHScrollBarMode(QScrollView::AlwaysOff);
-    svMain->setFrameShape(QFrame::NoFrame);
+    svMain->setHScrollBarMode(Q3ScrollView::AlwaysOff);
+    svMain->setFrameShape(Q3Frame::NoFrame);
     
     qwUserInfo = new EvaUserInfoWidget( svMain, "qwUserInfo");
     svMain->addChild( qwUserInfo );
@@ -82,7 +87,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     
     QWidget* privateLayoutWidget = new QWidget( tabQQShow, "layout13" );
     privateLayoutWidget->setGeometry( QRect( 10, -15, 350, 290 ) );
-    layout13 = new QGridLayout( privateLayoutWidget, 1, 1, 11, 6, "layout13"); 
+    layout13 = new Q3GridLayout( privateLayoutWidget, 1, 1, 11, 6, "layout13"); 
 
     lblQQShow = new QLabel( privateLayoutWidget, "lblQQShow" );
     lblQQShow->setMinimumSize( QSize( 147, 233 ) );
@@ -90,13 +95,13 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     lblQQShow->setFrameShape( QLabel::Box );
     lblQQShow->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
     lblQQShow->setScaledContents( FALSE );
-    lblQQShow->setAlignment( int( QLabel::AlignCenter ) );
+    lblQQShow->setAlignment( Qt::AlignCenter );
 
     layout13->addWidget( lblQQShow, 0, 0 );
     spacer6 = new QSpacerItem( 23, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout13->addItem( spacer6, 0, 1 );
 
-    layout12 = new QGridLayout( 0, 1, 1, 0, 6, "layout12"); 
+    layout12 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout12"); 
     spacer5 = new QSpacerItem( 20, 80, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layout12->addItem( spacer5, 4, 0 );
     spacer7 = new QSpacerItem( 20, 42, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -132,17 +137,17 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     ///////////////////////////////////////////////////////////////////////
     //Memo Widget
     TabMemo = new QWidget( twTabMain, "TabMemo" );
-    TabMemoLayout = new QGridLayout( TabMemo, 1, 1, 11, 6, "TabMemoLayout"); 
+    TabMemoLayout = new Q3GridLayout( TabMemo, 1, 1, 11, 6, "TabMemoLayout"); 
     spacer30 = new QSpacerItem( 20, 21, QSizePolicy::Minimum, QSizePolicy::Expanding );
     TabMemoLayout->addItem( spacer30, 1, 0 );
     spacer29 = new QSpacerItem( 91, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     TabMemoLayout->addItem( spacer29, 0, 1 );
 
-    layout117 = new QVBoxLayout( 0, 0, 6, "layout117"); 
+    layout117 = new Q3VBoxLayout( 0, 0, 6, "layout117"); 
 
-    layout100 = new QHBoxLayout( 0, 0, 6, "layout100"); 
+    layout100 = new Q3HBoxLayout( 0, 0, 6, "layout100"); 
 
-    layout97 = new QVBoxLayout( 0, 0, 6, "layout97"); 
+    layout97 = new Q3VBoxLayout( 0, 0, 6, "layout97"); 
 
     lblMemoName = new QLabel( TabMemo, "lblMemoName" );
     layout97->addWidget( lblMemoName );
@@ -157,11 +162,11 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout97->addWidget( lblMemoEmail );
     layout100->addLayout( layout97 );
 
-    layout99 = new QVBoxLayout( 0, 0, 6, "layout99"); 
+    layout99 = new Q3VBoxLayout( 0, 0, 6, "layout99"); 
 
-    layout98 = new QHBoxLayout( 0, 0, 6, "layout98"); 
+    layout98 = new Q3HBoxLayout( 0, 0, 6, "layout98"); 
 
-    layout80 = new QVBoxLayout( 0, 0, 6, "layout80"); 
+    layout80 = new Q3VBoxLayout( 0, 0, 6, "layout80"); 
 
     leMemoName = new QLineEdit( TabMemo, "leMemoName" );
     leMemoName->setFrameShape( QLineEdit::Box );
@@ -176,7 +181,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout80->addWidget( leMemoMobile );
     layout98->addLayout( layout80 );
 
-    layout81 = new QVBoxLayout( 0, 0, 6, "layout81"); 
+    layout81 = new Q3VBoxLayout( 0, 0, 6, "layout81"); 
 
     lblMemoTelephone = new QLabel( TabMemo, "lblMemoTelephone" );
     layout81->addWidget( lblMemoTelephone );
@@ -185,7 +190,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout81->addWidget( lblMemoZipCode );
     layout98->addLayout( layout81 );
 
-    layout82 = new QVBoxLayout( 0, 0, 6, "layout82"); 
+    layout82 = new Q3VBoxLayout( 0, 0, 6, "layout82"); 
 
     leMemoTelephone = new QLineEdit( TabMemo, "leMemoTelephone" );
     leMemoTelephone->setFrameShape( QLineEdit::Box );
@@ -201,7 +206,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout98->addLayout( layout82 );
     layout99->addLayout( layout98 );
 
-    layout86 = new QVBoxLayout( 0, 0, 6, "layout86"); 
+    layout86 = new Q3VBoxLayout( 0, 0, 6, "layout86"); 
 
     leMemoAddress = new QLineEdit( TabMemo, "leMemoAddress" );
     leMemoAddress->setFrameShape( QLineEdit::Box );
@@ -218,9 +223,9 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout100->addLayout( layout99 );
     layout117->addLayout( layout100 );
 
-    layout112 = new QHBoxLayout( 0, 0, 6, "layout112"); 
+    layout112 = new Q3HBoxLayout( 0, 0, 6, "layout112"); 
 
-    layout111 = new QVBoxLayout( 0, 0, 6, "layout111"); 
+    layout111 = new Q3VBoxLayout( 0, 0, 6, "layout111"); 
 
     lblMemoNote = new QLabel( TabMemo, "lblMemoNote" );
     layout111->addWidget( lblMemoNote );
@@ -228,18 +233,18 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     layout111->addItem( spacer32 );
     layout112->addLayout( layout111 );
 
-    teMemoNote = new QTextEdit( TabMemo, "teMemoNote" );
+    teMemoNote = new Q3TextEdit( TabMemo, "teMemoNote" );
     teMemoNote->setMinimumSize( QSize( 0, 50 ) );
     teMemoNote->setMaximumSize( QSize( 32767, 50 ) );
-    teMemoNote->setFrameShape( QTextEdit::Box );
-    teMemoNote->setFrameShadow( QTextEdit::Plain );
+    teMemoNote->setFrameShape( Q3TextEdit::Box );
+    teMemoNote->setFrameShadow( Q3TextEdit::Plain );
     teMemoNote->setLineWidth( 1 );
     layout112->addWidget( teMemoNote );
     layout117->addLayout( layout112 );
     spacer38 = new QSpacerItem( 20, 21, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layout117->addItem( spacer38 );
 
-    layout116 = new QHBoxLayout( 0, 0, 6, "layout116"); 
+    layout116 = new Q3HBoxLayout( 0, 0, 6, "layout116"); 
     spacer34 = new QSpacerItem( 40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout116->addItem( spacer34 );
 
@@ -259,7 +264,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, WFl
     
     languageChange();
     resize( QSize(512, 345).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

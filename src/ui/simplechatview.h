@@ -20,11 +20,13 @@
 #define UI_SIMPLECHATVIEW_H_
  
 #include <qdatetime.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <Q3PopupMenu>
  
 class QAction;
  
-class SimpleChatView : public QTextEdit {
+class SimpleChatView : public Q3TextEdit {
     Q_OBJECT
     public:
         SimpleChatView( QWidget*parent = 0, const char* name = 0 );
@@ -47,7 +49,7 @@ class SimpleChatView : public QTextEdit {
 	
 	void updateContents(const QString &contents);
 
-	QPopupMenu *menu;
+	Q3PopupMenu *menu;
 	QAction *copyAction;
 	QString buffer;
 	bool m_isScrollAtBottom;

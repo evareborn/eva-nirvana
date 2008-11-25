@@ -24,7 +24,9 @@
 #include "evaqunsysmsguibase.h"
 
 #include "evapacketmanager.h"
-#include <qmemarray.h>
+#include <q3memarray.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 class EvaQunSysMsgWindow : public EvaQunSysMsgUIBase
 {

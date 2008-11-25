@@ -24,6 +24,13 @@
 #include "customfacemanagerui.h"
 #include "customface.h"
 #include <qdialog.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3PopupMenu>
+#include <QCloseEvent>
 
 class CustomFaceConfig;
 class QCloseEvent;
@@ -57,9 +64,9 @@ private slots:
 
 class GroupActionPrivate;
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QPushButton;
 class QRadioButton;
@@ -71,7 +78,7 @@ class RmSmileyGroupDialog : public QDialog
     Q_OBJECT
 
 public:
-	RmSmileyGroupDialog( int indexOfRm, CustomFaceConfig *config, QWidget* parent = 0, const char* name = 0, bool modal = true, WFlags fl = 0 );
+	RmSmileyGroupDialog( int indexOfRm, CustomFaceConfig *config, QWidget* parent = 0, const char* name = 0, bool modal = true, Qt::WFlags fl = 0 );
 	virtual ~RmSmileyGroupDialog();
 	
 	QPushButton* btnOK;
@@ -86,12 +93,12 @@ public:
 	static int QueryDialog(int indexOfRm, CustomFaceConfig *config, QWidget* parent = 0);
 
 private:
-	QGridLayout* RmSmileyGroupUILayout;
-	QHBoxLayout* layout3;
+	Q3GridLayout* RmSmileyGroupUILayout;
+	Q3HBoxLayout* layout3;
 	QSpacerItem* spacer3;
-	QVBoxLayout* layout7;
-	QVBoxLayout* layout6;
-	QHBoxLayout* layout4;
+	Q3VBoxLayout* layout7;
+	Q3VBoxLayout* layout6;
+	Q3HBoxLayout* layout4;
 	QSpacerItem* spacer4;
 
 	int m_IndexOfRm;
@@ -106,7 +113,7 @@ private slots:
 	void slotCancelClicked();
 };
 
-class QPopupMenu;
+class Q3PopupMenu;
 
 class CustomSmileyManager : public CustomFaceManagerUI
 {
@@ -123,7 +130,7 @@ private:
 	CustomFaceConfig *m_Config;
 	bool m_IsChanged;
 	GroupActionPrivate *d;
-	QPopupMenu *m_MoveToMenu;
+	Q3PopupMenu *m_MoveToMenu;
 
 	virtual void closeEvent ( QCloseEvent *e);
 
@@ -142,8 +149,8 @@ private slots:
 	void slotEditGroupClicked();
 	void slotRemoveGroupClicked();
 
-	void slotGroupRenamed(QListViewItem*, int, const QString &);
-	void slotGroupSelectionChanged( QListViewItem *);
+	void slotGroupRenamed(Q3ListViewItem*, int, const QString &);
+	void slotGroupSelectionChanged( Q3ListViewItem *);
 
 	void slotFaceSelectionChanged( );
 	void slotFaceValueChanged(int row, int col);

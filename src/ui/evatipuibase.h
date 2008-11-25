@@ -23,12 +23,18 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QLabel;
 
 class EvaTipUIBase : public QWidget
@@ -36,19 +42,19 @@ class EvaTipUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaTipUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaTipUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaTipUIBase();
 
-    QFrame* fraMain;
+    Q3Frame* fraMain;
     QLabel* lblPixmap;
     QLabel* lblNick;
     QLabel* lblMessage;
 
 protected:
-    QGridLayout* EvaTipUIBaseLayout;
-    QGridLayout* fraMainLayout;
-    QHBoxLayout* layout2;
-    QVBoxLayout* layout1;
+    Q3GridLayout* EvaTipUIBaseLayout;
+    Q3GridLayout* fraMainLayout;
+    Q3HBoxLayout* layout2;
+    Q3VBoxLayout* layout1;
 
 protected slots:
     virtual void languageChange();

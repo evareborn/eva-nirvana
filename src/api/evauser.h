@@ -27,6 +27,8 @@
 #include "evausersetting.h"
 #include <qobject.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QCustomEvent>
 #include <cstring>
 #include <list>
 

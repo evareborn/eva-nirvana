@@ -60,13 +60,13 @@
 
 
 #include <qhostaddress.h>
-#include <qcstring.h>
+#include <q3cstring.h>
 #include <qobject.h>
 #include <qmap.h>
 
 // Implementing UDP & TCP connections to Tencent Server
 
-class QSocketDevice;
+class Q3SocketDevice;
 class QSocketNotifier;
  
 class EvaSocket : public QObject {
@@ -99,7 +99,7 @@ signals:
 	void exceptionEvent(int);      // emit whenever exception happens
 	void writeReady();
 protected:
-	QSocketDevice *connectSocket;
+	Q3SocketDevice *connectSocket;
 	QSocketNotifier *socketReadNotifier; 
 	QSocketNotifier *socketWriteNotifier;
 	
@@ -127,8 +127,8 @@ public:
 	void setDestinationServer(const QString &server, const int port); // server could be IP or URL
 	const QString &getDestinationServer() const { return destinationAddress; }
 	void setAuthParameter(const QString &username, const QString &password);
-	const QCString &getBase64AuthParam() const { return base64AuthParam;}
-	void setBase64AuthParam(const QCString &param) { base64AuthParam = param;  status = Proxy_None; }
+	const Q3CString &getBase64AuthParam() const { return base64AuthParam;}
+	void setBase64AuthParam(const Q3CString &param) { base64AuthParam = param;  status = Proxy_None; }
 	bool doInitConnecting();
 	bool doAuthConnecting();
 	
@@ -144,8 +144,8 @@ public slots:
 private:
 	ProxyStatus status;
 	QString destinationAddress;
-	QCString base64AuthParam;
-	QCString sentBuffer;
+	Q3CString base64AuthParam;
+	Q3CString sentBuffer;
 	char *readBuffer;
 	void received(int len);
 private slots:
@@ -183,17 +183,17 @@ public:
 	/** get the ready-to-send string for sending
 	 *  or the string we got for receiving
 	 */
-	const QCString toCString();
+	const Q3CString toCString();
 
-	QCString getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth = false);
-	QCString getCmdGetHeader(const bool useProxy = false, const bool needAuth = false);
+	Q3CString getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth = false);
+	Q3CString getCmdGetHeader(const bool useProxy = false, const bool needAuth = false);
 
 	/** Also, provides some easy to use methods for sending/receiving header */
 	void setCookie(const QString &name, const QString &value);
 	void setGetURI(const QString &uri);
 	void setHost(const QString &host);
 	void setAuthInfo(const QString &user, const QString &password);
-	void setBase64AuthParam(const QCString &param);
+	void setBase64AuthParam(const Q3CString &param);
 
 	const QString &getUsername() const { return m_Username; }
 	const QString &getPassword() const { return m_Password; }
@@ -223,7 +223,7 @@ private:
 	QMap<QString, QString> m_Fields;
 	QMap<QString, QString> m_Cookies;
 	QString m_Username, m_Password;
-	QCString m_Base64AuthParam;
+	Q3CString m_Base64AuthParam;
 };
 
 
@@ -245,7 +245,7 @@ public:
 	/** if use proxy, call the following two */
 	void setProxyServer(const QString &host, unsigned short port);
 	void setProxyAuthInfo(const QString &username, const QString &password);
-	void setBase64AuthParam(const QCString &param);
+	void setBase64AuthParam(const Q3CString &param);
 
 	/** path can be the relative path like /index.html or /data/123.png. the path can also be the 
 	    absolute URI like www.myswear.net/forum/index.php

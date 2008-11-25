@@ -21,10 +21,15 @@
 #define EVAMAINBASEUI_H
 
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QToolButton;
 class QLabel;
@@ -38,7 +43,7 @@ class EvaMainUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaMainUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaMainUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaMainUIBase();
 
     QToolButton* tbMyFace;
@@ -54,9 +59,9 @@ public:
     //QPushButton* pbStatus;
 
 protected:
-    QGridLayout* EvaMainUIBaseLayout;
-    QVBoxLayout* layout1;
-    QHBoxLayout* layout2;
+    Q3GridLayout* EvaMainUIBaseLayout;
+    Q3VBoxLayout* layout1;
+    Q3HBoxLayout* layout2;
     QSpacerItem* spacer1;
     //QVBoxLayout* layout3;
     //QHBoxLayout* layout4;

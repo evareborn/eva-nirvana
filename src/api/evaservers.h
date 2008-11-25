@@ -21,7 +21,7 @@
 #define EVASERVERS_H
 
 #include <qobject.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qhostaddress.h>
 
 
@@ -67,8 +67,8 @@ private:
 	bool m_StopDns;
 	QTimer *m_Timeout;
 	int m_CurrAddrIndex;
-	QValueList<serverItem> TCPServers;
-	QValueList<serverItem> UDPServers;
+	Q3ValueList<serverItem> TCPServers;
+	Q3ValueList<serverItem> UDPServers;
 	
 	bool m_bIsFirst;
 	

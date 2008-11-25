@@ -35,6 +35,8 @@
 #include <qvariant.h>
 #include <qstringlist.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 
 class EvaImageResource;
@@ -45,7 +47,7 @@ class EvaDetailsWindow : public EvaUserUIBase
 {
 	Q_OBJECT
 public:
-	EvaDetailsWindow(QStringList &user, QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0);
+	EvaDetailsWindow(QStringList &user, QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0);
 	~EvaDetailsWindow(); 
 	static void setImageResource( EvaImageResource *res ) { faces = res; }
 

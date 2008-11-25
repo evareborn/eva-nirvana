@@ -23,16 +23,22 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QToolButton;
 class QLabel;
-class QFrame;
+class Q3Frame;
 class QLineEdit;
-class QGroupBox;
+class Q3GroupBox;
 class QPushButton;
 
 class EvaAddQunUIBase : public QWidget
@@ -40,7 +46,7 @@ class EvaAddQunUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaAddQunUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaAddQunUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaAddQunUIBase();
 
     QToolButton* tbQunDetails;
@@ -51,40 +57,40 @@ public:
     QLabel* lblQunNameTag;
     QLabel* lblQunName;
     QToolButton* tbCreatorDetails;
-    QFrame* fraAuthContents;
+    Q3Frame* fraAuthContents;
     QLabel* lblDescription;
-    QFrame* fraAuthGraphic;
+    Q3Frame* fraAuthGraphic;
     QLabel* lblCode;
     QLineEdit* leCode;
     QLabel* lblTip;
     QLabel* lblGraphic;
     QToolButton* tbRefresh;
-    QGroupBox* gbMessage;
+    Q3GroupBox* gbMessage;
     QLineEdit* leMessage;
     QPushButton* btnSend;
     QPushButton* btnCancel;
 
 protected:
-    QGridLayout* EvaAddQunUIBaseLayout;
-    QVBoxLayout* layout21;
-    QHBoxLayout* layout15;
-    QVBoxLayout* layout1;
-    QVBoxLayout* layout2;
-    QVBoxLayout* layout14;
-    QHBoxLayout* layout13;
+    Q3GridLayout* EvaAddQunUIBaseLayout;
+    Q3VBoxLayout* layout21;
+    Q3HBoxLayout* layout15;
+    Q3VBoxLayout* layout1;
+    Q3VBoxLayout* layout2;
+    Q3VBoxLayout* layout14;
+    Q3HBoxLayout* layout13;
     QSpacerItem* spacer3;
-    QHBoxLayout* layout4;
+    Q3HBoxLayout* layout4;
     QSpacerItem* spacer1;
-    QVBoxLayout* fraAuthContentsLayout;
-    QVBoxLayout* layout20;
-    QVBoxLayout* fraAuthGraphicLayout;
-    QVBoxLayout* layout19;
-    QHBoxLayout* layout18;
+    Q3VBoxLayout* fraAuthContentsLayout;
+    Q3VBoxLayout* layout20;
+    Q3VBoxLayout* fraAuthGraphicLayout;
+    Q3VBoxLayout* layout19;
+    Q3HBoxLayout* layout18;
     QSpacerItem* spacer4;
-    QHBoxLayout* layout17;
+    Q3HBoxLayout* layout17;
     QSpacerItem* spacer5;
-    QVBoxLayout* gbMessageLayout;
-    QHBoxLayout* layout11;
+    Q3VBoxLayout* gbMessageLayout;
+    Q3HBoxLayout* layout11;
     QSpacerItem* spacer2;
 
 protected slots:

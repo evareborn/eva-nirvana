@@ -28,6 +28,10 @@
 #include <qimage.h>
 #include <qbitmap.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <Q3Frame>
+#include <QMouseEvent>
 //X #include <klocale.h>
 #include <math.h>
 
@@ -62,8 +66,8 @@ static void CreateMaskFromImage(QPixmap *pixmap, QImage *image, int color)
 	if(image->depth() != 32) return;
 	maskImage = new QImage(image->width(), image->height(), 8, 2);
 
-	maskImage->setColor(0, Qt::white.rgb());
-	maskImage->setColor(1, Qt::black.rgb());
+	maskImage->setColor(0, QColor( Qt::white ).rgb());
+	maskImage->setColor(1, QColor( Qt::black ).rgb());
 
 	for(y=0; y < image->height(); y++) {
 		sourceLine = image->scanLine(y);
@@ -82,12 +86,12 @@ static void CreateMaskFromImage(QPixmap *pixmap, QImage *image, int color)
 }
 
 CustomFacePanel::CustomFacePanel(int groupIndex, QString &group, FaceList &members, QWidget* parent)
-	: QFrame(parent, "", WStyle_NoBorder),
+	: Q3Frame(parent, "", Qt::WStyle_NoBorder),
 	m_groupName(group), m_groupIndex(groupIndex), m_CurrSurface(0), m_CurrPage(0)
 {
 	setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
 	resize( QSize(FACE_PANEL_WIDTH, FACE_PANEL_HEIGHT).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 	m_Surfaces.setAutoDelete(true);
 
 	if(m_groupIndex == -1)
@@ -287,7 +291,7 @@ void CustomFacePanel::setPage(int index)
 void CustomFacePanel::paintEvent( QPaintEvent *e)
 {
 	if(!m_CurrSurface){
-		QFrame::paintEvent(e);
+		Q3Frame::paintEvent(e);
 		return;
 	}
 	
@@ -331,7 +335,7 @@ void CustomFacePanel::mouseReleaseEvent( QMouseEvent * e)
 
 ///*  =========================================== */
 
-CustomFaceSelector::CustomFaceSelector( bool useSysFaceOnly, QWidget* parent,  const char* name, WFlags fl )
+CustomFaceSelector::CustomFaceSelector( bool useSysFaceOnly, QWidget* parent,  const char* name, Qt::WFlags fl )
     : CustomFaceUIBase( parent, name, fl ), m_UseSysFaceOnly(useSysFaceOnly)
 {
 	// system smiley first

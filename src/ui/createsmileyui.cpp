@@ -17,7 +17,11 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <qrect.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -28,24 +32,24 @@
  *  Constructs a CreateSmileyUI as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
+CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "CreateSmileyUI" );
-    CreateSmileyUILayout = new QGridLayout( this, 1, 1, 11, 6, "CreateSmileyUILayout"); 
+    CreateSmileyUILayout = new Q3GridLayout( this, 1, 1, 11, 6, "CreateSmileyUILayout"); 
 
-    layout21 = new QVBoxLayout( 0, 0, 6, "layout21"); 
+    layout21 = new Q3VBoxLayout( 0, 0, 6, "layout21"); 
 
     lblTop = new QLabel( this, "lblTop" );
     lblTop->setPaletteForegroundColor( QColor( 0, 51, 153 ) );
     layout21->addWidget( lblTop );
 
     lblStep1 = new QLabel( this, "lblStep1" );
-    lblStep1->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+    lblStep1->setAlignment( int( Qt::WordBreak | Qt::AlignVCenter ) );
     layout21->addWidget( lblStep1 );
 
-    layout16 = new QHBoxLayout( 0, 0, 6, "layout16"); 
+    layout16 = new Q3HBoxLayout( 0, 0, 6, "layout16"); 
     spacer6 = new QSpacerItem( 20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout16->addItem( spacer6 );
 
@@ -61,7 +65,7 @@ CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
     lblStep2 = new QLabel( this, "lblStep2" );
     layout21->addWidget( lblStep2 );
 
-    layout19 = new QHBoxLayout( 0, 0, 6, "layout19"); 
+    layout19 = new Q3HBoxLayout( 0, 0, 6, "layout19"); 
     spacer6_3 = new QSpacerItem( 20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout19->addItem( spacer6_3 );
 
@@ -81,7 +85,7 @@ CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
     lblStep3 = new QLabel( this, "lblStep3" );
     layout21->addWidget( lblStep3 );
 
-    layout17 = new QHBoxLayout( 0, 0, 6, "layout17"); 
+    layout17 = new Q3HBoxLayout( 0, 0, 6, "layout17"); 
     spacer6_2 = new QSpacerItem( 20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout17->addItem( spacer6_2 );
 
@@ -89,16 +93,16 @@ CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
     layout17->addWidget( leTip );
     layout21->addLayout( layout17 );
 
-    layout20 = new QHBoxLayout( 0, 0, 6, "layout20"); 
+    layout20 = new Q3HBoxLayout( 0, 0, 6, "layout20"); 
     spacer6_2_2 = new QSpacerItem( 20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout20->addItem( spacer6_2_2 );
 
     lblCommends = new QLabel( this, "lblCommends" );
-    lblCommends->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+    lblCommends->setAlignment( int( Qt::WordBreak | Qt::AlignVCenter ) );
     layout20->addWidget( lblCommends );
     layout21->addLayout( layout20 );
 
-    layout14 = new QHBoxLayout( 0, 0, 6, "layout14"); 
+    layout14 = new Q3HBoxLayout( 0, 0, 6, "layout14"); 
     spacer5 = new QSpacerItem( 141, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout14->addItem( spacer5 );
 
@@ -112,7 +116,7 @@ CreateSmileyUI::CreateSmileyUI( QWidget* parent, const char* name, WFlags fl )
     CreateSmileyUILayout->addLayout( layout21, 0, 0 );
     languageChange();
     resize( QSize(445, 316).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
 //X     QRect scr = KApplication::desktop()->screenGeometry();
 //X     move(scr.center()-rect().center());

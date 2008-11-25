@@ -5,27 +5,31 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
 //X #include <klocale.h>
 #include "evadisplaywidget.h"
 #include "evastatusbar.h"
 //#include "evalistview.h"
 
-EvaMainUIBase::EvaMainUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaMainUIBase::EvaMainUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaMainUIBase" );
-    EvaMainUIBaseLayout = new QGridLayout( this, 1, 1, 0, 0, "EvaMainUIBaseLayout"); 
+    EvaMainUIBaseLayout = new Q3GridLayout( this, 1, 1, 0, 0, "EvaMainUIBaseLayout"); 
 
-    layout1 = new QVBoxLayout( 0, 0, 0, "layout1"); 
+    layout1 = new Q3VBoxLayout( 0, 0, 0, "layout1"); 
 
-    layout2 = new QHBoxLayout( 0, 0, 0, "layout2"); 
+    layout2 = new Q3HBoxLayout( 0, 0, 0, "layout2"); 
 
     tbMyFace = new QToolButton( this, "tbMyFace" );
     tbMyFace->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbMyFace->sizePolicy().hasHeightForWidth() ) );
@@ -73,7 +77,7 @@ EvaMainUIBase::EvaMainUIBase( QWidget* parent, const char* name, WFlags fl )
     EvaMainUIBaseLayout->addLayout( layout1, 0, 0 );
     languageChange();
     resize( QSize(195, 376).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 EvaMainUIBase::~EvaMainUIBase()

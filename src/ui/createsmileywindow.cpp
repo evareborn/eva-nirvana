@@ -28,16 +28,21 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qdir.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qtoolbutton.h>
 #include <qlayout.h>
 #include <qradiobutton.h>
-#include <qtable.h>
-#include <qpopupmenu.h>
+#include <q3table.h>
+#include <q3popupmenu.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qmovie.h>
 #include <qmessagebox.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
+#include <QCloseEvent>
 
 //X #include <kfiledialog.h>
 //X #include <kmessagebox.h>
@@ -155,14 +160,14 @@ void CreateSmileyWindow::slotOKClicked( )
 /**======================================================*/
 
 
-RmSmileyGroupDialog::RmSmileyGroupDialog(  int indexOfRm, CustomFaceConfig *config, QWidget* parent, const char* name, bool modal, WFlags fl )
+RmSmileyGroupDialog::RmSmileyGroupDialog(  int indexOfRm, CustomFaceConfig *config, QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : QDialog( parent, name, modal, fl ), m_IndexOfRm(indexOfRm), m_Config(config)
 {
 	if ( !name )
 		setName( "RmSmileyGroupUI" );
-	RmSmileyGroupUILayout = new QGridLayout( this, 1, 1, 16, 7, "RmSmileyGroupUILayout"); 
+	RmSmileyGroupUILayout = new Q3GridLayout( this, 1, 1, 16, 7, "RmSmileyGroupUILayout"); 
 	
-	layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
+	layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3"); 
 	spacer3 = new QSpacerItem( 81, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout3->addItem( spacer3 );
 	
@@ -174,17 +179,17 @@ RmSmileyGroupDialog::RmSmileyGroupDialog(  int indexOfRm, CustomFaceConfig *conf
 	
 	RmSmileyGroupUILayout->addLayout( layout3, 1, 0 );
 	
-	layout7 = new QVBoxLayout( 0, 6, 15, "layout7"); 
+	layout7 = new Q3VBoxLayout( 0, 6, 15, "layout7"); 
 	
 	rbtnRmAll = new QRadioButton( this, "rbtnRmAll" );
 	layout7->addWidget( rbtnRmAll );
 	
-	layout6 = new QVBoxLayout( 0, 0, 6, "layout6"); 
+	layout6 = new Q3VBoxLayout( 0, 0, 6, "layout6"); 
 	
 	rbtnRmMv = new QRadioButton( this, "rbtnRmMv" );
 	layout6->addWidget( rbtnRmMv );
 	
-	layout4 = new QHBoxLayout( 0, 0, 6, "layout4"); 
+	layout4 = new Q3HBoxLayout( 0, 0, 6, "layout4"); 
 	spacer4 = new QSpacerItem( 20, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
 	layout4->addItem( spacer4 );
 	
@@ -199,7 +204,7 @@ RmSmileyGroupDialog::RmSmileyGroupDialog(  int indexOfRm, CustomFaceConfig *conf
 	RmSmileyGroupUILayout->addLayout( layout7, 0, 0 );
 	languageChange();
 	resize( QSize(309, 171).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 
 	// make remove all smileys in this group as the default
 	rbtnRmAll->setChecked( true);
@@ -283,15 +288,15 @@ int RmSmileyGroupDialog::QueryDialog(int indexOfRm, CustomFaceConfig *config, QW
 
 /**======================================================*/
 
-class CustomItem : public QTableItem
+class CustomItem : public Q3TableItem
 {
 public:
-	CustomItem(QTable *table, const QString &text)
-		: QTableItem(table, QTableItem::OnTyping, text )
+	CustomItem(Q3Table *table, const QString &text)
+		: Q3TableItem(table, Q3TableItem::OnTyping, text )
 	{
 	}	
-	CustomItem(QTable *table, const QString &text, const QPixmap &p )
-		: QTableItem(table, QTableItem::OnTyping, text, p)
+	CustomItem(Q3Table *table, const QString &text, const QPixmap &p )
+		: Q3TableItem(table, Q3TableItem::OnTyping, text, p)
 	{
 	}
 	
@@ -304,7 +309,7 @@ public:
 	enum GroupAction {GNone, GSelect, GAdd, GEdit, GRemove};
 	
 	GroupAction m_Action;
-	QListViewItem *m_Item;
+	Q3ListViewItem *m_Item;
 	QString m_OldName;
 	friend class CustomSmileyManager;
 };
@@ -364,16 +369,16 @@ void CustomSmileyManager::loadGroups( )
 	// as  QLIstView alway insert the current item on the top,
 	// so, just add items reversely
 	for( int i = (int)(groups.count() -1); i >= 0; i--){
-		(void) new QListViewItem(lvGroups, groups[i]);
+		(void) new Q3ListViewItem(lvGroups, groups[i]);
 	}
 	connect(tbtnAddGroup, SIGNAL(clicked()), this, SLOT(slotAddGroupClicked()));
 	connect(tbtnEditGroup, SIGNAL(clicked()), this, SLOT(slotEditGroupClicked()));
 	connect(tbtnRemoveGroup, SIGNAL(clicked()), this, SLOT(slotRemoveGroupClicked()));
 
-	connect(lvGroups, SIGNAL(itemRenamed(QListViewItem*, int, const QString &)),
-			this, SLOT(slotGroupRenamed(QListViewItem*, int, const QString &)));
-	connect(lvGroups, SIGNAL(selectionChanged( QListViewItem *) ),
-			this, SLOT(slotGroupSelectionChanged( QListViewItem *) ) );
+	connect(lvGroups, SIGNAL(itemRenamed(Q3ListViewItem*, int, const QString &)),
+			this, SLOT(slotGroupRenamed(Q3ListViewItem*, int, const QString &)));
+	connect(lvGroups, SIGNAL(selectionChanged( Q3ListViewItem *) ),
+			this, SLOT(slotGroupSelectionChanged( Q3ListViewItem *) ) );
 }
 
 void CustomSmileyManager::initFaces( )
@@ -419,7 +424,7 @@ void CustomSmileyManager::loadSmileys( int groupIndex )
 		for( FaceList::Iterator it = list.begin(); it != list.end(); ++it){
 			//tblFaceList->setText(row, 0, QString::number( row + 1));
 			tblFaceList->setItem(row, 0, 
-						new QTableItem(tblFaceList, QTableItem::Never,
+						new Q3TableItem(tblFaceList, Q3TableItem::Never,
 									QString::number(row + 1)));
 
 			QPixmap *pixmap = new QPixmap(dir + (*it).fixed());
@@ -475,7 +480,7 @@ void CustomSmileyManager::slotAddGroupClicked( )
 		QMessageBox::critical( this, QString( i18n( "A directory named \"%1\" already exists. " )).arg( dir.path() ), i18n( "Directory Exists!" ) );
 		return;
 	}
-	QListViewItem *item = new QListViewItem(lvGroups, lvGroups->lastItem(), name);
+	Q3ListViewItem *item = new Q3ListViewItem(lvGroups, lvGroups->lastItem(), name);
 	m_Config->addGroup( name );
 	m_IsChanged = true;
 	m_Config->saveXML();
@@ -492,7 +497,7 @@ void CustomSmileyManager::slotAddGroupClicked( )
 // rename the group
 void CustomSmileyManager::slotEditGroupClicked( )
 {
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		if(item == lvGroups->firstChild()) return;
 
@@ -515,7 +520,7 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		if(item == lvGroups->firstChild()) return; // never remove default group
 
@@ -538,15 +543,13 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 				{
 					if(dir.exists()){
 						dir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );
-						const QFileInfoList *list = dir.entryInfoList();
-						QFileInfoListIterator it( *list);
-						QFileInfo *fi;
+						const QFileInfoList &list = dir.entryInfoList();
 						QString destDir = path;
 						if(result>0)
 							destDir += ( m_Config->groupName( result ) + "/") ;
-						while( (fi = it.current() ) != 0 ){
-							EvaHelper::copyFile(fi->absFilePath(), (destDir + fi->fileName()) );
-							++it;
+						for ( QFileInfoList::const_iterator iter = list.begin(); iter != list.end(); iter++ ){
+                                                        const QFileInfo &fi = *iter;
+							EvaHelper::copyFile(fi.absFilePath(), (destDir + fi.fileName()) );
 						}
 					}
 					m_Config->moveChildrenTo(index, result);
@@ -564,13 +567,12 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 			} else return;
 
 			dir.setFilter( QDir::Files | QDir::Hidden | QDir::NoSymLinks );
-			const QFileInfoList *list = dir.entryInfoList();
-			QFileInfoListIterator it( *list);
-			QFileInfo *fi;
-			while( (fi = it.current() ) != 0 ){
-				dir.remove( fi->absFilePath() );
-				++it;
-			}
+			const QFileInfoList &list = dir.entryInfoList();
+                        for ( QFileInfoList::const_iterator iter = list.begin(); iter != list.end(); iter++ ) {
+                                const QFileInfo &fi = *iter;
+				dir.remove( fi.absFilePath() );
+                        }
+
 			// as all files have been deleted,  we need keep the config file up to date.
 			m_Config->saveXML();
 			if( ! dir.rmdir( dir.path(), true)){
@@ -581,7 +583,7 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 	}
 }
 
-void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, const QString & text)
+void CustomSmileyManager::slotGroupRenamed( Q3ListViewItem *item, int /*col*/, const QString & text)
 {
 	item->setRenameEnabled( 0, false ); // make it un-editable
 	if(!m_Config) return;
@@ -597,7 +599,7 @@ void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, co
 		QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
 		QDir dir(path + d->m_OldName);
 		if(dir.exists()){
-			if(!dir.rename(path + d->m_OldName, path + text, true)){
+			if(!dir.rename(path + d->m_OldName, path + text)){
 				QMessageBox::critical( this, QString( i18n( "Can not change the directory name: %1. " ) )
 									.arg( dir.path()), i18n("Rename Group") );
 			} else{
@@ -613,7 +615,7 @@ void CustomSmileyManager::slotGroupRenamed( QListViewItem *item, int /*col*/, co
 	}
 }
 
-void CustomSmileyManager::slotGroupSelectionChanged( QListViewItem * group)
+void CustomSmileyManager::slotGroupSelectionChanged( Q3ListViewItem * group)
 {
 	if(!group) return;
 	group->setSelected( true );
@@ -638,7 +640,7 @@ void CustomSmileyManager::slotFaceSelectionChanged( )
 	btnUp->setEnabled(isSingle);
 	btnDown->setEnabled(isSingle);
 	if(numSelections){
-		QListViewItem *item = lvGroups->selectedItem();
+		Q3ListViewItem *item = lvGroups->selectedItem();
 		if(item){
 			int gId = m_Config->groupIndex( item->text( 0 ) );
 			if(gId < 0) return;
@@ -649,11 +651,11 @@ void CustomSmileyManager::slotFaceSelectionChanged( )
 			QString ext = face.org().right(3);
 			lblPreview->clear();
 			if(ext.lower() == "gif"){
-				lblPreview->setMovie( QMovie(path + face.org()));
+				lblPreview->setMovie( new QMovie(path + face.org()));
 			} else {
 				QImage img(path + face.org() );
 				
-				lblPreview->setPixmap( QPixmap(img.smoothScale( lblPreview->size(), QImage::ScaleMin)));
+				lblPreview->setPixmap( QPixmap(img.smoothScale( lblPreview->size(), Qt::ScaleMin)));
 			}
 		}
 	}
@@ -663,7 +665,7 @@ void CustomSmileyManager::slotFaceValueChanged( int row, int col )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		int gId = m_Config->groupIndex( item->text( 0 ) );
 		if(gId < 0) return;
@@ -689,7 +691,7 @@ void CustomSmileyManager::slotAddSmiley( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(! item) return;
 
 	int gId = m_Config->groupIndex( item->text( 0 ) );
@@ -705,7 +707,7 @@ void CustomSmileyManager::slotAddCustomSmileyReady( bool ok)
 	if(!ok) return;
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(! item) return;
 
 	int gId = m_Config->groupIndex( item->text( 0 ) );
@@ -735,7 +737,7 @@ void CustomSmileyManager::slotRemoveSmiley( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		int gId = m_Config->groupIndex( item->text( 0 ) );
 		if(gId < 0) return;
@@ -784,7 +786,7 @@ void CustomSmileyManager::slotUpSmiley( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		int gId = m_Config->groupIndex( item->text( 0 ) );
 		if(gId < 0) return;
@@ -807,7 +809,7 @@ void CustomSmileyManager::slotDownSmiley( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		int gId = m_Config->groupIndex( item->text( 0 ) );
 		if(gId < 0) return;
@@ -830,13 +832,13 @@ void CustomSmileyManager::slotMoveToSmiley( )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		if(m_MoveToMenu){
 			disconnect(m_MoveToMenu, 0, 0, 0);
 			delete m_MoveToMenu;
 		}
-		m_MoveToMenu = new QPopupMenu(0,"moveto");
+		m_MoveToMenu = new Q3PopupMenu(0,"moveto");
 
 		int currIndex = m_Config->groupIndex( item->text( 0 ) );
 		QStringList groups = m_Config->groupNames();
@@ -854,7 +856,7 @@ void CustomSmileyManager::slotMoveSmileyTo( int Id )
 {
 	if(!m_Config) return;
 
-	QListViewItem *item = lvGroups->selectedItem();
+	Q3ListViewItem *item = lvGroups->selectedItem();
 	if(item){
 		QString srcGName = item->text(0); // selected group name
 		int gId = m_Config->groupIndex( srcGName );  // selected group index
@@ -889,7 +891,7 @@ void CustomSmileyManager::slotMoveSmileyTo( int Id )
 			
 					QDir smileyDir(src);
 					smileyDir.remove( src + face.fixed());
-					smileyDir.remove( src +  + face.org());
+					smileyDir.remove( src + face.org());
 
 					// update display
 					tblFaceList->removeRow(row);

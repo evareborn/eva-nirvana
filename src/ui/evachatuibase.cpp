@@ -30,12 +30,15 @@
 #include <qlineedit.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qsplitter.h>
-#include <qvaluelist.h>
-#include <qframe.h>
+#include <q3valuelist.h>
+#include <q3frame.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -43,20 +46,20 @@
 //X 
 //X #include <kapplication.h>
 
-EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaChatUIBase" );
-	EvaChatUIBaseLayout = new QHBoxLayout( this, 0, 0, "EvaChatUIBaseLayout");
+	EvaChatUIBaseLayout = new Q3HBoxLayout( this, 0, 0, "EvaChatUIBaseLayout");
 
 	splitter = new QSplitter( this, "splitter" );
-	splitter->setOrientation( QSplitter::Vertical );
+	splitter->setOrientation( Qt::Vertical );
 	QWidget *upperLayoutWidget = new QWidget(splitter, "upper");
 
-	layout5 = new QVBoxLayout( upperLayoutWidget, 0, 3, "layout5");
+	layout5 = new Q3VBoxLayout( upperLayoutWidget, 0, 3, "layout5");
 
-	layout4 = new QHBoxLayout( 0, 3, 6, "layout4"); 
+	layout4 = new Q3HBoxLayout( 0, 3, 6, "layout4"); 
 	
 	tbBuddy = new QToolButton( upperLayoutWidget, "tbBuddy" );
 	tbBuddy->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbBuddy->sizePolicy().hasHeightForWidth() ) );
@@ -82,19 +85,19 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	
 	lblSignature = new QLabel( upperLayoutWidget, "lblSignature");
 	lblSignature->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, (QSizePolicy::SizeType)0, 0, 0, lblSignature->sizePolicy().hasHeightForWidth() ) );
-	lblSignature->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
+	lblSignature->setAlignment( Qt::WordBreak | Qt::AlignTop | Qt::AlignLeft );
 	layout5->addWidget(lblSignature);
 	
 	chatDisplay = new SimpleChatView(upperLayoutWidget, "chatDisplay");
 	chatDisplay->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred, 0, 3, chatDisplay->sizePolicy().hasHeightForWidth() ) );
-	chatDisplay->setHScrollBarMode(QScrollView::AlwaysOff);
+	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
 	layout5->addWidget( chatDisplay );
 	
 	
 	lowerLayoutWidget = new QWidget(splitter, "lower");
-	lowerLayout = new QVBoxLayout(lowerLayoutWidget, 0, 3, "toolLayout");
+	lowerLayout = new Q3VBoxLayout(lowerLayoutWidget, 0, 3, "toolLayout");
 
-	layout3 = new QHBoxLayout( 0, 0, 0, "layout3"); 
+	layout3 = new Q3HBoxLayout( 0, 0, 0, "layout3"); 
 	
 	tbSmiley = new QToolButton( lowerLayoutWidget, "tbSmiley" );
 	tbSmiley->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbSmiley->sizePolicy().hasHeightForWidth() ) );
@@ -192,11 +195,11 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	kteInput = new EvaTextEdit( lowerLayoutWidget, "kteInput" );
 	kteInput->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)2, (QSizePolicy::SizeType)1, 0, 2, kteInput->sizePolicy().hasHeightForWidth() ) );
 	kteInput->setMinimumSize( QSize( 0, 10 ) );
-	kteInput->setHScrollBarMode( QTextEdit::AlwaysOff );
+	kteInput->setHScrollBarMode( Q3TextEdit::AlwaysOff );
 	kteInput->setTextFormat(Qt::RichText);
 	lowerLayout->addWidget( kteInput );
 	
-	layout2 = new QHBoxLayout( 0, 4, 6, "layout2"); 
+	layout2 = new Q3HBoxLayout( 0, 4, 6, "layout2"); 
 	
 	pbHistory = new QPushButton( lowerLayoutWidget, "pbHistory" );
 	pbHistory->setToggleButton( TRUE );
@@ -218,14 +221,14 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	
 	EvaChatUIBaseLayout->addWidget(splitter);
 	
-	layout19 = new QVBoxLayout( 0, 10, 6, "layout19");
+	layout19 = new Q3VBoxLayout( 0, 10, 6, "layout19");
 
 	spacer12 = new QSpacerItem( 20, 3, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout19->addItem( spacer12 );
 	
-	m_FilePanelFrame = new QFrame(this, "m_FilePanelFrame");
+	m_FilePanelFrame = new Q3Frame(this, "m_FilePanelFrame");
 	m_FilePanelFrame->setMaximumSize(QSize(115, 200));
-	m_FilePanelFrame->setFrameShape(QFrame::LineEditPanel);
+	m_FilePanelFrame->setFrameShape(Q3Frame::LineEditPanel);
 //X 	m_FilePanelLayout = new QVBoxLayout( m_FilePanelFrame, 2, 2, "m_FilePanelLayout"); // parent, margin, space
 		
 //X 	m_FilePanel = new EvaFilePanel(m_FilePanelFrame, "m_FilePanel");
@@ -233,13 +236,13 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 
 	layout19->addWidget(m_FilePanelFrame);
 
-	m_ShowFrame = new QFrame(this, "m_ShowFrame");
-	m_ShowFrame->setFrameShape(QFrame::LineEditPanel);
-	m_ShowLayout = new QVBoxLayout( m_ShowFrame, 10, 1, "m_ShowLayout"); // parent, margin, space
+	m_ShowFrame = new Q3Frame(this, "m_ShowFrame");
+	m_ShowFrame->setFrameShape(Q3Frame::LineEditPanel);
+	m_ShowLayout = new Q3VBoxLayout( m_ShowFrame, 10, 1, "m_ShowLayout"); // parent, margin, space
 
 	lblBuddyShow = new QLabel( m_ShowFrame, "lblBuddyShow" );
 	lblBuddyShow->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)7, 0, 0, lblBuddyShow->sizePolicy().hasHeightForWidth() ) );
-	lblBuddyShow->setAlignment( int( QLabel::AlignVCenter ) );
+	lblBuddyShow->setAlignment( Qt::AlignVCenter );
 	m_ShowLayout->addWidget( lblBuddyShow );
 	
 	tbShowBuddy = new QToolButton( m_ShowFrame, "tbShowBuddy" );
@@ -252,7 +255,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	
 	lblMeShow = new QLabel( m_ShowFrame, "lblMeShow" );
 	lblMeShow->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)7, 0, 0, lblMeShow->sizePolicy().hasHeightForWidth() ) );
-	lblMeShow->setAlignment( int( QLabel::AlignVCenter ) );
+	lblMeShow->setAlignment( Qt::AlignVCenter );
 	//layout19->addWidget( lblMeShow );
 	m_ShowLayout->addWidget( lblMeShow );
 	
@@ -275,7 +278,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	m_FilePanelFrame->hide();
 	m_ShowFrame->hide();
 
-	QValueList<int> list;
+	Q3ValueList<int> list;
 	list.append(150);
 	list.append(120);
 	//list.append(100);
@@ -284,7 +287,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	languageChange();
 	resize( QSize(320, 367).expandedTo(minimumSizeHint()) );
 	//resize( QSize(450, 422).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 //X 	QRect scr = KApplication::desktop()->screenGeometry();
 //X 	move(scr.center()-rect().center());
 }

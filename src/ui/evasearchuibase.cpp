@@ -26,19 +26,23 @@
 #include <qpushbutton.h>
 #include <qtabwidget.h>
 #include <qwidget.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 #include <qlabel.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlineedit.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qtoolbutton.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -51,7 +55,7 @@
  *  The dialog will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal dialog.
  */
-EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal, WFlags fl )
+EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : QDialog( parent, name, modal, fl )
 {
     if ( !name )
@@ -59,10 +63,10 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     setEnabled( TRUE );
     setMinimumSize( QSize( 535, 360 ) );
     setMaximumSize( QSize( 535, 360 ) );
-    EvaSearchUIBaseLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaSearchUIBaseLayout"); 
+    EvaSearchUIBaseLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaSearchUIBaseLayout"); 
     EvaSearchUIBaseLayout->setResizeMode( QLayout::Minimum );
 
-    layout127 = new QGridLayout( 0, 1, 1, 0, 6, "layout127"); 
+    layout127 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout127"); 
 
     twSearchMain = new QTabWidget( this, "twSearchMain" );
     twSearchMain->setMinimumSize( QSize( 0, 305 ) );
@@ -70,32 +74,32 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     twSearchMain->setMargin( 0 );
 
     tabBasicSearch = new QWidget( twSearchMain, "tabBasicSearch" );
-    tabBasicSearchLayout = new QGridLayout( tabBasicSearch, 1, 1, 11, 6, "tabBasicSearchLayout"); 
+    tabBasicSearchLayout = new Q3GridLayout( tabBasicSearch, 1, 1, 11, 6, "tabBasicSearchLayout"); 
 
-    wsBasicSearch = new QWidgetStack( tabBasicSearch, "wsBasicSearch" );
+    wsBasicSearch = new Q3WidgetStack( tabBasicSearch, "wsBasicSearch" );
     wsBasicSearch->setMargin( 0 );
 
     wsBSPage = new QWidget( wsBasicSearch, "wsBSPage" );
-    wsBSPageLayout = new QGridLayout( wsBSPage, 1, 1, 11, 6, "wsBSPageLayout"); 
+    wsBSPageLayout = new Q3GridLayout( wsBSPage, 1, 1, 11, 6, "wsBSPageLayout"); 
 
-    layout135 = new QVBoxLayout( 0, 0, 6, "layout135"); 
+    layout135 = new Q3VBoxLayout( 0, 0, 6, "layout135"); 
 
-    layout105 = new QVBoxLayout( 0, 3, 5, "layout105"); 
+    layout105 = new Q3VBoxLayout( 0, 3, 5, "layout105"); 
 
     lblSearchOptionTip = new QLabel( wsBSPage, "lblSearchOptionTip" );
     layout105->addWidget( lblSearchOptionTip );
 
-    layout100 = new QHBoxLayout( 0, 3, 6, "layout100"); 
+    layout100 = new Q3HBoxLayout( 0, 3, 6, "layout100"); 
 
-    bgBSType = new QButtonGroup( wsBSPage, "bgBSType" );
+    bgBSType = new Q3ButtonGroup( wsBSPage, "bgBSType" );
     bgBSType->setMaximumSize( QSize( 32767, 94 ) );
-    bgBSType->setFrameShape( QButtonGroup::NoFrame );
+    bgBSType->setFrameShape( Q3ButtonGroup::NoFrame );
     bgBSType->setRadioButtonExclusive( TRUE );
     bgBSType->setProperty( "selectedId", -1 );
     bgBSType->setColumnLayout(0, Qt::Vertical );
     bgBSType->layout()->setSpacing( 0 );
     bgBSType->layout()->setMargin( 0 );
-    bgBSTypeLayout = new QGridLayout( bgBSType->layout() );
+    bgBSTypeLayout = new Q3GridLayout( bgBSType->layout() );
     bgBSTypeLayout->setAlignment( Qt::AlignTop );
 
     rbCustomSearch = new QRadioButton( bgBSType, "rbCustomSearch" );
@@ -115,23 +119,23 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout105->addLayout( layout100 );
     layout135->addLayout( layout105 );
 
-    wsBasicCondtion = new QWidgetStack( wsBSPage, "wsBasicCondtion" );
+    wsBasicCondtion = new Q3WidgetStack( wsBSPage, "wsBasicCondtion" );
     wsBasicCondtion->setMargin( -9 );
 
     wsCustomSearchCondition = new QWidget( wsBasicCondtion, "wsCustomSearchCondition" );
-    wsCustomSearchConditionLayout = new QGridLayout( wsCustomSearchCondition, 1, 1, 11, 6, "wsCustomSearchConditionLayout"); 
+    wsCustomSearchConditionLayout = new Q3GridLayout( wsCustomSearchCondition, 1, 1, 11, 6, "wsCustomSearchConditionLayout"); 
 
-    gbCustomCondition = new QGroupBox( wsCustomSearchCondition, "gbCustomCondition" );
+    gbCustomCondition = new Q3GroupBox( wsCustomSearchCondition, "gbCustomCondition" );
     gbCustomCondition->setMargin( 0 );
     gbCustomCondition->setColumnLayout(0, Qt::Vertical );
     gbCustomCondition->layout()->setSpacing( 6 );
     gbCustomCondition->layout()->setMargin( 11 );
-    gbCustomConditionLayout = new QGridLayout( gbCustomCondition->layout() );
+    gbCustomConditionLayout = new Q3GridLayout( gbCustomCondition->layout() );
     gbCustomConditionLayout->setAlignment( Qt::AlignTop );
 
-    layout204_2 = new QHBoxLayout( 0, 0, 6, "layout204_2"); 
+    layout204_2 = new Q3HBoxLayout( 0, 0, 6, "layout204_2"); 
 
-    layout188_2 = new QVBoxLayout( 0, 0, 6, "layout188_2"); 
+    layout188_2 = new Q3VBoxLayout( 0, 0, 6, "layout188_2"); 
 
     lblQQNum = new QLabel( gbCustomCondition, "lblQQNum" );
     layout188_2->addWidget( lblQQNum );
@@ -141,7 +145,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
 
     layout204_2->addLayout( layout188_2 );
 
-    layout203_2 = new QVBoxLayout( 0, 0, 6, "layout203_2"); 
+    layout203_2 = new Q3VBoxLayout( 0, 0, 6, "layout203_2"); 
 
     leQQNum = new QLineEdit( gbCustomCondition, "leQQNum" );
     leQQNum->setMinimumSize( QSize( 150, 0 ) );
@@ -166,22 +170,22 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsBasicCondtion->addWidget( wsCustomSearchCondition, 0 );
 
     wsFrdCenterSearchCondition = new QWidget( wsBasicCondtion, "wsFrdCenterSearchCondition" );
-    wsFrdCenterSearchConditionLayout = new QGridLayout( wsFrdCenterSearchCondition, 1, 1, 11, 6, "wsFrdCenterSearchConditionLayout"); 
+    wsFrdCenterSearchConditionLayout = new Q3GridLayout( wsFrdCenterSearchCondition, 1, 1, 11, 6, "wsFrdCenterSearchConditionLayout"); 
 
-    gbFrdCenterCondition = new QGroupBox( wsFrdCenterSearchCondition, "gbFrdCenterCondition" );
+    gbFrdCenterCondition = new Q3GroupBox( wsFrdCenterSearchCondition, "gbFrdCenterCondition" );
     gbFrdCenterCondition->setMargin( 0 );
     gbFrdCenterCondition->setColumnLayout(0, Qt::Vertical );
     gbFrdCenterCondition->layout()->setSpacing( 2 );
     gbFrdCenterCondition->layout()->setMargin( 8 );
-    gbFrdCenterConditionLayout = new QGridLayout( gbFrdCenterCondition->layout() );
+    gbFrdCenterConditionLayout = new Q3GridLayout( gbFrdCenterCondition->layout() );
     gbFrdCenterConditionLayout->setAlignment( Qt::AlignTop );
 
-    layout46 = new QVBoxLayout( 0, 0, 6, "layout46"); 
+    layout46 = new Q3VBoxLayout( 0, 0, 6, "layout46"); 
     spacer27 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layout46->addItem( spacer27 );
 
     lblQQFrdTip = new QLabel( gbFrdCenterCondition, "lblQQFrdTip" );
-    lblQQFrdTip->setAlignment( int( QLabel::WordBreak | QLabel::AlignCenter ) );
+    lblQQFrdTip->setAlignment( Qt::WordBreak | Qt::AlignCenter );
     layout46->addWidget( lblQQFrdTip );
     spacer28 = new QSpacerItem( 20, 21, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layout46->addItem( spacer28 );
@@ -192,7 +196,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsBasicCondtion->addWidget( wsFrdCenterSearchCondition, 1 );
     layout135->addWidget( wsBasicCondtion );
 
-    layout316_2 = new QHBoxLayout( 0, 0, 6, "layout316_2"); 
+    layout316_2 = new Q3HBoxLayout( 0, 0, 6, "layout316_2"); 
 
     lblOnlineNumbers = new QLabel( wsBSPage, "lblOnlineNumbers" );
     layout316_2->addWidget( lblOnlineNumbers );
@@ -207,11 +211,11 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsBasicSearch->addWidget( wsBSPage, 0 );
 
     wsBSResultPage = new QWidget( wsBasicSearch, "wsBSResultPage" );
-    wsBSResultPageLayout = new QGridLayout( wsBSResultPage, 1, 1, 11, 6, "wsBSResultPageLayout"); 
+    wsBSResultPageLayout = new Q3GridLayout( wsBSResultPage, 1, 1, 11, 6, "wsBSResultPageLayout"); 
 
-    layout47 = new QVBoxLayout( 0, 0, 6, "layout47"); 
+    layout47 = new Q3VBoxLayout( 0, 0, 6, "layout47"); 
 
-    layout96 = new QHBoxLayout( 0, 0, 6, "layout96"); 
+    layout96 = new Q3HBoxLayout( 0, 0, 6, "layout96"); 
 
     lblBSResultTip = new QLabel( wsBSResultPage, "lblBSResultTip" );
     layout96->addWidget( lblBSResultTip );
@@ -219,26 +223,26 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout96->addItem( spacer46 );
     layout47->addLayout( layout96 );
 
-    tbBSResult = new QTable( wsBSResultPage, "tbBSResult" );
+    tbBSResult = new Q3Table( wsBSResultPage, "tbBSResult" );
     tbBSResult->setNumCols( tbBSResult->numCols() + 1 );
     tbBSResult->horizontalHeader()->setLabel( tbBSResult->numCols() - 1, i18n( "Account" ) );
     tbBSResult->setNumCols( tbBSResult->numCols() + 1 );
     tbBSResult->horizontalHeader()->setLabel( tbBSResult->numCols() - 1, i18n( "Nick Name" ) );
     tbBSResult->setNumCols( tbBSResult->numCols() + 1 );
     tbBSResult->horizontalHeader()->setLabel( tbBSResult->numCols() - 1, i18n( "From" ) );
-    tbBSResult->setFrameShape( QTable::Box );
-    tbBSResult->setFrameShadow( QTable::Plain );
+    tbBSResult->setFrameShape( Q3Table::Box );
+    tbBSResult->setFrameShadow( Q3Table::Plain );
     tbBSResult->setLineWidth( 1 );
-    tbBSResult->setHScrollBarMode( QTable::Auto );
+    tbBSResult->setHScrollBarMode( Q3Table::Auto );
     tbBSResult->setNumRows( 0 );
     tbBSResult->setNumCols( 3 );
     tbBSResult->setShowGrid( TRUE );
     tbBSResult->setReadOnly( TRUE );
-    tbBSResult->setSelectionMode( QTable::SingleRow );
-    tbBSResult->setFocusStyle( QTable::FollowStyle );
+    tbBSResult->setSelectionMode( Q3Table::SingleRow );
+    tbBSResult->setFocusStyle( Q3Table::FollowStyle );
     layout47->addWidget( tbBSResult );
 
-    layout46_2 = new QHBoxLayout( 0, 0, 6, "layout46_2"); 
+    layout46_2 = new Q3HBoxLayout( 0, 0, 6, "layout46_2"); 
 
     lblBSResultPage = new QLabel( wsBSResultPage, "lblBSResultPage" );
     layout46_2->addWidget( lblBSResultPage );
@@ -273,25 +277,25 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     twSearchMain->insertTab( tabBasicSearch, QString::fromLatin1("") );
 
     tabAdvancedSearch = new QWidget( twSearchMain, "tabAdvancedSearch" );
-    tabAdvancedSearchLayout = new QGridLayout( tabAdvancedSearch, 1, 1, 11, 6, "tabAdvancedSearchLayout"); 
+    tabAdvancedSearchLayout = new Q3GridLayout( tabAdvancedSearch, 1, 1, 11, 6, "tabAdvancedSearchLayout"); 
 
-    wsAdvancedSearch = new QWidgetStack( tabAdvancedSearch, "wsAdvancedSearch" );
+    wsAdvancedSearch = new Q3WidgetStack( tabAdvancedSearch, "wsAdvancedSearch" );
 
     wsASPage = new QWidget( wsAdvancedSearch, "wsASPage" );
-    wsASPageLayout = new QGridLayout( wsASPage, 1, 1, 11, 6, "wsASPageLayout"); 
+    wsASPageLayout = new Q3GridLayout( wsASPage, 1, 1, 11, 6, "wsASPageLayout"); 
 
-    layout91 = new QVBoxLayout( 0, 0, 6, "layout91"); 
+    layout91 = new Q3VBoxLayout( 0, 0, 6, "layout91"); 
 
-    layout371 = new QVBoxLayout( 0, 0, 6, "layout371"); 
+    layout371 = new Q3VBoxLayout( 0, 0, 6, "layout371"); 
 
     lblASTip = new QLabel( wsASPage, "lblASTip" );
     layout371->addWidget( lblASTip );
 
-    layout370 = new QHBoxLayout( 0, 0, 6, "layout370"); 
+    layout370 = new Q3HBoxLayout( 0, 0, 6, "layout370"); 
     spacer156 = new QSpacerItem( 31, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout370->addItem( spacer156 );
 
-    layout369 = new QHBoxLayout( 0, 0, 6, "layout369"); 
+    layout369 = new Q3HBoxLayout( 0, 0, 6, "layout369"); 
 
     chbOnlineUsers = new QCheckBox( wsASPage, "chbOnlineUsers" );
     layout369->addWidget( chbOnlineUsers );
@@ -306,16 +310,16 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout371->addLayout( layout370 );
     layout91->addLayout( layout371 );
 
-    gbBasicCondition = new QGroupBox( wsASPage, "gbBasicCondition" );
+    gbBasicCondition = new Q3GroupBox( wsASPage, "gbBasicCondition" );
     gbBasicCondition->setColumnLayout(0, Qt::Vertical );
     gbBasicCondition->layout()->setSpacing( 6 );
     gbBasicCondition->layout()->setMargin( 11 );
-    gbBasicConditionLayout = new QGridLayout( gbBasicCondition->layout() );
+    gbBasicConditionLayout = new Q3GridLayout( gbBasicCondition->layout() );
     gbBasicConditionLayout->setAlignment( Qt::AlignTop );
 
-    layout376 = new QHBoxLayout( 0, 0, 6, "layout376"); 
+    layout376 = new Q3HBoxLayout( 0, 0, 6, "layout376"); 
 
-    layout372 = new QVBoxLayout( 0, 0, 6, "layout372"); 
+    layout372 = new Q3VBoxLayout( 0, 0, 6, "layout372"); 
 
     lblASProvince = new QLabel( gbBasicCondition, "lblASProvince" );
     layout372->addWidget( lblASProvince );
@@ -330,7 +334,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout372->addWidget( lblASGender );
     layout376->addLayout( layout372 );
 
-    layout375 = new QVBoxLayout( 0, 0, 6, "layout375"); 
+    layout375 = new Q3VBoxLayout( 0, 0, 6, "layout375"); 
 
     cbASProvince = new QComboBox( FALSE, gbBasicCondition, "cbASProvince" );
     layout375->addWidget( cbASProvince );
@@ -341,7 +345,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     cbASAge = new QComboBox( FALSE, gbBasicCondition, "cbASAge" );
     layout375->addWidget( cbASAge );
 
-    layout373 = new QHBoxLayout( 0, 0, 6, "layout373"); 
+    layout373 = new Q3HBoxLayout( 0, 0, 6, "layout373"); 
 
     cbASSex = new QComboBox( FALSE, gbBasicCondition, "cbASSex" );
     cbASSex->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)0, 0, 0, cbASSex->sizePolicy().hasHeightForWidth() ) );
@@ -362,11 +366,11 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsAdvancedSearch->addWidget( wsASPage, 0 );
 
     wsASResultPage = new QWidget( wsAdvancedSearch, "wsASResultPage" );
-    wsASResultPageLayout = new QVBoxLayout( wsASResultPage, 11, 6, "wsASResultPageLayout"); 
+    wsASResultPageLayout = new Q3VBoxLayout( wsASResultPage, 11, 6, "wsASResultPageLayout"); 
 
-    layout47_2 = new QVBoxLayout( 0, 0, 6, "layout47_2"); 
+    layout47_2 = new Q3VBoxLayout( 0, 0, 6, "layout47_2"); 
 
-    layout96_2 = new QHBoxLayout( 0, 0, 6, "layout96_2"); 
+    layout96_2 = new Q3HBoxLayout( 0, 0, 6, "layout96_2"); 
 
     lblASResultTip = new QLabel( wsASResultPage, "lblASResultTip" );
     layout96_2->addWidget( lblASResultTip );
@@ -374,7 +378,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout96_2->addItem( spacer48 );
     layout47_2->addLayout( layout96_2 );
 
-    tbASResult = new QTable( wsASResultPage, "tbASResult" );
+    tbASResult = new Q3Table( wsASResultPage, "tbASResult" );
     tbASResult->setNumCols( tbASResult->numCols() + 1 );
     tbASResult->horizontalHeader()->setLabel( tbASResult->numCols() - 1, i18n( "Account" ) );
     tbASResult->setNumCols( tbASResult->numCols() + 1 );
@@ -389,19 +393,19 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     tbASResult->horizontalHeader()->setLabel( tbASResult->numCols() - 1, i18n( "City" ) );
     tbASResult->setNumCols( tbASResult->numCols() + 1 );
     tbASResult->horizontalHeader()->setLabel( tbASResult->numCols() - 1, i18n( "Status" ) );
-    tbASResult->setFrameShape( QTable::Box );
-    tbASResult->setFrameShadow( QTable::Plain );
+    tbASResult->setFrameShape( Q3Table::Box );
+    tbASResult->setFrameShadow( Q3Table::Plain );
     tbASResult->setLineWidth( 1 );
-    tbASResult->setHScrollBarMode( QTable::Auto );
+    tbASResult->setHScrollBarMode( Q3Table::Auto );
     tbASResult->setNumRows( 0 );
     tbASResult->setNumCols( 7 );
     tbASResult->setShowGrid( TRUE );
     tbASResult->setReadOnly( TRUE );
-    tbASResult->setSelectionMode( QTable::SingleRow );
-    tbASResult->setFocusStyle( QTable::FollowStyle );
+    tbASResult->setSelectionMode( Q3Table::SingleRow );
+    tbASResult->setFocusStyle( Q3Table::FollowStyle );
     layout47_2->addWidget( tbASResult );
 
-    layout46_2_2 = new QHBoxLayout( 0, 0, 6, "layout46_2_2"); 
+    layout46_2_2 = new Q3HBoxLayout( 0, 0, 6, "layout46_2_2"); 
 
     lblASResultPage = new QLabel( wsASResultPage, "lblASResultPage" );
     layout46_2_2->addWidget( lblASResultPage );
@@ -435,33 +439,33 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     twSearchMain->insertTab( tabAdvancedSearch, QString::fromLatin1("") );
 
     tabQunSearch = new QWidget( twSearchMain, "tabQunSearch" );
-    tabQunSearchLayout = new QGridLayout( tabQunSearch, 1, 1, 11, 6, "tabQunSearchLayout"); 
+    tabQunSearchLayout = new Q3GridLayout( tabQunSearch, 1, 1, 11, 6, "tabQunSearchLayout"); 
 
-    wsQunSearch = new QWidgetStack( tabQunSearch, "wsQunSearch" );
+    wsQunSearch = new Q3WidgetStack( tabQunSearch, "wsQunSearch" );
 
     wsQSPage = new QWidget( wsQunSearch, "wsQSPage" );
-    wsQSPageLayout = new QGridLayout( wsQSPage, 1, 1, 11, 6, "wsQSPageLayout"); 
+    wsQSPageLayout = new Q3GridLayout( wsQSPage, 1, 1, 11, 6, "wsQSPageLayout"); 
 
-    layout203 = new QVBoxLayout( 0, 0, 6, "layout203"); 
+    layout203 = new Q3VBoxLayout( 0, 0, 6, "layout203"); 
 
-    layout92 = new QHBoxLayout( 0, 0, 0, "layout92"); 
+    layout92 = new Q3HBoxLayout( 0, 0, 0, "layout92"); 
     spacer173_2 = new QSpacerItem( 40, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout92->addItem( spacer173_2 );
 
-    layout400_2 = new QVBoxLayout( 0, 0, 0, "layout400_2"); 
+    layout400_2 = new Q3VBoxLayout( 0, 0, 0, "layout400_2"); 
 
     lblQSTip = new QLabel( wsQSPage, "lblQSTip" );
     layout400_2->addWidget( lblQSTip );
 
-    layout399_2 = new QHBoxLayout( 0, 0, 6, "layout399_2"); 
+    layout399_2 = new Q3HBoxLayout( 0, 0, 6, "layout399_2"); 
 
-    bgQSType = new QButtonGroup( wsQSPage, "bgQSType" );
-    bgQSType->setFrameShape( QButtonGroup::NoFrame );
-    bgQSType->setFrameShadow( QButtonGroup::Plain );
+    bgQSType = new Q3ButtonGroup( wsQSPage, "bgQSType" );
+    bgQSType->setFrameShape( Q3ButtonGroup::NoFrame );
+    bgQSType->setFrameShadow( Q3ButtonGroup::Plain );
     bgQSType->setColumnLayout(0, Qt::Vertical );
     bgQSType->layout()->setSpacing( 2 );
     bgQSType->layout()->setMargin( 6 );
-    bgQSTypeLayout = new QGridLayout( bgQSType->layout() );
+    bgQSTypeLayout = new Q3GridLayout( bgQSType->layout() );
     bgQSTypeLayout->setAlignment( Qt::AlignTop );
 
     rbSearchAlumni = new QRadioButton( bgQSType, "rbSearchAlumni" );
@@ -484,21 +488,21 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout92->addItem( spacer174_2 );
     layout203->addLayout( layout92 );
 
-    gbQCondition = new QGroupBox( wsQSPage, "gbQCondition" );
+    gbQCondition = new Q3GroupBox( wsQSPage, "gbQCondition" );
     gbQCondition->setColumnLayout(0, Qt::Vertical );
     gbQCondition->layout()->setSpacing( 0 );
     gbQCondition->layout()->setMargin( 8 );
-    gbQConditionLayout = new QGridLayout( gbQCondition->layout() );
+    gbQConditionLayout = new Q3GridLayout( gbQCondition->layout() );
     gbQConditionLayout->setAlignment( Qt::AlignTop );
 
-    wsQunCondition = new QWidgetStack( gbQCondition, "wsQunCondition" );
+    wsQunCondition = new Q3WidgetStack( gbQCondition, "wsQunCondition" );
 
     wsCategoryConditon = new QWidget( wsQunCondition, "wsCategoryConditon" );
-    wsCategoryConditonLayout = new QGridLayout( wsCategoryConditon, 1, 1, 11, 6, "wsCategoryConditonLayout"); 
+    wsCategoryConditonLayout = new Q3GridLayout( wsCategoryConditon, 1, 1, 11, 6, "wsCategoryConditonLayout"); 
 
-    layout402_2 = new QVBoxLayout( 0, 0, 6, "layout402_2"); 
+    layout402_2 = new Q3VBoxLayout( 0, 0, 6, "layout402_2"); 
 
-    layout388_2 = new QHBoxLayout( 0, 0, 6, "layout388_2"); 
+    layout388_2 = new Q3HBoxLayout( 0, 0, 6, "layout388_2"); 
 
     lblCategory = new QLabel( wsCategoryConditon, "lblCategory" );
     layout388_2->addWidget( lblCategory );
@@ -508,11 +512,11 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout388_2->addWidget( cbCategory1 );
     layout402_2->addLayout( layout388_2 );
 
-    layout394_2 = new QHBoxLayout( 0, 0, 6, "layout394_2"); 
+    layout394_2 = new Q3HBoxLayout( 0, 0, 6, "layout394_2"); 
     spacer168_2 = new QSpacerItem( 51, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout394_2->addItem( spacer168_2 );
 
-    layout390_2 = new QVBoxLayout( 0, 0, 6, "layout390_2"); 
+    layout390_2 = new Q3VBoxLayout( 0, 0, 6, "layout390_2"); 
 
     cbCategory2 = new QComboBox( FALSE, wsCategoryConditon, "cbCategory2" );
     cbCategory2->setMinimumSize( QSize( 100, 0 ) );
@@ -531,18 +535,18 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsQunCondition->addWidget( wsCategoryConditon, 0 );
 
     wsAlumniCondition = new QWidget( wsQunCondition, "wsAlumniCondition" );
-    wsAlumniConditionLayout = new QGridLayout( wsAlumniCondition, 1, 1, 11, 6, "wsAlumniConditionLayout"); 
+    wsAlumniConditionLayout = new Q3GridLayout( wsAlumniCondition, 1, 1, 11, 6, "wsAlumniConditionLayout"); 
 
     lblAlumniTip = new QLabel( wsAlumniCondition, "lblAlumniTip" );
-    lblAlumniTip->setAlignment( int( QLabel::WordBreak | QLabel::AlignCenter ) );
+    lblAlumniTip->setAlignment( Qt::WordBreak | Qt::AlignCenter );
 
     wsAlumniConditionLayout->addWidget( lblAlumniTip, 0, 0 );
     wsQunCondition->addWidget( wsAlumniCondition, 1 );
 
     wsAccurateCondition = new QWidget( wsQunCondition, "wsAccurateCondition" );
-    wsAccurateConditionLayout = new QGridLayout( wsAccurateCondition, 1, 1, 11, 6, "wsAccurateConditionLayout"); 
+    wsAccurateConditionLayout = new Q3GridLayout( wsAccurateCondition, 1, 1, 11, 6, "wsAccurateConditionLayout"); 
 
-    layout306 = new QHBoxLayout( 0, 0, 6, "layout306"); 
+    layout306 = new Q3HBoxLayout( 0, 0, 6, "layout306"); 
 
     lblQunNum = new QLabel( wsAccurateCondition, "lblQunNum" );
     layout306->addWidget( lblQunNum );
@@ -567,11 +571,11 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     wsQunSearch->addWidget( wsQSPage, 0 );
 
     wsQSResultPage = new QWidget( wsQunSearch, "wsQSResultPage" );
-    wsQSResultPageLayout = new QGridLayout( wsQSResultPage, 1, 1, 11, 6, "wsQSResultPageLayout"); 
+    wsQSResultPageLayout = new Q3GridLayout( wsQSResultPage, 1, 1, 11, 6, "wsQSResultPageLayout"); 
 
-    layout49 = new QVBoxLayout( 0, 0, 6, "layout49"); 
+    layout49 = new Q3VBoxLayout( 0, 0, 6, "layout49"); 
 
-    layout96_3 = new QHBoxLayout( 0, 0, 6, "layout96_3"); 
+    layout96_3 = new Q3HBoxLayout( 0, 0, 6, "layout96_3"); 
 
     lblQSResultTip = new QLabel( wsQSResultPage, "lblQSResultTip" );
     layout96_3->addWidget( lblQSResultTip );
@@ -579,26 +583,26 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout96_3->addItem( spacer46_2 );
     layout49->addLayout( layout96_3 );
 
-    tbQSResult = new QTable( wsQSResultPage, "tbQSResult" );
+    tbQSResult = new Q3Table( wsQSResultPage, "tbQSResult" );
     tbQSResult->setNumCols( tbQSResult->numCols() + 1 );
     tbQSResult->horizontalHeader()->setLabel( tbQSResult->numCols() - 1, i18n( "Qun Num" ) );
     tbQSResult->setNumCols( tbQSResult->numCols() + 1 );
     tbQSResult->horizontalHeader()->setLabel( tbQSResult->numCols() - 1, i18n( "Qun Name" ) );
     tbQSResult->setNumCols( tbQSResult->numCols() + 1 );
     tbQSResult->horizontalHeader()->setLabel( tbQSResult->numCols() - 1, i18n( "Creator" ) );
-    tbQSResult->setFrameShape( QTable::Box );
-    tbQSResult->setFrameShadow( QTable::Plain );
+    tbQSResult->setFrameShape( Q3Table::Box );
+    tbQSResult->setFrameShadow( Q3Table::Plain );
     tbQSResult->setLineWidth( 1 );
-    tbQSResult->setHScrollBarMode( QTable::Auto );
+    tbQSResult->setHScrollBarMode( Q3Table::Auto );
     tbQSResult->setNumRows( 0 );
     tbQSResult->setNumCols( 3 );
     tbQSResult->setShowGrid( TRUE );
     tbQSResult->setReadOnly( TRUE );
-    tbQSResult->setSelectionMode( QTable::SingleRow );
-    tbQSResult->setFocusStyle( QTable::FollowStyle );
+    tbQSResult->setSelectionMode( Q3Table::SingleRow );
+    tbQSResult->setFocusStyle( Q3Table::FollowStyle );
     layout49->addWidget( tbQSResult );
 
-    layout46_3 = new QHBoxLayout( 0, 0, 6, "layout46_3"); 
+    layout46_3 = new Q3HBoxLayout( 0, 0, 6, "layout46_3"); 
 
     lblQSResultPage = new QLabel( wsQSResultPage, "lblQSResultPage" );
     layout46_3->addWidget( lblQSResultPage );
@@ -634,7 +638,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
 
     layout127->addWidget( twSearchMain, 0, 1 );
 
-    layout195 = new QHBoxLayout( 0, 0, 6, "layout195"); 
+    layout195 = new Q3HBoxLayout( 0, 0, 6, "layout195"); 
     spacer38 = new QSpacerItem( 140, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout195->addItem( spacer38 );
 
@@ -660,7 +664,7 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     EvaSearchUIBaseLayout->addLayout( layout127, 0, 0 );
     languageChange();
     resize( QSize(535, 360).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

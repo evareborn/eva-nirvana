@@ -21,8 +21,12 @@
 
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qwidgetstack.h>
-#include <qprogressbar.h>
+#include <q3widgetstack.h>
+#include <q3progressbar.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
 //X #include <klocale.h>
 
 #include "evaapi.h"
@@ -30,18 +34,18 @@
 
 EvaLoginPageFrame::EvaLoginPageFrame(QWidget* parent, 
 					const char* name, 
-					WFlags fl)
-	: QFrame(parent, name, fl)
+					Qt::WFlags fl)
+	: Q3Frame(parent, name, fl)
 {
-	layout1 = new QVBoxLayout( this, 20, 6, "layout1"); 
+	layout1 = new Q3VBoxLayout( this, 20, 6, "layout1"); 
 	spacer1 = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout1->addItem( spacer1 );
 
 	lblDesc = new QLabel( this, "lblDesc" );
-	lblDesc->setAlignment( int( QLabel::WordBreak | QLabel::AlignCenter ) );
+	lblDesc->setAlignment( Qt::WordBreak | Qt::AlignCenter );
 	layout1->addWidget( lblDesc );
 
-	qpbProgress = new QProgressBar( this, "qpbProgress" );
+	qpbProgress = new Q3ProgressBar( this, "qpbProgress" );
 	qpbProgress->setTotalSteps(E_LoginProcessDone + 1);
 	layout1->addWidget( qpbProgress );
 	spacer2 = new QSpacerItem( 20, 50, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -69,11 +73,11 @@ void EvaLoginPageFrame::update(int value, const QString &msg)
 
 ///******************************************************///
 
-EvaDisplayWidget::EvaDisplayWidget(QWidget* parent, const char* name, WFlags fl)
-	: QWidgetStack(parent, name, fl)
+EvaDisplayWidget::EvaDisplayWidget(QWidget* parent, const char* name, Qt::WFlags fl)
+	: Q3WidgetStack(parent, name, fl)
 {
 	wLogin = new QWidget(this);	
-	layoutLogin = new QGridLayout( wLogin, 1, 1, 30, 6, "wspageLoginLayout");
+	layoutLogin = new Q3GridLayout( wLogin, 1, 1, 30, 6, "wspageLoginLayout");
 	
 	loginPage = new EvaLoginPageFrame(wLogin, "loginPageFrame");
 	layoutLogin->addWidget(loginPage, 0, 0);
@@ -82,7 +86,7 @@ EvaDisplayWidget::EvaDisplayWidget(QWidget* parent, const char* name, WFlags fl)
 	//wspageLoginLayout = new QGridLayout( loginPage, 1, 1, 30, 6, "wspageLoginLayout");
 	//addWidget(wLogin, 0);
 	wTab = new QWidget(this);
-	layoutTab = new QGridLayout( wTab, 1, 1, 3, 3, "wspageLoginLayout");
+	layoutTab = new Q3GridLayout( wTab, 1, 1, 3, 3, "wspageLoginLayout");
 	
 	tab = new EvaTabWidget(wTab, "tabWidget");
 	layoutTab->addWidget(tab, 0, 0);

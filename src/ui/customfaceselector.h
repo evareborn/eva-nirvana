@@ -23,9 +23,13 @@
 
 #include "customfaceuibase.h"
 #include "customface.h"
-#include <qframe.h>
+#include <q3frame.h>
 #include <qmap.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QPaintEvent>
 #include "evautil.h"
 
 #ifndef NUM_W
@@ -34,7 +38,7 @@
 #define NUM_GRIDS     (NUM_W * NUM_H)
 #endif
 
-class CustomFacePanel : public QFrame
+class CustomFacePanel : public Q3Frame
 {
 	Q_OBJECT
 
@@ -52,7 +56,7 @@ private:
 	int m_groupIndex;
 	QPixmap *m_CurrSurface;
 	int m_CurrPage;
-	QPtrList<QPixmap> m_Surfaces;
+	Q3PtrList<QPixmap> m_Surfaces;
 	QMap<int, QString> files; // index, original file name
 	int m_sysIndex[QQ_SMILEY_AMOUNT];
 
@@ -71,7 +75,7 @@ class CustomFaceSelector : public CustomFaceUIBase
 public:
     CustomFaceSelector( bool useSysFaceOnly = true, QWidget* parent = 0,
 					const char* name = 0,
-					WFlags fl = Qt::WStyle_Customize 
+					Qt::WFlags fl = Qt::WStyle_Customize 
 							| Qt::WStyle_NoBorder 
 							| Qt::WType_Popup);
 	~CustomFaceSelector();

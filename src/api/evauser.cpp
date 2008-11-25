@@ -29,6 +29,8 @@
 #include <cstdlib>
 #include <qtextcodec.h>
 #include <qevent.h>
+//Added by qt3to4:
+#include <QCustomEvent>
 //X #include <klocale.h>
 
 std::string EvaUser::qunName = "Qun List";

@@ -21,7 +21,7 @@
 #define EVACONNECTER_H
 
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
 #include <qhostaddress.h>
 #include <qstring.h>
 #include "evapacket.h"
@@ -65,8 +65,8 @@ private:
 	bool connectionReady;
 	bool m_IsDetecting;
 	bool isClientSetup;
-	QPtrList<InPacket> inPool;
-	QPtrList<OutPacket> outPool;
+	Q3PtrList<InPacket> inPool;
+	Q3PtrList<OutPacket> outPool;
 	QTimer *timer;
 	bool isConnected;
 	EvaNetwork *connecter;

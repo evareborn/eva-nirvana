@@ -19,19 +19,21 @@
  ***************************************************************************/
 #include "evatextedit.h"
 #include <qevent.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 EvaTextEdit::EvaTextEdit(const QString &text, const QString &context, QWidget *parent, const char *name):
-		QTextEdit(text, context, parent, name), isEnterSend(false)
+		Q3TextEdit(text, context, parent, name), isEnterSend(false)
 {
-	setAutoFormatting(QTextEdit::AutoNone);
-	setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+	setAutoFormatting(Q3TextEdit::AutoNone);
+	setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
 }
 
 EvaTextEdit::EvaTextEdit(QWidget *parent, const char * name):
-		QTextEdit(parent, name), isEnterSend(false)
+		Q3TextEdit(parent, name), isEnterSend(false)
 {
-	setAutoFormatting(QTextEdit::AutoNone);
-	setWrapPolicy(QTextEdit::AtWordOrDocumentBoundary);
+	setAutoFormatting(Q3TextEdit::AutoNone);
+	setWrapPolicy(Q3TextEdit::AtWordOrDocumentBoundary);
 }
 
 void EvaTextEdit::keyPressEvent(QKeyEvent *e)
@@ -57,7 +59,7 @@ void EvaTextEdit::keyPressEvent(QKeyEvent *e)
     	    }
 	}
     }
-    QTextEdit::keyPressEvent(e);
+    Q3TextEdit::keyPressEvent(e);
     if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){	
         QString txt = text();
         txt.replace("</p>\n<p>", "<br />");

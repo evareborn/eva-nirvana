@@ -48,13 +48,17 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
-#include <qvaluelist.h>
-#include <qpopupmenu.h>
+#include <q3valuelist.h>
+#include <q3popupmenu.h>
 #include <qmessagebox.h>
 #include <qapplication.h>
 //#include <qhelpmenu.h>
 #include <quuid.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QCustomEvent>
+#include <QDesktopWidget>
 
 //X #include <dcopclient.h>  ///DCOPClient
 //X #include <kapplication.h>
@@ -395,31 +399,31 @@ bool EvaMain::doInitUI()
 
 void EvaMain::initMenus()
 {
-	statusMenu = new QPopupMenu();
-	statusMenu->insertItem(QIconSet(*(images->getIcon("ONLINE"))), i18n("Online"), this,SLOT(slotDoOnline()), -1);
-	statusMenu->insertItem(QIconSet(*(images->getIcon("OFFLINE"))), i18n("Offline"), this,SLOT(slotDoOffline()), -1);
-	statusMenu->insertItem(QIconSet(*(images->getIcon("LEAVE"))), i18n("Leave"), this,SLOT(slotDoLeave()), -1);
-	statusMenu->insertItem(QIconSet(*(images->getIcon("INVISIBLE"))), i18n("Invisible"), this,SLOT(slotDoInvisible()), -1);
+	statusMenu = new Q3PopupMenu();
+	statusMenu->insertItem(QIcon(*(images->getIcon("ONLINE"))), i18n("Online"), this,SLOT(slotDoOnline()), -1);
+	statusMenu->insertItem(QIcon(*(images->getIcon("OFFLINE"))), i18n("Offline"), this,SLOT(slotDoOffline()), -1);
+	statusMenu->insertItem(QIcon(*(images->getIcon("LEAVE"))), i18n("Leave"), this,SLOT(slotDoLeave()), -1);
+	statusMenu->insertItem(QIcon(*(images->getIcon("INVISIBLE"))), i18n("Invisible"), this,SLOT(slotDoInvisible()), -1);
 	
-	sysMenu = new QPopupMenu();
-	QPopupMenu *group = new QPopupMenu();
+	sysMenu = new Q3PopupMenu();
+	Q3PopupMenu *group = new Q3PopupMenu();
 
-	group->insertItem(QIconSet(*(images->getIcon("UPLOAD_GROUPS"))), i18n("Upload Group"),this, SLOT(slotDoUploadGroups()), -1);
-	group->insertItem(QIconSet(*(images->getIcon("DOWNLOAD_GROUPS"))), i18n("Download Group"),this, SLOT(slotDoDownloadGroups()), -1);
+	group->insertItem(QIcon(*(images->getIcon("UPLOAD_GROUPS"))), i18n("Upload Group"),this, SLOT(slotDoUploadGroups()), -1);
+	group->insertItem(QIcon(*(images->getIcon("DOWNLOAD_GROUPS"))), i18n("Download Group"),this, SLOT(slotDoDownloadGroups()), -1);
 	
-	sysMenu->insertItem(QIconSet(*(images->getIcon("GROUP"))), i18n("Group"),group);
-	sysMenu->insertItem(QIconSet(*(images->getIcon("REFRESH_BUDDIES"))), i18n("Update Buddies"), this,SLOT(slotDoDownloadBuddies()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("GROUP"))), i18n("Group"),group);
+	sysMenu->insertItem(QIcon(*(images->getIcon("REFRESH_BUDDIES"))), i18n("Update Buddies"), this,SLOT(slotDoDownloadBuddies()), -1);
 	sysMenu->insertSeparator(-1);
-	sysMenu->insertItem(QIconSet(*(images->getIcon("SYSTEM_OPTIONS"))), i18n("System Options"),this, SLOT(slotRequestSystemSettingWindow()));
-	sysMenu->insertItem(QIconSet(*(images->getIcon("SCRIPT"))), i18n("Script Manager"),this, SLOT(slotShowScriptManager()));
-	sysMenu->insertItem(QIconSet(*(images->getIcon("CHANGE_USER"))), i18n("Change User"), this,SLOT(slotDoChangeUser()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("SYSTEM_OPTIONS"))), i18n("System Options"),this, SLOT(slotRequestSystemSettingWindow()));
+	sysMenu->insertItem(QIcon(*(images->getIcon("SCRIPT"))), i18n("Script Manager"),this, SLOT(slotShowScriptManager()));
+	sysMenu->insertItem(QIcon(*(images->getIcon("CHANGE_USER"))), i18n("Change User"), this,SLOT(slotDoChangeUser()), -1);
 	sysMenu->insertSeparator(-1);
 	//sysMenu->insertItem(QIconSet(*(images->getIcon("EVA"))), i18n("About Eva"), this,SLOT(doAbout()), -1);
 //X 	m_helpMenu = new QHelpMenu(g_mainWin, KGlobal::instance()->aboutData(), 
 //X 				 false);
 //X 	sysMenu->insertItem(SmallIcon("help"),KStdGuiItem::help().text(), m_helpMenu->menu());
 	sysMenu->insertSeparator(-1);
-	sysMenu->insertItem(QIconSet(*(images->getIcon("QUIT"))), i18n("Quit"), this,SLOT(doQuit()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("QUIT"))), i18n("Quit"), this,SLOT(doQuit()), -1);
 }
 
 void EvaMain::initUserLeaveMenu()
@@ -431,7 +435,7 @@ void EvaMain::initUserLeaveMenu()
 	
 	statusMenu->removeItemAt(2);
 	if(autoMenu) delete autoMenu;
-	autoMenu = new QPopupMenu();
+	autoMenu = new Q3PopupMenu();
 	autoMenu->setCheckable(true);
 	autoMenu->insertItem(QString(i18n("No Auto-Reply")), 0);
 	int id=1;
@@ -439,7 +443,7 @@ void EvaMain::initUserLeaveMenu()
 		autoMenu->insertItem(*iter, id++);
 	}
 	autoMenu->setItemChecked(user->getSetting()->getAutoReplySelectedIndex()+1, true);
-	statusMenu->insertItem(QIconSet(*(images->getIcon("LEAVE"))), i18n("Leave"), autoMenu, -1, 2);
+	statusMenu->insertItem(QIcon(*(images->getIcon("LEAVE"))), i18n("Leave"), autoMenu, -1, 2);
 	
 	QObject::connect(autoMenu, SIGNAL(activated(int)), this,  SLOT(slotAutoReplyMenuActivated(int)));
 }
@@ -833,10 +837,10 @@ void EvaMain::slotSetupWindowManager()
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestBuddyQQShow(const unsigned int)), this, SLOT(slotRequestQQShow(const unsigned int)));	
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestMyQQShow()), this, SLOT(slotRequestMyQQShow()));
 
-	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-							const QValueList<unsigned int>, const unsigned char)), 
-				SLOT(slotFileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-							const QValueList<unsigned int>, const unsigned char)));
+	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+							const Q3ValueList<unsigned int>, const unsigned char)), 
+				SLOT(slotFileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+							const Q3ValueList<unsigned int>, const unsigned char)));
 	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferAccept(const unsigned int, const unsigned int,
 							const QString, const unsigned char)),
 				SLOT(slotFileTransferAccept(const unsigned int, const unsigned int,
@@ -2206,11 +2210,11 @@ void EvaMain::slotModifyMemo(const unsigned int id )
 }
 
 void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned int session,
-				const QValueList<QString> fileNameList,
-				const QValueList<unsigned int> sizeList, const unsigned char transferType)
+				const Q3ValueList<QString> fileNameList,
+				const Q3ValueList<unsigned int> sizeList, const unsigned char transferType)
 {
 	if(user->getFriendList().hasFriend(receiver)){
-		QValueListConstIterator<QString> iter = fileNameList.begin();
+		Q3ValueListConstIterator<QString> iter = fileNameList.begin();
 		if(iter == fileNameList.end()) return;
 		QString fileName = *iter;
 		QString dir = fileName.left(fileName.findRev("/"));
@@ -2219,8 +2223,8 @@ void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned 
 		unsigned int size = sizeList.first();
 		if(packetManager)
 			packetManager->doSendFileUdpRequest(receiver, file, size, session, transferType);
-		QValueList<QString> dirList;
-		QValueList<QString> fileList;
+		Q3ValueList<QString> dirList;
+		Q3ValueList<QString> fileList;
 		for(iter = fileNameList.begin(); iter != fileNameList.end(); ++iter){
 			dir = (*iter).left((*iter).findRev("/"));
 			file = (*iter).right((*iter).length() - (*iter).findRev("/") - 1);
@@ -2265,9 +2269,9 @@ void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned in
 	if(g_ChatWindowManager && frd){
 		if(m_FileManager){
 			printf("EvaMain::slotReceivedFileRequest: -- new session: %d\n", session);
-			QValueList<QString> dirList;
-			QValueList<QString> fileList;
-			QValueList<unsigned int> sizeList;
+			Q3ValueList<QString> dirList;
+			Q3ValueList<QString> fileList;
+			Q3ValueList<unsigned int> sizeList;
 			switch(transferType){
 			case QQ_TRANSFER_IMAGE:
 				dirList.append(user->getSetting()->getPictureCacheDir());

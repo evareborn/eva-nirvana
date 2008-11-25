@@ -22,6 +22,9 @@
 #define QUNCREATEWINDOW_H
 
 #include "quncreateui.h"
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QCloseEvent>
 #include <list>
 
 class QTextCodec;
@@ -33,7 +36,7 @@ class EvaQunCreateWindow : public QunCreateUI
 {
 	Q_OBJECT
 public:
-	EvaQunCreateWindow(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaQunCreateWindow(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	virtual ~EvaQunCreateWindow(){};
 signals:
 	void doQunCreate(const QString &name, const unsigned short category, const unsigned char auth, const QString &notice, 

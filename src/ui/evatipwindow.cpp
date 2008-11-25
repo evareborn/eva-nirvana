@@ -28,11 +28,13 @@
 #include <qtimer.h>
 #include <qpixmap.h>
 #include <qimage.h>
+//Added by qt3to4:
+#include <QMouseEvent>
  
 #include "evamain.h"
 
 EvaTipWindow::EvaTipWindow(EvaImageResource *res, const QString nick, const unsigned int id, const short face, const QString &message)
-    : EvaTipUIBase(0, 0, WType_TopLevel | WStyle_Customize | WStyle_NoBorder | WStyle_StaysOnTop | WX11BypassWM | WNoAutoErase | WDestructiveClose)
+    : EvaTipUIBase(0, 0, Qt::WType_TopLevel | Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WNoAutoErase | Qt::WDestructiveClose)
 {
 	//m_BgPixmap = 0;
 	//setBackgroundMode( NoBackground );
@@ -86,7 +88,7 @@ void EvaTipWindow::mousePressEvent(QMouseEvent *e)
 {
 	if(timer->isActive())
 		timer->stop();
-	if( (e->button() & LeftButton)==LeftButton){
+	if( (e->button() & Qt::LeftButton)== Qt::LeftButton){
 		emit requestChat(qqNum);
 	}
 	close();

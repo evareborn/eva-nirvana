@@ -26,7 +26,7 @@ class EvaNotifyWindow : public EvaNotifyUIBase
 {
 	Q_OBJECT
 public:
-	EvaNotifyWindow(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaNotifyWindow(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	~EvaNotifyWindow();
 public slots:
 	void slotAddBuddyReady();

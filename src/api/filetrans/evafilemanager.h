@@ -22,7 +22,11 @@
 #define EVAFILEMANAGER_H
 
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <Q3CString>
+#include <QCustomEvent>
+#include <Q3ValueList>
 //#include <qmap.h>
 #include "evafiledownloader.h"
 #include "../../libeva/evadefines.h"
@@ -37,12 +41,12 @@ public:
 	~EvaFileManager();
 	// set before starting a new thread
 	void setMyBasicInfo(const unsigned char *key, const unsigned char *token, const unsigned int tokenLen);
-	void setMyProxyInfo(const QHostAddress addr, const short port, const QCString &param);
+	void setMyProxyInfo(const QHostAddress addr, const short port, const Q3CString &param);
 
 	bool newSession(const unsigned int id, const unsigned int session, 
-				const QValueList<QString> &dirList, 
-				const QValueList<QString> &filenameList,
-				const QValueList<unsigned int> &sizeList, const bool isDownload,
+				const Q3ValueList<QString> &dirList, 
+				const Q3ValueList<QString> &filenameList,
+				const Q3ValueList<unsigned int> &sizeList, const bool isDownload,
 				const unsigned char transferType = QQ_TRANSFER_FILE);
 	bool changeToAgent(const unsigned int id, const unsigned int session);
 
@@ -91,7 +95,7 @@ private:
 	//QPtrList<EvaFileThread> m_SendList;
 	//QPtrList<EvaFileThread> m_ReceiveList;
 	//QMap<unsigned int, EvaFileThread *> m_SendList;
-	QPtrList<EvaFileThread> m_ThreadList;
+	Q3PtrList<EvaFileThread> m_ThreadList;
 	EvaFileThread *m_LastThread;
 
 	unsigned int m_MyId;
@@ -106,7 +110,7 @@ private:
 	bool m_IsProxySet;
 	QHostAddress m_ProxyServer;
 	short m_ProxyPort;
-	QCString m_ProxyAuthParam;
+	Q3CString m_ProxyAuthParam;
 
 	//EvaFileThread *getThread(const unsigned int session);
 	EvaFileThread *getThread(const unsigned int id, const unsigned int session);

@@ -25,6 +25,8 @@
 #include <qstringlist.h>
 
 #include <qdesktopwidget.h>
+//Added by qt3to4:
+#include <QCloseEvent>
  
 #include "evamain.h"
 

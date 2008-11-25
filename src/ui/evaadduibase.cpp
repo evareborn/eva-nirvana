@@ -23,13 +23,17 @@
 #include <qvariant.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qtoolbutton.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 //X #include <klocale.h>
@@ -38,25 +42,25 @@
  *  Constructs a EvaAddUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaAddUIBase" );
-    EvaAddUIBaseLayout = new QVBoxLayout( this, 11, 6, "EvaAddUIBaseLayout"); 
+    EvaAddUIBaseLayout = new Q3VBoxLayout( this, 11, 6, "EvaAddUIBaseLayout"); 
 
     lblTip = new QLabel( this, "lblTip" );
     lblTip->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)1, 0, 0, lblTip->sizePolicy().hasHeightForWidth() ) );
     EvaAddUIBaseLayout->addWidget( lblTip );
 
-    frame3 = new QFrame( this, "frame3" );
+    frame3 = new Q3Frame( this, "frame3" );
     frame3->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)7, 0, 0, frame3->sizePolicy().hasHeightForWidth() ) );
     frame3->setPaletteBackgroundColor( QColor( 234, 247, 255 ) );
-    frame3->setFrameShape( QFrame::StyledPanel );
-    frame3->setFrameShadow( QFrame::Raised );
-    frame3Layout = new QVBoxLayout( frame3, 11, 6, "frame3Layout"); 
+    frame3->setFrameShape( Q3Frame::StyledPanel );
+    frame3->setFrameShadow( Q3Frame::Raised );
+    frame3Layout = new Q3VBoxLayout( frame3, 11, 6, "frame3Layout"); 
 
-    layout17 = new QHBoxLayout( 0, 0, 6, "layout17"); 
+    layout17 = new Q3HBoxLayout( 0, 0, 6, "layout17"); 
 
     lblTopic = new QLabel( frame3, "lblTopic" );
     lblTopic->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)1, 0, 0, lblTopic->sizePolicy().hasHeightForWidth() ) );
@@ -69,7 +73,7 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     layout17->addWidget( tbtnFace );
     frame3Layout->addLayout( layout17 );
 
-    layout13 = new QHBoxLayout( 0, 0, 6, "layout13"); 
+    layout13 = new Q3HBoxLayout( 0, 0, 6, "layout13"); 
 
     lblGroup = new QLabel( frame3, "lblGroup" );
     layout13->addWidget( lblGroup );
@@ -80,12 +84,12 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     layout13->addItem( spacer1 );
     frame3Layout->addLayout( layout13 );
 
-    fraVeriGraphic = new QFrame( frame3, "fraVeriGraphic" );
-    fraVeriGraphic->setFrameShape( QFrame::NoFrame );
-    fraVeriGraphic->setFrameShadow( QFrame::Plain );
-    fraVeriGraphicLayout = new QGridLayout( fraVeriGraphic, 1, 1, 0, 0, "fraVeriGraphicLayout"); 
+    fraVeriGraphic = new Q3Frame( frame3, "fraVeriGraphic" );
+    fraVeriGraphic->setFrameShape( Q3Frame::NoFrame );
+    fraVeriGraphic->setFrameShadow( Q3Frame::Plain );
+    fraVeriGraphicLayout = new Q3GridLayout( fraVeriGraphic, 1, 1, 0, 0, "fraVeriGraphicLayout"); 
 
-    layout14 = new QHBoxLayout( 0, 0, 6, "layout14"); 
+    layout14 = new Q3HBoxLayout( 0, 0, 6, "layout14"); 
 
     lblVeriCode = new QLabel( fraVeriGraphic, "lblVeriCode" );
     layout14->addWidget( lblVeriCode );
@@ -103,12 +107,12 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     fraVeriGraphicLayout->addLayout( layout14, 0, 0 );
     frame3Layout->addWidget( fraVeriGraphic );
 
-    fraQuestion = new QFrame( frame3, "fraQuestion" );
-    fraQuestion->setFrameShape( QFrame::NoFrame );
-    fraQuestion->setFrameShadow( QFrame::Plain );
-    fraQuestionLayout = new QHBoxLayout( fraQuestion, 0, 0, "fraQuestionLayout"); 
+    fraQuestion = new Q3Frame( frame3, "fraQuestion" );
+    fraQuestion->setFrameShape( Q3Frame::NoFrame );
+    fraQuestion->setFrameShadow( Q3Frame::Plain );
+    fraQuestionLayout = new Q3HBoxLayout( fraQuestion, 0, 0, "fraQuestionLayout"); 
 
-    layout12 = new QVBoxLayout( 0, 0, 6, "layout12"); 
+    layout12 = new Q3VBoxLayout( 0, 0, 6, "layout12"); 
 
     lblQuestion = new QLabel( fraQuestion, "lblQuestion" );
     layout12->addWidget( lblQuestion );
@@ -118,11 +122,11 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     layout12->addWidget( lblAnswer );
     fraQuestionLayout->addLayout( layout12 );
 
-    layout13_2 = new QVBoxLayout( 0, 0, 6, "layout13_2"); 
+    layout13_2 = new Q3VBoxLayout( 0, 0, 6, "layout13_2"); 
 
     lblQuesContents = new QLabel( fraQuestion, "lblQuesContents" );
     lblQuesContents->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)4, 0, 0, lblQuesContents->sizePolicy().hasHeightForWidth() ) );
-    lblQuesContents->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter | QLabel::AlignLeft ) );
+    lblQuesContents->setAlignment( int( Qt::WordBreak | Qt::AlignVCenter | Qt::AlignLeft ) );
     layout13_2->addWidget( lblQuesContents );
 
     leAnswer = new QLineEdit( fraQuestion, "leAnswer" );
@@ -133,11 +137,11 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     leMessage = new QLineEdit( frame3, "leMessage" );
     leMessage->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)7, 0, 0, leMessage->sizePolicy().hasHeightForWidth() ) );
     leMessage->setMaxLength( 255 );
-    leMessage->setAlignment( int( QLineEdit::AlignAuto ) );
+    leMessage->setAlignment(  Qt::AlignAuto );
     frame3Layout->addWidget( leMessage );
     EvaAddUIBaseLayout->addWidget( frame3 );
 
-    layout13_3 = new QHBoxLayout( 0, 10, 6, "layout13_3"); 
+    layout13_3 = new Q3HBoxLayout( 0, 10, 6, "layout13_3"); 
 
     chbReverse = new QCheckBox( this, "chbReverse" );
     layout13_3->addWidget( chbReverse );
@@ -152,7 +156,7 @@ EvaAddUIBase::EvaAddUIBase( QWidget* parent, const char* name, WFlags fl )
     EvaAddUIBaseLayout->addLayout( layout13_3 );
     languageChange();
     resize( QSize(430, 280).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

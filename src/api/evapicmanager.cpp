@@ -35,6 +35,9 @@
 #include <qdatastream.h>
 #include <qmutex.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <Q3CString>
 
 #define QUEUE_INTERVAL 10000
 EvaPicManager::EvaPicManager(EvaUser *u, bool useProxy)
@@ -67,7 +70,7 @@ EvaPicManager::~EvaPicManager()
 	clearManager();
 }
 
-void EvaPicManager::setProxyServer( const QString ip, const short port, QCString proxyParam )
+void EvaPicManager::setProxyServer( const QString ip, const short port, Q3CString proxyParam )
 {
 	proxyIP = ip;
 	proxyPort = port;
@@ -421,7 +424,7 @@ void EvaPicManager::doSaveFile()
 {
 	QString fileName = user->getSetting()->getPictureCacheDir() + "/" + currentFile.filename;
 	QFile file(fileName);
-	if(!file.open(IO_WriteOnly | IO_Raw )){
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Unbuffered )){
 		printf("EvaPicManager::doSaveFile -- cannot open file \'%s\'!\n", fileName.ascii());
 		return;
 	}
@@ -463,7 +466,7 @@ void EvaPicManager::doSendFileInfo( )
 	currentFile.offset = 0;
 	currentFile.buf = new unsigned char[currentFile.length];
 	QFile file(currentOutPic.fileName);
-	if(!file.open(IO_ReadOnly | IO_Raw )){
+	if(!file.open(QIODevice::ReadOnly | QIODevice::Unbuffered )){
 		printf("EvaPicManager::doSendFileInfo -- cannot open file \'%s\' !\n", currentOutPic.fileName.ascii());
 		return;
 	}

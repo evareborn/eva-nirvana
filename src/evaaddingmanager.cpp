@@ -28,7 +28,7 @@
 #include <qmessagebox.h>
 
 #include <qrect.h>
-#include <qurl.h>
+#include <q3url.h>
 #include <qtextcodec.h>
 #include <qpixmap.h>
 
@@ -409,7 +409,7 @@ void EvaAddingManager::requestGraphic( )
 		m_GraphicFile.remove();
 	}
 	
-	if ( !m_GraphicFile.open( IO_WriteOnly ) ) {
+	if ( !m_GraphicFile.open( QIODevice::WriteOnly ) ) {
 //X 		kdDebug() << "[EvaAddingManager] cannot create the image" << endl;
 		return;
 	}

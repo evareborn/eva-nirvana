@@ -33,6 +33,8 @@
 
 #include <qmessagebox.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 //X #include <kwin.h>
 //X #include <klocale.h>
 		
@@ -233,10 +235,10 @@ EvaChatWindow *EvaChatWindowManager::newWindow(QQFriend *frd)
 	QObject::connect(win, SIGNAL(requestBuddyQQShow(const unsigned int)), this, SIGNAL(requestBuddyQQShow(const unsigned int)));
 	QObject::connect(win, SIGNAL(requestMyQQShow()), this, SIGNAL(requestMyQQShow()));
 
-	QObject::connect(win, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-							const QValueList<unsigned int>, const unsigned char)),
-				SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-							const QValueList<unsigned int>, const unsigned char)));
+	QObject::connect(win, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+							const Q3ValueList<unsigned int>, const unsigned char)),
+				SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+							const Q3ValueList<unsigned int>, const unsigned char)));
 	QObject::connect(win, SIGNAL(fileTransferAccept(const unsigned int, const unsigned int, const QString,
 							const unsigned char )),
 				SIGNAL(fileTransferAccept(const unsigned int, const unsigned int, const QString,

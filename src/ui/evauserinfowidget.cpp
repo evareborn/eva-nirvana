@@ -13,16 +13,20 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
 
 /*
  *  Constructs a EvaUserInfoWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags fl )
+EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
@@ -31,24 +35,24 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     setMinimumSize( QSize( 483, 610 ) );
     setMaximumSize( QSize( 483, 610 ) );
     setBackgroundOrigin( QWidget::WidgetOrigin );
-    EvaUserInfoWidgetLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaUserInfoWidgetLayout"); 
+    EvaUserInfoWidgetLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaUserInfoWidgetLayout"); 
 
-    layout191 = new QGridLayout( 0, 1, 1, 0, 6, "layout191"); 
+    layout191 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout191"); 
     spacer18 = new QSpacerItem( 16, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout191->addItem( spacer18, 0, 1 );
 
-    layout189 = new QVBoxLayout( 0, 0, 6, "layout189"); 
+    layout189 = new Q3VBoxLayout( 0, 0, 6, "layout189"); 
 
-    layout188 = new QVBoxLayout( 0, 0, 15, "layout188"); 
+    layout188 = new Q3VBoxLayout( 0, 0, 15, "layout188"); 
 
     lblBasicInfo = new QLabel( this, "lblBasicInfo" );
     layout188->addWidget( lblBasicInfo );
 
-    layout187 = new QHBoxLayout( 0, 0, 6, "layout187"); 
+    layout187 = new Q3HBoxLayout( 0, 0, 6, "layout187"); 
 
-    layout186 = new QHBoxLayout( 0, 0, 6, "layout186"); 
+    layout186 = new Q3HBoxLayout( 0, 0, 6, "layout186"); 
 
-    layout39 = new QVBoxLayout( 0, 0, 6, "layout39"); 
+    layout39 = new Q3VBoxLayout( 0, 0, 6, "layout39"); 
 
     lblRealName = new QLabel( this, "lblRealName" );
     layout39->addWidget( lblRealName );
@@ -63,7 +67,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout39->addWidget( lblArea );
     layout186->addLayout( layout39 );
 
-    layout178 = new QVBoxLayout( 0, 0, 6, "layout178"); 
+    layout178 = new Q3VBoxLayout( 0, 0, 6, "layout178"); 
 
     leRealName = new QLineEdit( this, "leRealName" );
     leRealName->setEnabled( TRUE );
@@ -104,9 +108,9 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout186->addLayout( layout178 );
     layout187->addLayout( layout186 );
 
-    layout163 = new QHBoxLayout( 0, 0, 6, "layout163"); 
+    layout163 = new Q3HBoxLayout( 0, 0, 6, "layout163"); 
 
-    layout64 = new QVBoxLayout( 0, 0, 6, "layout64"); 
+    layout64 = new Q3VBoxLayout( 0, 0, 6, "layout64"); 
 
     lblNumber = new QLabel( this, "lblNumber" );
     layout64->addWidget( lblNumber );
@@ -121,13 +125,13 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout64->addWidget( lblProvince );
     layout163->addLayout( layout64 );
 
-    layout162 = new QVBoxLayout( 0, 0, 6, "layout162"); 
+    layout162 = new Q3VBoxLayout( 0, 0, 6, "layout162"); 
 
-    layout161 = new QHBoxLayout( 0, 0, 6, "layout161"); 
+    layout161 = new Q3HBoxLayout( 0, 0, 6, "layout161"); 
 
-    layout86 = new QVBoxLayout( 0, 0, 6, "layout86"); 
+    layout86 = new Q3VBoxLayout( 0, 0, 6, "layout86"); 
 
-    layout66 = new QHBoxLayout( 0, 0, 6, "layout66"); 
+    layout66 = new Q3HBoxLayout( 0, 0, 6, "layout66"); 
 
     leNumber = new QLineEdit( this, "leNumber" );
     leNumber->setEnabled( TRUE );
@@ -143,7 +147,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     lblLevelDisplay->setEnabled( TRUE );
     layout86->addWidget( lblLevelDisplay );
 
-    layout65 = new QHBoxLayout( 0, 0, 6, "layout65"); 
+    layout65 = new Q3HBoxLayout( 0, 0, 6, "layout65"); 
 
     leSex = new QLineEdit( this, "leSex" );
     leSex->setEnabled( TRUE );
@@ -156,7 +160,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout86->addLayout( layout65 );
     layout161->addLayout( layout86 );
 
-    layout103 = new QHBoxLayout( 0, 0, 6, "layout103"); 
+    layout103 = new Q3HBoxLayout( 0, 0, 6, "layout103"); 
     spacer17 = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout103->addItem( spacer17 );
 
@@ -164,14 +168,14 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     lblFace->setMinimumSize( QSize( 46, 46 ) );
     lblFace->setMaximumSize( QSize( 46, 46 ) );
     lblFace->setFrameShape( QLabel::Box );
-    lblFace->setAlignment( int( QLabel::AlignCenter ) );
+    lblFace->setAlignment( Qt::AlignCenter );
     layout103->addWidget( lblFace );
     spacer24 = new QSpacerItem( 20, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout103->addItem( spacer24 );
     layout161->addLayout( layout103 );
     layout162->addLayout( layout161 );
 
-    layout151 = new QHBoxLayout( 0, 0, 6, "layout151"); 
+    layout151 = new Q3HBoxLayout( 0, 0, 6, "layout151"); 
 
     leProvince = new QLineEdit( this, "leProvince" );
     leProvince->setEnabled( TRUE );
@@ -200,22 +204,22 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout187->addLayout( layout163 );
     layout188->addLayout( layout187 );
 
-    layout156 = new QHBoxLayout( 0, 0, 6, "layout156"); 
+    layout156 = new Q3HBoxLayout( 0, 0, 6, "layout156"); 
 
-    layout99 = new QGridLayout( 0, 1, 1, 0, 6, "layout99"); 
+    layout99 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout99"); 
 
-    teSignature = new QTextEdit( this, "teSignature" );
+    teSignature = new Q3TextEdit( this, "teSignature" );
     teSignature->setEnabled( TRUE );
     teSignature->setMinimumSize( QSize( 0, 50 ) );
     teSignature->setMaximumSize( QSize( 32767, 50 ) );
     teSignature->setPaletteForegroundColor( QColor( 0, 0, 0 ) );
     teSignature->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-    teSignature->setFocusPolicy( QTextEdit::NoFocus );
-    teSignature->setFrameShape( QTextEdit::Box );
-    teSignature->setFrameShadow( QTextEdit::Plain );
+    teSignature->setFocusPolicy( Qt::NoFocus );
+    teSignature->setFrameShape( Q3TextEdit::Box );
+    teSignature->setFrameShadow( Q3TextEdit::Plain );
     teSignature->setLineWidth( 1 );
-    teSignature->setHScrollBarMode( QTextEdit::AlwaysOff );
-    teSignature->setWordWrap( QTextEdit::WidgetWidth );
+    teSignature->setHScrollBarMode( Q3TextEdit::AlwaysOff );
+    teSignature->setWordWrap( Q3TextEdit::WidgetWidth );
     teSignature->setReadOnly( TRUE );
 
     layout99->addMultiCellWidget( teSignature, 0, 1, 1, 1 );
@@ -229,11 +233,11 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout188->addLayout( layout156 );
     layout189->addLayout( layout188 );
 
-    layout144 = new QGridLayout( 0, 1, 1, 0, 15, "layout144"); 
+    layout144 = new Q3GridLayout( 0, 1, 1, 0, 15, "layout144"); 
 
-    layout143 = new QGridLayout( 0, 1, 1, 0, 6, "layout143"); 
+    layout143 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout143"); 
 
-    layout142 = new QGridLayout( 0, 1, 1, 0, 6, "layout142"); 
+    layout142 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout142"); 
 
     lePhone = new QLineEdit( this, "lePhone" );
     lePhone->setEnabled( TRUE );
@@ -277,11 +281,11 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     spacer13_2 = new QSpacerItem( 180, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout143->addItem( spacer13_2, 1, 1 );
 
-    layout141 = new QGridLayout( 0, 1, 1, 0, 6, "layout141"); 
+    layout141 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout141"); 
 
-    layout139 = new QHBoxLayout( 0, 0, 6, "layout139"); 
+    layout139 = new Q3HBoxLayout( 0, 0, 6, "layout139"); 
 
-    layout138 = new QGridLayout( 0, 1, 1, 0, 6, "layout138"); 
+    layout138 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout138"); 
 
     leOccupation = new QLineEdit( this, "leOccupation" );
     leOccupation->setEnabled( TRUE );
@@ -338,7 +342,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
 
     layout143->addMultiCellLayout( layout141, 0, 0, 0, 1 );
 
-    layout30 = new QVBoxLayout( 0, 0, 6, "layout30"); 
+    layout30 = new Q3VBoxLayout( 0, 0, 6, "layout30"); 
 
     leSchool = new QLineEdit( this, "leSchool" );
     leSchool->setEnabled( TRUE );
@@ -380,7 +384,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
 
     layout144->addLayout( layout143, 1, 1 );
 
-    layout51 = new QVBoxLayout( 0, 0, 6, "layout51"); 
+    layout51 = new Q3VBoxLayout( 0, 0, 6, "layout51"); 
 
     lblZodiac = new QLabel( this, "lblZodiac" );
     layout51->addWidget( lblZodiac );
@@ -413,29 +417,29 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     layout144->addMultiCellWidget( lblDetails, 0, 0, 0, 1 );
     layout189->addLayout( layout144 );
 
-    layout95 = new QVBoxLayout( 0, 0, 15, "layout95"); 
+    layout95 = new Q3VBoxLayout( 0, 0, 15, "layout95"); 
 
     lblDescription = new QLabel( this, "lblDescription" );
     layout95->addWidget( lblDescription );
 
-    layout94 = new QGridLayout( 0, 1, 1, 0, 6, "layout94"); 
+    layout94 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout94"); 
     spacer16 = new QSpacerItem( 20, 77, QSizePolicy::Minimum, QSizePolicy::Expanding );
     layout94->addItem( spacer16, 1, 0 );
     spacer14_2_2 = new QSpacerItem( 71, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout94->addItem( spacer14_2_2, 1, 2 );
 
-    teAboutMe = new QTextEdit( this, "teAboutMe" );
+    teAboutMe = new Q3TextEdit( this, "teAboutMe" );
     teAboutMe->setEnabled( TRUE );
     teAboutMe->setMinimumSize( QSize( 0, 0 ) );
     teAboutMe->setMaximumSize( QSize( 32767, 100 ) );
     teAboutMe->setPaletteForegroundColor( QColor( 0, 0, 0 ) );
     teAboutMe->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-    teAboutMe->setFocusPolicy( QTextEdit::NoFocus );
-    teAboutMe->setFrameShape( QTextEdit::Box );
-    teAboutMe->setFrameShadow( QTextEdit::Plain );
+    teAboutMe->setFocusPolicy( Qt::NoFocus );
+    teAboutMe->setFrameShape( Q3TextEdit::Box );
+    teAboutMe->setFrameShadow( Q3TextEdit::Plain );
     teAboutMe->setLineWidth( 1 );
-    teAboutMe->setHScrollBarMode( QTextEdit::AlwaysOff );
-    teAboutMe->setWordWrap( QTextEdit::WidgetWidth );
+    teAboutMe->setHScrollBarMode( Q3TextEdit::AlwaysOff );
+    teAboutMe->setWordWrap( Q3TextEdit::WidgetWidth );
     teAboutMe->setReadOnly( TRUE );
 
     layout94->addMultiCellWidget( teAboutMe, 0, 1, 1, 1 );
@@ -453,7 +457,7 @@ EvaUserInfoWidget::EvaUserInfoWidget( QWidget* parent, const char* name, WFlags 
     EvaUserInfoWidgetLayout->addLayout( layout191, 0, 0 );
     languageChange();
     resize( QSize(483, 610).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
     // tab order
     setTabOrder( leRealName, leNickName );

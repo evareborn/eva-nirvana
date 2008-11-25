@@ -22,18 +22,22 @@
 #include <qvariant.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
-#include <qframe.h>
-#include <qwidgetstack.h>
+#include <q3frame.h>
+#include <q3widgetstack.h>
 #include <qlineedit.h>
 #include <qtoolbutton.h>
-#include <qgroupbox.h>
-#include <qtextedit.h>
-#include <qbuttongroup.h>
+#include <q3groupbox.h>
+#include <q3textedit.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -43,30 +47,30 @@
  *  Constructs a QunCreateUI as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
+QunCreateUI::QunCreateUI( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "QunCreateUI" );
-    QunCreateUILayout = new QVBoxLayout( this, 11, 6, "QunCreateUILayout"); 
+    QunCreateUILayout = new Q3VBoxLayout( this, 11, 6, "QunCreateUILayout"); 
 
     lblTip = new QLabel( this, "lblTip" );
     QunCreateUILayout->addWidget( lblTip );
 
-    line1 = new QFrame( this, "line1" );
-    line1->setFrameShape( QFrame::HLine );
-    line1->setFrameShadow( QFrame::Sunken );
-    line1->setFrameShape( QFrame::HLine );
+    line1 = new Q3Frame( this, "line1" );
+    line1->setFrameShape( Q3Frame::HLine );
+    line1->setFrameShadow( Q3Frame::Sunken );
+    line1->setFrameShape( Q3Frame::HLine );
     QunCreateUILayout->addWidget( line1 );
 
-    wsMain = new QWidgetStack( this, "wsMain" );
+    wsMain = new Q3WidgetStack( this, "wsMain" );
 
     wsDetails = new QWidget( wsMain, "wsDetails" );
-    wsDetailsLayout = new QGridLayout( wsDetails, 1, 1, 11, 6, "wsDetailsLayout"); 
+    wsDetailsLayout = new Q3GridLayout( wsDetails, 1, 1, 11, 6, "wsDetailsLayout"); 
 
-    layout44 = new QVBoxLayout( 0, 0, 16, "layout44"); 
+    layout44 = new Q3VBoxLayout( 0, 0, 16, "layout44"); 
 
-    layout40 = new QHBoxLayout( 0, 0, 9, "layout40"); 
+    layout40 = new Q3HBoxLayout( 0, 0, 9, "layout40"); 
 
     lblName = new QLabel( wsDetails, "lblName" );
     layout40->addWidget( lblName );
@@ -77,7 +81,7 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     layout40->addItem( spacer15 );
     layout44->addLayout( layout40 );
 
-    layout41 = new QHBoxLayout( 0, 0, 7, "layout41"); 
+    layout41 = new Q3HBoxLayout( 0, 0, 7, "layout41"); 
 
     lblCategory = new QLabel( wsDetails, "lblCategory" );
     lblCategory->setMaximumSize( QSize( 50, 32767 ) );
@@ -90,40 +94,40 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     layout41->addItem( spacer16 );
     layout44->addLayout( layout41 );
 
-    gbNotice = new QGroupBox( wsDetails, "gbNotice" );
+    gbNotice = new Q3GroupBox( wsDetails, "gbNotice" );
     gbNotice->setColumnLayout(0, Qt::Vertical );
     gbNotice->layout()->setSpacing( 6 );
     gbNotice->layout()->setMargin( 11 );
-    gbNoticeLayout = new QGridLayout( gbNotice->layout() );
+    gbNoticeLayout = new Q3GridLayout( gbNotice->layout() );
     gbNoticeLayout->setAlignment( Qt::AlignTop );
 
-    teNotice = new QTextEdit( gbNotice, "teNotice" );
+    teNotice = new Q3TextEdit( gbNotice, "teNotice" );
     teNotice->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, teNotice->sizePolicy().hasHeightForWidth() ) );
     teNotice->setMaximumSize( QSize( 32767, 50 ) );
 
     gbNoticeLayout->addWidget( teNotice, 0, 0 );
     layout44->addWidget( gbNotice );
 
-    gbDescription = new QGroupBox( wsDetails, "gbDescription" );
+    gbDescription = new Q3GroupBox( wsDetails, "gbDescription" );
     gbDescription->setColumnLayout(0, Qt::Vertical );
     gbDescription->layout()->setSpacing( 6 );
     gbDescription->layout()->setMargin( 11 );
-    gbDescriptionLayout = new QGridLayout( gbDescription->layout() );
+    gbDescriptionLayout = new Q3GridLayout( gbDescription->layout() );
     gbDescriptionLayout->setAlignment( Qt::AlignTop );
 
-    teDescription = new QTextEdit( gbDescription, "teDescription" );
+    teDescription = new Q3TextEdit( gbDescription, "teDescription" );
     teDescription->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, teDescription->sizePolicy().hasHeightForWidth() ) );
     teDescription->setMaximumSize( QSize( 32767, 60 ) );
 
     gbDescriptionLayout->addWidget( teDescription, 0, 0 );
     layout44->addWidget( gbDescription );
 
-    bgAuthen = new QButtonGroup( wsDetails, "bgAuthen" );
+    bgAuthen = new Q3ButtonGroup( wsDetails, "bgAuthen" );
     bgAuthen->setExclusive( TRUE );
     bgAuthen->setColumnLayout(0, Qt::Vertical );
     bgAuthen->layout()->setSpacing( 6 );
     bgAuthen->layout()->setMargin( 11 );
-    bgAuthenLayout = new QVBoxLayout( bgAuthen->layout() );
+    bgAuthenLayout = new Q3VBoxLayout( bgAuthen->layout() );
     bgAuthenLayout->setAlignment( Qt::AlignTop );
 
     rbNoAuthenNeed = new QRadioButton( bgAuthen, "rbNoAuthenNeed" );
@@ -141,11 +145,11 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     wsMain->addWidget( wsDetails, 0 );
 
     wsMembers = new QWidget( wsMain, "wsMembers" );
-    wsMembersLayout = new QGridLayout( wsMembers, 1, 1, 11, 6, "wsMembersLayout"); 
+    wsMembersLayout = new Q3GridLayout( wsMembers, 1, 1, 11, 6, "wsMembersLayout"); 
 
-    layout43 = new QHBoxLayout( 0, 0, 6, "layout43"); 
+    layout43 = new Q3HBoxLayout( 0, 0, 6, "layout43"); 
 
-    tblMembers = new QTable( wsMembers, "tblMembers" );
+    tblMembers = new Q3Table( wsMembers, "tblMembers" );
     tblMembers->setNumCols( tblMembers->numCols() + 1 );
     tblMembers->horizontalHeader()->setLabel( tblMembers->numCols() - 1, i18n( "QQ" ) );
     tblMembers->setNumCols( tblMembers->numCols() + 1 );
@@ -154,12 +158,12 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     tblMembers->horizontalHeader()->setLabel( tblMembers->numCols() - 1, i18n( "Gender" ) );
     tblMembers->setMinimumSize( QSize( 250, 0 ) );
     tblMembers->setMaximumSize( QSize( 32767, 32767 ) );
-    tblMembers->setHScrollBarMode( QTable::AlwaysOff );
+    tblMembers->setHScrollBarMode( Q3Table::AlwaysOff );
     tblMembers->setNumRows( 3 );
     tblMembers->setNumCols( 4 );
     layout43->addWidget( tblMembers );
 
-    layout42 = new QVBoxLayout( 0, 0, 6, "layout42"); 
+    layout42 = new Q3VBoxLayout( 0, 0, 6, "layout42"); 
 
     pbSetMembers = new QPushButton( wsMembers, "pbSetMembers" );
     layout42->addWidget( pbSetMembers );
@@ -174,7 +178,7 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     wsMain->addWidget( wsMembers, 1 );
     QunCreateUILayout->addWidget( wsMain );
 
-    layout7 = new QHBoxLayout( 0, 0, 6, "layout7"); 
+    layout7 = new Q3HBoxLayout( 0, 0, 6, "layout7"); 
     spacer18 = new QSpacerItem( 270, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout7->addItem( spacer18 );
 
@@ -189,7 +193,7 @@ QunCreateUI::QunCreateUI( QWidget* parent, const char* name, WFlags fl )
     QunCreateUILayout->addLayout( layout7 );
     languageChange();
     resize( QSize(487, 502).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
     // tab order
     setTabOrder( leQunName, teNotice );

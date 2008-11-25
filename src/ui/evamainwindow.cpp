@@ -24,15 +24,19 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
-#include <qheader.h>
+#include <q3header.h>
 #include <qtooltip.h>
 #include <qimage.h>
 #include <qpixmap.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qmessagebox.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <qcursor.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QResizeEvent>
+#include <Q3PopupMenu>
 
 //X #include <klocale.h>
 //X #include <kpopupmenu.h>
@@ -52,23 +56,23 @@
 #include "evastatusbar.h"
 #include "evachatwindowmanager.h"
 //X #include "evascriptwidget.h"
+//X 
+//X MainWindowTip::MainWindowTip(QWidget *parent)
+//X 	: QToolTip(parent) 
+//X {
+//X }
+//X 
+//X void MainWindowTip::maybeTip(const QPoint &pos)
+//X {
+//X 	if(!parentWidget()->inherits("EvaMainWindow"))
+//X 		return;
+//X 	QRect r( ((EvaMainWindow *)parentWidget())->tipRect(pos) );
+//X 	if(!r.isValid()) 
+//X 		return;
+//X 	tip(r, ((EvaMainWindow *)parentWidget())->myInfoTip());
+//X }
 
-MainWindowTip::MainWindowTip(QWidget *parent)
-	: QToolTip(parent) 
-{
-}
-
-void MainWindowTip::maybeTip(const QPoint &pos)
-{
-	if(!parentWidget()->inherits("EvaMainWindow"))
-		return;
-	QRect r( ((EvaMainWindow *)parentWidget())->tipRect(pos) );
-	if(!r.isValid()) 
-		return;
-	tip(r, ((EvaMainWindow *)parentWidget())->myInfoTip());
-}
-
-EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name, WFlags fl )
+EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name, Qt::WFlags fl )
 //X 	: DCOPObject("View")
         : EvaMainUIBase(parent, name, fl)
         , g_eva( evaapp )
@@ -76,16 +80,16 @@ EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name,
 	, pixOnline(NULL), pixOffline(NULL), pixLeave(NULL), pixInvisible(NULL)
 {
 	qqNum = 0;
-	myTip = new MainWindowTip(this);
+//X 	myTip = new MainWindowTip(this);
 
 	pixOnline = EvaMain::images->getIcon("ONLINE");
 	pixOffline = EvaMain::images->getIcon("OFFLINE");
 	pixLeave = EvaMain::images->getIcon("LEAVE");
 	pixInvisible = EvaMain::images->getIcon("INVISIBLE");
 
-	statusBar->tbSearch->setIconSet(QIconSet(*EvaMain::images->getIcon("FIND")));
-	statusBar->tbSysMsg->setIconSet(QIconSet(*EvaMain::images->getIcon("SYSTEM_MSG")));
-	statusBar->tbSystem->setIconSet(QIconSet(*EvaMain::images->getIcon("SYSTEM_OPTIONS")));
+	statusBar->tbSearch->setIconSet(QIcon(*EvaMain::images->getIcon("FIND")));
+	statusBar->tbSysMsg->setIconSet(QIcon(*EvaMain::images->getIcon("SYSTEM_MSG")));
+	statusBar->tbSystem->setIconSet(QIcon(*EvaMain::images->getIcon("SYSTEM_OPTIONS")));
 
 	m_buddyLv = 0;
 	m_qunLv = 0;
@@ -125,7 +129,7 @@ void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPix
 	slotUpdateBuddyStat();
 
 	if(pix)
-		tbMyFace->setIconSet( QIconSet(*pix));
+		tbMyFace->setIconSet( QIcon(*pix));
 //
 //
 //	loadContacts();
@@ -140,7 +144,7 @@ void EvaMainWindow::slotUpdateBuddyStat()
 	tlQQ->setText(" ( "+ QString::number(onlines) + "/" + QString::number(all) + ")");
 }
 
-void EvaMainWindow::setSystemMenu( QPopupMenu *sys)
+void EvaMainWindow::setSystemMenu( Q3PopupMenu *sys)
 {
 	if(sys){
 		sysMenu = sys;
@@ -148,7 +152,7 @@ void EvaMainWindow::setSystemMenu( QPopupMenu *sys)
 	}
 }
 
-void EvaMainWindow::setStatusMenu( QPopupMenu *status)
+void EvaMainWindow::setStatusMenu( Q3PopupMenu *status)
 {
 	if(status){
 		statusMenu = status;
@@ -304,25 +308,25 @@ void EvaMainWindow::deleteBuddy(unsigned int id)
 
 void EvaMainWindow::online()
 {
-	if(pixOnline) statusBar->tbStatus->setIconSet(QIconSet(*pixOnline));
+	if(pixOnline) statusBar->tbStatus->setIconSet(QIcon(*pixOnline));
 	//statusBar->tbStatus->setText(i18n( "Online"));
 }
 
 void EvaMainWindow::offline()
 {
-	if(pixOffline) statusBar->tbStatus->setIconSet(QIconSet(*pixOffline));
+	if(pixOffline) statusBar->tbStatus->setIconSet(QIcon(*pixOffline));
 	//pbStatus->setText(i18n( "Offline"));
 }
 
 void EvaMainWindow::leave()
 {
-	if(pixLeave) statusBar->tbStatus->setIconSet(QIconSet(*pixLeave));
+	if(pixLeave) statusBar->tbStatus->setIconSet(QIcon(*pixLeave));
 	//pbStatus->setText(i18n( "Leave"));
 }
 
 void EvaMainWindow::invisible()
 {
-	if(pixInvisible) statusBar->tbStatus->setIconSet(QIconSet(*pixInvisible));
+	if(pixInvisible) statusBar->tbStatus->setIconSet(QIcon(*pixInvisible));
 	//pbStatus->setText(i18n( "Invisible"));
 }
 

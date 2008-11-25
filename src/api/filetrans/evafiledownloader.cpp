@@ -23,9 +23,12 @@
 #include "evaftprotocols.h"
 #include "../../libeva/evautil.h"
 #include "../../libeva/evadefines.h"
-#include <qdns.h>
+#include <q3dns.h>
 #include <qtextcodec.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3CString>
 #include <cstring>
 
 #define RELAY_SERVER_URL             "RelayServer2.tencent.com"
@@ -38,10 +41,10 @@
 #define QQ_TRANSFER_FILE             0x65
 #define QQ_TRANSFER_IMAGE            0x66
 
-EvaFileThread::EvaFileThread(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList, 
-				const QValueList<QString> &filenameList,
-				const QValueList<unsigned int> sizeList, const bool isSender)
-	: QObject(), QThread(), m_IsSender(isSender), m_Receiver(receiver),
+EvaFileThread::EvaFileThread(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList, 
+				const Q3ValueList<QString> &filenameList,
+				const Q3ValueList<unsigned int> sizeList, const bool isSender)
+	: QThread(), m_IsSender(isSender), m_Receiver(receiver),
 	m_Id(id), m_Session(0), m_StartOffset(0), m_ExitNow(false),
 	m_BytesSent(0), m_File(NULL), m_Connecter(NULL)
 {
@@ -53,7 +56,7 @@ EvaFileThread::EvaFileThread(QObject *receiver, const unsigned int id, const QVa
 	m_FileNameList = filenameList;
 	m_SizeList = sizeList;
 	EvaCachedFile *file;
-	for(unsigned int i = 0; i < dirList.size(); ++i){
+	for(int i = 0; i < dirList.size(); ++i){
 		printf("EvaFileThread::EvaFileThread -- dir: %s\t filename:%s\n", dirList[i].ascii(), filenameList[i].ascii());
 		if(m_IsSender)
 			file = new EvaCachedFile(dirList[i], filenameList[i]);
@@ -135,9 +138,9 @@ void EvaFileThread::cleanUp()
 /** ================================================================== */
 
 
-EvaAgentThread::EvaAgentThread(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList, 
-			QValueList<unsigned int> sizeList, const bool isSender)
+EvaAgentThread::EvaAgentThread(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList, 
+			Q3ValueList<unsigned int> sizeList, const bool isSender)
 	: EvaFileThread(receiver, id, dirList, filenameList, sizeList, isSender),
 	m_State(ENone), m_Token(NULL), m_TokenLength(0),  m_ServerPort(RELAY_SERVER_PORT),
 	m_BufferLength(0), m_PacketLength(0), m_UsingProxy(false)
@@ -171,7 +174,7 @@ void EvaAgentThread::setServerAddress(const unsigned int ip, const unsigned shor
 	m_ServerPort = port;
 }
 
-void EvaAgentThread::setProxySettings(const QHostAddress addr, const short port, const QCString &param)
+void EvaAgentThread::setProxySettings(const QHostAddress addr, const short port, const Q3CString &param)
 {
 	m_ProxyServer = addr;
 	m_ProxyPort = port;
@@ -277,9 +280,9 @@ void EvaAgentThread::slotNetworkException(int no)
 /** ================================================================== */
 
 
-EvaAgentUploader::EvaAgentUploader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList)
-	: EvaAgentThread(receiver, id, dirList, filenameList, QValueList<unsigned int>(), true),
+EvaAgentUploader::EvaAgentUploader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList)
+	: EvaAgentThread(receiver, id, dirList, filenameList, Q3ValueList<unsigned int>(), true),
 	m_IsSendingStart(false), m_Dns(NULL)
 {
 	m_Sequence = 0x0005;// give it a random number anyway
@@ -343,7 +346,7 @@ void EvaAgentUploader::doDnsRequest()
 	printf("EvaAgentUploader::doDnsRequest\n");
 	m_HostAddresses.clear();
 	if(m_Dns) delete m_Dns;
-	m_Dns = new QDns(RELAY_SERVER_URL);
+	m_Dns = new Q3Dns(RELAY_SERVER_URL);
 	QObject::connect(m_Dns, SIGNAL(resultsReady()), SLOT(slotDnsReady()));
 	
 // 	while(!m_HostAddresses.size()){
@@ -655,9 +658,9 @@ void EvaAgentUploader::processTransferReply(EvaFTAgentTransferReply *packet)
 
 /** ================================================================== */
 
-EvaAgentDownloader::EvaAgentDownloader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList, 
-			QValueList<unsigned int> sizeList)
+EvaAgentDownloader::EvaAgentDownloader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList, 
+			Q3ValueList<unsigned int> sizeList)
 	: EvaAgentThread(receiver, id, dirList, filenameList, sizeList, false),
 	m_IsRecovery(false), m_MaxBufferSize(EVA_FILE_BUFFER_UNIT), 
 	m_BufferSize(0), m_IsSendingStart(false)
@@ -974,9 +977,9 @@ bool EvaAgentDownloader::parsePacket(EvaFTAgentPacket *packet)
 
 
 
-EvaUDPThread::EvaUDPThread(QObject *receiver, const unsigned int id,const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList, 
-			QValueList<unsigned int> sizeList, const bool isSender)
+EvaUDPThread::EvaUDPThread(QObject *receiver, const unsigned int id,const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList, 
+			Q3ValueList<unsigned int> sizeList, const bool isSender)
 	: EvaFileThread(receiver, id, dirList, filenameList, sizeList, isSender),
 	m_State(ENone), m_Token(NULL), m_TokenLength(0),  m_ServerPort(SYN_SERVER_PORT)
 {
@@ -1088,9 +1091,9 @@ void EvaUDPThread::slotNetworkException(int no)
 
 
 
-EvaUdpUploader::EvaUdpUploader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList)
-	: EvaUDPThread(receiver, id, dirList, filenameList, QValueList<unsigned int>(), true),
+EvaUdpUploader::EvaUdpUploader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList)
+	: EvaUDPThread(receiver, id, dirList, filenameList, Q3ValueList<unsigned int>(), true),
 	m_Dns(NULL)
 {
 	m_Sequence = 0x0000;// give it a random number anyway
@@ -1146,7 +1149,7 @@ void EvaUdpUploader::doDnsRequest()
 {
 	m_HostAddresses.clear();
 	if(m_Dns) delete m_Dns;
-	m_Dns = new QDns(SYN_SERVER_URL);
+	m_Dns = new Q3Dns(SYN_SERVER_URL);
 	QObject::connect(m_Dns, SIGNAL(resultsReady()), SLOT(slotDnsReady()));
 	
 // 	while(!m_HostAddresses.size()){

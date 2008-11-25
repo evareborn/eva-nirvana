@@ -23,33 +23,39 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QLabel;
-class QListView;
+class Q3ListView;
 
 class EvaQunMemberPickerUI : public QWidget
 {
     Q_OBJECT
 
 public:
-	EvaQunMemberPickerUI( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaQunMemberPickerUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~EvaQunMemberPickerUI();
 	
-	QFrame* fraMain;
-	QFrame* line1;
-	QFrame* line2;
+	Q3Frame* fraMain;
+	Q3Frame* line1;
+	Q3Frame* line2;
 	QLabel* lblTitle;
-	QListView* lvBuddyList;
+	Q3ListView* lvBuddyList;
 
 protected:
-	QGridLayout* EvaQunMemberPickerUILayout;
-	QGridLayout* fraMainLayout;
-	QVBoxLayout* layout1;
+	Q3GridLayout* EvaQunMemberPickerUILayout;
+	Q3GridLayout* fraMainLayout;
+	Q3VBoxLayout* layout1;
 
 protected slots:
     virtual void languageChange();

@@ -20,11 +20,13 @@
 #ifndef EVATEXTEDIT_H
 #define EVATEXTEDIT_H
  
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <QKeyEvent>
 
 //X #include <ktextedit.h>
 class QKeyEvent;
-class EvaTextEdit : public QTextEdit
+class EvaTextEdit : public Q3TextEdit
 {
 	Q_OBJECT
 public: 

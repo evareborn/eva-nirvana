@@ -26,8 +26,13 @@
 #include <qdatetime.h>
 #include <qcolor.h>
 //X #include <kurl.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QCloseEvent>
+#include <QPixmap>
+#include <Q3PopupMenu>
+#include <QKeyEvent>
 #include <list>
 
 class EvaImageResource;
@@ -37,7 +42,7 @@ class QTextCodec;
 class QKeyEvent;
 class QCloseEvent;
 //X class EvaFontSelecter;
-class QPopupMenu;
+class Q3PopupMenu;
 class RegionGrabber;
 class EvaHistoryViewer;
 
@@ -45,7 +50,7 @@ class EvaChatWindow : public EvaChatUIBase
 {
 	Q_OBJECT
 public:
-	EvaChatWindow(QQFriend * frd, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaChatWindow(QQFriend * frd, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	~EvaChatWindow();
 	static void setupImages(EvaImageResource *res);
 	static void setQuickReplyMessages(const std::list<QString> &list);
@@ -97,8 +102,8 @@ signals:
 	void requestBuddyQQShow(const unsigned int);
 	void requestMyQQShow();
 
-	void fileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-				const QValueList<unsigned int>,
+	void fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+				const Q3ValueList<unsigned int>,
 				const unsigned char transferType);
 	// last string is the dest path to save the file
 	void fileTransferAccept(const unsigned int, const unsigned int, const QString,
@@ -117,10 +122,10 @@ private:
 	static EvaImageResource *images;
 	
 	static std::list<QString> quickList;
-	QPopupMenu *quickMenu;
+	Q3PopupMenu *quickMenu;
 	
 //X 	EvaFontSelecter *fontSelecter;
-	QPopupMenu *sendKey;
+	Q3PopupMenu *sendKey;
 	
 	QQFriend *buddy;
 	QTextCodec *codec;

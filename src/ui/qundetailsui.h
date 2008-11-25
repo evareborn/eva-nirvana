@@ -22,30 +22,36 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
 class QTabWidget;
 class QLineEdit;
 class QToolButton;
-class QGroupBox;
-class QTextEdit;
-class QButtonGroup;
+class Q3GroupBox;
+class Q3TextEdit;
+class Q3ButtonGroup;
 class QRadioButton;
-class QTable;
+class Q3Table;
 class QPushButton;
 class QComboBox;
-class QFrame;
+class Q3Frame;
 
 class QunDetailsUI : public QWidget
 {
     Q_OBJECT
 
 public:
-    QunDetailsUI( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    QunDetailsUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~QunDetailsUI();
 
     QLabel* lblLogo;
@@ -60,16 +66,16 @@ public:
     QLabel* lblQunFace;
     QLabel* lblCategory;
     QToolButton* tbCategory;
-    QGroupBox* gbNotice;
-    QTextEdit* teNotice;
-    QGroupBox* gbDescription;
-    QTextEdit* teDescription;
-    QButtonGroup* bgAuthen;
+    Q3GroupBox* gbNotice;
+    Q3TextEdit* teNotice;
+    Q3GroupBox* gbDescription;
+    Q3TextEdit* teDescription;
+    Q3ButtonGroup* bgAuthen;
     QRadioButton* rbNoAuthenNeed;
     QRadioButton* rbNeedAuthen;
     QRadioButton* rbRejectAnyone;
     QWidget* tabMember;
-    QTable* tblMembers;
+    Q3Table* tblMembers;
     QPushButton* pbSetMembers;
     QPushButton* pbAddToMe;
     QPushButton* pbDelMembers;
@@ -77,7 +83,7 @@ public:
     QPushButton* pbUnsetAdmin;
     QPushButton* pbTransfer;
     QWidget* tabSetting;
-    QButtonGroup* bgSettings;
+    Q3ButtonGroup* bgSettings;
     QRadioButton* rbRecord_Show;
     QRadioButton* rbPopupWindow;
     QRadioButton* rbDisplayNumbers;
@@ -92,45 +98,45 @@ public:
     QComboBox* cbbMyGender;
     QLineEdit* leMyPhone;
     QLineEdit* leMyEmail;
-    QFrame* line1;
+    Q3Frame* line1;
     QLabel* lblMyComment;
-    QTextEdit* teMyMemo;
+    Q3TextEdit* teMyMemo;
     QPushButton* pbUpdate;
     QPushButton* pbClose;
 
 protected:
-    QVBoxLayout* QunDetailsUILayout;
-    QHBoxLayout* layout18;
-    QVBoxLayout* tabDetailsLayout;
-    QHBoxLayout* layout17;
-    QVBoxLayout* layout1;
-    QVBoxLayout* layout2;
-    QVBoxLayout* layout25;
-    QHBoxLayout* layout5;
+    Q3VBoxLayout* QunDetailsUILayout;
+    Q3HBoxLayout* layout18;
+    Q3VBoxLayout* tabDetailsLayout;
+    Q3HBoxLayout* layout17;
+    Q3VBoxLayout* layout1;
+    Q3VBoxLayout* layout2;
+    Q3VBoxLayout* layout25;
+    Q3HBoxLayout* layout5;
     QSpacerItem* spacer1;
-    QHBoxLayout* layout24;
-    QGridLayout* gbNoticeLayout;
-    QGridLayout* gbDescriptionLayout;
-    QVBoxLayout* bgAuthenLayout;
-    QGridLayout* tabMemberLayout;
-    QHBoxLayout* layout17_2;
-    QVBoxLayout* layout16;
+    Q3HBoxLayout* layout24;
+    Q3GridLayout* gbNoticeLayout;
+    Q3GridLayout* gbDescriptionLayout;
+    Q3VBoxLayout* bgAuthenLayout;
+    Q3GridLayout* tabMemberLayout;
+    Q3HBoxLayout* layout17_2;
+    Q3VBoxLayout* layout16;
     QSpacerItem* spacer6;
     QSpacerItem* spacer7;
-    QGridLayout* tabSettingLayout;
-    QVBoxLayout* bgSettingsLayout;
-    QVBoxLayout* TabCardLayout;
-    QHBoxLayout* layout19;
-    QVBoxLayout* layout11;
-    QVBoxLayout* layout18_2;
-    QHBoxLayout* layout17_3;
+    Q3GridLayout* tabSettingLayout;
+    Q3VBoxLayout* bgSettingsLayout;
+    Q3VBoxLayout* TabCardLayout;
+    Q3HBoxLayout* layout19;
+    Q3VBoxLayout* layout11;
+    Q3VBoxLayout* layout18_2;
+    Q3HBoxLayout* layout17_3;
     QSpacerItem* spacer4;
-    QHBoxLayout* layout20;
+    Q3HBoxLayout* layout20;
     QSpacerItem* spacer5;
-    QHBoxLayout* layout21;
-    QVBoxLayout* layout15;
+    Q3HBoxLayout* layout21;
+    Q3VBoxLayout* layout15;
     QSpacerItem* spacer3;
-    QHBoxLayout* layout9;
+    Q3HBoxLayout* layout9;
     QSpacerItem* spacer2;
 
 protected slots:

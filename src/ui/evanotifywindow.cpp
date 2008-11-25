@@ -21,17 +21,17 @@
 
 #include <qlabel.h>
 #include <qpushbutton.h>
-#include <qwidgetstack.h>
-#include <qgroupbox.h>
+#include <q3widgetstack.h>
+#include <q3groupbox.h>
 #include <qtoolbutton.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qtimer.h>
  
 #include "evamain.h"
 
 //X #include <klocale.h>
   
-EvaNotifyWindow::EvaNotifyWindow(QWidget* parent , const char* name, WFlags fl)
+EvaNotifyWindow::EvaNotifyWindow(QWidget* parent , const char* name, Qt::WFlags fl)
 	: EvaNotifyUIBase(parent, name, fl)
 {
 	needAuth = false;

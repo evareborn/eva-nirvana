@@ -23,21 +23,27 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QToolButton;
 class QLabel;
 class QLineEdit;
 class EvaTextEdit;
-class QTextEdit;
+class Q3TextEdit;
 //X class EvaChatView;
 class SimpleChatView;
 class QPushButton;
 class QSplitter;
-class QFrame;
+class Q3Frame;
 //X class EvaFilePanel;
 
 class EvaChatUIBase : public QWidget
@@ -45,7 +51,7 @@ class EvaChatUIBase : public QWidget
 	Q_OBJECT
 
 public:
-	EvaChatUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaChatUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~EvaChatUIBase();
 	
 	QToolButton* tbBuddy;
@@ -70,7 +76,7 @@ public:
 	QPushButton* pbClose;
 	QPushButton* pbSend;
 	QPushButton* pbSendKey;
-	QFrame *m_ShowFrame;
+	Q3Frame *m_ShowFrame;
 	QLabel* lblBuddyShow;
 	QToolButton* tbShowBuddy;
 	QLabel* lblMeShow;
@@ -78,25 +84,25 @@ public:
 	QSplitter* splitter;
 
 //X 	EvaFilePanel *m_FilePanel;
-	QFrame *m_FilePanelFrame;
+	Q3Frame *m_FilePanelFrame;
 
 protected:
 	//QGridLayout* EvaChatUIBaseLayout;
-	QHBoxLayout* EvaChatUIBaseLayout;
-	QVBoxLayout* layout5;
-	QHBoxLayout* layout4;
-	QHBoxLayout* layout3;
+	Q3HBoxLayout* EvaChatUIBaseLayout;
+	Q3VBoxLayout* layout5;
+	Q3HBoxLayout* layout4;
+	Q3HBoxLayout* layout3;
 	QSpacerItem* spcTootBtn1;
 	QSpacerItem* spcToolBtn2;
 	QSpacerItem* spcToolBtn3;
-	QHBoxLayout* layout2;
+	Q3HBoxLayout* layout2;
 	QSpacerItem* spcBottom;
-	QVBoxLayout* layout19;
+	Q3VBoxLayout* layout19;
 	QSpacerItem* spacer12;
 	QSpacerItem* spacer10;
-	QVBoxLayout* lowerLayout;
-	QVBoxLayout* m_ShowLayout;
-	QVBoxLayout* m_FilePanelLayout;
+	Q3VBoxLayout* lowerLayout;
+	Q3VBoxLayout* m_ShowLayout;
+	Q3VBoxLayout* m_FilePanelLayout;
 
 protected slots:
 	virtual void languageChange();

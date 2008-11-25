@@ -21,7 +21,7 @@
 #include "customface.h"
 
 #include <qfile.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qtextcodec.h>
 #include "evamain.h"
 
@@ -723,14 +723,14 @@ FaceList CustomFaceConfig::groupMembers(const int groupIndex)
 bool CustomFaceConfig::loadXML()
 {
 	QFile xmlFile(m_Dir+"/"XML_FACE_FILE);
-	if(! xmlFile.open( IO_ReadOnly ) ) {
+	if(! xmlFile.open( QIODevice::ReadOnly ) ) {
 		// if config file not existed we create an default config file
 		createConfig();
 		saveXML();
 		return false;
 	}
 	
-	QTextStream xmlStream(&xmlFile);
+	Q3TextStream xmlStream(&xmlFile);
 	xmlStream.setCodec(QTextCodec::codecForName("GB18030") );
 	QString xmlstr = xmlStream.read();
 	xmlFile.close();
@@ -761,9 +761,9 @@ bool CustomFaceConfig::saveXML()
 	xmlstr.replace(TAG_FILE_FIXED, __FILE_FIXED);
 
 	QFile xmlFile(m_Dir+"/"XML_FACE_FILE);
-	if(! xmlFile.open( IO_WriteOnly ) ) return false;
+	if(! xmlFile.open( QIODevice::WriteOnly ) ) return false;
 
-	QTextStream xmlStream(&xmlFile);
+	Q3TextStream xmlStream(&xmlFile);
 	xmlStream.setCodec(QTextCodec::codecForName("GB18030") );
 	xmlStream << xmlstr;
 	xmlFile.close();

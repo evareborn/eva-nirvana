@@ -22,12 +22,16 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
 //X #include <kurllabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -39,24 +43,24 @@
  *  Constructs a EvaSysBroadcastUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaSysBroadcastUIBase" );
-    EvaSysBroadcastUIBaseLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaSysBroadcastUIBaseLayout"); 
+    EvaSysBroadcastUIBaseLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaSysBroadcastUIBaseLayout"); 
 
-    layout7 = new QVBoxLayout( 0, 0, 6, "layout7"); 
+    layout7 = new Q3VBoxLayout( 0, 0, 6, "layout7"); 
 
-    fraContents = new QFrame( this, "fraContents" );
+    fraContents = new Q3Frame( this, "fraContents" );
     fraContents->setPaletteBackgroundColor( QColor( 234, 247, 225 ) );
-    fraContents->setFrameShape( QFrame::StyledPanel );
-    fraContents->setFrameShadow( QFrame::Raised );
-    fraContentsLayout = new QGridLayout( fraContents, 1, 1, 11, 6, "fraContentsLayout"); 
+    fraContents->setFrameShape( Q3Frame::StyledPanel );
+    fraContents->setFrameShadow( Q3Frame::Raised );
+    fraContentsLayout = new Q3GridLayout( fraContents, 1, 1, 11, 6, "fraContentsLayout"); 
 
-    layout6 = new QVBoxLayout( 0, 0, 6, "layout6"); 
+    layout6 = new Q3VBoxLayout( 0, 0, 6, "layout6"); 
 
-    layout5 = new QHBoxLayout( 0, 0, 6, "layout5"); 
+    layout5 = new Q3HBoxLayout( 0, 0, 6, "layout5"); 
 
     lblTitle = new QLabel( fraContents, "lblTitle" );
     layout5->addWidget( lblTitle );
@@ -69,8 +73,8 @@ EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name,
 //X     QFont lblContents_font = KGlobalSettings::fixedFont();
 //X     lblContents->setFont( lblContents_font ); 
     lblContents->setFrameShape( QLabel::NoFrame );
-    lblContents->setTextFormat( QLabel::PlainText );
-    lblContents->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
+    lblContents->setTextFormat( Qt::PlainText );
+    lblContents->setAlignment( Qt::WordBreak | Qt::AlignTop | Qt::AlignLeft );
     layout6->addWidget( lblContents );
 
     qlblUrl = new QLabel( fraContents, "kurllblUrl" );
@@ -81,7 +85,7 @@ EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name,
     fraContentsLayout->addLayout( layout6, 0, 0 );
     layout7->addWidget( fraContents );
 
-    layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
+    layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3"); 
     spacer1 = new QSpacerItem( 101, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout3->addItem( spacer1 );
 
@@ -95,7 +99,7 @@ EvaSysBroadcastUIBase::EvaSysBroadcastUIBase( QWidget* parent, const char* name,
     EvaSysBroadcastUIBaseLayout->addLayout( layout7, 0, 0 );
     languageChange();
     resize( QSize(400, 248).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*
@@ -116,7 +120,7 @@ void EvaSysBroadcastUIBase::languageChange()
     lblTitle->setText( i18n( "System Broadcast:" ) );
     //lblContents->setText( tr( "-" ) );
     //kurllblUrl->setText( tr( "-" ) );
-    qlblUrl->setProperty( "url", QString::null );
+//X     qlblUrl->setProperty( "url", QVariant::null );
     btnDetails->setText( i18n( "&More Details" ) );
     btnDetails->setAccel( QKeySequence( tr( "Alt+M" ) ) );
     btnClose->setText( i18n( "&Close" ) );

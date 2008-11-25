@@ -22,56 +22,61 @@
 #define EVANOTIFYUIBASE_H
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QGroupBox;
+class Q3GroupBox;
 class QLabel;
 class QToolButton;
-class QWidgetStack;
-class QTextEdit;
+class Q3WidgetStack;
+class Q3TextEdit;
 class QPushButton;
 
 class EvaNotifyUIBase : public QWidget
 {
     Q_OBJECT
 public:
-	EvaNotifyUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaNotifyUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~EvaNotifyUIBase();
 	
-	QGroupBox* gbFrom;
+	Q3GroupBox* gbFrom;
 	QLabel* textLabel1;
 	QLabel* tlQQ;
 	QLabel* textLabel2;
 	QLabel* tlNick;
 	QLabel* textLabel3;
 	QToolButton* tbDetails;
-	QGroupBox* gbMain;
-	QWidgetStack* wsMain;
+	Q3GroupBox* gbMain;
+	Q3WidgetStack* wsMain;
 	QWidget* WStackPage;
 	QLabel* tlP0Tip;
 	QWidget* WStackPage_2;
 	QLabel* tlP1Tip;
-	QTextEdit* teP1Msg;
+	Q3TextEdit* teP1Msg;
 	QPushButton* pbApprove;
 	QPushButton* pbReject;
 	QPushButton* pbAdd;
 	QPushButton* pbClose;
 
 protected:
-	QGridLayout* EvaNotifyUIBaseLayout;
-	QVBoxLayout* layout62;
-	QGridLayout* gbFromLayout;
-	QHBoxLayout* layout49;
+	Q3GridLayout* EvaNotifyUIBaseLayout;
+	Q3VBoxLayout* layout62;
+	Q3GridLayout* gbFromLayout;
+	Q3HBoxLayout* layout49;
 	QSpacerItem* spacer14;
 	QSpacerItem* spacer13;
-	QGridLayout* gbMainLayout;
-	QGridLayout* WStackPageLayout;
-	QGridLayout* WStackPageLayout_2;
-	QHBoxLayout* layout54;
-	QHBoxLayout* layout52;
+	Q3GridLayout* gbMainLayout;
+	Q3GridLayout* WStackPageLayout;
+	Q3GridLayout* WStackPageLayout_2;
+	Q3HBoxLayout* layout54;
+	Q3HBoxLayout* layout52;
 	QSpacerItem* spacer15;
 
 protected slots:

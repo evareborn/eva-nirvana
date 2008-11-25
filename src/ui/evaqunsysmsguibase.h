@@ -23,15 +23,21 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QToolButton;
 class QLabel;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QRadioButton;
 class QLineEdit;
 class QCheckBox;
@@ -42,35 +48,35 @@ class EvaQunSysMsgUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaQunSysMsgUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaQunSysMsgUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaQunSysMsgUIBase();
 
-    QFrame* fraMain;
+    Q3Frame* fraMain;
     QToolButton* tbQQ;
     QLabel* lblAction;
     QToolButton* tbQun;
     QLabel* lblMessage;
-    QButtonGroup* bgActions;
+    Q3ButtonGroup* bgActions;
     QRadioButton* rbtnAccept;
     QRadioButton* rbtnReject;
-    QFrame* fraMessage;
+    Q3Frame* fraMessage;
     QLineEdit* leMessage;
     QCheckBox* chbRejectForever;
     QPushButton* btnOk;
     QPushButton* btnClose;
 
 protected:
-    QGridLayout* EvaQunSysMsgUIBaseLayout;
-    QVBoxLayout* layout12;
-    QVBoxLayout* fraMainLayout;
-    QVBoxLayout* layout6;
-    QHBoxLayout* layout5;
+    Q3GridLayout* EvaQunSysMsgUIBaseLayout;
+    Q3VBoxLayout* layout12;
+    Q3VBoxLayout* fraMainLayout;
+    Q3VBoxLayout* layout6;
+    Q3HBoxLayout* layout5;
     QSpacerItem* spacer3;
-    QVBoxLayout* bgActionsLayout;
-    QHBoxLayout* layout1;
+    Q3VBoxLayout* bgActionsLayout;
+    Q3HBoxLayout* layout1;
     QSpacerItem* spacer1;
-    QVBoxLayout* fraMessageLayout;
-    QHBoxLayout* layout10;
+    Q3VBoxLayout* fraMessageLayout;
+    Q3HBoxLayout* layout10;
     QSpacerItem* spacer2;
 
 protected slots:

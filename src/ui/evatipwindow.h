@@ -22,6 +22,9 @@
 #define EVATIPWINDOW_H
 
 #include "evatipuibase.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <QMouseEvent>
 
 class EvaImageResource;
 class QTimer;

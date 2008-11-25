@@ -11,17 +11,21 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qtoolbutton.h>
-#include <qlistview.h>
-#include <qtable.h>
+#include <q3listview.h>
+#include <q3table.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qrect.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 //X #include <klocale.h>
@@ -332,7 +336,7 @@ static const unsigned char image2_data[] = {
  *  Constructs a CustomFaceManagerUI as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFlags fl )
+CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     QImage img;
@@ -344,17 +348,17 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     image2 = img;
     if ( !name )
 	setName( "CustomFaceManagerUI" );
-    CustomFaceManagerUILayout = new QGridLayout( this, 1, 1, 3, 0, "CustomFaceManagerUILayout"); 
+    CustomFaceManagerUILayout = new Q3GridLayout( this, 1, 1, 3, 0, "CustomFaceManagerUILayout"); 
 
-    layout9 = new QVBoxLayout( 0, 0, 6, "layout9"); 
+    layout9 = new Q3VBoxLayout( 0, 0, 6, "layout9"); 
 
-    frame7 = new QFrame( this, "frame7" );
+    frame7 = new Q3Frame( this, "frame7" );
     frame7->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, frame7->sizePolicy().hasHeightForWidth() ) );
-    frame7->setFrameShape( QFrame::TabWidgetPanel );
-    frame7->setFrameShadow( QFrame::Raised );
-    frame7Layout = new QGridLayout( frame7, 1, 1, 2, 0, "frame7Layout"); 
+    frame7->setFrameShape( Q3Frame::TabWidgetPanel );
+    frame7->setFrameShadow( Q3Frame::Raised );
+    frame7Layout = new Q3GridLayout( frame7, 1, 1, 2, 0, "frame7Layout"); 
 
-    layout1 = new QHBoxLayout( 0, 0, 6, "layout1"); 
+    layout1 = new Q3HBoxLayout( 0, 0, 6, "layout1"); 
 
     tbtnImport = new QToolButton( frame7, "tbtnImport" );
     tbtnImport->setAutoRaise( TRUE );
@@ -365,21 +369,21 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     layout1->addWidget( tbtnExport );
 
     tbtnAddGroup = new QToolButton( frame7, "tbtnAddGroup" );
-    tbtnAddGroup->setIconSet( QIconSet( image0 ) );
+    tbtnAddGroup->setIconSet( QIcon( image0 ) );
     tbtnAddGroup->setUsesTextLabel( TRUE );
     tbtnAddGroup->setAutoRaise( TRUE );
     tbtnAddGroup->setTextPosition( QToolButton::BesideIcon );
     layout1->addWidget( tbtnAddGroup );
 
     tbtnEditGroup = new QToolButton( frame7, "tbtnEditGroup" );
-    tbtnEditGroup->setIconSet( QIconSet( image1 ) );
+    tbtnEditGroup->setIconSet( QIcon( image1 ) );
     tbtnEditGroup->setUsesTextLabel( TRUE );
     tbtnEditGroup->setAutoRaise( TRUE );
     tbtnEditGroup->setTextPosition( QToolButton::BesideIcon );
     layout1->addWidget( tbtnEditGroup );
 
     tbtnRemoveGroup = new QToolButton( frame7, "tbtnRemoveGroup" );
-    tbtnRemoveGroup->setIconSet( QIconSet( image2 ) );
+    tbtnRemoveGroup->setIconSet( QIcon( image2 ) );
     tbtnRemoveGroup->setUsesBigPixmap( TRUE );
     tbtnRemoveGroup->setUsesTextLabel( TRUE );
     tbtnRemoveGroup->setAutoRaise( TRUE );
@@ -389,53 +393,53 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     frame7Layout->addLayout( layout1, 0, 0 );
     layout9->addWidget( frame7 );
 
-    layout7 = new QHBoxLayout( 0, 0, 6, "layout7"); 
+    layout7 = new Q3HBoxLayout( 0, 0, 6, "layout7"); 
 
-    frame6 = new QFrame( this, "frame6" );
+    frame6 = new Q3Frame( this, "frame6" );
     frame6->setPaletteForegroundColor( QColor( 0, 124, 206 ) );
-    frame6->setFrameShape( QFrame::Box );
-    frame6->setFrameShadow( QFrame::Plain );
-    frame6Layout = new QGridLayout( frame6, 1, 1, 1, 0, "frame6Layout"); 
+    frame6->setFrameShape( Q3Frame::Box );
+    frame6->setFrameShadow( Q3Frame::Plain );
+    frame6Layout = new Q3GridLayout( frame6, 1, 1, 1, 0, "frame6Layout"); 
 
-    lvGroups = new QListView( frame6, "lvGroups" );
+    lvGroups = new Q3ListView( frame6, "lvGroups" );
     lvGroups->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)7, 0, 0, lvGroups->sizePolicy().hasHeightForWidth() ) );
     lvGroups->setMinimumSize( QSize( 100, 0 ) );
     lvGroups->setMaximumSize( QSize( 250, 32767 ) );
-    lvGroups->setFrameShape( QListView::NoFrame );
-    lvGroups->setFrameShadow( QListView::Plain );
+    lvGroups->setFrameShape( Q3ListView::NoFrame );
+    lvGroups->setFrameShadow( Q3ListView::Plain );
     lvGroups->setLineWidth( 1 );
-    lvGroups->setHScrollBarMode( QListView::AlwaysOff );
+    lvGroups->setHScrollBarMode( Q3ListView::AlwaysOff );
     lvGroups->setSorting( -1 ); // don't sort
 
     frame6Layout->addWidget( lvGroups, 0, 0 );
     layout7->addWidget( frame6 );
 
-    frmMain = new QFrame( this, "frmMain" );
+    frmMain = new Q3Frame( this, "frmMain" );
     frmMain->setPaletteForegroundColor( QColor( 0, 124, 206 ) );
     frmMain->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-    frmMain->setFrameShape( QFrame::Box );
-    frmMain->setFrameShadow( QFrame::Plain );
-    frmMainLayout = new QGridLayout( frmMain, 1, 1, 11, 6, "frmMainLayout"); 
+    frmMain->setFrameShape( Q3Frame::Box );
+    frmMain->setFrameShadow( Q3Frame::Plain );
+    frmMainLayout = new Q3GridLayout( frmMain, 1, 1, 11, 6, "frmMainLayout"); 
 
-    layout6 = new QHBoxLayout( 0, 0, 6, "layout6"); 
+    layout6 = new Q3HBoxLayout( 0, 0, 6, "layout6"); 
 
-    tblFaceList = new QTable( frmMain, "tblFaceList" );
+    tblFaceList = new Q3Table( frmMain, "tblFaceList" );
     tblFaceList->setNumCols( tblFaceList->numCols() + 1 );
     tblFaceList->horizontalHeader()->setLabel( tblFaceList->numCols() - 1, i18n("No." ) );
     tblFaceList->setNumCols( tblFaceList->numCols() + 1 );
     tblFaceList->horizontalHeader()->setLabel( tblFaceList->numCols() - 1, i18n("Smiley" ) );
     tblFaceList->setNumCols( tblFaceList->numCols() + 1 );
     tblFaceList->horizontalHeader()->setLabel( tblFaceList->numCols() - 1, i18n("Shortcut" ) );
-    tblFaceList->setFrameShape( QTable::GroupBoxPanel );
-    tblFaceList->setFrameShadow( QTable::Plain );
-    tblFaceList->setHScrollBarMode( QTable::AlwaysOff );
+    tblFaceList->setFrameShape( Q3Table::GroupBoxPanel );
+    tblFaceList->setFrameShadow( Q3Table::Plain );
+    tblFaceList->setHScrollBarMode( Q3Table::AlwaysOff );
     tblFaceList->setNumRows( 0 );
     tblFaceList->setNumCols( 3 );
-    tblFaceList->setSelectionMode( QTable::MultiRow );
-    tblFaceList->setFocusStyle( QTable::FollowStyle );
+    tblFaceList->setSelectionMode( Q3Table::MultiRow );
+    tblFaceList->setFocusStyle( Q3Table::FollowStyle );
     layout6->addWidget( tblFaceList );
 
-    layout5 = new QVBoxLayout( 0, 0, 6, "layout5"); 
+    layout5 = new Q3VBoxLayout( 0, 0, 6, "layout5"); 
 
     btnAdd = new QPushButton( frmMain, "btnAdd" );
     layout5->addWidget( btnAdd );
@@ -470,7 +474,7 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     layout7->addWidget( frmMain );
     layout9->addLayout( layout7 );
 
-    layout8 = new QHBoxLayout( 0, 0, 6, "layout8"); 
+    layout8 = new Q3HBoxLayout( 0, 0, 6, "layout8"); 
     spacer2 = new QSpacerItem( 91, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout8->addItem( spacer2 );
 
@@ -484,7 +488,7 @@ CustomFaceManagerUI::CustomFaceManagerUI( QWidget* parent, const char* name, WFl
     CustomFaceManagerUILayout->addLayout( layout9, 0, 0 );
     languageChange();
     resize( QSize(521, 382).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
 //X     QRect scr = KApplication::desktop()->screenGeometry();
 //X     move(scr.center()-rect().center());

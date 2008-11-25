@@ -21,7 +21,7 @@
 
 #include "qundetailswindow.h"
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -29,14 +29,17 @@
 #include <qpixmap.h>
 #include <qlabel.h>
 #include <qtabwidget.h>
-#include <qbuttongroup.h>
-#include <qtable.h>
+#include <q3buttongroup.h>
+#include <q3table.h>
 #include <qimage.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <qpoint.h>
 #include <qtoolbutton.h>
 #include <qmessagebox.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QCloseEvent>
 #include "evaqunlist.h"
 #include "evamain.h"
 #include "evaresource.h"
@@ -63,7 +66,7 @@ QunDetailsWindow::~QunDetailsWindow()
 	delete mQun;
 }
 
-QunDetailsWindow::QunDetailsWindow( Qun * qun, const bool isInList, QWidget * parent, const char * name, WFlags fl )
+QunDetailsWindow::QunDetailsWindow( Qun * qun, const bool isInList, QWidget * parent, const char * name, Qt::WFlags fl )
 	: QunDetailsUI(parent,name,fl), mQun(qun), m_IsInList(isInList), m_CardId(0)
 {
 	mQun = new Qun(*qun);
@@ -73,8 +76,8 @@ QunDetailsWindow::QunDetailsWindow( Qun * qun, const bool isInList, QWidget * pa
 		initTable( );
 		slotLoadMembers();
 	
-		picker = new EvaQunMemberPicker(0, "qunpicker", WStyle_Customize | WStyle_NoBorder | 
-									WStyle_StaysOnTop |  WStyle_Tool| WX11BypassWM, mQun);
+		picker = new EvaQunMemberPicker(0, "qunpicker", Qt::FramelessWindowHint | 
+									Qt::WindowStaysOnTopHint |Qt::Tool |Qt::X11BypassWindowManagerHint, mQun);
 		picker->resize(QSize(240,frameGeometry().height()));
 		QObject::connect(picker, SIGNAL(memberClicked(const unsigned int, const bool)), 
 					SLOT(slotPickerMemberClicked(const unsigned int, const bool)));
@@ -419,7 +422,7 @@ void QunDetailsWindow::slotLoadMembers( )
 
 void QunDetailsWindow::initTable( )
 {
-	QHeader *vheader = tblMembers->verticalHeader();
+	Q3Header *vheader = tblMembers->verticalHeader();
 	vheader->hide();
 	tblMembers->setLeftMargin(0);
 	tblMembers->setNumRows( 0 );
@@ -432,8 +435,8 @@ void QunDetailsWindow::initTable( )
 	tblMembers->horizontalHeader()->setLabel( 1, i18n( "QQ" ) );
 	tblMembers->horizontalHeader()->setLabel( 2, i18n( "Nick" ) );
 	tblMembers->horizontalHeader()->setLabel( 3, i18n( "Gender" ) );
-	tblMembers->setSelectionMode( QTable::SingleRow );
-	tblMembers->setFocusStyle( QTable::FollowStyle );
+	tblMembers->setSelectionMode( Q3Table::SingleRow );
+	tblMembers->setFocusStyle( Q3Table::FollowStyle );
 	tblMembers->setReadOnly( true );
 	QObject::connect(tblMembers, SIGNAL(clicked(int,int,int,const QPoint&)), SLOT(slotTableClicked(int,int,int,const QPoint&)));
 
@@ -791,8 +794,8 @@ void QunDetailsWindow::slotReceivedQunCard( const unsigned int id, const bool ok
 
 void QunDetailsWindow::slotCategoryClicked( )
 {
-	QunCategoryPicker *picker = new QunCategoryPicker(this, "categoryPicker",WStyle_Customize | WStyle_Dialog |
-										 WStyle_DialogBorder|WDestructiveClose);
+	QunCategoryPicker *picker = new QunCategoryPicker(this, "categoryPicker",Qt::WFlags( Qt::Dialog |
+										 Qt::MSWindowsFixedSizeDialogHint |Qt::WA_DeleteOnClose ));
 	QObject::connect(picker, SIGNAL(selectCategoryCode(const unsigned short )), SLOT(slotCategorySelected(const unsigned short )));
 	picker->show();
 }

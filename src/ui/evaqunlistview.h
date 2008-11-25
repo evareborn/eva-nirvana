@@ -21,20 +21,24 @@
 #ifndef EVAQUNLISTVIEW_H
 #define EVAQUNLISTVIEW_H
 
-#include <qlistview.h>
+#include <q3listview.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QCustomEvent>
+#include <Q3PopupMenu>
 #include <list>
 
 class QPixmap;
 //class EvaToolTip;
 class QCustomEvent;
-class QPopupMenu;
+class Q3PopupMenu;
 
 
-class EvaQunBuddyItem :  public QObject, public QListViewItem
+class EvaQunBuddyItem :  public QObject, public Q3ListViewItem
 {
 	Q_OBJECT
 public:
-	EvaQunBuddyItem( QListView *parent, const QString &name, const unsigned int id, const QPixmap *pic, const QPixmap *offPic);
+	EvaQunBuddyItem( Q3ListView *parent, const QString &name, const unsigned int id, const QPixmap *pic, const QPixmap *offPic);
 	
 	void update(const unsigned int id, const QString &name, const QPixmap *pic, const QPixmap *offPic, const bool isCreator = false);
 	void setCreator(bool isCreator);
@@ -60,11 +64,11 @@ private:
 	bool mIsAdmin;
 };
 
-class EvaQunListView : public QListView 
+class EvaQunListView : public Q3ListView 
 {
 	Q_OBJECT
 public:
-	EvaQunListView( QWidget *parent=0, const char *name =0, WFlags f= 0);
+	EvaQunListView( QWidget *parent=0, const char *name =0, Qt::WFlags f= 0);
 	~EvaQunListView();
 	
 	EvaQunBuddyItem * addQunBuddy(const QString &nick, const unsigned int id, const QPixmap *pic, const QPixmap *offpic);
@@ -79,13 +83,13 @@ signals:
 	void requestChat(const unsigned int);
 private:
 	//EvaToolTip *mToolTip;
-	QPopupMenu *popupMenu;
+	Q3PopupMenu *popupMenu;
 private slots:
-	void slotContextMenu(QListViewItem *, const QPoint & , int);
+	void slotContextMenu(Q3ListViewItem *, const QPoint & , int);
 	void slotDetails();
 	void slotDoRefreshMembers();
 	void slotQunCard();
-	void slotBuddyDoubleClick( QListViewItem *item, const QPoint &, int );
+	void slotBuddyDoubleClick( Q3ListViewItem *item, const QPoint &, int );
 };
 
 

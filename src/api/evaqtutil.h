@@ -33,6 +33,8 @@
 #include <qsize.h>
 #include <qevent.h>
 #include <qmutex.h>
+//Added by qt3to4:
+#include <QCustomEvent>
 
 #define EvaLoadGroupedUsersEvent  65535
 #define EvaLoadQunUsersEvent      65534

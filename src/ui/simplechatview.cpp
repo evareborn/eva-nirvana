@@ -1,4 +1,4 @@
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 
 #include "evamain.h"
 #include "api/evaresource.h"
@@ -10,17 +10,17 @@ class EvaImageResource;
 #define MAX_FONT_SIZE   20
 
 SimpleChatView::SimpleChatView( QWidget * parent, const char * name )
-	: QTextEdit(parent, name), m_isScrollAtBottom(true)
+	: Q3TextEdit(parent, name), m_isScrollAtBottom(true)
 {
 	//setOnlyLocalReferences(true);
-	menu = new QPopupMenu(0, "popup");
+	menu = new Q3PopupMenu(0, "popup");
 //X 	copyAction = KStdAction::copy( this, SLOT(copy()), actionCollection());
 //X 	copyAction->setText(i18n("&Copy Text"));
 //X 	copyAction->setShortcut( KShortcut("Ctrl+C"));
 
 //X 	setDNDEnabled(true);
 //X 	setAutoloadImages(true);
-	setHScrollBarMode(QScrollView::AlwaysOff);
+	setHScrollBarMode(Q3ScrollView::AlwaysOff);
 	
 	//setStandardFont("Helvetica");
 	//buffer += "<body style=\"font-size:9pt;font-family:Helvetica\">";

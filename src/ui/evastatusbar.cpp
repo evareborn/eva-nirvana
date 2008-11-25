@@ -22,32 +22,36 @@
 #include <qlabel.h>
 #include <qtoolbutton.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
 
-EvaStatusBar::EvaStatusBar( QWidget* parent, const char* name, WFlags fl )
-    : QFrame( parent, name, fl )
+EvaStatusBar::EvaStatusBar( QWidget* parent, const char* name, Qt::WFlags fl )
+    : Q3Frame( parent, name, fl )
 {
 	if ( !name )
 		setName( "Eva Status Bar" );
 
-	setFrameShape( QFrame::NoFrame );
-	setFrameShadow( QFrame::Raised );
+	setFrameShape( Q3Frame::NoFrame );
+	setFrameShadow( Q3Frame::Raised );
 	setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)0, 0, 0, sizePolicy().hasHeightForWidth() ) );
 
-	frame4Layout = new QGridLayout( this, 1, 1, 1, 1, "frame4Layout");
+	frame4Layout = new Q3GridLayout( this, 1, 1, 1, 1, "frame4Layout");
 
-	layout4 = new QHBoxLayout( 0, 1, 1, "layout4"); 
+	layout4 = new Q3HBoxLayout( 0, 1, 1, "layout4"); 
 	
 	lblNotification = new QLabel( this, "lblNotification" );
 	lblNotification->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, lblNotification->sizePolicy().hasHeightForWidth() ) );
 	layout4->addWidget( lblNotification );
 
-	fraSystem = new QFrame( this, "fraSystem" );
+	fraSystem = new Q3Frame( this, "fraSystem" );
 	fraSystem->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, fraSystem->sizePolicy().hasHeightForWidth() ) );
-	fraSystem->setFrameShape( QFrame::NoFrame );
-	fraSystem->setFrameShadow( QFrame::Raised );
-	fraSystemLayout = new QGridLayout( fraSystem, 1, 1, 2, 2, "fraSystemLayout"); 
+	fraSystem->setFrameShape( Q3Frame::NoFrame );
+	fraSystem->setFrameShadow( Q3Frame::Raised );
+	fraSystemLayout = new Q3GridLayout( fraSystem, 1, 1, 2, 2, "fraSystemLayout"); 
 
-	layout3 = new QHBoxLayout( 0, 0, 6, "layout3");
+	layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3");
 
 	tbSearch = new QToolButton( fraSystem, "tbSearch" );
 	tbSearch->setMinimumSize( QSize( 24, 24 ) );
@@ -73,11 +77,11 @@ EvaStatusBar::EvaStatusBar( QWidget* parent, const char* name, WFlags fl )
 	spacer2 = new QSpacerItem( 21, 20, QSizePolicy::Fixed, QSizePolicy::Minimum );
 	layout4->addItem( spacer2 );
 
-	fraStatus = new QFrame( this, "fraStatus" );
+	fraStatus = new Q3Frame( this, "fraStatus" );
 	fraStatus->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, fraStatus->sizePolicy().hasHeightForWidth() ) );
-	fraStatus->setFrameShape( QFrame::NoFrame );
-	fraStatus->setFrameShadow( QFrame::Raised );
-	fraStatusLayout = new QGridLayout( fraStatus, 1, 1, 2, 2, "fraStatusLayout"); 
+	fraStatus->setFrameShape( Q3Frame::NoFrame );
+	fraStatus->setFrameShadow( Q3Frame::Raised );
+	fraStatusLayout = new Q3GridLayout( fraStatus, 1, 1, 2, 2, "fraStatusLayout"); 
 	
 	tbStatus = new QToolButton( fraStatus, "tbStatus" );
 	tbStatus->setMinimumSize( QSize( 24, 24 ) );
@@ -90,7 +94,7 @@ EvaStatusBar::EvaStatusBar( QWidget* parent, const char* name, WFlags fl )
 
 	frame4Layout->addLayout( layout4, 0, 0 );
 	resize( QSize(600, 30).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 }
 
 EvaStatusBar::~EvaStatusBar()

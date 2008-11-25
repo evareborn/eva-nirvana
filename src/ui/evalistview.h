@@ -21,11 +21,14 @@
 #ifndef EVALISTVIEW_H
 #define EVALISTVIEW_H
 
-#include <qlistview.h>
-#include <qvaluestack.h>
+#include <q3listview.h>
+#include <q3valuestack.h>
 #include <qtooltip.h>
 #include <qcolor.h>
 #include <qsize.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QPixmap>
 #include <string>
 #include <list>
 #include <map>
@@ -36,29 +39,30 @@ class EvaListView;
 class QCustomEvent;
 class QPainter;
 class QColorGroup;
-class QSimpleRichText;
+class Q3SimpleRichText;
 class QTextCodec;
+class QToolTipGroup;
 
-
-class EvaLVToolTip : public QToolTip
-{
-public:
-    EvaLVToolTip(EvaListView *lv, QToolTipGroup *group = 0);
-    virtual ~EvaLVToolTip();
-protected:
-    void maybeTip(const QPoint &p);
-private:
-    EvaListView *m_lv;
-};
-
+//X 
+//X class EvaLVToolTip : public QToolTip
+//X {
+//X public:
+//X     EvaLVToolTip(EvaListView *lv, QToolTipGroup *group = 0);
+//X     virtual ~EvaLVToolTip();
+//X protected:
+//X     void maybeTip(const QPoint &p);
+//X private:
+//X     EvaListView *m_lv;
+//X };
+//X 
 // list view item types
 enum LVIType { E_LVIBuddy, E_LVIGroup, E_LVIQun};
 
-class EvaListViewItem :  public QListViewItem
+class EvaListViewItem :  public Q3ListViewItem
 {
 public:
-	EvaListViewItem( QListViewItem *parent, QString label, QPixmap *p = 0);
-	EvaListViewItem( QListView *parent);
+	EvaListViewItem( Q3ListViewItem *parent, QString label, QPixmap *p = 0);
+	EvaListViewItem( Q3ListView *parent);
 	~EvaListViewItem();
 	
 	virtual void updateIcon(QPixmap *p);
@@ -76,23 +80,23 @@ protected:
 	QTextCodec *codec;
 	QPixmap *m_icon;
 private:
-	QSimpleRichText *m_richText;
+	Q3SimpleRichText *m_richText;
 	
 	friend class EvaListView;
 };
 
-class EvaListView : public QListView 
+class EvaListView : public Q3ListView 
 {
     Q_OBJECT
 public:
-    EvaListView( QWidget *parent=0, const char *name =0, WFlags f= 0);
+    EvaListView( QWidget *parent=0, const char *name =0, Qt::WFlags f= 0);
     ~EvaListView();
 
 protected:	
     QTextCodec *codec;
 
 private:
-    EvaLVToolTip *m_tooltip;
+//X     EvaLVToolTip *m_tooltip;
 
     friend class EvaListViewItem;
 };

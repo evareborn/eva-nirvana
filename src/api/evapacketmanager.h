@@ -27,7 +27,7 @@
 #include <qobject.h>
 #include <qdatetime.h>
 #include <qstringlist.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 
 // passing a connected EvaConnecter in, otherwise whenever sending a packet will cause an exception
@@ -298,8 +298,8 @@ private:
 	int processQunID;
 	bool qunMemberInfoFinished;
 	ContactInfo changingDetails;
-	QValueList<int>receivedPacketList;
-	QValueList<int>receivedCacheList;
+	Q3ValueList<int>receivedPacketList;
+	Q3ValueList<int>receivedCacheList;
 	
 	std::map<short, pcMsg> pcMsgCache;
 

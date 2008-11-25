@@ -25,9 +25,9 @@
 #include "evaresource.h"
 #include <qfile.h>
 #include <qdatastream.h>
-#include <qtextstream.h>
-#include <qsocketdevice.h>
-#include <qdns.h>
+#include <q3textstream.h>
+#include <q3socketdevice.h>
+#include <q3dns.h>
 #include <qstringlist.h>
 #include <qapplication.h>
 #include <string.h>
@@ -201,7 +201,7 @@ void EvaUHFile::save(QString &dir)
 	*/
 	QString filePrefix = dir + "/" + getMd5String();
 	QFile file(filePrefix + ".bmp");
-	if(!file.open(IO_WriteOnly | IO_Raw )){
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Unbuffered )){
 		fprintf(stderr, "EvaUHFile::save -- file creating, failed\n");
 		return;
 	}
@@ -254,11 +254,11 @@ bool EvaUHProfile::loadProfile()
 {
 	QString filename = dir + "/" + UH_PROFILE_NAME;
 	QFile file(filename);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		fprintf(stderr, "EvaUHProfile::loadProfile -- file not exists\n");
 		return false;
 	}
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	while(!stream.atEnd()){
 		QString line = stream.readLine();
 		QStringList lines = QStringList::split(":", line);
@@ -330,11 +330,11 @@ void EvaUHProfile::saveProfile()
 {
 	QString filename = dir + "/" + UH_PROFILE_NAME;
 	QFile file(filename);
-	if(!file.open(IO_WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)){
 		fprintf(stderr, "EvaUHProfile::saveProfile -- cannot open file to write\n");
 		return;
 	}
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	QMap<unsigned int, UHInfoItem>::Iterator it;
 	for(it = list.begin(); it!=list.end(); ++it){
 		if(it.data().isUpdated) continue;     // only save the downloaded ones
@@ -355,7 +355,7 @@ char *EvaUHProfile::strMd5ToChar(const QString &strMd5)
 	if(strMd5.length() != 32) return NULL;
 	char *md5 = new char[16];
 	
-	for(uint i=0; i<strMd5.length(); i+=2){
+	for(int i=0; i<strMd5.length(); i+=2){
 		ch = strMd5.mid(i, 2);
 		tmp = ch.toInt(&ok, 16);
 		if(!ok)
@@ -407,7 +407,7 @@ QString EvaUHProfile::getStrMd5(const unsigned int id)
 /************************************************************************************************/
 
 EvaUHManager::EvaUHManager(QObject *receiver, const QString &dir)
-	: QObject(), QThread(), mReceiver(receiver), m_retryCount(0), AllInfoGotCounter(0), 
+	: QThread(), mReceiver(receiver), m_retryCount(0), AllInfoGotCounter(0), 
 	mUHDir(dir), mAskForStop(false), mSocket(NULL), 
 	mProfileManager(NULL), mCurrentFile(NULL), mDns(NULL)
 {
@@ -454,7 +454,7 @@ void EvaUHManager::run()
 	doDnsRequest();
 	int availableBytes = 0;
 	bytesRead = 0;
-	mSocket = new QSocketDevice(QSocketDevice::Datagram);
+	mSocket = new Q3SocketDevice(Q3SocketDevice::Datagram);
 	doAllInfoRequest();
 	while(1){
 		if( (availableBytes = mSocket->bytesAvailable()) ){
@@ -477,7 +477,7 @@ void EvaUHManager::doDnsRequest()
 {
 	mHostAddresses.clear();
 	if(mDns) delete mDns;
-	mDns = new QDns(CFACE_SERVER);
+	mDns = new Q3Dns(CFACE_SERVER);
 	QObject::connect(mDns, SIGNAL(resultsReady()), SLOT(slotDnsReady()));
 	
 	while(!mHostAddresses.size()){

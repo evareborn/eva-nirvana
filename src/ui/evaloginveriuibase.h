@@ -23,15 +23,21 @@
 
 #include <qvariant.h>
 #include <qdialog.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
 class QToolButton;
 class QLineEdit;
-class QFrame;
+class Q3Frame;
 class QPushButton;
 
 class EvaLoginVeriUIBase : public QDialog
@@ -39,7 +45,7 @@ class EvaLoginVeriUIBase : public QDialog
     Q_OBJECT
 
 public:
-    EvaLoginVeriUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaLoginVeriUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaLoginVeriUIBase();
 
     QLabel* lblTopTip;
@@ -48,20 +54,20 @@ public:
     QLabel* lblGraphic;
     QToolButton* tbnChangeGraphic;
     QLineEdit* leCode;
-    QFrame* line1;
+    Q3Frame* line1;
     QPushButton* btnOK;
     QPushButton* btnCancel;
 
 protected:
-    QGridLayout* EvaLoginVeriUIBaseLayout;
-    QVBoxLayout* layout8;
-    QHBoxLayout* layout1;
+    Q3GridLayout* EvaLoginVeriUIBaseLayout;
+    Q3VBoxLayout* layout8;
+    Q3HBoxLayout* layout1;
     QSpacerItem* spacer1;
-    QHBoxLayout* layout5;
-    QVBoxLayout* layout2;
-    QVBoxLayout* layout4;
-    QHBoxLayout* layout3;
-    QHBoxLayout* layout6;
+    Q3HBoxLayout* layout5;
+    Q3VBoxLayout* layout2;
+    Q3VBoxLayout* layout4;
+    Q3HBoxLayout* layout3;
+    Q3HBoxLayout* layout6;
     QSpacerItem* spacer2;
 
 protected slots:

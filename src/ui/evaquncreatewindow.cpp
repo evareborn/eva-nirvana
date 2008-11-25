@@ -22,23 +22,26 @@
 
 #include <stdlib.h>
 #include <qlineedit.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 //#include <qiconset.h>
 #include <qpixmap.h>
 #include <qlabel.h>
-#include <qwidgetstack.h>
-#include <qbuttongroup.h>
+#include <q3widgetstack.h>
+#include <q3buttongroup.h>
 #include <qmessagebox.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qimage.h>
 //X #include <kmessagebox.h>
 #include <qtextcodec.h>
 #include <qevent.h>
 #include <qpoint.h>
 #include <qtoolbutton.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QCloseEvent>
 #include "../evamain.h"
 #include "evaresource.h"
 #include "evauser.h"
@@ -47,7 +50,7 @@
 //X #include <kapplication.h>
 //X #include <klocale.h>
 
-EvaQunCreateWindow::EvaQunCreateWindow( QWidget * parent, const char * name, WFlags fl )
+EvaQunCreateWindow::EvaQunCreateWindow( QWidget * parent, const char * name, Qt::WFlags fl )
 	: QunCreateUI(parent,name,fl), picker(NULL), qunCategory(0), qunNotice(""), qunDescription("")
 {
 	codec = QTextCodec::codecForName("GB18030");
@@ -59,8 +62,8 @@ EvaQunCreateWindow::EvaQunCreateWindow( QWidget * parent, const char * name, WFl
 	QObject::connect(pbNext, SIGNAL(clicked()), SLOT(slotNextClicked()));
 	QObject::connect(tbCategory, SIGNAL(clicked()), SLOT(slotCategoryClicked()));
 	
-	picker = new EvaQunMemberPicker(0, "memberpicker", WStyle_Customize | WStyle_NoBorder | 
-								WStyle_StaysOnTop |  WStyle_Tool| WX11BypassWM);
+	picker = new EvaQunMemberPicker(0, "memberpicker",  Qt::FramelessWindowHint| 
+								 Qt::WindowStaysOnTopHint|  Qt::Tool| Qt::X11BypassWindowManagerHint);
 	picker->resize(QSize(240,frameGeometry().height()));
 	QObject::connect(picker, SIGNAL(memberClicked(const unsigned int, const bool)), 
 				SLOT(slotPickerMemberClicked(const unsigned int, const bool)));
@@ -100,7 +103,7 @@ void EvaQunCreateWindow::moveEvent( QMoveEvent * event )
 
 void EvaQunCreateWindow::initTable()
 {
-	QHeader *vheader = tblMembers->verticalHeader();
+	Q3Header *vheader = tblMembers->verticalHeader();
 	vheader->hide();
 	tblMembers->setLeftMargin(0);
 	tblMembers->setNumRows( 0 );
@@ -113,8 +116,8 @@ void EvaQunCreateWindow::initTable()
 	tblMembers->horizontalHeader()->setLabel( 1, i18n( "QQ" ) );
 	tblMembers->horizontalHeader()->setLabel( 2, i18n( "Nick" ) );
 	tblMembers->horizontalHeader()->setLabel( 3, i18n( "Gender" ) );
-	tblMembers->setSelectionMode( QTable::SingleRow );
-	tblMembers->setFocusStyle( QTable::FollowStyle );
+	tblMembers->setSelectionMode( Q3Table::SingleRow );
+	tblMembers->setFocusStyle( Q3Table::FollowStyle );
 	tblMembers->setReadOnly( true );
 	QObject::connect(tblMembers, SIGNAL(clicked(int,int,int,const QPoint&)), SLOT(slotTableClicked(int,int,int,const QPoint&)));
 	
@@ -236,8 +239,8 @@ void EvaQunCreateWindow::slotDelMembersClicked( )
 
 void EvaQunCreateWindow::slotCategoryClicked( )
 {
-	QunCategoryPicker *picker = new QunCategoryPicker(this, "categoryPicker",WStyle_Customize | WStyle_Dialog |
-										 WStyle_DialogBorder|WDestructiveClose);
+	QunCategoryPicker *picker = new QunCategoryPicker(this, "categoryPicker", Qt::WFlags( Qt::Dialog |
+										 Qt::MSWindowsFixedSizeDialogHint| Qt::WA_DeleteOnClose ));
 	QObject::connect(picker, SIGNAL(selectCategoryCode(const unsigned short )), SLOT(slotCategorySelected(const unsigned short )));
 	picker->show();
 }

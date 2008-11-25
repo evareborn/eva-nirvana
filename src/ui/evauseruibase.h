@@ -23,16 +23,21 @@
 
 #include <qvariant.h>
 #include <qdialog.h>
-#include <qscrollview.h>
+#include <q3scrollview.h>
 #include <qtoolbutton.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
 
 //X #include <kpushbutton.h>
 
 #include "evauserinfowidget.h"
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QPushButton;
 class QLabel;
@@ -40,7 +45,7 @@ class QTabWidget;
 class QWidget;
 class QPushButton;
 class QLineEdit;
-class QTextEdit;
+class Q3TextEdit;
 class QCheckBox;
 
 class EvaUserUIBase : public QDialog
@@ -48,7 +53,7 @@ class EvaUserUIBase : public QDialog
     Q_OBJECT
 
 public:
-    EvaUserUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+    EvaUserUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
     ~EvaUserUIBase();
 
     QPushButton* pbUpdate;
@@ -65,7 +70,7 @@ public:
     QToolButton* tbtnShop;
 
     //UserInfo ScrollView 
-    QScrollView* svMain;
+    Q3ScrollView* svMain;
     EvaUserInfoWidget* qwUserInfo;
     
     //Memo
@@ -83,36 +88,36 @@ public:
     QLineEdit* leMemoAddress;
     QLineEdit* leMemoEmail;
     QLabel* lblMemoNote;
-    QTextEdit* teMemoNote;
+    Q3TextEdit* teMemoNote;
     QCheckBox* chbAutoUploadMemo;
     QPushButton* pbDownloadMemo;
 
 
 protected:
-    QGridLayout* layout13;
+    Q3GridLayout* layout13;
     QSpacerItem* spacer6;
-    QGridLayout* layout12;
+    Q3GridLayout* layout12;
     QSpacerItem* spacer5;
     QSpacerItem* spacer7;
     QSpacerItem* spacer8;
     
-    QGridLayout* TabMemoLayout;
+    Q3GridLayout* TabMemoLayout;
     QSpacerItem* spacer30;
     QSpacerItem* spacer29;
-    QVBoxLayout* layout117;
+    Q3VBoxLayout* layout117;
     QSpacerItem* spacer38;
-    QHBoxLayout* layout100;
-    QVBoxLayout* layout97;
-    QVBoxLayout* layout99;
-    QHBoxLayout* layout98;
-    QVBoxLayout* layout80;
-    QVBoxLayout* layout81;
-    QVBoxLayout* layout82;
-    QVBoxLayout* layout86;
-    QHBoxLayout* layout112;
-    QVBoxLayout* layout111;
+    Q3HBoxLayout* layout100;
+    Q3VBoxLayout* layout97;
+    Q3VBoxLayout* layout99;
+    Q3HBoxLayout* layout98;
+    Q3VBoxLayout* layout80;
+    Q3VBoxLayout* layout81;
+    Q3VBoxLayout* layout82;
+    Q3VBoxLayout* layout86;
+    Q3HBoxLayout* layout112;
+    Q3VBoxLayout* layout111;
     QSpacerItem* spacer32;
-    QHBoxLayout* layout116;
+    Q3HBoxLayout* layout116;
     QSpacerItem* spacer34;
     QSpacerItem* spacer33;
 

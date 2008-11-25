@@ -23,7 +23,8 @@
 
 #include "evautil.h"
 #include <list>
-#include <qobject.h>
+#include <QObject>
+#include <qstring.h>
 
 typedef struct CustomizedPic{
 	unsigned char type;  // should be 33, 34, 36, 37, ..     0 means error

@@ -13,16 +13,22 @@
 #include <qvariant.h>
 #include <qpixmap.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QToolButton;
-class QListView;
-class QListViewItem;
-class QTable;
+class Q3ListView;
+class Q3ListViewItem;
+class Q3Table;
 class QPushButton;
 class QLabel;
 
@@ -31,19 +37,19 @@ class CustomFaceManagerUI : public QWidget
     Q_OBJECT
 
 public:
-    CustomFaceManagerUI( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    CustomFaceManagerUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~CustomFaceManagerUI();
 
-    QFrame* frame7;
+    Q3Frame* frame7;
     QToolButton* tbtnImport;
     QToolButton* tbtnExport;
     QToolButton* tbtnAddGroup;
     QToolButton* tbtnEditGroup;
     QToolButton* tbtnRemoveGroup;
-    QFrame* frame6;
-    QListView* lvGroups;
-    QFrame* frmMain;
-    QTable* tblFaceList;
+    Q3Frame* frame6;
+    Q3ListView* lvGroups;
+    Q3Frame* frmMain;
+    Q3Table* tblFaceList;
     QPushButton* btnAdd;
     QPushButton* btnRemove;
     QPushButton* btnEdit;
@@ -55,17 +61,17 @@ public:
     QPushButton* btnCancel;
 
 protected:
-    QGridLayout* CustomFaceManagerUILayout;
-    QVBoxLayout* layout9;
-    QGridLayout* frame7Layout;
-    QHBoxLayout* layout1;
-    QHBoxLayout* layout7;
-    QGridLayout* frame6Layout;
-    QGridLayout* frmMainLayout;
-    QHBoxLayout* layout6;
-    QVBoxLayout* layout5;
+    Q3GridLayout* CustomFaceManagerUILayout;
+    Q3VBoxLayout* layout9;
+    Q3GridLayout* frame7Layout;
+    Q3HBoxLayout* layout1;
+    Q3HBoxLayout* layout7;
+    Q3GridLayout* frame6Layout;
+    Q3GridLayout* frmMainLayout;
+    Q3HBoxLayout* layout6;
+    Q3VBoxLayout* layout5;
     QSpacerItem* spacer1;
-    QHBoxLayout* layout8;
+    Q3HBoxLayout* layout8;
     QSpacerItem* spacer2;
 
 protected slots:

@@ -23,42 +23,48 @@
 
 #include <qvariant.h>
 #include <qdialog.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QPushButton;
 class QToolButton;
-class QGroupBox;
+class Q3GroupBox;
 class QLabel;
 class QComboBox;
 class QLineEdit;
 class QCheckBox;
-class QFrame;
+class Q3Frame;
 
 class LoginUIBase : public QDialog
 {
     Q_OBJECT
 
 public:
-    LoginUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+    LoginUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
     ~LoginUIBase();
 
     QPushButton* cancelBtn;
     QToolButton* tbNetSetup;
-    QGroupBox* groupBox1;
+    Q3GroupBox* groupBox1;
     QLabel* textLabel1;
     QLabel* textLabel2;
     QComboBox* cbQQ;
     QLineEdit* lePwd;
     QCheckBox* chbRecordPwd;
     QCheckBox* chbLoginMode;
-    QFrame* line1;
+    Q3Frame* line1;
     QLabel* lblType;
     QComboBox* cbbLoginType;
     QPushButton* loginBtn;
-    QFrame* fraNetSetup;
+    Q3Frame* fraNetSetup;
     QLabel* tlProxyServer;
     QLineEdit* leIP;
     QLabel* tlProxyPort;
@@ -74,20 +80,20 @@ public slots:
     virtual void cancelClickSlot();
 
 protected:
-    QGridLayout* groupBox1Layout;
-    QHBoxLayout* layout14;
+    Q3GridLayout* groupBox1Layout;
+    Q3HBoxLayout* layout14;
     QSpacerItem* spacer3;
     QSpacerItem* spacer2;
-    QVBoxLayout* layout9;
-    QHBoxLayout* layout8;
-    QVBoxLayout* layout7;
-    QVBoxLayout* layout6;
-    QHBoxLayout* layout1;
+    Q3VBoxLayout* layout9;
+    Q3HBoxLayout* layout8;
+    Q3VBoxLayout* layout7;
+    Q3VBoxLayout* layout6;
+    Q3HBoxLayout* layout1;
     QSpacerItem* spacer1;
-    QGridLayout* fraNetSetupLayout;
-    QVBoxLayout* layout13;
-    QHBoxLayout* layout12;
-    QHBoxLayout* layout11;
+    Q3GridLayout* fraNetSetupLayout;
+    Q3VBoxLayout* layout13;
+    Q3HBoxLayout* layout12;
+    Q3HBoxLayout* layout11;
 
 protected slots:
     virtual void languageChange();

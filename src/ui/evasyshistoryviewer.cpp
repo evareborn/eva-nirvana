@@ -21,13 +21,13 @@
 #include "evadefines.h"
 
 #include <qpushbutton.h>
-#include <qtable.h>
+#include <q3table.h>
  
 #include "evamain.h"
 
 //X #include <klocale.h>
 #include <qcheckbox.h>
-#include <qdatetimeedit.h>
+#include <q3datetimeedit.h>
 
 EvaSysHistoryViewer::EvaSysHistoryViewer(EvaUserSetting *userSetting)
 	: EvaHistoryUIBase(0,0,Qt::WStyle_Customize  | Qt::WStyle_Title | Qt::WStyle_SysMenu | Qt::WStyle_NormalBorder 

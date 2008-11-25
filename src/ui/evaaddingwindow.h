@@ -23,6 +23,8 @@
 
 #include "evaadduibase.h"
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 class QCloseEvent;
 

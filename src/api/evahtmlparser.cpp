@@ -25,6 +25,7 @@
 #include <qfile.h>
 #include <qpixmap.h>
 #include <cstring>
+#include <qstring.h>
 //#include <stdio.h>
 
 unsigned int EvaHtmlParser::tmpNum = 0;
@@ -355,7 +356,7 @@ std::list< CustomizedPic > EvaHtmlParser::convertCustomizedPictures( QString & t
 					break;
 				default:
 					printf("unknown code: %d\n", type);
-					img = "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches")+"/unknown.png\">";
+					img = "<img src=\""  + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches")+"/unknown.png\">" ;
 				}
 				if(useRealFileName){
 					text.replace(contents, "<img src=\"" + args.fileName+ "\">");
@@ -405,7 +406,7 @@ QString EvaHtmlParser::processPic33( const QString &src, CustomizedPic * args )
 	args->type = 33;
 	args->fileName = contents.mid(0, 36);
 	args->shortCutName = contents.right(contents.length() - 36);
-	args->tmpFileName = ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/" + "tmp" + QString::number(tmpNum) + ".png";
+	args->tmpFileName = ((absCustomCachesPath != QString::null )?absCustomCachesPath:"~/.eva/customCaches") + "/" + "tmp" + QString::number(tmpNum) + ".png";
 	QString ret =  "<img src=\"" + args->tmpFileName +"\">";
 	return ret;
 }
@@ -416,7 +417,7 @@ QString EvaHtmlParser::processPic34( const QString &src)
 
 	int occurredIndex = contents.latin1()[0] - 'A'; 
 	if(occurredIndex >= (int)(picList.size())){
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
 	}
 	int index=0;
 	std::list< CustomizedPic >::iterator iter;
@@ -426,7 +427,7 @@ QString EvaHtmlParser::processPic34( const QString &src)
 		}
 		index++;
 	}
-	return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
+	return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
 }
 
 QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
@@ -444,14 +445,14 @@ QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
 	pos+=2;
 	if(!ok){
 		args->type = 0;
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") +"/unknown_sessionLen2int.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") +"/unknown_sessionLen2int.png\">";
 	}
 	// FIXME: we should use sessionLen to get the session string not fix value 8
 	QString strSession = contents.mid(pos, 8);
 	uint tmp4 = strSession.stripWhiteSpace().toInt(&ok, 16);
 	if(!ok){
 		args->type = 0;
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_session2int.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_session2int.png\">";
 	}
 	args->sessionID = tmp4;
 	pos+=8;// note sessionLen is 8 
@@ -462,7 +463,7 @@ QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
 	args->ip = htonl(strIP.toUInt(&ok, 16));
 	if(!ok){
 		args->type = 0;
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_ip2int.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_ip2int.png\">";
 	}
 	pos+=8;
 	// port 
@@ -470,7 +471,7 @@ QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
 	args->port = strPort.toInt(&ok, 16) & 0xffff; 
 	if(!ok){
 		args->type = 0;
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_port2int.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown_port2int.png\">";
 	}
 	pos+=8;
 	
@@ -484,7 +485,7 @@ QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
 
 	args->shortCutName = contents.mid(pos, shortLen);
 	// if file already existed/downloaded just display it :)
-	if(absCustomCachesPath){
+	if(absCustomCachesPath != QString::null){
 		QFile file(absCustomCachesPath + "/" + args->fileName);
 		if(file.exists()){
 			args->tmpFileName = absCustomCachesPath + "/" + args->fileName;
@@ -507,7 +508,7 @@ QString EvaHtmlParser::processPic37( const QString &src)
 	//Q_UINT8 shortLen = contents.latin1()[pos++] - 'A';
 	
 	if(occurredIndex >= (int)picList.size()){
-		return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
+		return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
 	}
 	int index = 0;
 	std::list< CustomizedPic >::iterator iter;
@@ -517,7 +518,7 @@ QString EvaHtmlParser::processPic37( const QString &src)
 		}
 		index++;
 	}
-	return "<img src=\"" + ((absCustomCachesPath)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
+	return "<img src=\"" + ((absCustomCachesPath != QString::null)?absCustomCachesPath:"~/.eva/customCaches") + "/unknown.png\">";
 }
 
 void EvaHtmlParser::convertToPlainTxt( QString & html, const unsigned int agentSessionID, 

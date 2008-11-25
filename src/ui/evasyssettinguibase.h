@@ -24,32 +24,38 @@
 #include <qvariant.h>
 #include <qdialog.h>
 
-#include <qlistview.h>
+#include <q3listview.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QLabel>
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3VBoxLayout>
 //X #include "mainlistfontsettinguibase.h"
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QListView;
-class QListViewItem;
-class QWidgetStack;
+class Q3ListView;
+class Q3ListViewItem;
+class Q3WidgetStack;
 class QWidget;
 class QLabel;
-class QTextEdit;
+class Q3TextEdit;
 class QLineEdit;
 class QComboBox;
 class QPushButton;
-class QGroupBox;
+class Q3GroupBox;
 class QToolButton;
 class QPushButton;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QRadioButton;
 class QCheckBox;
 class QSpinBox;
 class QSlider;
-class QFrame;
-class QIconView;
+class Q3Frame;
+class Q3IconView;
 //class MainListFontSettingUIBase;
 
 class EvaSysSettingUIBase : public QDialog
@@ -57,18 +63,18 @@ class EvaSysSettingUIBase : public QDialog
     Q_OBJECT
 
 public:
-    EvaSysSettingUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+    EvaSysSettingUIBase( QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
     ~EvaSysSettingUIBase();
 
-    QListView* lvSettingItem;
-    QWidgetStack* wsSetting;
+    Q3ListView* lvSettingItem;
+    Q3WidgetStack* wsSetting;
     QWidget* wspUserInfo;
     QLabel* lblSignature;
     QLabel* lblLevel;
     QLabel* lblLevelDisplay;
-    QTextEdit* teSignature;
+    Q3TextEdit* teSignature;
     QLabel* lblAboutMe;
-    QTextEdit* teAboutMe;
+    Q3TextEdit* teAboutMe;
     QLabel* lblRealName;
     QLabel* lblSchool;
     QLabel* lblOccupation;
@@ -94,15 +100,15 @@ public:
     QLabel* lblFace;
     QPushButton* pbChangeFace;
     QWidget* wspQQShow;
-    QGroupBox* gbQQShow;
+    Q3GroupBox* gbQQShow;
     QLabel* lblQQShow;
     QToolButton* tbtnHome;
     QToolButton* tbtnAlbum;
     QPushButton* kpbUpdateShow;
     QToolButton* tbtnShop;
     QWidget* wspContact;
-    QGroupBox* gbContact;
-    QButtonGroup* buttonGroup1;
+    Q3GroupBox* gbContact;
+    Q3ButtonGroup* buttonGroup1;
     QLabel* lblPrompt;
     QRadioButton* rbPublic;
     QRadioButton* rbProtect;
@@ -125,23 +131,23 @@ public:
     QLabel* lblArea;
     QWidget* wspSecurity;
 
-    QGroupBox* gbPassword;
+    Q3GroupBox* gbPassword;
     QPushButton* pbChangePassword;
     QPushButton* pbProtectPassword;
 
-    QButtonGroup* bgAuthen;
+    Q3ButtonGroup* bgAuthen;
     QRadioButton* rbAuthNoNeed;
     QRadioButton* rbAuthNeed;
     QRadioButton* rbAuthReject;
     QRadioButton* rbAuthQuest;
-    QFrame *fraQuestion;
+    Q3Frame *fraQuestion;
     QLabel *lblQuestion;
     QLabel *lblAnswer;
     QComboBox *cbbQuestion;
     QLineEdit *leAnswer;
 
     QWidget* wspBasicSetting;
-    QGroupBox* gbGeneralSetting;
+    Q3GroupBox* gbGeneralSetting;
     QCheckBox* chbOnlineTip;
     QCheckBox* chbShowOnlineUsers;
     QCheckBox* chbSound;
@@ -152,7 +158,7 @@ public:
     QCheckBox* chbSendKey;
     QCheckBox* chbShowNickSmiley;
     QCheckBox* chbShowSigSeperate;
-    QGroupBox* gbOtherSetting;
+    Q3GroupBox* gbOtherSetting;
     QLabel* lblPageSize;
     QSpinBox* sbPageSize;
     QLabel* lblPageSizeEnd;
@@ -166,7 +172,7 @@ public:
     QLabel* lblShortKey;
     QPushButton* kkbtnShortKey;
     QWidget* wspResource;
-    QGroupBox* gbPath;
+    Q3GroupBox* gbPath;
     QLabel* lblThemePath;
     QLineEdit* leThemePath;
     QPushButton* pbTheme;
@@ -174,15 +180,15 @@ public:
     QLineEdit* leSoundPath;
     QPushButton* pbSound;
     QWidget* wspReply;
-    QGroupBox* gbQuickReply;
+    Q3GroupBox* gbQuickReply;
     QComboBox* cbbQuickNo;
-    QTextEdit* teQuickMessage;
+    Q3TextEdit* teQuickMessage;
     QPushButton* pbQuickNew;
     QPushButton* pbQuickDelete;
-    QGroupBox* gbAutoReply;
+    Q3GroupBox* gbAutoReply;
     QComboBox* cbbAutoNo;
     QCheckBox* chbAutoReply;
-    QTextEdit* teAutoMessage;
+    Q3TextEdit* teAutoMessage;
     QPushButton* pbAutoNew;
     QPushButton* pbAutoDelete;
     QPushButton* pbFaceDefault;
@@ -190,122 +196,122 @@ public:
     QPushButton* pbApply;
     QPushButton* pbCancel;
     
-    QIconView* ivFace;
+    Q3IconView* ivFace;
 
 //X     MainListFontSettingUIBase *wspMainFont;
 protected:
-    QGridLayout* EvaSysSettingUIBaseLayout;
-    QVBoxLayout* layout57;
-    QHBoxLayout* layout55;
-    QGridLayout* wspUserInfoLayout;
+    Q3GridLayout* EvaSysSettingUIBaseLayout;
+    Q3VBoxLayout* layout57;
+    Q3HBoxLayout* layout55;
+    Q3GridLayout* wspUserInfoLayout;
     QSpacerItem* spacer37;
-    QGridLayout* layout44;
-    QGridLayout* layout43;
-    QVBoxLayout* layout41;
+    Q3GridLayout* layout44;
+    Q3GridLayout* layout43;
+    Q3VBoxLayout* layout41;
     QSpacerItem* spacer15;
-    QHBoxLayout* layout70;
-    QHBoxLayout* layout61;
+    Q3HBoxLayout* layout70;
+    Q3HBoxLayout* layout61;
     QSpacerItem* spacer16;
-    QHBoxLayout* layout73;
-    QVBoxLayout* layout72;
+    Q3HBoxLayout* layout73;
+    Q3VBoxLayout* layout72;
     QSpacerItem* spacer17;
-    QHBoxLayout* layout56;
-    QHBoxLayout* layout55_2;
-    QVBoxLayout* layout54;
-    QVBoxLayout* layout53;
-    QHBoxLayout* layout52;
-    QHBoxLayout* layout68;
-    QVBoxLayout* layout66;
-    QVBoxLayout* layout67;
-    QHBoxLayout* layout46;
-    QVBoxLayout* layout45;
-    QGridLayout* layout36;
+    Q3HBoxLayout* layout56;
+    Q3HBoxLayout* layout55_2;
+    Q3VBoxLayout* layout54;
+    Q3VBoxLayout* layout53;
+    Q3HBoxLayout* layout52;
+    Q3HBoxLayout* layout68;
+    Q3VBoxLayout* layout66;
+    Q3VBoxLayout* layout67;
+    Q3HBoxLayout* layout46;
+    Q3VBoxLayout* layout45;
+    Q3GridLayout* layout36;
     QSpacerItem* spacer13;
     QSpacerItem* spacer10;
-    QGridLayout* wspQQShowLayout;
+    Q3GridLayout* wspQQShowLayout;
     QSpacerItem* spacer18;
     QSpacerItem* spacer17_2;
-    QGridLayout* layout13;
+    Q3GridLayout* layout13;
     QSpacerItem* spacer6;
-    QGridLayout* layout12;
+    Q3GridLayout* layout12;
     QSpacerItem* spacer5;
     QSpacerItem* spacer7;
     QSpacerItem* spacer8;
-    QGridLayout* wspContactLayout;
+    Q3GridLayout* wspContactLayout;
     QSpacerItem* spacer29;
     QSpacerItem* spacer30;
-    QGridLayout* layout48;
+    Q3GridLayout* layout48;
     QSpacerItem* spacer28;
-    QGridLayout* buttonGroup1Layout;
-    QHBoxLayout* layout54_2;
-    QGridLayout* layout56_2;
-    QGridLayout* layout57_2;
-    QGridLayout* wspSecurityLayout;
+    Q3GridLayout* buttonGroup1Layout;
+    Q3HBoxLayout* layout54_2;
+    Q3GridLayout* layout56_2;
+    Q3GridLayout* layout57_2;
+    Q3GridLayout* wspSecurityLayout;
     QSpacerItem* spacer32;
     QSpacerItem* spacer33;
-    QVBoxLayout* layout53_2;
+    Q3VBoxLayout* layout53_2;
 
-    QGridLayout* authButtonLayout;
-    QVBoxLayout* layout49;
-    QGridLayout* wspBasicSettingLayout;
+    Q3GridLayout* authButtonLayout;
+    Q3VBoxLayout* layout49;
+    Q3GridLayout* wspBasicSettingLayout;
     QSpacerItem* spacer15_2;
     QSpacerItem* spacer16_2;
-    QVBoxLayout* layout48_2;
-    QHBoxLayout* layout47;
-    QVBoxLayout* layout45_2;
-    QVBoxLayout* layout46_2;
-    QVBoxLayout* layout52_3;
-    QHBoxLayout* layout44_2;
-    QHBoxLayout* layout_idt;
-    QHBoxLayout* layout45_3;
-    QHBoxLayout* layout51_2;
+    Q3VBoxLayout* layout48_2;
+    Q3HBoxLayout* layout47;
+    Q3VBoxLayout* layout45_2;
+    Q3VBoxLayout* layout46_2;
+    Q3VBoxLayout* layout52_3;
+    Q3HBoxLayout* layout44_2;
+    Q3HBoxLayout* layout_idt;
+    Q3HBoxLayout* layout45_3;
+    Q3HBoxLayout* layout51_2;
     QSpacerItem* spacer19;
-    QGridLayout* wspResourceLayout;
+    Q3GridLayout* wspResourceLayout;
     QSpacerItem* spacer19_2;
     QSpacerItem* spacer20_2;
-    QVBoxLayout* layout59;
-    QGridLayout* layout56_3;
+    Q3VBoxLayout* layout59;
+    Q3GridLayout* layout56_3;
     QSpacerItem* spacer20;
-    QHBoxLayout* layout55_3;
-    QGridLayout* layout57_3;
+    Q3HBoxLayout* layout55_3;
+    Q3GridLayout* layout57_3;
     QSpacerItem* spacer21;
-    QHBoxLayout* layout101;
-    QGridLayout* wspReplyLayout;
+    Q3HBoxLayout* layout101;
+    Q3GridLayout* wspReplyLayout;
     QSpacerItem* spacer26;
     QSpacerItem* spacer27;
-    QGridLayout* layout44_3;
-    QVBoxLayout* layout43_2;
-    QHBoxLayout* layout40;
+    Q3GridLayout* layout44_3;
+    Q3VBoxLayout* layout43_2;
+    Q3HBoxLayout* layout40;
     QSpacerItem* spacer24;
-    QHBoxLayout* layout42;
-    QVBoxLayout* layout41_2;
+    Q3HBoxLayout* layout42;
+    Q3VBoxLayout* layout41_2;
     QSpacerItem* spacer25;
-    QVBoxLayout* layout39;
-    QHBoxLayout* layout32;
+    Q3VBoxLayout* layout39;
+    Q3HBoxLayout* layout32;
     QSpacerItem* spacer21_2;
-    QHBoxLayout* layout38;
-    QVBoxLayout* layout37;
+    Q3HBoxLayout* layout38;
+    Q3VBoxLayout* layout37;
     QSpacerItem* spacer23;
-    QHBoxLayout* layout54_3;
+    Q3HBoxLayout* layout54_3;
     QSpacerItem* spacer34;
 
-    QVBoxLayout* layoutQuestLbl;
-    QVBoxLayout* layoutQuestContents;
-    QHBoxLayout* layoutHQuest;
-    QVBoxLayout* layoutQuest;
+    Q3VBoxLayout* layoutQuestLbl;
+    Q3VBoxLayout* layoutQuestContents;
+    Q3HBoxLayout* layoutHQuest;
+    Q3VBoxLayout* layoutQuest;
 
-    QVBoxLayout* layoutPwd;
-    QVBoxLayout* layoutPwButton;
+    Q3VBoxLayout* layoutPwd;
+    Q3VBoxLayout* layoutPwButton;
 protected slots:
     virtual void languageChange();
 
 };
 
-class EvaSettingListItem : public QListViewItem
+class EvaSettingListItem : public Q3ListViewItem
 {
 public:
-	EvaSettingListItem(  QListView* parent, QListViewItem* after, int index );
-	EvaSettingListItem(  QListViewItem* parent, QListViewItem* after, int index );
+	EvaSettingListItem(  Q3ListView* parent, Q3ListViewItem* after, int index );
+	EvaSettingListItem(  Q3ListViewItem* parent, Q3ListViewItem* after, int index );
 	~EvaSettingListItem();
 	
 	int itemIndex;

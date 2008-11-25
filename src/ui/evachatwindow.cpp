@@ -42,7 +42,7 @@
 #include <qrect.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qiconset.h>
+#include <qicon.h>
 #include <qpixmap.h>
 #include <qsplitter.h>
 #include <qhostaddress.h>
@@ -51,7 +51,7 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlineedit.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qtooltip.h>
 #include <qregexp.h>
 #include <qdir.h>
@@ -59,6 +59,10 @@
 #include <qimage.h>
 #include <quuid.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <Q3ValueList>
+#include <QCloseEvent>
 //X #include <klocale.h>
 //X #include <kurl.h>
 //X #include <kfiledialog.h>
@@ -77,7 +81,7 @@ bool EvaChatWindow::isSentByEnter = false;
 
 std::list<QString> EvaChatWindow::quickList;
 	
-EvaChatWindow::EvaChatWindow(QQFriend * frd, QWidget* parent, const char* name, WFlags fl)
+EvaChatWindow::EvaChatWindow(QQFriend * frd, QWidget* parent, const char* name, Qt::WFlags fl)
 	: EvaChatUIBase(parent, name, fl), smileyPopup(NULL), quickMenu(NULL), /*fontSelecter(NULL),*/
 	m_NumImages(0), grabber(NULL), viewer(NULL)
 {
@@ -142,7 +146,7 @@ void EvaChatWindow::initObjects()
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector();
 	
-	quickMenu = new QPopupMenu(tbQuickReply);
+	quickMenu = new Q3PopupMenu(tbQuickReply);
 	if(quickList.size()){	
 		std::list<QString>::iterator iter;
 		int index = 0;
@@ -153,10 +157,10 @@ void EvaChatWindow::initObjects()
 		QObject::connect(quickMenu, SIGNAL(activated(int)), this,  SLOT(slotQuickReplyActivated(int)));
 	}
 	
-	sendKey = new QPopupMenu();
+	sendKey = new Q3PopupMenu();
 	sendKey->setCheckable(true);
-	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),SHIFT+ALT+Key_Enter,1);  
-	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),SHIFT+CTRL+ALT+Key_Enter,2);
+	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),Qt::SHIFT+Qt::ALT+Qt::Key_Enter,1);  
+	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),Qt::SHIFT+Qt::CTRL+Qt::ALT+Qt::Key_Enter,2);
 	if(isSentByEnter)
 		sendKey->setItemChecked(1,true);
 	else
@@ -172,7 +176,7 @@ void EvaChatWindow::initInformation()
 	QString title = QString(i18n("Chatting with %1")).arg(nick);
 	setCaption(title);
 	QString status =i18n("(offline)");
-	QIconSet face;
+	QIcon face;
 	int faceId = buddy->getFace();
 	QPixmap *faceOnPic=NULL, *faceOffPic=NULL;
 	if(buddy->hasUserHead()){
@@ -185,12 +189,12 @@ void EvaChatWindow::initInformation()
 	}
 	setIcon(*faceOnPic);
 	
-	face.setPixmap(*faceOffPic,QIconSet::Large);
+	face.setPixmap(*faceOffPic,QIcon::Large);
 	tbBuddy->setIconSet(face);
 	switch(buddy->getStatus()){
 	case 10:
 		status = i18n("(online)");
-		face.setPixmap(*faceOnPic,QIconSet::Large);
+		face.setPixmap(*faceOnPic,QIcon::Large);
 		tbBuddy->setIconSet(face);
 		break;
 	case 20:
@@ -204,13 +208,13 @@ void EvaChatWindow::initInformation()
 		QPixmap pixna(*(images->getIcon("NA")));
 		copyBlt(&pixleave, pixleave.width()-pixna.width(),pixleave.height()-pixna.height(), 
 			&pixna,0,0, pixna.width(), pixna.height());
-		face.setPixmap(pixleave, QIconSet::Large);
+		face.setPixmap(pixleave, QIcon::Large);
 		tbBuddy->setIconSet(face);
 		}
 		break;
 	case 40:
 		status = i18n("(invisible)");
-		face.setPixmap(*faceOffPic, QIconSet::Large);
+		face.setPixmap(*faceOffPic, QIcon::Large);
 		tbBuddy->setIconSet(face);
 		break;
 	}
@@ -435,7 +439,7 @@ void EvaChatWindow::slotHideShowsClick()
 		EvaChatUIBaseLayout->removeItem(layout19);
 		tbHideShows->setIconSet(*(images->getIcon("SHOW_PORTRAIT")));
 
-		QValueList<int> list;
+		Q3ValueList<int> list;
 		list.append(150);
 		list.append(100);
 		splitter->setSizes(list);
@@ -451,7 +455,7 @@ void EvaChatWindow::slotHideShowsClick()
 		EvaChatUIBaseLayout->addLayout(layout19);
 		tbHideShows->setIconSet(*(images->getIcon("HIDE_PORTRAIT")));
 
-		QValueList<int> list;
+		Q3ValueList<int> list;
 		list.append(150);
 		list.append(100);
 		splitter->setSizes(list);
@@ -550,8 +554,8 @@ void EvaChatWindow::slotSend()
 			(char)(chatColor.blue()) , (char)(chatColor.green()), (char)(chatColor.red()));
 
 	if(numFiles){		
-		QValueList<QString> nameList;
-		QValueList<unsigned int> sizeList;
+		Q3ValueList<QString> nameList;
+		Q3ValueList<unsigned int> sizeList;
 		unsigned int session = buddy->getNextSequence();
 		for(int i=0; i<numFiles; i++){
 			QString name = sendFileNameBase + QString::number(i) + ".jpg";

@@ -19,23 +19,25 @@
  ***************************************************************************/ 
 #include "evasocket.h"
 #include "qmdcodec.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
 #include <sys/mman.h>
 #include <stdlib.h>
-#include <qsocketdevice.h> 
+#include <q3socketdevice.h> 
 #include <qsocketnotifier.h>
 #include <qapplication.h>
 #include <qmutex.h>
 #include <qtimer.h>
 #include <qstringlist.h>
-#include <qurl.h>
+#include <q3url.h>
 #include <qiodevice.h>
-#include <qtextstream.h>
-#include <qdns.h>
-#include <qcstring.h>
+#include <q3textstream.h>
+#include <q3dns.h>
+#include <q3cstring.h>
 //X #include <kdebug.h>
 
 
@@ -59,9 +61,9 @@ EvaSocket::EvaSocket(const  QHostAddress &host, const short port, const Type typ
         server = host;
 	serverPort = port;
 	if(connectionType == UDP){
-		connectSocket = new QSocketDevice(QSocketDevice::Datagram); 
+		connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
 	}else{
-		connectSocket = new QSocketDevice(QSocketDevice::Stream);
+		connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream);
 		connectSocket->setBlocking(false);
         	socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
 							QSocketNotifier::Write,0,"writeNotifier");
@@ -116,9 +118,9 @@ void EvaSocket::setHost(const QHostAddress &address, const short port)
 			delete socketWriteNotifier;
 		}
 		if(connectionType == UDP){
-			connectSocket = new QSocketDevice(QSocketDevice::Datagram); 
+			connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
 		}else{
-			connectSocket = new QSocketDevice(QSocketDevice::Stream); 
+			connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream); 
 			connectSocket->setBlocking(false);
 			socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
 								QSocketNotifier::Write,0,"writeNotifier");
@@ -153,34 +155,34 @@ void EvaSocket::startConnecting()
 			fprintf(stderr,"connecting server failed\nError type: ");
 			connectionStatus = Failed;
 			switch(connectSocket->error()){
-				case QSocketDevice::NoError:
+				case Q3SocketDevice::NoError:
 					fprintf(stderr,"NoError\n");
 					break;
-				case QSocketDevice::AlreadyBound:
+				case Q3SocketDevice::AlreadyBound:
 					fprintf(stderr,"AlreadyBound\n");
 					break; 
-				case QSocketDevice::Inaccessible:
+				case Q3SocketDevice::Inaccessible:
 					fprintf(stderr,"Inaccessible\n");
 					break;
-				case QSocketDevice::NoResources:
+				case Q3SocketDevice::NoResources:
 					fprintf(stderr,"NoResources\n");
 					break;
-				case QSocketDevice::InternalError:
+				case Q3SocketDevice::InternalError:
 					fprintf(stderr,"InternalError\n");
 					break;
-				case QSocketDevice::Impossible:
+				case Q3SocketDevice::Impossible:
 					fprintf(stderr,"Impossible\n");
 					break;
-				case QSocketDevice::NoFiles:
+				case Q3SocketDevice::NoFiles:
 					fprintf(stderr,"NoFiles\n");
 					break;
-				case QSocketDevice::ConnectionRefused:
+				case Q3SocketDevice::ConnectionRefused:
 					fprintf(stderr,"ConnectionRefused\n");
 					break;
-				case QSocketDevice::NetworkFailure:
+				case Q3SocketDevice::NetworkFailure:
 					fprintf(stderr,"NetworkFailure\n");
 					break;
-				case QSocketDevice::UnknownError:
+				case Q3SocketDevice::UnknownError:
 					fprintf(stderr,"UnknownError\n");
 					break;
 				default:
@@ -334,7 +336,7 @@ void EvaHttpProxy::setDestinationServer(const QString &server, const int port) /
 
 void EvaHttpProxy::setAuthParameter(const QString &username, const QString &password)
 {
-	QCString para = (username + ':' + password).local8Bit();
+	Q3CString para = (username + ':' + password).local8Bit();
 	base64AuthParam = QCodecs::base64Encode(para);
 	status = Proxy_None;
 }
@@ -446,7 +448,7 @@ HttpHeader::HttpHeader(const QByteArray &data)
 
 bool HttpHeader::parseHeader(const QByteArray &data)
 {
-	QCString buf(data);
+	Q3CString buf(data);
 	if (buf.left(strlen(HTTP_VERSION)) != HTTP_VERSION){
 		//kdDebug() << "[HttpHeader] Not a HTTP command return, but might be data packet" << endl;
 		return false;
@@ -487,15 +489,15 @@ bool HttpHeader::parseHeader(const QByteArray &data)
 	return true;
 }
 
-const QCString HttpHeader::toCString()
+const Q3CString HttpHeader::toCString()
 {
 	return "GET /forum/ HTTP/1.1\r\nHost: www.myswear.net\r\nUser-Agent: Eva 0.4.2\r\nAccept: */*\r\nConnection: Keep-Alive\r\n\r\n";
 }
 
-QCString HttpHeader::getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth)
+Q3CString HttpHeader::getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth)
 {
-	QCString buf;
-	QTextStream stream(buf, IO_WriteOnly);
+	Q3CString buf;
+	Q3TextStream stream(buf, QIODevice::WriteOnly);
 	stream << HTTP_CONNECT << " " << (destHost + ":" + QString::number(port)) << " " << HTTP_VERSION << HTTP_NEW_LINE;
 	if(needAuth){
 		stream << HTTP_PROXY_BASIC;
@@ -515,10 +517,10 @@ QCString HttpHeader::getProxyConnectHeader( const QString &destHost, const unsig
 	return buf;
 }
 
-QCString HttpHeader::getCmdGetHeader(const bool useProxy, const bool needAuth)
+Q3CString HttpHeader::getCmdGetHeader(const bool useProxy, const bool needAuth)
 {
 	QString buf;
-	QTextStream stream(buf, IO_WriteOnly);
+	Q3TextStream stream(buf, QIODevice::WriteOnly);
 	stream << HTTP_CMD_GET << " ";
 	if(useProxy){
 		stream << "http://" << getMetaData(HTTP_HOST);
@@ -584,7 +586,7 @@ void HttpHeader::setAuthInfo(const QString &user, const QString &password)
 	m_Password = password;
 }
 
-void HttpHeader::setBase64AuthParam( const QCString & param )
+void HttpHeader::setBase64AuthParam( const Q3CString & param )
 {
 	m_Base64AuthParam = param;
 }
@@ -641,7 +643,7 @@ const QString HttpHeader::getMetaData(const QString &field) const
 
 
 EvaHttp::EvaHttp( const QString & host, const unsigned short port )
-	: EvaSocket(host, port, EvaSocket::TCP),
+	: EvaSocket( QHostAddress( host ), port , EvaSocket::TCP),
 	m_UseProxy(false),
 	m_NeedAuth(false),
 	m_IsProxyReady(false),
@@ -685,7 +687,7 @@ void EvaHttp::setProxyAuthInfo( const QString & username, const QString & passwo
 	m_Header.setAuthInfo(username, password);
 }
 
-void EvaHttp::setBase64AuthParam( const QCString & param )
+void EvaHttp::setBase64AuthParam( const Q3CString & param )
 {
 	if(param.isEmpty()) return;
 	m_IsProxyReady = false;
@@ -700,7 +702,7 @@ void EvaHttp::get( const QString & path, QIODevice * to )
 	if(path.startsWith("/")){
 		m_Header.setGetURI(path);
 	} else{
-		QUrl url(path);
+		Q3Url url(path);
 		if(!url.isValid()){
 //X 			kdDebug() << "[EvaHttp] uri of get is malformed" << endl;
 			emit requestFinished(true);
@@ -725,7 +727,7 @@ void EvaHttp::get( const QString & path, QIODevice * to )
 
 void EvaHttp::tcpReady( )
 {
-	QCString toSend;
+	Q3CString toSend;
 	if(m_UseProxy){
 		toSend = m_Header.getCmdGetHeader(true, m_NeedAuth);
 		//kdDebug() << "[EvaHttp] ("<< toSend.length() << ") connecting to proxy:\r\n" << endl;
@@ -770,7 +772,7 @@ void EvaHttp::parseData( int len )
 		case 200:
 			if(m_UseProxy && !m_IsProxyReady){
 				m_IsProxyReady = true;
-				QCString toSend = m_Header.getCmdGetHeader();
+				Q3CString toSend = m_Header.getCmdGetHeader();
 				write(toSend.data(), toSend.length());
 			}else{ 
 				// do nothing, just wait for the contents
@@ -835,19 +837,19 @@ void EvaHttp::startDnsLookup( const QString & host )
 {
 	//kdDebug() << "{EvaHttp} looking for IP of " << host << endl;
 	// host should be a URL string
-	QDns * dns =  new QDns(host, QDns::A);
+	Q3Dns * dns =  new Q3Dns(host, Q3Dns::A);
 	QObject::connect(dns, SIGNAL(resultsReady()), this, SLOT(getResultsSlot()));
 }
 
 void EvaHttp::getResultsSlot( )
 {
-	QDns *dns = (QDns *)(QObject::sender());
+	Q3Dns *dns = (Q3Dns *)(QObject::sender());
 	if(dns == 0 ){
 //X         	kdDebug() << "[EvaHttp] Dns lookup error" << endl;
 		emit requestFinished(true);
         	return;
 	}
-	QValueList<QHostAddress> list = dns->addresses();
+	Q3ValueList<QHostAddress> list = dns->addresses();
 	if(list.count() == 0 ){
 //X         	kdDebug() << "[EvaHttp] Dns lookup error - no address" << endl;
 		emit requestFinished(true);

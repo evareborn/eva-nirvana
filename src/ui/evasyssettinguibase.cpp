@@ -22,18 +22,18 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qheader.h>
-#include <qlistview.h>
-#include <qwidgetstack.h>
+#include <q3header.h>
+#include <q3listview.h>
+#include <q3widgetstack.h>
 #include <qwidget.h>
 #include <qlabel.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qlineedit.h>
 #include <qcombobox.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qtoolbutton.h>
 //X #include <kpushbutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qspinbox.h>
@@ -41,11 +41,16 @@
 //X #include <kkeybutton.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
 
-#include <qiconview.h>
+#include <q3iconview.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3VBoxLayout>
 //X #include <klocale.h>
 
 #include "../evamain.h"
@@ -60,14 +65,14 @@
  *  TRUE to construct a modal dialog.
  */
  
- EvaSettingListItem::EvaSettingListItem( QListView* parent, QListViewItem* after, int index )
-	:QListViewItem( parent, after)
+ EvaSettingListItem::EvaSettingListItem( Q3ListView* parent, Q3ListViewItem* after, int index )
+	:Q3ListViewItem( parent, after)
 {
 	itemIndex = index;
 }
 
-EvaSettingListItem::EvaSettingListItem( QListViewItem* parent, QListViewItem* after, int index )
-	:QListViewItem( parent, after)
+EvaSettingListItem::EvaSettingListItem( Q3ListViewItem* parent, Q3ListViewItem* after, int index )
+	:Q3ListViewItem( parent, after)
 {
 	itemIndex = index;
 }
@@ -77,42 +82,42 @@ EvaSettingListItem::~ EvaSettingListItem()
 }
 
 /*--------------------------------------------------------------*/
-EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, bool modal, WFlags fl )
+EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : QDialog( parent, name, modal, fl )
 {
 	if ( !name )
 		setName( "EvaSysSettingUIBase" );
-	EvaSysSettingUIBaseLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaSysSettingUIBaseLayout"); 
+	EvaSysSettingUIBaseLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaSysSettingUIBaseLayout"); 
 	
-	layout57 = new QVBoxLayout( 0, 0, 6, "layout57"); 
+	layout57 = new Q3VBoxLayout( 0, 0, 6, "layout57"); 
 	
-	layout55 = new QHBoxLayout( 0, 0, 6, "layout55"); 
+	layout55 = new Q3HBoxLayout( 0, 0, 6, "layout55"); 
 	
-	lvSettingItem = new QListView( this, "lvSettingItem" );
+	lvSettingItem = new Q3ListView( this, "lvSettingItem" );
 	lvSettingItem->addColumn( tr( "ListView" ) );
-	lvSettingItem->setFrameShape( QListView::Box );
-	lvSettingItem->setFrameShadow( QListView::Plain );
+	lvSettingItem->setFrameShape( Q3ListView::Box );
+	lvSettingItem->setFrameShadow( Q3ListView::Plain );
 	lvSettingItem->setLineWidth( 1 );
 	lvSettingItem->setItemMargin( 1 );
-	lvSettingItem->setResizeMode( QListView::LastColumn );
+	lvSettingItem->setResizeMode( Q3ListView::LastColumn );
 	lvSettingItem->setMaximumWidth(94);
 	
 	layout55->addWidget( lvSettingItem );
 	
-	wsSetting = new QWidgetStack( this, "wsSetting" );
-	wsSetting->setFrameShape( QWidgetStack::Box );
+	wsSetting = new Q3WidgetStack( this, "wsSetting" );
+	wsSetting->setFrameShape( Q3WidgetStack::Box );
 	wsSetting->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 	
 	wspUserInfo = new QWidget( wsSetting, "wspUserInfo" );
-	wspUserInfoLayout = new QGridLayout( wspUserInfo, 1, 1, 11, 6, "wspUserInfoLayout"); 
+	wspUserInfoLayout = new Q3GridLayout( wspUserInfo, 1, 1, 11, 6, "wspUserInfoLayout"); 
 	spacer37 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	wspUserInfoLayout->addItem( spacer37, 1, 0 );
 	
-	layout44 = new QGridLayout( 0, 1, 1, 0, 6, "layout44"); 
+	layout44 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout44"); 
 	
-	layout43 = new QGridLayout( 0, 1, 1, 0, 6, "layout43"); 
+	layout43 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout43"); 
 	
-	layout41 = new QVBoxLayout( 0, 0, 6, "layout41"); 
+	layout41 = new Q3VBoxLayout( 0, 0, 6, "layout41"); 
 	
 	lblSignature = new QLabel( wspUserInfo, "lblSignature" );
 	layout41->addWidget( lblSignature );
@@ -121,12 +126,12 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout43->addLayout( layout41, 0, 0 );
 	
-	layout70 = new QHBoxLayout( 0, 0, 6, "layout70"); 
+	layout70 = new Q3HBoxLayout( 0, 0, 6, "layout70"); 
 	
 	lblLevel = new QLabel( wspUserInfo, "lblLevel" );
 	layout70->addWidget( lblLevel );
 	
-	layout61 = new QHBoxLayout( 0, 0, 6, "layout61"); 
+	layout61 = new Q3HBoxLayout( 0, 0, 6, "layout61"); 
 	
 	lblLevelDisplay = new QLabel( wspUserInfo, "lblLevelDisplay" );
 	layout61->addWidget( lblLevelDisplay );
@@ -136,31 +141,31 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout43->addMultiCellLayout( layout70, 1, 1, 0, 1 );
 	
-	teSignature = new QTextEdit( wspUserInfo, "teSignature" );
+	teSignature = new Q3TextEdit( wspUserInfo, "teSignature" );
 	teSignature->setEnabled( TRUE );
 	teSignature->setMinimumSize( QSize( 0, 50 ) );
 	teSignature->setMaximumSize( QSize( 32767, 50 ) );
 	teSignature->setPaletteForegroundColor( QColor( 0, 0, 0 ) );
 	teSignature->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-	teSignature->setFrameShape( QTextEdit::Box );
-	teSignature->setFrameShadow( QTextEdit::Plain );
+	teSignature->setFrameShape( Q3TextEdit::Box );
+	teSignature->setFrameShadow( Q3TextEdit::Plain );
 	teSignature->setLineWidth( 1 );
-	teSignature->setResizePolicy( QTextEdit::Manual );
-	teSignature->setVScrollBarMode( QTextEdit::AlwaysOff );
-	teSignature->setHScrollBarMode( QTextEdit::AlwaysOff );
+	teSignature->setResizePolicy( Q3TextEdit::Manual );
+	teSignature->setVScrollBarMode( Q3TextEdit::AlwaysOff );
+	teSignature->setHScrollBarMode( Q3TextEdit::AlwaysOff );
 	teSignature->setDragAutoScroll( FALSE );
-	teSignature->setTextFormat( QTextEdit::PlainText );
-	teSignature->setWordWrap( QTextEdit::WidgetWidth );
+	teSignature->setTextFormat( Qt::PlainText );
+	teSignature->setWordWrap( Q3TextEdit::WidgetWidth );
 	teSignature->setWrapColumnOrWidth( 333 );
-	teSignature->setAutoFormatting((unsigned int)( QTextEdit::AutoAll ) );
+	teSignature->setAutoFormatting( Q3TextEdit::AutoAll );
 	
 	layout43->addWidget( teSignature, 0, 1 );
 	
 	layout44->addLayout( layout43, 1, 0 );
 	
-	layout73 = new QHBoxLayout( 0, 0, 6, "layout73"); 
+	layout73 = new Q3HBoxLayout( 0, 0, 6, "layout73"); 
 	
-	layout72 = new QVBoxLayout( 0, 0, 6, "layout72"); 
+	layout72 = new Q3VBoxLayout( 0, 0, 6, "layout72"); 
 	
 	lblAboutMe = new QLabel( wspUserInfo, "lblAboutMe" );
 	layout72->addWidget( lblAboutMe );
@@ -168,27 +173,27 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout72->addItem( spacer17 );
 	layout73->addLayout( layout72 );
 	
-	teAboutMe = new QTextEdit( wspUserInfo, "teAboutMe" );
+	teAboutMe = new Q3TextEdit( wspUserInfo, "teAboutMe" );
 	teAboutMe->setEnabled( TRUE );
 	teAboutMe->setMinimumSize( QSize( 0, 80 ) );
 	teAboutMe->setMaximumSize( QSize( 32767, 80 ) );
 	teAboutMe->setPaletteForegroundColor( QColor( 0, 0, 0 ) );
 	teAboutMe->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-	teAboutMe->setFrameShape( QTextEdit::Box );
-	teAboutMe->setFrameShadow( QTextEdit::Plain );
+	teAboutMe->setFrameShape( Q3TextEdit::Box );
+	teAboutMe->setFrameShadow( Q3TextEdit::Plain );
 	teAboutMe->setLineWidth( 1 );
-	teAboutMe->setVScrollBarMode( QTextEdit::Auto );
-	teAboutMe->setHScrollBarMode( QTextEdit::AlwaysOff );
-	teAboutMe->setWordWrap( QTextEdit::WidgetWidth );
+	teAboutMe->setVScrollBarMode( Q3TextEdit::Auto );
+	teAboutMe->setHScrollBarMode( Q3TextEdit::AlwaysOff );
+	teAboutMe->setWordWrap( Q3TextEdit::WidgetWidth );
 	layout73->addWidget( teAboutMe );
 	
 	layout44->addLayout( layout73, 3, 0 );
 	
-	layout56 = new QHBoxLayout( 0, 0, 6, "layout56"); 
+	layout56 = new Q3HBoxLayout( 0, 0, 6, "layout56"); 
 	
-	layout55_2 = new QHBoxLayout( 0, 0, 6, "layout55_2"); 
+	layout55_2 = new Q3HBoxLayout( 0, 0, 6, "layout55_2"); 
 	
-	layout54 = new QVBoxLayout( 0, 0, 6, "layout54"); 
+	layout54 = new Q3VBoxLayout( 0, 0, 6, "layout54"); 
 	
 	lblRealName = new QLabel( wspUserInfo, "lblRealName" );
 	layout54->addWidget( lblRealName );
@@ -203,9 +208,9 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout54->addWidget( lblHomePage );
 	layout55_2->addLayout( layout54 );
 	
-	layout53 = new QVBoxLayout( 0, 0, 6, "layout53"); 
+	layout53 = new Q3VBoxLayout( 0, 0, 6, "layout53"); 
 	
-	layout52 = new QHBoxLayout( 0, 0, 6, "layout52"); 
+	layout52 = new Q3HBoxLayout( 0, 0, 6, "layout52"); 
 	
 	leRealName = new QLineEdit( wspUserInfo, "leRealName" );
 	leRealName->setEnabled( TRUE );
@@ -247,9 +252,9 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout55_2->addLayout( layout53 );
 	layout56->addLayout( layout55_2 );
 	
-	layout68 = new QHBoxLayout( 0, 0, 6, "layout68"); 
+	layout68 = new Q3HBoxLayout( 0, 0, 6, "layout68"); 
 	
-	layout66 = new QVBoxLayout( 0, 0, 6, "layout66"); 
+	layout66 = new Q3VBoxLayout( 0, 0, 6, "layout66"); 
 	
 	lblAge = new QLabel( wspUserInfo, "lblAge" );
 	layout66->addWidget( lblAge );
@@ -264,7 +269,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout66->addWidget( lblBlood );
 	layout68->addLayout( layout66 );
 	
-	layout67 = new QVBoxLayout( 0, 0, 6, "layout67"); 
+	layout67 = new Q3VBoxLayout( 0, 0, 6, "layout67"); 
 	
 	leAge = new QLineEdit( wspUserInfo, "leAge" );
 	leAge->setEnabled( TRUE );
@@ -288,9 +293,9 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout44->addLayout( layout56, 2, 0 );
 	
-	layout46 = new QHBoxLayout( 0, 0, 6, "layout46"); 
+	layout46 = new Q3HBoxLayout( 0, 0, 6, "layout46"); 
 	
-	layout45 = new QVBoxLayout( 0, 0, 6, "layout45"); 
+	layout45 = new Q3VBoxLayout( 0, 0, 6, "layout45"); 
 	
 	lblNumber = new QLabel( wspUserInfo, "lblNumber" );
 	layout45->addWidget( lblNumber );
@@ -299,7 +304,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout45->addWidget( lblNickName );
 	layout46->addLayout( layout45 );
 	
-	layout36 = new QGridLayout( 0, 1, 1, 0, 6, "layout36"); 
+	layout36 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout36"); 
 	
 	leNickName = new QLineEdit( wspUserInfo, "leNickName" );
 	leNickName->setEnabled( TRUE );
@@ -326,7 +331,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	lblFace->setMinimumSize( QSize( 46, 46 ) );
 	lblFace->setMaximumSize( QSize( 46, 46 ) );
 	lblFace->setFrameShape( QLabel::Box );
-	lblFace->setAlignment( int( QLabel::AlignCenter ) );
+	lblFace->setAlignment( Qt::AlignCenter );
 	
 	layout36->addMultiCellWidget( lblFace, 0, 1, 2, 2 );
 	spacer10 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -343,29 +348,29 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspUserInfo, 0 );
 	
 	wspQQShow = new QWidget( wsSetting, "wspQQShow" );
-	wspQQShowLayout = new QGridLayout( wspQQShow, 1, 1, 11, 6, "wspQQShowLayout"); 
+	wspQQShowLayout = new Q3GridLayout( wspQQShow, 1, 1, 11, 6, "wspQQShowLayout"); 
 	spacer18 = new QSpacerItem( 20, 31, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	wspQQShowLayout->addItem( spacer18, 1, 0 );
 	spacer17_2 = new QSpacerItem( 21, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	wspQQShowLayout->addItem( spacer17_2, 0, 1 );
 	
-	gbQQShow = new QGroupBox( wspQQShow, "gbQQShow" );
+	gbQQShow = new Q3GroupBox( wspQQShow, "gbQQShow" );
 	
 	QWidget* privateLayoutWidget = new QWidget( gbQQShow, "layout13" );
 	privateLayoutWidget->setGeometry( QRect( 30, 30, 325, 261 ) );
-	layout13 = new QGridLayout( privateLayoutWidget, 1, 1, 11, 6, "layout13"); 
+	layout13 = new Q3GridLayout( privateLayoutWidget, 1, 1, 11, 6, "layout13"); 
 	
 	lblQQShow = new QLabel( privateLayoutWidget, "lblQQShow" );
 	lblQQShow->setMinimumSize( QSize( 147, 233 ) );
 	lblQQShow->setMaximumSize( QSize( 147, 233 ) );
 	lblQQShow->setFrameShape( QLabel::Box );
-	lblQQShow->setAlignment( int( QLabel::AlignCenter ) );
+	lblQQShow->setAlignment( Qt::AlignCenter );
 	
 	layout13->addWidget( lblQQShow, 0, 0 );
 	spacer6 = new QSpacerItem( 23, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout13->addItem( spacer6, 0, 1 );
 	
-	layout12 = new QGridLayout( 0, 1, 1, 0, 6, "layout12"); 
+	layout12 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout12"); 
 	spacer5 = new QSpacerItem( 20, 80, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout12->addItem( spacer5, 4, 0 );
 	spacer7 = new QSpacerItem( 20, 42, QSizePolicy::Minimum, QSizePolicy::Expanding );
@@ -410,28 +415,28 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspQQShow, 1 );
 	
 	wspContact = new QWidget( wsSetting, "wspContact" );
-	wspContactLayout = new QGridLayout( wspContact, 1, 1, 11, 6, "wspContactLayout"); 
+	wspContactLayout = new Q3GridLayout( wspContact, 1, 1, 11, 6, "wspContactLayout"); 
 	spacer29 = new QSpacerItem( 31, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	wspContactLayout->addItem( spacer29, 0, 1 );
 	spacer30 = new QSpacerItem( 20, 41, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	wspContactLayout->addItem( spacer30, 1, 0 );
 	
-	layout48 = new QGridLayout( 0, 1, 1, 0, 6, "layout48"); 
+	layout48 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout48"); 
 	
-	gbContact = new QGroupBox( wspContact, "gbContact" );
+	gbContact = new Q3GroupBox( wspContact, "gbContact" );
 	
-	buttonGroup1 = new QButtonGroup( gbContact, "buttonGroup1" );
+	buttonGroup1 = new Q3ButtonGroup( gbContact, "buttonGroup1" );
 	buttonGroup1->setGeometry( QRect( 10, 20, 293, 44 ) );
-	buttonGroup1->setFrameShape( QButtonGroup::NoFrame );
-	buttonGroup1->setFrameShadow( QButtonGroup::Plain );
+	buttonGroup1->setFrameShape( Q3ButtonGroup::NoFrame );
+	buttonGroup1->setFrameShadow( Q3ButtonGroup::Plain );
 	buttonGroup1->setLineWidth( 0 );
 	buttonGroup1->setColumnLayout(0, Qt::Vertical );
 	buttonGroup1->layout()->setSpacing( 6 );
 	buttonGroup1->layout()->setMargin( 11 );
-	buttonGroup1Layout = new QGridLayout( buttonGroup1->layout() );
+	buttonGroup1Layout = new Q3GridLayout( buttonGroup1->layout() );
 	buttonGroup1Layout->setAlignment( Qt::AlignTop );
 	
-	layout54_2 = new QHBoxLayout( 0, 0, 6, "layout54_2"); 
+	layout54_2 = new Q3HBoxLayout( 0, 0, 6, "layout54_2"); 
 	
 	lblPrompt = new QLabel( buttonGroup1, "lblPrompt" );
 	layout54_2->addWidget( lblPrompt );
@@ -449,7 +454,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	QWidget* privateLayoutWidget_2 = new QWidget( gbContact, "layout56" );
 	privateLayoutWidget_2->setGeometry( QRect( 10, 60, 210, 128 ) );
-	layout56_2 = new QGridLayout( privateLayoutWidget_2, 1, 1, 11, 6, "layout56_2"); 
+	layout56_2 = new Q3GridLayout( privateLayoutWidget_2, 1, 1, 11, 6, "layout56_2"); 
 	
 	leMobile = new QLineEdit( privateLayoutWidget_2, "leMobile" );
 	leMobile->setFrameShape( QLineEdit::Box );
@@ -497,7 +502,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout48->addMultiCellWidget( gbContact, 1, 1, 0, 1 );
 	
-	layout57_2 = new QGridLayout( 0, 1, 1, 0, 6, "layout57_2"); 
+	layout57_2 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout57_2"); 
 	
 	lblCity = new QLabel( wspContact, "lblCity" );
 	
@@ -546,15 +551,15 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspContact, 2 );
 	
 	wspSecurity = new QWidget( wsSetting, "wspSecurity" );
-	wspSecurityLayout = new QGridLayout( wspSecurity, 1, 1, 11, 6, "wspSecurityLayout"); 
+	wspSecurityLayout = new Q3GridLayout( wspSecurity, 1, 1, 11, 6, "wspSecurityLayout"); 
 	
-	layout53_2 = new QVBoxLayout( 0, 6, 6, "layout53_2"); 
+	layout53_2 = new Q3VBoxLayout( 0, 6, 6, "layout53_2"); 
 	
-	gbPassword = new QGroupBox(wspSecurity, "gbPassword");
-	gbPassword->setFrameShape( QFrame::StyledPanel );
-	gbPassword->setFrameShadow( QFrame::Raised );
+	gbPassword = new Q3GroupBox(wspSecurity, "gbPassword");
+	gbPassword->setFrameShape( Q3GroupBox::StyledPanel );
+	gbPassword->setFrameShadow( Q3GroupBox::Raised );
 
-	layoutPwButton = new QVBoxLayout( 0, 6, 6, "layoutPwButton");
+	layoutPwButton = new Q3VBoxLayout( 0, 6, 6, "layoutPwButton");
 	pbChangePassword = new QPushButton(gbPassword, "pbChangePassword");
 	pbChangePassword->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	layoutPwButton->addWidget(pbChangePassword);
@@ -564,18 +569,18 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layoutPwButton->addWidget(pbProtectPassword);
 
 	
-	layoutPwd = new QVBoxLayout(gbPassword, 15, 10, "layoutPwd");
+	layoutPwd = new Q3VBoxLayout(gbPassword, 15, 10, "layoutPwd");
 	layoutPwd->addLayout(layoutPwButton);
 	layout53_2->addWidget( gbPassword);
 	
-	bgAuthen = new QButtonGroup( wspSecurity, "bgAuthen" );
+	bgAuthen = new Q3ButtonGroup( wspSecurity, "bgAuthen" );
 	bgAuthen->setColumnLayout(0, Qt::Vertical );
 	bgAuthen->layout()->setSpacing( 6 );
 	bgAuthen->layout()->setMargin( 11 );
-	authButtonLayout = new QGridLayout( bgAuthen->layout() );
+	authButtonLayout = new Q3GridLayout( bgAuthen->layout() );
 	authButtonLayout->setAlignment( Qt::AlignTop );
 
-	layout49 = new QVBoxLayout(0, 11, 6, "layout49"); 
+	layout49 = new Q3VBoxLayout(0, 11, 6, "layout49"); 
 	
 	rbAuthNoNeed = new QRadioButton( bgAuthen, "rbAuthNoNeed" );
 	layout49->addWidget( rbAuthNoNeed );
@@ -589,27 +594,27 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	rbAuthQuest = new QRadioButton( bgAuthen, "rbAuthQuest" );
 	layout49->addWidget( rbAuthQuest );
 
-	fraQuestion = new QFrame(bgAuthen, "fraQuestion");
-	fraQuestion->setFrameShape( QFrame::StyledPanel );
-	fraQuestion->setFrameShadow( QFrame::Raised );
+	fraQuestion = new Q3Frame(bgAuthen, "fraQuestion");
+	fraQuestion->setFrameShape( Q3Frame::StyledPanel );
+	fraQuestion->setFrameShadow( Q3Frame::Raised );
 	lblQuestion = new QLabel(fraQuestion, "lblQuestion");
 	lblAnswer = new QLabel(fraQuestion, "lblAnswer");
-	layoutQuestLbl = new QVBoxLayout(0, 11, 6, "layoutQuestLbl");
+	layoutQuestLbl = new Q3VBoxLayout(0, 11, 6, "layoutQuestLbl");
 	layoutQuestLbl->addWidget(lblQuestion);
 	layoutQuestLbl->addWidget(lblAnswer);
 
 	cbbQuestion = new QComboBox(fraQuestion, "leQuestion");
 	cbbQuestion->setEditable(true);
 	leAnswer = new QLineEdit(fraQuestion, "leAnswer");
-	layoutQuestContents = new QVBoxLayout(0, 11, 6, "layoutQuestContents");
+	layoutQuestContents = new Q3VBoxLayout(0, 11, 6, "layoutQuestContents");
 	layoutQuestContents->addWidget(cbbQuestion);
 	layoutQuestContents->addWidget(leAnswer);
 
-	layoutHQuest =  new QHBoxLayout(0, 11, 6, "layoutHQuest");
+	layoutHQuest =  new Q3HBoxLayout(0, 11, 6, "layoutHQuest");
 	layoutHQuest->addLayout(layoutQuestLbl);
 	layoutHQuest->addLayout(layoutQuestContents);
 
-	layoutQuest = new QVBoxLayout(fraQuestion, 6, 6, "layoutQuest");
+	layoutQuest = new Q3VBoxLayout(fraQuestion, 6, 6, "layoutQuest");
 	layoutQuest->addLayout(layoutHQuest);
 	layout49->addWidget( fraQuestion );
 
@@ -624,19 +629,19 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspSecurity, 3 );
 	
 	wspBasicSetting = new QWidget( wsSetting, "wspBasicSetting" );
-	wspBasicSettingLayout = new QGridLayout( wspBasicSetting, 1, 1, 11, 6, "wspBasicSettingLayout"); 
+	wspBasicSettingLayout = new Q3GridLayout( wspBasicSetting, 1, 1, 11, 6, "wspBasicSettingLayout"); 
 	spacer15_2 = new QSpacerItem( 21, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	wspBasicSettingLayout->addItem( spacer15_2, 0, 1 );
 	spacer16_2 = new QSpacerItem( 20, 41, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	wspBasicSettingLayout->addItem( spacer16_2, 1, 0 );
 	
-	layout48_2 = new QVBoxLayout( 0, 0, 6, "layout48_2"); 
+	layout48_2 = new Q3VBoxLayout( 0, 0, 6, "layout48_2"); 
 	
-	gbGeneralSetting = new QGroupBox( wspBasicSetting, "gbGeneralSetting" );
+	gbGeneralSetting = new Q3GroupBox( wspBasicSetting, "gbGeneralSetting" );
 
-	layout47 = new QHBoxLayout( gbGeneralSetting, 11, 6, "layout47"); 
+	layout47 = new Q3HBoxLayout( gbGeneralSetting, 11, 6, "layout47"); 
 	
-	layout45_2 = new QVBoxLayout( 0, 10, 6, "layout45_2"); 
+	layout45_2 = new Q3VBoxLayout( 0, 10, 6, "layout45_2"); 
 	
 	chbOnlineTip = new QCheckBox( gbGeneralSetting, "chbOnlineTip" );
 	layout45_2->addWidget( chbOnlineTip );
@@ -654,7 +659,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout45_2->addWidget( chbSystemNews );
 	layout47->addLayout( layout45_2 );
 	
-	layout46_2 = new QVBoxLayout( 0, 10, 6, "layout46_2"); 
+	layout46_2 = new Q3VBoxLayout( 0, 10, 6, "layout46_2"); 
 	
 	chbMessage = new QCheckBox( gbGeneralSetting, "chbMessage" );
 	layout46_2->addWidget( chbMessage );
@@ -670,13 +675,13 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout47->addLayout( layout46_2 );
 	layout48_2->addWidget( gbGeneralSetting );
 	
-	gbOtherSetting = new QGroupBox( wspBasicSetting, "gbOtherSetting" );
+	gbOtherSetting = new Q3GroupBox( wspBasicSetting, "gbOtherSetting" );
 	
 	QWidget* privateLayoutWidget_5 = new QWidget( gbOtherSetting, "layout52" );
 	privateLayoutWidget_5->setGeometry( QRect( 10, 15, 340, 140 ) );
-	layout52_3 = new QVBoxLayout( privateLayoutWidget_5, 11, 6, "layout52_3"); 
+	layout52_3 = new Q3VBoxLayout( privateLayoutWidget_5, 11, 6, "layout52_3"); 
 	
-	layout44_2 = new QHBoxLayout( 0, 0, 6, "layout44_2"); 
+	layout44_2 = new Q3HBoxLayout( 0, 0, 6, "layout44_2"); 
 	
 	lblPageSize = new QLabel( privateLayoutWidget_5, "lblPageSize" );
 	layout44_2->addWidget( lblPageSize );
@@ -692,7 +697,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 
 	layout52_3->addLayout( layout44_2 );
 
-	layout_idt = new QHBoxLayout( 0, 0, 6, "layout_idt");
+	layout_idt = new Q3HBoxLayout( 0, 0, 6, "layout_idt");
 	lblIdleTime = new QLabel( privateLayoutWidget_5, "lblIdleTime" );
 	layout_idt->addWidget( lblIdleTime );
 	sbIdleTime = new QSpinBox( privateLayoutWidget_5, "sbIdleTime" );
@@ -704,7 +709,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout_idt->addWidget( lblIdleTimeEnd );
 	layout52_3->addLayout( layout_idt );
 	
-	layout45_3 = new QHBoxLayout( 0, 0, 6, "layout45_3"); 
+	layout45_3 = new Q3HBoxLayout( 0, 0, 6, "layout45_3"); 
 	
 	lblFaceSize = new QLabel( privateLayoutWidget_5, "lblFaceSize" );
 	layout45_3->addWidget( lblFaceSize );
@@ -717,14 +722,14 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	sliderFaceSize->setMaxValue( 40 );
 	sliderFaceSize->setPageStep( 5 );
 	sliderFaceSize->setValue( 16 );
-	sliderFaceSize->setOrientation( QSlider::Horizontal );
+	sliderFaceSize->setOrientation( Qt::Horizontal );
 	layout45_3->addWidget( sliderFaceSize );
 	
 	lblFaceBig = new QLabel( privateLayoutWidget_5, "lblFaceBig" );
 	layout45_3->addWidget( lblFaceBig );
 	layout52_3->addLayout( layout45_3 );
 	
-	layout51_2 = new QHBoxLayout( 0, 0, 6, "layout51_2"); 
+	layout51_2 = new Q3HBoxLayout( 0, 0, 6, "layout51_2"); 
 	
 	lblShortKey = new QLabel( privateLayoutWidget_5, "lblShortKey" );
 	layout51_2->addWidget( lblShortKey );
@@ -740,15 +745,15 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspBasicSetting, 4 );
 	
 	wspResource = new QWidget( wsSetting, "wspResource" );
-	wspResourceLayout = new QGridLayout( wspResource, 1, 1, 11, 6, "wspResourceLayout"); 
+	wspResourceLayout = new Q3GridLayout( wspResource, 1, 1, 11, 6, "wspResourceLayout"); 
 	
-	gbPath = new QGroupBox( wspResource, "gbPath" );
+	gbPath = new Q3GroupBox( wspResource, "gbPath" );
 	
 	QWidget* privateLayoutWidget_6 = new QWidget( gbPath, "layout59" );
 	privateLayoutWidget_6->setGeometry( QRect( 10, 15, 350, 160 ) );
-	layout59 = new QVBoxLayout( privateLayoutWidget_6, 11, 6, "layout59"); 
+	layout59 = new Q3VBoxLayout( privateLayoutWidget_6, 11, 6, "layout59"); 
 	
-	layout56_3 = new QGridLayout( 0, 1, 1, 0, 6, "layout56_3"); 
+	layout56_3 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout56_3"); 
 	
 	lblThemePath = new QLabel( privateLayoutWidget_6, "lblThemePath" );
 	
@@ -756,7 +761,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	spacer20 = new QSpacerItem( 271, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout56_3->addItem( spacer20, 0, 1 );
 	
-	layout55_3 = new QHBoxLayout( 0, 0, 6, "layout55_3"); 
+	layout55_3 = new Q3HBoxLayout( 0, 0, 6, "layout55_3"); 
 	
 	leThemePath = new QLineEdit( privateLayoutWidget_6, "leThemePath" );
 	leThemePath->setFrameShape( QLineEdit::Box );
@@ -770,7 +775,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout56_3->addMultiCellLayout( layout55_3, 1, 1, 0, 1 );
 	layout59->addLayout( layout56_3 );
 	
-	layout57_3 = new QGridLayout( 0, 1, 1, 0, 6, "layout57_3"); 
+	layout57_3 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout57_3"); 
 	
 	lblSoundPath = new QLabel( privateLayoutWidget_6, "lblSoundPath" );
 	
@@ -778,7 +783,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	spacer21 = new QSpacerItem( 271, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout57_3->addItem( spacer21, 0, 1 );
 	
-	layout101 = new QHBoxLayout( 0, 0, 6, "layout101"); 
+	layout101 = new Q3HBoxLayout( 0, 0, 6, "layout101"); 
 	
 	leSoundPath = new QLineEdit( privateLayoutWidget_6, "leSoundPath" );
 	leSoundPath->setFrameShape( QLineEdit::Box );
@@ -800,17 +805,17 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	wsSetting->addWidget( wspResource, 5 );
 	
 	wspReply = new QWidget( wsSetting, "wspReply" );
-	wspReplyLayout = new QGridLayout( wspReply, 1, 1, 11, 6, "wspReplyLayout"); 
+	wspReplyLayout = new Q3GridLayout( wspReply, 1, 1, 11, 6, "wspReplyLayout"); 
 	
-	layout44_3 = new QGridLayout( 0, 1, 1, 0, 6, "layout44_3"); 
+	layout44_3 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout44_3"); 
 	
-	gbQuickReply = new QGroupBox( wspReply, "gbQuickReply" );
+	gbQuickReply = new Q3GroupBox( wspReply, "gbQuickReply" );
 	
 	QWidget* privateLayoutWidget_7 = new QWidget( gbQuickReply, "layout43" );
 	privateLayoutWidget_7->setGeometry( QRect( 10, 15, 350, 120 ) );
-	layout43_2 = new QVBoxLayout( privateLayoutWidget_7, 11, 6, "layout43_2"); 
+	layout43_2 = new Q3VBoxLayout( privateLayoutWidget_7, 11, 6, "layout43_2"); 
 	
-	layout40 = new QHBoxLayout( 0, 0, 6, "layout40"); 
+	layout40 = new Q3HBoxLayout( 0, 0, 6, "layout40"); 
 	
 	cbbQuickNo = new QComboBox( FALSE, privateLayoutWidget_7, "cbbQuickNo" );
 	layout40->addWidget( cbbQuickNo );
@@ -818,15 +823,15 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout40->addItem( spacer24 );
 	layout43_2->addLayout( layout40 );
 	
-	layout42 = new QHBoxLayout( 0, 0, 6, "layout42"); 
+	layout42 = new Q3HBoxLayout( 0, 0, 6, "layout42"); 
 	
-	teQuickMessage = new QTextEdit( privateLayoutWidget_7, "teQuickMessage" );
-	teQuickMessage->setFrameShape( QTextEdit::Box );
-	teQuickMessage->setFrameShadow( QTextEdit::Plain );
+	teQuickMessage = new Q3TextEdit( privateLayoutWidget_7, "teQuickMessage" );
+	teQuickMessage->setFrameShape( Q3TextEdit::Box );
+	teQuickMessage->setFrameShadow( Q3TextEdit::Plain );
 	teQuickMessage->setLineWidth( 1 );
 	layout42->addWidget( teQuickMessage );
 	
-	layout41_2 = new QVBoxLayout( 0, 0, 6, "layout41_2"); 
+	layout41_2 = new Q3VBoxLayout( 0, 0, 6, "layout41_2"); 
 	spacer25 = new QSpacerItem( 20, 21, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout41_2->addItem( spacer25 );
 	
@@ -840,13 +845,13 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	layout44_3->addWidget( gbQuickReply, 1, 0 );
 	
-	gbAutoReply = new QGroupBox( wspReply, "gbAutoReply" );
+	gbAutoReply = new Q3GroupBox( wspReply, "gbAutoReply" );
 	
 	QWidget* privateLayoutWidget_8 = new QWidget( gbAutoReply, "layout39" );
 	privateLayoutWidget_8->setGeometry( QRect( 10, 15, 352, 120 ) );
-	layout39 = new QVBoxLayout( privateLayoutWidget_8, 11, 6, "layout39"); 
+	layout39 = new Q3VBoxLayout( privateLayoutWidget_8, 11, 6, "layout39"); 
 	
-	layout32 = new QHBoxLayout( 0, 0, 6, "layout32"); 
+	layout32 = new Q3HBoxLayout( 0, 0, 6, "layout32"); 
 	
 	cbbAutoNo = new QComboBox( FALSE, privateLayoutWidget_8, "cbbAutoNo" );
 	cbbAutoNo->setDuplicatesEnabled( FALSE );
@@ -858,15 +863,15 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout32->addItem( spacer21_2 );
 	layout39->addLayout( layout32 );
 	
-	layout38 = new QHBoxLayout( 0, 0, 6, "layout38"); 
+	layout38 = new Q3HBoxLayout( 0, 0, 6, "layout38"); 
 	
-	teAutoMessage = new QTextEdit( privateLayoutWidget_8, "teAutoMessage" );
-	teAutoMessage->setFrameShape( QTextEdit::Box );
-	teAutoMessage->setFrameShadow( QTextEdit::Plain );
+	teAutoMessage = new Q3TextEdit( privateLayoutWidget_8, "teAutoMessage" );
+	teAutoMessage->setFrameShape( Q3TextEdit::Box );
+	teAutoMessage->setFrameShadow( Q3TextEdit::Plain );
 	teAutoMessage->setLineWidth( 1 );
 	layout38->addWidget( teAutoMessage );
 	
-	layout37 = new QVBoxLayout( 0, 0, 6, "layout37"); 
+	layout37 = new Q3VBoxLayout( 0, 0, 6, "layout37"); 
 	spacer23 = new QSpacerItem( 20, 20, QSizePolicy::Minimum, QSizePolicy::Expanding );
 	layout37->addItem( spacer23 );
 	
@@ -893,7 +898,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	layout55->addWidget( wsSetting );
 	layout57->addLayout( layout55 );
 	
-	layout54_3 = new QHBoxLayout( 0, 0, 6, "layout54_3"); 
+	layout54_3 = new Q3HBoxLayout( 0, 0, 6, "layout54_3"); 
 	
 	pbFaceDefault = new QPushButton( this, "pbFaceDefault" );
 	layout54_3->addWidget( pbFaceDefault );
@@ -912,10 +917,10 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	EvaSysSettingUIBaseLayout->addLayout( layout57, 0, 0 );
 	
-	ivFace = new QIconView( this, "ivFace" );
+	ivFace = new Q3IconView( this, "ivFace" );
 	ivFace->setGeometry( QRect( 230, 80, 220, 220 ) );
-	ivFace->setFrameShape( QIconView::WinPanel );
-	ivFace->setFrameShadow( QIconView::Plain );
+	ivFace->setFrameShape( Q3IconView::WinPanel );
+	ivFace->setFrameShadow( Q3IconView::Plain );
 	ivFace->setSpacing( 4 );
 	ivFace->setMaxItemWidth( 100 );
 	ivFace->setItemsMovable( FALSE );
@@ -924,7 +929,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	languageChange();
 	resize( QSize(551, 433).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 	
 	// tab order
 	setTabOrder( pbOk, pbCancel );

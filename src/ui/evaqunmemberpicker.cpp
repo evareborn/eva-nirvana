@@ -20,10 +20,12 @@
  
 #include "evaqunmemberpicker.h"
  
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qimage.h>
 #include <qtextcodec.h>
-#include <qheader.h>
+#include <q3header.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include <string>
 
 #include "../evamain.h"
@@ -34,7 +36,7 @@
 #include "evaqunlist.h"
 #include "evaqtutil.h"
 
-EvaQunMemberPicker::EvaQunMemberPicker(QWidget * parent, const char * name, WFlags fl, Qun *qun )
+EvaQunMemberPicker::EvaQunMemberPicker(QWidget * parent, const char * name, Qt::WFlags fl, Qun *qun )
 	: EvaQunMemberPickerUI( parent, name, fl )
 {
 	mQun = qun;
@@ -46,7 +48,7 @@ void EvaQunMemberPicker::initListView()
 {
 	lvBuddyList->header()->hide();
 	lvBuddyList->setRootIsDecorated( true);
-	QObject::connect(lvBuddyList, SIGNAL(clicked(QListViewItem *)), SLOT(slotClicked(QListViewItem *)));
+	QObject::connect(lvBuddyList, SIGNAL(clicked(Q3ListViewItem *)), SLOT(slotClicked(Q3ListViewItem *)));
 	//lvBuddyList->setTreeStepSize( 0 );   
 }
 
@@ -61,8 +63,8 @@ void EvaQunMemberPicker::updateBuddyListView()
 	int i=0;
 	for(groupIter = names.begin(); groupIter!= names.end(); ++groupIter){
 		QString g = codec->toUnicode(groupIter->c_str());
-		QCheckListItem *item = new QCheckListItem(lvBuddyList, g, QCheckListItem::CheckBox);
-		item->setState(QCheckListItem::Off);
+		Q3CheckListItem *item = new Q3CheckListItem(lvBuddyList, g, Q3CheckListItem::CheckBox);
+		item->setState(Q3CheckListItem::Off);
 		groups[i++] = item;
 	}
 	
@@ -76,12 +78,12 @@ void EvaQunMemberPicker::updateBuddyListView()
 		QString nick = EvaTextFilter::filter(codec->toUnicode(iter->second.getNick().c_str()));
 		
 		int groupIndex = iter->second.getGroupIndex();
-		QCheckListItem *group = groups[groupIndex];
+		Q3CheckListItem *group = groups[groupIndex];
 		if(!group) continue;
 		
 		short faceID = (iter->second.getFace())/3 + 1;
 		if(faceID<1) faceID = 1;
-		QCheckListItem *item = new QCheckListItem(group, nick + "(" + QString::number(id) + ")", QCheckListItem::CheckBox);
+		Q3CheckListItem *item = new Q3CheckListItem(group, nick + "(" + QString::number(id) + ")", Q3CheckListItem::CheckBox);
 
 		QPixmap *pic = EvaMain::images->getFace(faceID, true);
 		if(pic) {
@@ -91,18 +93,18 @@ void EvaQunMemberPicker::updateBuddyListView()
 			fprintf(stderr, "EvaQunMemberPicker::updateBuddyListView (id:%d, faceID:%d, %s) --  NULL QPixmap pointer, ignored!\n", id, faceID, nick.ascii());
 		}
 		if(mQun && mQun->hasMember(id))
-			item->setState(QCheckListItem::On);
+			item->setState(Q3CheckListItem::On);
 		else
-			item->setState(QCheckListItem::Off);
+			item->setState(Q3CheckListItem::Off);
 			
 		buddyList[id] = item;
 	}
 }
 
-void EvaQunMemberPicker::slotClicked(QListViewItem *item)
+void EvaQunMemberPicker::slotClicked(Q3ListViewItem *item)
 {
 	if(!item) return;
-	QCheckListItem *chkItem = dynamic_cast<QCheckListItem *>(item);
+	Q3CheckListItem *chkItem = dynamic_cast<Q3CheckListItem *>(item);
 	if(!chkItem) return;
 	unsigned int id;
 	QString txt;
@@ -111,7 +113,7 @@ void EvaQunMemberPicker::slotClicked(QListViewItem *item)
 	QString nick;
 	QPixmap face;
 	
-	QCheckListItem *child = dynamic_cast<QCheckListItem *>(chkItem->firstChild());
+	Q3CheckListItem *child = dynamic_cast<Q3CheckListItem *>(chkItem->firstChild());
 	if(!child){
 		txt = chkItem->text(0);
 		int index = txt.findRev("(");
@@ -137,13 +139,13 @@ void EvaQunMemberPicker::slotClicked(QListViewItem *item)
 		face = *(child->pixmap(0));
 		
 		emit memberClicked(id, child->isOn());
-		child = dynamic_cast<QCheckListItem *>(child->nextSibling());
+		child = dynamic_cast<Q3CheckListItem *>(child->nextSibling());
 	}
 }
 
 void EvaQunMemberPicker::slotSetMemberOff(const unsigned int id)
 {
-	std::map<int, QCheckListItem *>::iterator iter;
+	std::map<int, Q3CheckListItem *>::iterator iter;
 	iter = buddyList.find(id);
 	if(iter == buddyList.end()) return;
 	iter->second->setOn(false);

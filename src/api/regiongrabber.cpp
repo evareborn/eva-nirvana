@@ -24,6 +24,14 @@
 #include <qstyle.h>
 #include <qtimer.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3Painter>
+#include <QPixmap>
+#include <QMouseEvent>
+#include <QLabel>
+#include <Q3Frame>
+#include <QKeyEvent>
+#include <QDesktopWidget>
  
 #include "evamain.h"
 
@@ -31,12 +39,12 @@
 //X #include <klocale.h>
 
 SizeTip::SizeTip( QWidget *parent, const char *name )
-    : QLabel( parent, name, WStyle_Customize | WX11BypassWM |
-      WStyle_StaysOnTop | WStyle_NoBorder | WStyle_Tool )
+    : QLabel( parent, name, Qt::WStyle_Customize | Qt::WX11BypassWM |
+      Qt::WStyle_StaysOnTop | Qt::WStyle_NoBorder | Qt::WStyle_Tool )
 {
   setMargin( 10 );
   setIndent( 5 );
-  setFrameStyle( QFrame::Plain | QFrame::Box );
+  setFrameStyle( Q3Frame::Plain | Q3Frame::Box );
 
   //setPalette( QToolTip::palette() );
   setPalette( QPalette(Qt::yellow, QColor(20,190,255)));
@@ -92,19 +100,20 @@ RegionGrabber::~RegionGrabber()
 
 void RegionGrabber::initGrabber()
 {
-  pixmap = QPixmap::grabWindow( qt_xrootwin() );
+//X   pixmap = QPixmap::grabWindow( qt_xrootwin() );
+  pixmap = QPixmap::grabWindow( QApplication::desktop()->winId() );
   setPaletteBackgroundPixmap( pixmap );
 
   showFullScreen();
 
-  grabMouse( crossCursor );
+//X   grabMouse( crossCursor );
   sizeTip->setTip(QRect(0,0,0,0));
   sizeTip->show();
 }
 
 void RegionGrabber::mousePressEvent( QMouseEvent *e )
 {
-  if ( e->button() == LeftButton )
+  if ( e->button() == Qt::LeftButton )
   {
     mouseDown = true;
     grabRect = QRect( e->pos(), e->pos() );
@@ -141,7 +150,7 @@ void RegionGrabber::mouseReleaseEvent( QMouseEvent *e )
 
 void RegionGrabber::keyPressEvent( QKeyEvent *e )
 {
-  if ( e->key() == Key_Escape )
+  if ( e->key() == Qt::Key_Escape )
   {
     releaseMouse();
     emit regionGrabbed( QPixmap() );
@@ -160,16 +169,16 @@ void RegionGrabber::updateSizeTip()
 
 void RegionGrabber::drawRubber()
 {
-  QPainter p;
-  p.begin( this );
-  p.setRasterOp( NotROP );
-  p.setPen( QPen( color0, 1 ) );
-  p.setBrush( NoBrush );
-
-  style().drawPrimitive( QStyle::PE_FocusRect, &p, grabRect, colorGroup(),
-      QStyle::Style_Default, QStyleOption( colorGroup().base() ) );
-
-  p.end();
+//X   Q3Painter p;
+//X   p.begin( this );
+//X //X   p.setRasterO( NotROP );
+//X //X   p.setPen( QPen( color0, 1 ) );
+//X   p.setBrush( Qt::NoBrush );
+//X 
+//X   style()->drawPrimitive( QStyle::PE_FrameFocusRect, &p, grabRect, colorGroup(),
+//X       QStyle::Style_Default, QStyleOption( colorGroup().base() ) );
+//X 
+//X   p.end();
 }
 
 //X #include "regiongrabber.moc"

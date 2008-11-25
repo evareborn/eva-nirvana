@@ -27,10 +27,13 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
-#include <qiconset.h>
+#include <qicon.h>
 //#include <qtextedit.h>
 #include <qtextcodec.h>
 #include <qevent.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QCloseEvent>
 
 //X #include <kmessagebox.h>
 //X #include <klocale.h>
@@ -65,8 +68,8 @@ void EvaAddingWindow::initBuddy( )
 
 	lblTopic->setText(QString(i18n("You are about to add ")) + m_Nick + QString("(%1)").arg(m_ID) );
 	QPixmap *facePic = EvaMain::images->getFaceByID( m_Face);
-	QIconSet faceIcon;
-	faceIcon.setPixmap(*facePic,QIconSet::Large);
+	QIcon faceIcon;
+	faceIcon.setPixmap(*facePic,QIcon::Large);
 	tbtnFace->setIconSet(faceIcon);
 
 	// load users groups

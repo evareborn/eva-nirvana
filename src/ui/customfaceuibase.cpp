@@ -27,31 +27,35 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
  
 #include "evamain.h"
 //X #include <klocale.h>
 
 
-CustomFaceUIBase::CustomFaceUIBase( QWidget* parent, const char* name, WFlags fl )
+CustomFaceUIBase::CustomFaceUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "CustomFaceUIBase" );
     setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
-    CustomFaceUIBaseLayout = new QGridLayout( this, 1, 1, 1, 0, "CustomFaceUIBaseLayout"); 
+    CustomFaceUIBaseLayout = new Q3GridLayout( this, 1, 1, 1, 0, "CustomFaceUIBaseLayout"); 
 
-    layout2 = new QVBoxLayout( 0, 0, 0, "layout2"); 
+    layout2 = new Q3VBoxLayout( 0, 0, 0, "layout2"); 
 
     twSelector = new QTabWidget( this, "twSelector" );
     twSelector->setPaletteBackgroundColor( QColor( 255, 255, 255 ) );
 
     layout2->addWidget( twSelector );
 
-    layout1 = new QHBoxLayout( 0, 5, 6, "layout1"); 
+    layout1 = new Q3HBoxLayout( 0, 5, 6, "layout1"); 
 
     tbAdd = new QToolButton( this, "tbAdd" );
-    tbAdd->setBackgroundMode( QToolButton::PaletteBackground );
+    tbAdd->setBackgroundMode( Qt::PaletteBackground );
     tbAdd->setPaletteForegroundColor( QColor( 4, 74, 155 ) );
     tbAdd->setAutoRaise( TRUE );
     layout1->addWidget( tbAdd );
@@ -78,7 +82,7 @@ CustomFaceUIBase::CustomFaceUIBase( QWidget* parent, const char* name, WFlags fl
     CustomFaceUIBaseLayout->addLayout( layout2, 0, 0 );
     languageChange();
     resize( QSize(384, 265).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 CustomFaceUIBase::~CustomFaceUIBase()

@@ -23,21 +23,25 @@
 #include <qvariant.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
 //X #include <klocale.h>
 
-LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags fl )
+LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, Qt::WFlags fl )
     : QDialog( parent, name, modal, fl )
 {
     if ( !name )
@@ -55,23 +59,23 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     tbNetSetup->setAutoRepeat( TRUE );
     tbNetSetup->setAutoRaise( TRUE );
 
-    groupBox1 = new QGroupBox( this, "groupBox1" );
+    groupBox1 = new Q3GroupBox( this, "groupBox1" );
     groupBox1->setGeometry( QRect( 21, 51, 250, 115 ) );
     groupBox1->setColumnLayout(0, Qt::Vertical );
     groupBox1->layout()->setSpacing( 6 );
     groupBox1->layout()->setMargin( 11 );
-    groupBox1Layout = new QGridLayout( groupBox1->layout() );
+    groupBox1Layout = new Q3GridLayout( groupBox1->layout() );
     groupBox1Layout->setAlignment( Qt::AlignTop );
 
-    layout14 = new QHBoxLayout( 0, 0, 6, "layout14"); 
+    layout14 = new Q3HBoxLayout( 0, 0, 6, "layout14"); 
     spacer3 = new QSpacerItem( 21, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout14->addItem( spacer3 );
 
-    layout9 = new QVBoxLayout( 0, 0, 6, "layout9"); 
+    layout9 = new Q3VBoxLayout( 0, 0, 6, "layout9"); 
 
-    layout8 = new QHBoxLayout( 0, 0, 6, "layout8"); 
+    layout8 = new Q3HBoxLayout( 0, 0, 6, "layout8"); 
 
-    layout7 = new QVBoxLayout( 0, 0, 6, "layout7"); 
+    layout7 = new Q3VBoxLayout( 0, 0, 6, "layout7"); 
 
     textLabel1 = new QLabel( groupBox1, "textLabel1" );
     layout7->addWidget( textLabel1 );
@@ -80,7 +84,7 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     layout7->addWidget( textLabel2 );
     layout8->addLayout( layout7 );
 
-    layout6 = new QVBoxLayout( 0, 0, 6, "layout6"); 
+    layout6 = new Q3VBoxLayout( 0, 0, 6, "layout6"); 
 
     cbQQ = new QComboBox( FALSE, groupBox1, "cbQQ" );
     cbQQ->setEditable( TRUE );
@@ -92,7 +96,7 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     layout8->addLayout( layout6 );
     layout9->addLayout( layout8 );
 
-    layout1 = new QHBoxLayout( 0, 0, 6, "layout1"); 
+    layout1 = new Q3HBoxLayout( 0, 0, 6, "layout1"); 
     spacer1 = new QSpacerItem( 41, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout1->addItem( spacer1 );
 
@@ -108,11 +112,11 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
 
     groupBox1Layout->addLayout( layout14, 0, 0 );
 
-    line1 = new QFrame( this, "line1" );
+    line1 = new Q3Frame( this, "line1" );
     line1->setGeometry( QRect( 31, 204, 200, 16 ) );
-    line1->setFrameShape( QFrame::HLine );
-    line1->setFrameShadow( QFrame::Sunken );
-    line1->setFrameShape( QFrame::HLine );
+    line1->setFrameShape( Q3Frame::HLine );
+    line1->setFrameShadow( Q3Frame::Sunken );
+    line1->setFrameShape( Q3Frame::HLine );
 
     lblType = new QLabel( this, "lblType" );
     lblType->setGeometry(QRect(20, 220, 106, 23));
@@ -124,15 +128,15 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     loginBtn->setGeometry( QRect( 127, 170, 61, 23 ) );
     loginBtn->setDefault(true);
 
-    fraNetSetup = new QFrame( this, "fraNetSetup" );
+    fraNetSetup = new Q3Frame( this, "fraNetSetup" );
     fraNetSetup->setGeometry( QRect( 1, 252, 290, 76 ) );
-    fraNetSetup->setFrameShape( QFrame::StyledPanel );
-    fraNetSetup->setFrameShadow( QFrame::Raised );
-    fraNetSetupLayout = new QGridLayout( fraNetSetup, 1, 1, 11, 6, "fraNetSetupLayout"); 
+    fraNetSetup->setFrameShape( Q3Frame::StyledPanel );
+    fraNetSetup->setFrameShadow( Q3Frame::Raised );
+    fraNetSetupLayout = new Q3GridLayout( fraNetSetup, 1, 1, 11, 6, "fraNetSetupLayout"); 
 
-    layout13 = new QVBoxLayout( 0, 0, 6, "layout13"); 
+    layout13 = new Q3VBoxLayout( 0, 0, 6, "layout13"); 
 
-    layout12 = new QHBoxLayout( 0, 0, 6, "layout12"); 
+    layout12 = new Q3HBoxLayout( 0, 0, 6, "layout12"); 
 
     tlProxyServer = new QLabel( fraNetSetup, "tlProxyServer" );
     layout12->addWidget( tlProxyServer );
@@ -151,7 +155,7 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     layout12->addWidget( lePort );
     layout13->addLayout( layout12 );
 
-    layout11 = new QHBoxLayout( 0, 0, 6, "layout11"); 
+    layout11 = new Q3HBoxLayout( 0, 0, 6, "layout11"); 
 
     tlUserName = new QLabel( fraNetSetup, "tlUserName" );
     tlUserName->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, tlUserName->sizePolicy().hasHeightForWidth() ) );
@@ -180,7 +184,7 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, WFlags 
     lblLogo->setScaledContents( TRUE );
     languageChange();
     resize( QSize(292, 333).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
     // signals and slots connections
     connect( loginBtn, SIGNAL( clicked() ), this, SLOT( loginClickSlot() ) );

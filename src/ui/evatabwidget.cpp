@@ -26,9 +26,17 @@
 #include <qpainter.h>
 #include <qsizepolicy.h>
 #include <qimage.h>
-#include <qmemarray.h>
+#include <q3memarray.h>
 #include <qevent.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QWheelEvent>
+#include <QPaintEvent>
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <QPixmap>
+#include <QMouseEvent>
 
 #define TAB_BAR_SIZE         26
 #define TAB_ICON_SIZE        (TAB_BAR_SIZE - 4)
@@ -37,41 +45,41 @@
 #define TAB_GRID_COLOR      (QColor(0x2D, 0x7A, 0xFF))
 #define TAB_LEFT_MARGIN      4
 
-
-class EvaTabToolTip : public QToolTip
-{
-public:
-	EvaTabToolTip(EvaTabBar *bar, QToolTipGroup *group = 0);
-	virtual ~EvaTabToolTip();
-protected:
-	void maybeTip(const QPoint &p);
-private:
-	EvaTabBar *m_bar;
-};
-
-EvaTabToolTip::EvaTabToolTip(EvaTabBar *bar, QToolTipGroup *group)
-	: QToolTip(bar, group),
-	m_bar(bar)
-{
-	//setPalette( QPalette(Qt::yellow, QColor(20,190,255)));
-}
-
-EvaTabToolTip::~EvaTabToolTip()
-{
-}
-
-void EvaTabToolTip::maybeTip(const QPoint &p)
-{
-    QRect rect = m_bar->itemRect(p);
-    if(rect.width() && rect.height())
-        tip(rect, m_bar->tip(p));
-}
-
+//X 
+//X class EvaTabToolTip : public QToolTip
+//X {
+//X public:
+//X 	EvaTabToolTip(EvaTabBar *bar, QToolTipGroup *group = 0);
+//X 	virtual ~EvaTabToolTip();
+//X protected:
+//X 	void maybeTip(const QPoint &p);
+//X private:
+//X 	EvaTabBar *m_bar;
+//X };
+//X 
+//X EvaTabToolTip::EvaTabToolTip(EvaTabBar *bar, QToolTipGroup *group)
+//X 	: QToolTip(bar, group),
+//X 	m_bar(bar)
+//X {
+//X 	//setPalette( QPalette(Qt::yellow, QColor(20,190,255)));
+//X }
+//X 
+//X EvaTabToolTip::~EvaTabToolTip()
+//X {
+//X }
+//X 
+//X void EvaTabToolTip::maybeTip(const QPoint &p)
+//X {
+//X     QRect rect = m_bar->itemRect(p);
+//X     if(rect.width() && rect.height())
+//X         tip(rect, m_bar->tip(p));
+//X }
+//X 
 
 /// =========================================================
 
 
-EvaTabBar::EvaTabBar(QWidget *parent, const char * name, WFlags f )
+EvaTabBar::EvaTabBar(QWidget *parent, const char * name, Qt::WFlags f )
     : QWidget(parent, name, f),
     m_CurrentTab(0),
     m_Counter(0),
@@ -86,14 +94,14 @@ EvaTabBar::EvaTabBar(QWidget *parent, const char * name, WFlags f )
 	//                                 QSizePolicy::Preferred,
 	//                                 0, 0, false ));
 	
-	m_toolTip = new EvaTabToolTip(this);
+//X 	m_toolTip = new EvaTabToolTip(this);
 }
 
 EvaTabBar::~EvaTabBar()
 {
     m_d.clear();
-    delete m_toolTip;
-    m_toolTip = 0;
+//X     delete m_toolTip;
+//X     m_toolTip = 0;
 }
 
 // return the key of the just created tab
@@ -102,7 +110,7 @@ int EvaTabBar::addTab(QString &name, QPixmap icon, QString &tip)
     TabData data;
     if(icon.width() > TAB_ICON_SIZE ||
         icon.height() > TAB_ICON_SIZE){
-        data.setData(name, icon.convertToImage().smoothScale(TAB_ICON_SIZE, TAB_ICON_SIZE), tip);
+        data.setData(name, QPixmap( icon.convertToImage().smoothScale(TAB_ICON_SIZE, TAB_ICON_SIZE) ), tip);
     } else
         data.setData(name, icon, tip);
 
@@ -212,7 +220,7 @@ void EvaTabBar::mousePressEvent(QMouseEvent *e)
 void EvaTabBar::mouseReleaseEvent( QMouseEvent *e)
 {
     e->accept();
-    unsigned int seq = getTabSequence(e->x(), e->y());
+    int seq = getTabSequence(e->x(), e->y());
     if(seq >= m_d.size()) return;
 
     int key = getTabKey(seq);
@@ -238,7 +246,7 @@ void EvaTabBar::paintEvent( QPaintEvent *e)
 //     QPainter painter(this);
 //     painter.drawPixmap(x, y, m_BasePixmap, x, y, w, h);
 
-    QMemArray<QRect> rects = e->region().rects();
+    Q3MemArray<QRect> rects = e->region().rects();
     for ( uint i = 0; i < rects.count(); i++ ) {
         QRect r = rects[(int)i];
         bitBlt( this, r.x(), r.y(), &m_Buffer, r.x(), r.y(), r.width(), r.height() );
@@ -278,7 +286,7 @@ void EvaTabBar::updateBasePixmap()
 
 QRect EvaTabBar::itemRect(const QPoint &p)
 {
-    uint seq = getTabSequence(p.x(), p.y());
+    int seq = getTabSequence(p.x(), p.y());
     if(seq >= m_d.size()) return QRect(0,0,0,0);
 
     return QRect( 0, seq * TAB_BAR_SIZE, TAB_BAR_SIZE, TAB_BAR_SIZE);
@@ -286,7 +294,7 @@ QRect EvaTabBar::itemRect(const QPoint &p)
 
 QString EvaTabBar::tip(const QPoint &p)
 {
-    uint seq = getTabSequence(p.x(), p.y());
+    int seq = getTabSequence(p.x(), p.y());
     if(seq >= m_d.size()) return QString::null;
 
     return m_d[getTabKey(p.x(), p.y())].tip;
@@ -297,22 +305,22 @@ QString EvaTabBar::tip(const QPoint &p)
 /// =========================================================
 
 
-EvaWidgetStack::EvaWidgetStack(QWidget *parent, const char * name, WFlags f )
-    : QWidgetStack(parent, name, f),
+EvaWidgetStack::EvaWidgetStack(QWidget *parent, const char * name, Qt::WFlags f )
+    : Q3WidgetStack(parent, name, f),
     m_CurrentSeq(0)
 {
     m_gridColor = TAB_GRID_COLOR;
     m_tabSelectedColor = colorGroup().light();
 
     setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred));
-    setBackgroundMode(QWidget::PaletteBase);
-    setFrameShape( QFrame::Box );
+//X     setBackgroundMode(QWidget::PaletteBase);
+    setFrameShape( Q3Frame::Box );
 }
 
  void EvaWidgetStack::raiseWidget(int id, int seq)
 {
     m_CurrentSeq = seq;
-    QWidgetStack::raiseWidget(id);
+    Q3WidgetStack::raiseWidget(id);
     repaint();
 }
 
@@ -336,14 +344,14 @@ void EvaWidgetStack::paintEvent( QPaintEvent */*e*/)
 /// =========================================================
 
 
-EvaTabWidget::EvaTabWidget( QWidget* parent, const char* name, WFlags fl )
+EvaTabWidget::EvaTabWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaTabWidget" );
-    EvaTabWidgetLayout = new QGridLayout( this, 1, 1, 3, 6, "EvaTabWidgetLayout");
+    EvaTabWidgetLayout = new Q3GridLayout( this, 1, 1, 3, 6, "EvaTabWidgetLayout");
 
-    layout = new QHBoxLayout( 0, 0, 0, "layout2"); 
+    layout = new Q3HBoxLayout( 0, 0, 0, "layout2"); 
 
     evaTabBar = new EvaTabBar( this, "EvaTabBar" );
     evaTabBar->m_gridColor = TAB_GRID_COLOR;
@@ -365,7 +373,7 @@ EvaTabWidget::EvaTabWidget( QWidget* parent, const char* name, WFlags fl )
 
     EvaTabWidgetLayout->addLayout( layout, 0, 0 );
     resize( QSize(350, 233).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
     QObject::connect(evaTabBar, SIGNAL(clicked(int)), SLOT(changeTabTo(int)));
 }

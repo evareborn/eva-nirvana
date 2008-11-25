@@ -26,17 +26,21 @@
 #include <qvariant.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
-#include <qheader.h>
-#include <qlistview.h>
+#include <q3header.h>
+#include <q3listview.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qsplitter.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -48,21 +52,21 @@
  *  Constructs a EvaQunChatUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
 	: QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaQunChatUIBase" );
 	setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)5, 3, 3, sizePolicy().hasHeightForWidth() ) );
 	setSizeIncrement( QSize( 2, 2 ) );
-	EvaQunChatUIBaseLayout = new QGridLayout( this, 1, 1, 2, 2, "EvaQunChatUIBaseLayout"); 
+	EvaQunChatUIBaseLayout = new Q3GridLayout( this, 1, 1, 2, 2, "EvaQunChatUIBaseLayout"); 
 	EvaQunChatUIBaseLayout->setResizeMode( QLayout::FreeResize );
 	
-	layout16 = new QHBoxLayout( 0, 0, 6, "layout16"); 
+	layout16 = new Q3HBoxLayout( 0, 0, 6, "layout16"); 
 	
-	layout15 = new QVBoxLayout( 0, 0, 2, "layout15");
+	layout15 = new Q3VBoxLayout( 0, 0, 2, "layout15");
 	
-	layout6 = new QHBoxLayout( 0, 0, 6, "layout6"); 
+	layout6 = new Q3HBoxLayout( 0, 0, 6, "layout6"); 
 	
 	tbQunDetails = new QToolButton( this, "tbQunDetails" );
 	tbQunDetails->setUsesTextLabel( TRUE );
@@ -74,18 +78,18 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	layout15->addLayout( layout6 );
 
 	splitter = new QSplitter( this, "splitter" );
-	splitter->setOrientation( QSplitter::Vertical );
+	splitter->setOrientation( Qt::Vertical );
 
 	chatDisplay = new SimpleChatView(splitter, "chatDisplay");
-	chatDisplay->setHScrollBarMode(QScrollView::AlwaysOff);
+	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
 	//chatDisplay->view()->setMinimumSize(QSize( 0, 170 ) );
 	//layout15->addWidget( chatDisplay->view() );
 
 	
 	lowerLayoutWidget = new QWidget(splitter, "lower");
 
-	lowerLayout = new QVBoxLayout(lowerLayoutWidget, 0, 3, "lowerLayout");
-	layout14 = new QHBoxLayout( 0, 0, 6, "layout14"); 
+	lowerLayout = new Q3VBoxLayout(lowerLayoutWidget, 0, 3, "lowerLayout");
+	layout14 = new Q3HBoxLayout( 0, 0, 6, "layout14"); 
 	
 	tbSmiley = new QToolButton( lowerLayoutWidget, "tbSmiley" );
 	tbSmiley->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbSmiley->sizePolicy().hasHeightForWidth() ) );
@@ -170,14 +174,14 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	teInput->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)1, 0, 0, teInput->sizePolicy().hasHeightForWidth() ) );
 	teInput->setMinimumSize( QSize( 0, 10 ) );
 	//teInput->setMaximumSize( QSize( 32767, 160 ) );
-	teInput->setHScrollBarMode( QTextEdit::AlwaysOff );
+	teInput->setHScrollBarMode( Q3TextEdit::AlwaysOff );
 	teInput->setTextFormat(Qt::RichText);
 	lowerLayout->addWidget(teInput);
 
 	//layout15->addWidget( teInput );
 	layout15->addWidget(splitter);
 		
-	layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
+	layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3"); 
 	
 	pbHistory = new QPushButton( this, "pbHistory" );
 	pbHistory->setToggleButton(TRUE);
@@ -198,17 +202,17 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	layout16->addLayout( layout15 );
 	
 	memberSplitter = new QSplitter( this, "memberSplitter" );
-	memberSplitter->setOrientation( QSplitter::Vertical );
+	memberSplitter->setOrientation( Qt::Vertical );
 
 	
-	frmNotice = new QFrame( memberSplitter, "frmNoice" ); /// --------------
+	frmNotice = new Q3Frame( memberSplitter, "frmNoice" ); /// --------------
 	//frmNotice->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)5, 0, 0, frmNotice->sizePolicy().hasHeightForWidth() ) );
 	frmNotice->setMaximumSize( QSize( 140, 32767 ) );
-	frmNotice->setFrameShape( QFrame::LineEditPanel );
-	frmNotice->setFrameShadow( QFrame::Raised );
-	frmNoticeLayout = new QGridLayout( frmNotice, 1, 1, 2, 2, "frmNoiceLayout"); 
+	frmNotice->setFrameShape( Q3Frame::LineEditPanel );
+	frmNotice->setFrameShadow( Q3Frame::Raised );
+	frmNoticeLayout = new Q3GridLayout( frmNotice, 1, 1, 2, 2, "frmNoiceLayout"); 
 	
-	layout4 = new QVBoxLayout( 0, 0, 0, "layout4"); 
+	layout4 = new Q3VBoxLayout( 0, 0, 0, "layout4"); 
 	
 	tbtnNotice = new QToolButton( frmNotice, "tbtnNotice" );
 	tbtnNotice->setEnabled( TRUE );
@@ -220,21 +224,21 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	
 	//kslblNotice = new KSqueezedTextLabel( frmNotice, "kslblNotice" );
 //	teNotice = new QLabel(frmNotice, "teNotice");
-	teNotice = new QTextEdit(frmNotice, "teNotice");
+	teNotice = new Q3TextEdit(frmNotice, "teNotice");
 	//kslblNotice->setMaximumSize( QSize( 32767, 32767 ) );
 	teNotice->setMaximumSize( QSize( 136, 32767 ) );
 	teNotice->setPaletteBackgroundColor( QColor( 255, 253, 211 ) );
 	teNotice->setFrameShape( QLabel::LineEditPanel );
-	teNotice->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
-	teNotice->setVScrollBarMode(QScrollView::AlwaysOff);
+	teNotice->setAlignment( Qt::WordBreak | Qt::AlignTop | Qt::AlignLeft );
+	teNotice->setVScrollBarMode(Q3ScrollView::AlwaysOff);
 	teNotice->setReadOnly(true);
 	//layout4->addWidget( kslblNotice );
 	layout4->addWidget( teNotice );
 	
 	frmNoticeLayout->addLayout( layout4, 0, 0 );
 
-	frmMembers = new QFrame(memberSplitter, "frmMembers");
-	frmMemberLayout = new QVBoxLayout( frmMembers, 1, 1, "memberLayout"); 
+	frmMembers = new Q3Frame(memberSplitter, "frmMembers");
+	frmMemberLayout = new Q3VBoxLayout( frmMembers, 1, 1, "memberLayout"); 
 	
 	lblMembers = new QLabel( frmMembers, "lblMembers" );
 	lblMembers->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)5, 0, 0, lblMembers->sizePolicy().hasHeightForWidth() ) );
@@ -256,20 +260,20 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, WFlags fl
 	memberList->setDragAutoScroll(true);
 	frmMemberLayout->addWidget(memberList);
 
-	layout12 = new QVBoxLayout( 0, 4, 4, "layout12"); /// --------------	
+	layout12 = new Q3VBoxLayout( 0, 4, 4, "layout12"); /// --------------	
 	layout12->addWidget( memberSplitter );
 	layout16->addLayout( layout12 );
 	
 	EvaQunChatUIBaseLayout->addLayout( layout16, 0, 0 );
 
-	QValueList<int> list;
+	Q3ValueList<int> list;
 	list.append(150);
 	list.append(80);
 	splitter->setSizes(list);
 
 	languageChange();
 	resize( QSize(470, 422).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 //X 	QRect scr = KApplication::desktop()->screenGeometry();
 //X 	move(scr.center()-rect().center());
 }
@@ -331,7 +335,7 @@ void EvaQunChatUIBase::languageChange()
 	//listView1->header()->setLabel( 0, i18n( "Column 1" ) );
 	//listView1->header()->setLabel( 1, i18n( "Column 2" ) );
 	memberList->clear();
-	QListViewItem * item = new QListViewItem( memberList, 0 );
+	Q3ListViewItem * item = new Q3ListViewItem( memberList, 0 );
 	item->setText( 0, i18n( "New Item" ) );
 
 }

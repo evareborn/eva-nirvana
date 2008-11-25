@@ -23,20 +23,26 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QToolButton;
 class QPushButton;
-class QFrame;
+class Q3Frame;
 class KSqueezedTextLabel;
 class QLabel;
 class EvaTextEdit;
 class SimpleChatView;
-class QListView;
+class Q3ListView;
 class EvaQunListView;
 class QSplitter;
 
@@ -45,7 +51,7 @@ class EvaQunChatUIBase : public QWidget
 	Q_OBJECT
 
 public:
-	EvaQunChatUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaQunChatUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~EvaQunChatUIBase();
 	
 	QToolButton* tbQunDetails;
@@ -65,32 +71,32 @@ public:
 	QPushButton* pbClose;
 	QPushButton* pbSend;
 	QPushButton* pbSendKey;
-	QFrame* frmNotice;
+	Q3Frame* frmNotice;
 	QToolButton* tbtnNotice;
-	QTextEdit *teNotice;
-	QFrame *frmMembers;
+	Q3TextEdit *teNotice;
+	Q3Frame *frmMembers;
 	QLabel* lblMembers;
 	EvaQunListView* memberList;
 	QSplitter *memberSplitter;
 	QSplitter *splitter;
 
 protected:
-	QGridLayout* EvaQunChatUIBaseLayout;
-	QHBoxLayout* layout16;
-	QVBoxLayout* layout15;
-	QHBoxLayout* layout6;
+	Q3GridLayout* EvaQunChatUIBaseLayout;
+	Q3HBoxLayout* layout16;
+	Q3VBoxLayout* layout15;
+	Q3HBoxLayout* layout6;
 	QSpacerItem* spacer4;
-	QHBoxLayout* layout14;
+	Q3HBoxLayout* layout14;
 	QSpacerItem* spacer2;
 	QSpacerItem* spacer3;
 	QSpacerItem* spacer5;
-	QHBoxLayout* layout3;
+	Q3HBoxLayout* layout3;
 	QSpacerItem* spacer1;
-	QVBoxLayout* layout12;
-	QGridLayout* frmNoticeLayout;
-	QVBoxLayout* frmMemberLayout;
-	QVBoxLayout* layout4;
-	QVBoxLayout* lowerLayout;
+	Q3VBoxLayout* layout12;
+	Q3GridLayout* frmNoticeLayout;
+	Q3VBoxLayout* frmMemberLayout;
+	Q3VBoxLayout* layout4;
+	Q3VBoxLayout* lowerLayout;
 
 protected slots:
 	virtual void languageChange();

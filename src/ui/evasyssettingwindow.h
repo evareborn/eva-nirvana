@@ -28,13 +28,15 @@
 
 //X #include <kkeybutton.h>
 #include <list>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 
 #define EVA_SETTINGWINDOW_HEAD_ICON_WIDTH 32
 
 class EvaImageResource;
 class EvaUserSetting;
-class QIconViewItem;
+class Q3IconViewItem;
 class QCloseEvent;
 
 class EvaSysSettingWindow : public EvaSysSettingUIBase
@@ -103,10 +105,10 @@ private slots:
 	void slotPbQuickDeleteClicked();
 	void slotTeQuickTextChanged();
 	
-	void slotSettingListItemClicked(QListViewItem* item);
+	void slotSettingListItemClicked(Q3ListViewItem* item);
 	
 	void slotPbFaceClicked();
-	void FaceChoose( QIconViewItem * item );
+	void FaceChoose( Q3IconViewItem * item );
 	void slotFirstUpdate();
 	void slotSignatureChanged();
 	

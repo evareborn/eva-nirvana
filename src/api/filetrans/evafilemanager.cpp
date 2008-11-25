@@ -21,6 +21,10 @@
 #include "evafilemanager.h"
 #include "evafiledownloader.h"
 #include <qevent.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <Q3CString>
+#include <Q3ValueList>
 #include <cstring>
 
 EvaFileManager::EvaFileManager(const int myId, QObject *parent)
@@ -47,7 +51,7 @@ void EvaFileManager::setMyBasicInfo(const unsigned char *key, const unsigned cha
 	memcpy(m_FileAgentKey, key, 16);
 }
 
-void EvaFileManager::setMyProxyInfo(const QHostAddress addr, const short port, const QCString &param)
+void EvaFileManager::setMyProxyInfo(const QHostAddress addr, const short port, const Q3CString &param)
 {
 	m_ProxyServer = addr;
 	m_ProxyPort = port;
@@ -56,9 +60,9 @@ void EvaFileManager::setMyProxyInfo(const QHostAddress addr, const short port, c
 }
 
 bool EvaFileManager::newSession(const unsigned int id, const unsigned int session, 
-				const QValueList<QString> &dirList, 
-				const QValueList<QString> &filenameList,
-				const QValueList<unsigned int> &sizeList,
+				const Q3ValueList<QString> &dirList, 
+				const Q3ValueList<QString> &filenameList,
+				const Q3ValueList<unsigned int> &sizeList,
 				const bool isDownload, const unsigned char transferType)
 {
 	if(getThread(id, session)) return false;

@@ -24,11 +24,15 @@
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlineedit.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -38,16 +42,16 @@
  *  Constructs a EvaAddQunUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaAddQunUIBase" );
-    EvaAddQunUIBaseLayout = new QGridLayout( this, 1, 1, 10, 6, "EvaAddQunUIBaseLayout"); 
+    EvaAddQunUIBaseLayout = new Q3GridLayout( this, 1, 1, 10, 6, "EvaAddQunUIBaseLayout"); 
 
-    layout21 = new QVBoxLayout( 0, 0, 6, "layout21"); 
+    layout21 = new Q3VBoxLayout( 0, 0, 6, "layout21"); 
 
-    layout15 = new QHBoxLayout( 0, 0, 6, "layout15"); 
+    layout15 = new Q3HBoxLayout( 0, 0, 6, "layout15"); 
 
     tbQunDetails = new QToolButton( this, "tbQunDetails" );
     tbQunDetails->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, tbQunDetails->sizePolicy().hasHeightForWidth() ) );
@@ -55,7 +59,7 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     tbQunDetails->setAutoRaise( TRUE );
     layout15->addWidget( tbQunDetails );
 
-    layout1 = new QVBoxLayout( 0, 0, 6, "layout1"); 
+    layout1 = new Q3VBoxLayout( 0, 0, 6, "layout1"); 
 
     lblQunIDTag = new QLabel( this, "lblQunIDTag" );
     layout1->addWidget( lblQunIDTag );
@@ -64,7 +68,7 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     layout1->addWidget( lblCreatorTag );
     layout15->addLayout( layout1 );
 
-    layout2 = new QVBoxLayout( 0, 0, 6, "layout2"); 
+    layout2 = new Q3VBoxLayout( 0, 0, 6, "layout2"); 
 
     lblQunExtID = new QLabel( this, "lblQunExtID" );
     layout2->addWidget( lblQunExtID );
@@ -73,9 +77,9 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     layout2->addWidget( lblCreator );
     layout15->addLayout( layout2 );
 
-    layout14 = new QVBoxLayout( 0, 0, 6, "layout14"); 
+    layout14 = new Q3VBoxLayout( 0, 0, 6, "layout14"); 
 
-    layout13 = new QHBoxLayout( 0, 0, 6, "layout13"); 
+    layout13 = new Q3HBoxLayout( 0, 0, 6, "layout13"); 
 
     lblQunNameTag = new QLabel( this, "lblQunNameTag" );
     layout13->addWidget( lblQunNameTag );
@@ -86,7 +90,7 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     layout13->addItem( spacer3 );
     layout14->addLayout( layout13 );
 
-    layout4 = new QHBoxLayout( 0, 0, 6, "layout4"); 
+    layout4 = new Q3HBoxLayout( 0, 0, 6, "layout4"); 
 
     tbCreatorDetails = new QToolButton( this, "tbCreatorDetails" );
     tbCreatorDetails->setPaletteForegroundColor( QColor( 41, 90, 197 ) );
@@ -98,26 +102,26 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     layout15->addLayout( layout14 );
     layout21->addLayout( layout15 );
 
-    fraAuthContents = new QFrame( this, "fraAuthContents" );
+    fraAuthContents = new Q3Frame( this, "fraAuthContents" );
     fraAuthContents->setPaletteBackgroundColor( QColor( 234, 247, 255 ) );
-    fraAuthContents->setFrameShape( QFrame::StyledPanel );
-    fraAuthContents->setFrameShadow( QFrame::Raised );
-    fraAuthContentsLayout = new QVBoxLayout( fraAuthContents, 11, 6, "fraAuthContentsLayout"); 
+    fraAuthContents->setFrameShape( Q3Frame::StyledPanel );
+    fraAuthContents->setFrameShadow( Q3Frame::Raised );
+    fraAuthContentsLayout = new Q3VBoxLayout( fraAuthContents, 11, 6, "fraAuthContentsLayout"); 
 
-    layout20 = new QVBoxLayout( 0, 0, 6, "layout20"); 
+    layout20 = new Q3VBoxLayout( 0, 0, 6, "layout20"); 
 
     lblDescription = new QLabel( fraAuthContents, "lblDescription" );
-    lblDescription->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+    lblDescription->setAlignment( int( Qt::WordBreak | Qt::AlignVCenter ) );
     layout20->addWidget( lblDescription );
 
-    fraAuthGraphic = new QFrame( fraAuthContents, "fraAuthGraphic" );
-    fraAuthGraphic->setFrameShape( QFrame::StyledPanel );
-    fraAuthGraphic->setFrameShadow( QFrame::Raised );
-    fraAuthGraphicLayout = new QVBoxLayout( fraAuthGraphic, 11, 6, "fraAuthGraphicLayout"); 
+    fraAuthGraphic = new Q3Frame( fraAuthContents, "fraAuthGraphic" );
+    fraAuthGraphic->setFrameShape( Q3Frame::StyledPanel );
+    fraAuthGraphic->setFrameShadow( Q3Frame::Raised );
+    fraAuthGraphicLayout = new Q3VBoxLayout( fraAuthGraphic, 11, 6, "fraAuthGraphicLayout"); 
 
-    layout19 = new QVBoxLayout( 0, 0, 6, "layout19"); 
+    layout19 = new Q3VBoxLayout( 0, 0, 6, "layout19"); 
 
-    layout18 = new QHBoxLayout( 0, 0, 6, "layout18"); 
+    layout18 = new Q3HBoxLayout( 0, 0, 6, "layout18"); 
 
     lblCode = new QLabel( fraAuthGraphic, "lblCode" );
     layout18->addWidget( lblCode );
@@ -128,7 +132,7 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     layout18->addItem( spacer4 );
     layout19->addLayout( layout18 );
 
-    layout17 = new QHBoxLayout( 0, 0, 6, "layout17"); 
+    layout17 = new Q3HBoxLayout( 0, 0, 6, "layout17"); 
 
     lblTip = new QLabel( fraAuthGraphic, "lblTip" );
     layout17->addWidget( lblTip );
@@ -148,18 +152,18 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     fraAuthContentsLayout->addLayout( layout20 );
     layout21->addWidget( fraAuthContents );
 
-    gbMessage = new QGroupBox( this, "gbMessage" );
+    gbMessage = new Q3GroupBox( this, "gbMessage" );
     gbMessage->setColumnLayout(0, Qt::Vertical );
     gbMessage->layout()->setSpacing( 6 );
     gbMessage->layout()->setMargin( 11 );
-    gbMessageLayout = new QVBoxLayout( gbMessage->layout() );
+    gbMessageLayout = new Q3VBoxLayout( gbMessage->layout() );
     gbMessageLayout->setAlignment( Qt::AlignTop );
 
     leMessage = new QLineEdit( gbMessage, "leMessage" );
     gbMessageLayout->addWidget( leMessage );
     layout21->addWidget( gbMessage );
 
-    layout11 = new QHBoxLayout( 0, 10, 6, "layout11"); 
+    layout11 = new Q3HBoxLayout( 0, 10, 6, "layout11"); 
     spacer2 = new QSpacerItem( 61, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout11->addItem( spacer2 );
 
@@ -173,7 +177,7 @@ EvaAddQunUIBase::EvaAddQunUIBase( QWidget* parent, const char* name, WFlags fl )
     EvaAddQunUIBaseLayout->addLayout( layout21, 0, 0 );
     languageChange();
     resize( QSize(357, 334).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

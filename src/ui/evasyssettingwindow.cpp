@@ -33,20 +33,23 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qslider.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qlineedit.h>
 #include <qspinbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QCloseEvent>
 //X #include <klocale.h>
 #include <inttypes.h>
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qmessagebox.h>
-#include <qheader.h>
-#include <qwidgetstack.h>
-#include <qiconview.h>
+#include <q3header.h>
+#include <q3widgetstack.h>
+#include <q3iconview.h>
 #include <qradiobutton.h>
 #include <qtextcodec.h>
 #include <qtimer.h>
@@ -59,7 +62,7 @@
 
 EvaImageResource *EvaSysSettingWindow::faces = NULL;
 EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * res, EvaUserSetting * setting , QWidget *parent)
-	: EvaSysSettingUIBase(parent, 0, WType_Dialog | WShowModal),
+	: EvaSysSettingUIBase(parent, 0, Qt::WType_Dialog | Qt::WShowModal),
 	details(user), selectedFaceIndex(0), isSignatureChanged(false)
 {
 	userSetting = setting;
@@ -99,11 +102,11 @@ EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * 
 	QObject::connect(teQuickMessage, SIGNAL(textChanged()), SLOT(slotTeQuickTextChanged()));
 	
 	//connect ListView to the WidgetStack,add by casper
-	QObject::connect(lvSettingItem, SIGNAL(clicked(QListViewItem *)), SLOT(slotSettingListItemClicked(QListViewItem *)));
+	QObject::connect(lvSettingItem, SIGNAL(clicked(Q3ListViewItem *)), SLOT(slotSettingListItemClicked(Q3ListViewItem *)));
 	//click face button then show the IconView
 	QObject::connect(pbChangeFace,SIGNAL(clicked()),SLOT(slotPbFaceClicked()));
 	//double click the face Icon in the IconView
-	QObject::connect( ivFace, SIGNAL( doubleClicked(QIconViewItem*) ), SLOT( FaceChoose(QIconViewItem*) ) );
+	QObject::connect( ivFace, SIGNAL( doubleClicked(Q3IconViewItem*) ), SLOT( FaceChoose(Q3IconViewItem*) ) );
 	//if the text of signature changed
 	QObject::connect( teSignature, SIGNAL(textChanged()), SLOT(slotSignatureChanged()));
 	
@@ -121,7 +124,7 @@ EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * 
 	QObject::connect( leHomePage, SIGNAL( textChanged( const QString & )), SLOT( slotUserInfoChanged() ) );
 	QObject::connect( teSignature, SIGNAL(textChanged()), SLOT( slotUserInfoChanged() ) );
 	QObject::connect( teAboutMe, SIGNAL(textChanged()), SLOT( slotUserInfoChanged() ) );
-	QObject::connect( ivFace, SIGNAL( doubleClicked(QIconViewItem*) ), SLOT( slotUserInfoChanged() ) );
+	QObject::connect( ivFace, SIGNAL( doubleClicked(Q3IconViewItem*) ), SLOT( slotUserInfoChanged() ) );
 	QObject::connect( cbSex, SIGNAL( activated( int )), SLOT( slotUserInfoChanged() ) );
 	QObject::connect( cbOccupation, SIGNAL( textChanged( const QString & )), SLOT( slotUserInfoChanged() ) );
 	QObject::connect( cbZodiac, SIGNAL( activated( int )), SLOT( slotUserInfoChanged() ) );
@@ -213,17 +216,17 @@ EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * 
 	if(faces){
 		QPixmap *icon = faces->getIcon("QQ_SHOP");
 		if(icon)
-			tbtnShop->setIconSet(QIconSet(*icon));
+			tbtnShop->setIconSet(QIcon(*icon));
 	} 
 	if(faces){
 		QPixmap *icon = faces->getIcon("QQ_ALBUM");
 		if(icon)
-			tbtnAlbum->setIconSet(QIconSet(*icon));
+			tbtnAlbum->setIconSet(QIcon(*icon));
 	}
 	if(faces){
 		QPixmap *icon = faces->getIcon("QQ_HOME");
 		if(icon)
-			tbtnHome->setIconSet(QIconSet(*icon));
+			tbtnHome->setIconSet(QIcon(*icon));
 	}
 	//show user info in User Info Window
 	UpdateData(true); 
@@ -482,8 +485,8 @@ void EvaSysSettingWindow::slotFaceSizeChanged( int value )
 
 void EvaSysSettingWindow::slotPbThemeClicked( )
 {
-	QFileDialog *fd = new QFileDialog(this, i18n("Choose Theme Path  - Eva"), true);
-	fd->setMode(QFileDialog::DirectoryOnly);
+	Q3FileDialog *fd = new Q3FileDialog(this, i18n("Choose Theme Path  - Eva"), true);
+	fd->setMode(Q3FileDialog::DirectoryOnly);
 	fd->setFilter("Theme (eva.theme)");
 	QString path;
 	if(fd->exec() == QDialog::Accepted)
@@ -498,8 +501,8 @@ void EvaSysSettingWindow::slotPbThemeClicked( )
 
 void EvaSysSettingWindow::slotPbSoundClicked( )
 {
-	QFileDialog *fd = new QFileDialog(this, i18n("Choose Sound Path  - Eva"), true);
-	fd->setMode(QFileDialog::DirectoryOnly);
+	Q3FileDialog *fd = new Q3FileDialog(this, i18n("Choose Sound Path  - Eva"), true);
+	fd->setMode(Q3FileDialog::DirectoryOnly);
 	fd->setFilter("all (*)");
 	QString path;
 	if(fd->exec() == QDialog::Accepted)
@@ -594,7 +597,7 @@ void EvaSysSettingWindow::slotTeQuickTextChanged()
 	*iter = txt;
 }
 
-void EvaSysSettingWindow::slotSettingListItemClicked(QListViewItem* item)
+void EvaSysSettingWindow::slotSettingListItemClicked(Q3ListViewItem* item)
 { 
 	if(!item)
 		return;
@@ -668,7 +671,7 @@ void EvaSysSettingWindow::setupFaces()
 	ivFace->clear();
 	//printf("setupFaces run !\n");
 	for(int i=1; i< MaxFaceNumber; i++){
-		QIconViewItem *item =  new QIconViewItem( ivFace, QString::null );
+		Q3IconViewItem *item =  new Q3IconViewItem( ivFace, QString::null );
 		item->setPixmap(*(faces->getFace(i)));
 		item->setKey( QString::number(i));  // set face file index as key
 	}
@@ -683,7 +686,7 @@ void EvaSysSettingWindow::slotPbFaceClicked()
 		ivFace->show();
 }
 
-void EvaSysSettingWindow::FaceChoose( QIconViewItem * item )
+void EvaSysSettingWindow::FaceChoose( Q3IconViewItem * item )
 {
 	if(!faces) return;
 	selectedFaceIndex = faces->getFaceID(item->key().toInt());

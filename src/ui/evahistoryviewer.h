@@ -24,6 +24,8 @@
 #include "evausersetting.h"
 
 #include <list>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 class EvaHistoryViewer : public EvaHistoryUIBase
 {

@@ -23,40 +23,45 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QCheckBox;
 class QLabel;
-class QDateEdit;
+class Q3DateEdit;
 class QPushButton;
-class QTable;
+class Q3Table;
 
 class EvaHistoryUIBase : public QWidget
 {
     Q_OBJECT
 
 public:
-    EvaHistoryUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaHistoryUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaHistoryUIBase();
 
     QCheckBox* chbSelect;
     QLabel* lblFrom;
-    QDateEdit* deFrom;
+    Q3DateEdit* deFrom;
     QLabel* lblTo;
-    QDateEdit* deTo;
+    Q3DateEdit* deTo;
     QPushButton* pbShow;
-    QTable* tblDisplay;
+    Q3Table* tblDisplay;
     QPushButton* pbPrev;
     QPushButton* pbNext;
 
 protected:
-    QGridLayout* EvaHistoryUIBaseLayout;
-    QVBoxLayout* layout1;
-    QHBoxLayout* layout2;
-    QHBoxLayout* layout3;
+    Q3GridLayout* EvaHistoryUIBaseLayout;
+    Q3VBoxLayout* layout1;
+    Q3HBoxLayout* layout2;
+    Q3HBoxLayout* layout3;
     QSpacerItem* spacer1;
     QSpacerItem* spacer2;
 

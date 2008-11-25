@@ -12,21 +12,26 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
 class QLineEdit;
-class QTextEdit;
+class Q3TextEdit;
 
 class EvaUserInfoWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    EvaUserInfoWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaUserInfoWidget( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaUserInfoWidget();
 
     QLabel* lblBasicInfo;
@@ -49,7 +54,7 @@ public:
     QLineEdit* leProvince;
     QLabel* lblCity;
     QLineEdit* leCity;
-    QTextEdit* teSignature;
+    Q3TextEdit* teSignature;
     QLabel* lblSignature;
     QLineEdit* lePhone;
     QLineEdit* leHomePage;
@@ -75,49 +80,49 @@ public:
     QLabel* lblHomePage;
     QLabel* lblDetails;
     QLabel* lblDescription;
-    QTextEdit* teAboutMe;
+    Q3TextEdit* teAboutMe;
     QLabel* lblAboutMe;
 
 protected:
-    QGridLayout* EvaUserInfoWidgetLayout;
-    QGridLayout* layout191;
+    Q3GridLayout* EvaUserInfoWidgetLayout;
+    Q3GridLayout* layout191;
     QSpacerItem* spacer18;
     QSpacerItem* spacer31;
-    QVBoxLayout* layout189;
-    QVBoxLayout* layout188;
-    QHBoxLayout* layout187;
-    QHBoxLayout* layout186;
-    QVBoxLayout* layout39;
-    QVBoxLayout* layout178;
-    QHBoxLayout* layout163;
-    QVBoxLayout* layout64;
-    QVBoxLayout* layout162;
-    QHBoxLayout* layout161;
-    QVBoxLayout* layout86;
-    QHBoxLayout* layout66;
-    QHBoxLayout* layout65;
-    QHBoxLayout* layout103;
+    Q3VBoxLayout* layout189;
+    Q3VBoxLayout* layout188;
+    Q3HBoxLayout* layout187;
+    Q3HBoxLayout* layout186;
+    Q3VBoxLayout* layout39;
+    Q3VBoxLayout* layout178;
+    Q3HBoxLayout* layout163;
+    Q3VBoxLayout* layout64;
+    Q3VBoxLayout* layout162;
+    Q3HBoxLayout* layout161;
+    Q3VBoxLayout* layout86;
+    Q3HBoxLayout* layout66;
+    Q3HBoxLayout* layout65;
+    Q3HBoxLayout* layout103;
     QSpacerItem* spacer17;
     QSpacerItem* spacer24;
-    QHBoxLayout* layout151;
+    Q3HBoxLayout* layout151;
     QSpacerItem* spacer26;
-    QHBoxLayout* layout156;
+    Q3HBoxLayout* layout156;
     QSpacerItem* spacer14_2;
-    QGridLayout* layout99;
-    QGridLayout* layout144;
-    QGridLayout* layout143;
+    Q3GridLayout* layout99;
+    Q3GridLayout* layout144;
+    Q3GridLayout* layout143;
     QSpacerItem* spacer13_2;
-    QGridLayout* layout142;
+    Q3GridLayout* layout142;
     QSpacerItem* spacer28;
     QSpacerItem* spacer29;
-    QGridLayout* layout141;
-    QHBoxLayout* layout139;
+    Q3GridLayout* layout141;
+    Q3HBoxLayout* layout139;
     QSpacerItem* spacer27;
-    QGridLayout* layout138;
-    QVBoxLayout* layout30;
-    QVBoxLayout* layout51;
-    QVBoxLayout* layout95;
-    QGridLayout* layout94;
+    Q3GridLayout* layout138;
+    Q3VBoxLayout* layout30;
+    Q3VBoxLayout* layout51;
+    Q3VBoxLayout* layout95;
+    Q3GridLayout* layout94;
     QSpacerItem* spacer16;
     QSpacerItem* spacer14_2_2;
 

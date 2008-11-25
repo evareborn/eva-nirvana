@@ -23,14 +23,20 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
-class QFrame;
+class Q3Frame;
 class QToolButton;
 class QComboBox;
 class QLineEdit;
@@ -42,21 +48,21 @@ class EvaAddUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaAddUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaAddUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaAddUIBase();
 
     QLabel* lblTip;
-    QFrame* frame3;
+    Q3Frame* frame3;
     QLabel* lblTopic;
     QToolButton* tbtnFace;
     QLabel* lblGroup;
     QComboBox* cbbGroups;
-    QFrame* fraVeriGraphic;
+    Q3Frame* fraVeriGraphic;
     QLabel* lblVeriCode;
     QLineEdit* leCode;
     QLabel* lblCodeGraphic;
     QToolButton* btnRefreshCode;
-    QFrame* fraQuestion;
+    Q3Frame* fraQuestion;
     QLabel* lblQuestion;
     QLabel* lblAnswer;
     QLabel* lblQuesContents;
@@ -67,17 +73,17 @@ public:
     QPushButton* btnCancel;
 
 protected:
-    QVBoxLayout* EvaAddUIBaseLayout;
-    QVBoxLayout* frame3Layout;
-    QHBoxLayout* layout17;
-    QHBoxLayout* layout13;
+    Q3VBoxLayout* EvaAddUIBaseLayout;
+    Q3VBoxLayout* frame3Layout;
+    Q3HBoxLayout* layout17;
+    Q3HBoxLayout* layout13;
     QSpacerItem* spacer1;
-    QGridLayout* fraVeriGraphicLayout;
-    QHBoxLayout* layout14;
-    QHBoxLayout* fraQuestionLayout;
-    QVBoxLayout* layout12;
-    QVBoxLayout* layout13_2;
-    QHBoxLayout* layout13_3;
+    Q3GridLayout* fraVeriGraphicLayout;
+    Q3HBoxLayout* layout14;
+    Q3HBoxLayout* fraQuestionLayout;
+    Q3VBoxLayout* layout12;
+    Q3VBoxLayout* layout13_2;
+    Q3HBoxLayout* layout13_3;
     QSpacerItem* spacer2;
 
 protected slots:

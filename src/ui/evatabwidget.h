@@ -28,7 +28,13 @@
 #include <qmap.h>
 #include <qpixmap.h>
 #include <qcolor.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QWheelEvent>
+#include <Q3HBoxLayout>
+#include <QMouseEvent>
+#include <QPaintEvent>
 
 class EvaTabToolTip;
 class QMouseEvent;
@@ -40,7 +46,7 @@ class EvaTabBar : public QWidget
 {
     Q_OBJECT
 public:
-    EvaTabBar( QWidget *parent = 0, const char * name = 0, WFlags f = 0 );
+    EvaTabBar( QWidget *parent = 0, const char * name = 0, Qt::WFlags f = 0 );
     virtual ~EvaTabBar();
 
     // return the key of the just created tab
@@ -65,7 +71,8 @@ private:
 
     class TabData{
     public:
-        TabData() : name(""), tip(""), icon(0L){}
+//X         TabData() : name(""), tip(""), icon(0L){}
+        TabData() : name(""), tip("") {}
         TabData(QString &n, QPixmap i, QString t = QString::null){
             name = n;
             tip = t;
@@ -124,12 +131,12 @@ private:
 // 
 // };
 
-class EvaWidgetStack : public QWidgetStack
+class EvaWidgetStack : public Q3WidgetStack
 {
     Q_OBJECT
     friend class EvaTabWidget;
 public:
-    EvaWidgetStack( QWidget *parent = 0, const char * name = 0, WFlags f = 0 );
+    EvaWidgetStack( QWidget *parent = 0, const char * name = 0, Qt::WFlags f = 0 );
 
 protected:
     void paintEvent(QPaintEvent *e);
@@ -145,15 +152,15 @@ public slots:
 };
 
 
-class QHBoxLayout;
-class QGridLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 
 class EvaTabWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    EvaTabWidget( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaTabWidget( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaTabWidget();
 
     EvaTabBar* evaTabBar;
@@ -166,8 +173,8 @@ public:
     void setGridColor(const QColor &c);
     void setSelectedColor(const QColor &c);
 protected:
-    QGridLayout* EvaTabWidgetLayout;
-    QHBoxLayout* layout;
+    Q3GridLayout* EvaTabWidgetLayout;
+    Q3HBoxLayout* layout;
 
 public slots:
     void changeTabTo(int key);

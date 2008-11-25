@@ -3,6 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
+QT += qt3support
 DEPENDPATH += api \
               libeva \
               ui \
@@ -259,3 +260,5 @@ SOURCES += evaaddingmanager.cpp \
            libeva/libft/evaftprotocols.cpp \
            libeva/libuh/evauhpacket.cpp \
            libeva/libuh/evauhprotocols.cpp
+#The following line was inserted by qt3to4
+QT += xml network  

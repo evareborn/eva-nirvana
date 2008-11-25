@@ -22,6 +22,8 @@
 #include "evasetting.h"
 #include "evautil.h"
 #include "qmdcodec.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 #include <cstring>
 #include <qpixmap.h>
@@ -38,7 +40,7 @@
 
 //X #include <klocale.h>
 
-EvaLoginWindow::EvaLoginWindow(QWidget* parent, const char* name, bool modal, WFlags fl)
+EvaLoginWindow::EvaLoginWindow(QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
     : LoginUIBase(parent,name, modal,fl), qqNum(0), port(0)
 {
 	QObject::connect(tbNetSetup,SIGNAL(toggled(bool)),SLOT(showNetSetup(bool)));
@@ -126,7 +128,7 @@ QString EvaLoginWindow::getProxyPassword() const
 	return lePassword->text();
 }
 
-QCString EvaLoginWindow::getProxyParam()
+Q3CString EvaLoginWindow::getProxyParam()
 {
 	return proxyParam;
 }
@@ -233,7 +235,7 @@ void EvaLoginWindow::slotProxyPasswordChanged(const QString &)
 
 void EvaLoginWindow::updateProxyLoginParam()
 {
-	QCString para = (leUserName->text() + ':' + lePassword->text()).local8Bit();
+	Q3CString para = (leUserName->text() + ':' + lePassword->text()).local8Bit();
 	proxyParam = QCodecs::base64Encode(para);
 }
 

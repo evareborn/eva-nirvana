@@ -22,15 +22,19 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
 #include <qtoolbutton.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -40,28 +44,28 @@
  *  Constructs a EvaAddingNoticeUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaAddingNoticeUIBase" );
-	EvaAddingNoticeUIBaseLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaAddingNoticeUIBaseLayout"); 
+	EvaAddingNoticeUIBaseLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaAddingNoticeUIBaseLayout"); 
 	
-	layout15 = new QVBoxLayout( 0, 0, 6, "layout15"); 
+	layout15 = new Q3VBoxLayout( 0, 0, 6, "layout15"); 
 	spacer1 = new QSpacerItem( 20, 16, QSizePolicy::Minimum, QSizePolicy::Fixed );
 	layout15->addItem( spacer1 );
 	
-	fraMain = new QFrame( this, "fraMain" );
+	fraMain = new Q3Frame( this, "fraMain" );
 	fraMain->setPaletteBackgroundColor( QColor( 234, 247, 225 ) );
-	fraMain->setFrameShape( QFrame::StyledPanel );
-	fraMain->setFrameShadow( QFrame::Raised );
-	fraMainLayout = new QGridLayout( fraMain, 1, 1, 11, 6, "fraMainLayout"); 
+	fraMain->setFrameShape( Q3Frame::StyledPanel );
+	fraMain->setFrameShadow( Q3Frame::Raised );
+	fraMainLayout = new Q3GridLayout( fraMain, 1, 1, 11, 6, "fraMainLayout"); 
 	
-	layout10 = new QVBoxLayout( 0, 0, 6, "layout10"); 
+	layout10 = new Q3VBoxLayout( 0, 0, 6, "layout10"); 
 	
-	layout9 = new QHBoxLayout( 0, 0, 6, "layout9"); 
+	layout9 = new Q3HBoxLayout( 0, 0, 6, "layout9"); 
 	
-	layout4 = new QVBoxLayout( 0, 0, 6, "layout4"); 
+	layout4 = new Q3VBoxLayout( 0, 0, 6, "layout4"); 
 	
 	lblTitle = new QLabel( fraMain, "lblTitle" );
 	layout4->addWidget( lblTitle );
@@ -85,15 +89,15 @@ EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name,
 	fraMainLayout->addLayout( layout10, 0, 0 );
 	layout15->addWidget( fraMain );
 	
-	btngrpActions = new QButtonGroup( this, "btngrpActions" );
-	btngrpActions->setFrameShape( QButtonGroup::NoFrame );
+	btngrpActions = new Q3ButtonGroup( this, "btngrpActions" );
+	btngrpActions->setFrameShape( Q3ButtonGroup::NoFrame );
 	btngrpActions->setColumnLayout(0, Qt::Vertical );
 	btngrpActions->layout()->setSpacing( 6 );
 	btngrpActions->layout()->setMargin( 0 );
-	btngrpActionsLayout = new QGridLayout( btngrpActions->layout() );
+	btngrpActionsLayout = new Q3GridLayout( btngrpActions->layout() );
 	btngrpActionsLayout->setAlignment( Qt::AlignTop );
 	
-	layout14 = new QHBoxLayout( 0, 0, 6, "layout14"); 
+	layout14 = new Q3HBoxLayout( 0, 0, 6, "layout14"); 
 	
 	rbtnAcceptAdd = new QRadioButton( btngrpActions, "rbtnAcceptAdd" );
 	layout14->addWidget( rbtnAcceptAdd );
@@ -107,12 +111,12 @@ EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name,
 	btngrpActionsLayout->addLayout( layout14, 0, 0 );
 	layout15->addWidget( btngrpActions );
 	
-	fraRejectContents = new QFrame( this, "fraRejectContents" );
-	fraRejectContents->setFrameShape( QFrame::NoFrame );
-	fraRejectContents->setFrameShadow( QFrame::Raised );
-	fraRejectContentsLayout = new QGridLayout( fraRejectContents, 1, 1, 0, 6, "fraRejectContentsLayout"); 
+	fraRejectContents = new Q3Frame( this, "fraRejectContents" );
+	fraRejectContents->setFrameShape( Q3Frame::NoFrame );
+	fraRejectContents->setFrameShadow( Q3Frame::Raised );
+	fraRejectContentsLayout = new Q3GridLayout( fraRejectContents, 1, 1, 0, 6, "fraRejectContentsLayout"); 
 	
-	layout2 = new QVBoxLayout( 0, 0, 6, "layout2"); 
+	layout2 = new Q3VBoxLayout( 0, 0, 6, "layout2"); 
 	
 	leRejectMessage = new QLineEdit( fraRejectContents, "leRejectMessage" );
 	layout2->addWidget( leRejectMessage );
@@ -123,7 +127,7 @@ EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name,
 	fraRejectContentsLayout->addLayout( layout2, 0, 0 );
 	layout15->addWidget( fraRejectContents );
 	
-	layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
+	layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3"); 
 	
 	tbtnAuthSettings = new QToolButton( this, "tbtnAuthSettings" );
 	tbtnAuthSettings->setPaletteForegroundColor( QColor( 85, 0, 255 ) );
@@ -142,7 +146,7 @@ EvaAddingNoticeUIBase::EvaAddingNoticeUIBase( QWidget* parent, const char* name,
 	EvaAddingNoticeUIBaseLayout->addLayout( layout15, 0, 0 );
 	languageChange();
 	resize( QSize(337, 272).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 }
 
 /*

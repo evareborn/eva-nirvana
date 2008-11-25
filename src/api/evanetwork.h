@@ -23,6 +23,8 @@
 
 #include <qobject.h>
 #include <qhostaddress.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 class EvaSocket;
 class EvaHttpProxy;
@@ -43,7 +45,7 @@ public:
 	
 	void setDestinationServer(const QString &server, const short port); // for Http Proxy only;
         void setAuthParameter(const QString &username, const QString &password);
-	void setAuthParameter(const QCString &param);
+	void setAuthParameter(const Q3CString &param);
 	void newURLRequest();
 	void connect();
 	

@@ -24,14 +24,20 @@
 #include "evalistview.h"
 #include "evafriendlist.h"
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QPixmap>
+#include <Q3PopupMenu>
+#include <QKeyEvent>
+#include <QDragEnterEvent>
 
 class QQFriend;
-class QPopupMenu;
+class Q3PopupMenu;
 
 class EvaBuddyItem : public EvaListViewItem
 {
 public:
-    EvaBuddyItem( const QQFriend& buddy, QListViewItem *parent);
+    EvaBuddyItem( const QQFriend& buddy, Q3ListViewItem *parent);
 
      unsigned int QQ();
     const QQFriend &getFriend() const { return m_buddy; }
@@ -59,7 +65,7 @@ private:
 class EvaGroupItem : public EvaListViewItem
 {
 public:
-	EvaGroupItem( int groupIndex, QListView *parent);
+	EvaGroupItem( int groupIndex, Q3ListView *parent);
 	
 	 int groupIndex() const { return m_groupIndex; }
 	void update();
@@ -82,7 +88,7 @@ class EvaContactListView : public EvaListView
 {
     Q_OBJECT
 public:
-	EvaContactListView(QWidget *parent = 0, const char *name = 0, WFlags f = 0);
+	EvaContactListView(QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0);
 
 	void loadContacts();
 	void updateContacts();
@@ -116,8 +122,8 @@ private:
 	std::map<int, EvaGroupItem *> m_groups;
 	std::map<unsigned int, EvaBuddyItem *> m_contacts;
 
-	QPopupMenu *m_groupMenu; 
-	QPopupMenu *m_buddyMenu;
+	Q3PopupMenu *m_groupMenu; 
+	Q3PopupMenu *m_buddyMenu;
 
 	void initPopup();
 
@@ -140,11 +146,11 @@ private slots:
 	void slotDelBuddy();
 	void slotModifyMemo();
 
-	void slotItemRenamed(QListViewItem *, int);
-	void slotContextMenu(QListViewItem *, const QPoint & , int);
+	void slotItemRenamed(Q3ListViewItem *, int);
+	void slotContextMenu(Q3ListViewItem *, const QPoint & , int);
 
-	void slotBuddyDoubleClick(QListViewItem *, const QPoint & , int);
-	void slotListViewClicked(QListViewItem *);
+	void slotBuddyDoubleClick(Q3ListViewItem *, const QPoint & , int);
+	void slotListViewClicked(Q3ListViewItem *);
 
 public slots:
 	void friendStatusChanged(const int id);
@@ -159,7 +165,7 @@ class Qun;
 class EvaQunListViewItem : public EvaListViewItem
 {
 public:
-	EvaQunListViewItem( Qun * q, QListView *parent);
+	EvaQunListViewItem( Qun * q, Q3ListView *parent);
 	 const QString name();
 	 unsigned int getQunID() const;
 	void newMessage();
@@ -177,7 +183,7 @@ class EvaQunsListView : public EvaListView
 {
 	Q_OBJECT
 public:
-	EvaQunsListView(QWidget *parent = 0, const char *name = 0, WFlags f = 0);
+	EvaQunsListView(QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0);
 
 	void addQun(const unsigned int id);
 	void loadAllQuns();
@@ -192,14 +198,14 @@ signals:
 	void requestQunHistory(const unsigned int);
 
 private:
-	QPopupMenu *m_popup;
+	Q3PopupMenu *m_popup;
 
 	void initPopup();
 private slots:
 
-	void slotContextMenu(QListViewItem *, const QPoint & , int);
+	void slotContextMenu(Q3ListViewItem *, const QPoint & , int);
 
-	void slotQunDoubleClick(QListViewItem *, const QPoint & , int);
+	void slotQunDoubleClick(Q3ListViewItem *, const QPoint & , int);
 
 	void slotIMQunChat();
 	void slotQunDetails();
@@ -217,7 +223,7 @@ public slots:
 class EvaRecentContactLVItem : public EvaListViewItem
 {
 public:
-	EvaRecentContactLVItem( const bool isQun, QQFriend *f, Qun * q, QListView *parent);
+	EvaRecentContactLVItem( const bool isQun, QQFriend *f, Qun * q, Q3ListView *parent);
 	 bool isQun() const { return m_type == E_LVIQun; }
 
 	// Buddy methods
@@ -255,7 +261,7 @@ class EvaRecentContactsListView : public EvaListView
 {
 	Q_OBJECT
 public:
-	EvaRecentContactsListView(QWidget *parent = 0, const char *name = 0, WFlags f = 0);
+	EvaRecentContactsListView(QWidget *parent = 0, const char *name = 0, Qt::WFlags f = 0);
 
 	void loadRecentContacts();
 
@@ -277,8 +283,8 @@ signals:
 
 private:
 //	std::list<RecentContact>
-	QPopupMenu *m_buddyMenu;
-	QPopupMenu *m_qunMenu;
+	Q3PopupMenu *m_buddyMenu;
+	Q3PopupMenu *m_qunMenu;
 
 	void initBuddyPopup();
 	void initQunPopup();
@@ -286,8 +292,8 @@ private:
 	void updateConfig();
 
 private slots:
-	void slotContextMenu(QListViewItem *, const QPoint & , int);
-	void slotContactDoubleClick(QListViewItem *, const QPoint & , int);
+	void slotContextMenu(Q3ListViewItem *, const QPoint & , int);
+	void slotContactDoubleClick(Q3ListViewItem *, const QPoint & , int);
 
 	void slotIMChat();
 	void slotSendFile();

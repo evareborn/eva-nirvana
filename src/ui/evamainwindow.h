@@ -25,6 +25,11 @@
 #include <qsize.h>
 #include <qtooltip.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QResizeEvent>
+#include <QPixmap>
+#include <Q3PopupMenu>
 
 //X #include <kurl.h>
 //X #include <khtml_part.h>
@@ -44,8 +49,8 @@ protected:
 };
 
 class QResizeEvent;
-class QListViewItem;
-class QPopupMenu;
+class Q3ListViewItem;
+class Q3PopupMenu;
 //X class KHTMLPart;
 class EvaContactListView;
 class EvaQunsListView;
@@ -56,15 +61,15 @@ class EvaMainWindow : public EvaMainUIBase// , virtual public EvaDCOPViewInterfa
 {
 	Q_OBJECT
 public:
-	EvaMainWindow( EvaMain* evaapp, QWidget* parent = 0, const char* name = 0, WFlags fl = 0); // | WDestructiveClose
+	EvaMainWindow( EvaMain* evaapp, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0); // | WDestructiveClose
 	~EvaMainWindow();
 	
 	void setMainInfo(const unsigned int id, const QString &nick, QPixmap *p);
 	QRect tipRect(const QPoint &pos);
 	QString myInfoTip();
 	unsigned int getQQ() const { return qqNum; }
-	void setSystemMenu( QPopupMenu *sys);
-	void setStatusMenu( QPopupMenu *status);
+	void setSystemMenu( Q3PopupMenu *sys);
+	void setStatusMenu( Q3PopupMenu *status);
 	
 	void setPosAndSize();
 	const QPoint &getPosition() const { return nowPosition; }
@@ -171,8 +176,8 @@ private:
 //X 	QMap<int, EvaScriptWidget *> m_customTabs;
 //X 	QMap<int, QString> m_tabScriptMap;
 
-	QPopupMenu *sysMenu;
-	QPopupMenu *statusMenu;
+	Q3PopupMenu *sysMenu;
+	Q3PopupMenu *statusMenu;
 
 	QPixmap *pixOnline;
 	QPixmap *pixOffline;

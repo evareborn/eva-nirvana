@@ -29,6 +29,8 @@
 #include <qdatetime.h>
 #include <qtimer.h>
 #include <qtextcodec.h>
+//Added by qt3to4:
+#include <Q3CString>
 //X #include <kdebug.h>
 #include <stdlib.h>
 #include <map>
@@ -564,7 +566,7 @@ void EvaPacketManager::doSendMessage( const unsigned int receiver, const bool is
 	user->getSetting()->saveMessage(receiver,  user->getQQ(), sNick, receiver, rNick,
 				isNormal, message, time, fontSize, u, i, b, blue, green, red);
 	
-	QCString str = codec->fromUnicode(message);
+	Q3CString str = codec->fromUnicode(message);
 	unsigned short pcs = strlen(str.data()) / 700;
 	SendTextIMPacket *firstPacket = 0;
 	int lastSeq = -1;
@@ -791,7 +793,7 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 					for (int idx=0; idx<total; idx++) 
 						allText += pcMsgCache[ropID].content[idx];
 					pcMsgCache.erase(ropID);
-					received->setMessage(allText);
+					received->setMessage(allText.toStdString());
 				} else
 				{
 					delete received;
@@ -1031,7 +1033,7 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 				for (int idx=0; idx<total; idx++) 
 					allText += pcMsgCache[ropID].content[idx];
 				pcMsgCache.erase(ropID);
-				im->setMessage(allText);
+				im->setMessage(allText.toStdString());
 			} else
 			{
 				delete im;
@@ -1350,7 +1352,7 @@ void EvaPacketManager::processAddFriendReply( const InPacket * in )
 void EvaPacketManager::doAddAuthBuddy( const unsigned int id, const QString &message)
 {
 	AddFriendAuthPacket *packet = new AddFriendAuthPacket(id, QQ_MY_AUTH_REQUEST);
-	QCString msg = codec->fromUnicode(message);
+	Q3CString msg = codec->fromUnicode(message);
 	packet->setMessage(msg.data());
 	connecter->append(packet);
 }
@@ -1364,7 +1366,7 @@ void EvaPacketManager::doApproveBuddy( const unsigned int id)
 void EvaPacketManager::doRejectBuddy( const unsigned int id , const QString &message)
 {
 	AddFriendAuthPacket *packet = new AddFriendAuthPacket(id, QQ_MY_AUTH_REJECT);
-	QCString msg = codec->fromUnicode(message);
+	Q3CString msg = codec->fromUnicode(message);
 	packet->setMessage(msg.data());
 	connecter->append(packet);
 }
@@ -1407,7 +1409,7 @@ void EvaPacketManager::processSystemNotification( const InPacket * in )
 void EvaPacketManager::doModifyDetails(QStringList info, QString oldPwd, QString newPwd)
 {
 	std::vector<std::string> result;
-	for(uint i=0; i< info.count(); i++){
+	for(int i=0; i< info.count(); i++){
 		printf("changing my details[%d]:%s\n", i, info[i].local8Bit().data());
 		result.push_back((codec->fromUnicode(info[i])).data());
 	}
@@ -1781,7 +1783,7 @@ void EvaPacketManager::doSendQunMessage( const unsigned int receiver, QString & 
 				true, message, time, fontSize, u, i, b, blue, green, red, true);
 	
 
-	QCString str = codec->fromUnicode(message);
+	Q3CString str = codec->fromUnicode(message);
 	unsigned short pcs = strlen(str.data()) / 700;
 	QunSendIMExPacket *firstPacket = 0;
 	int lastSeq = 0;
@@ -2002,9 +2004,9 @@ void EvaPacketManager::doQunExit( const unsigned int id )
 void EvaPacketManager::doQunCreate( const QString & name, const unsigned short category, const unsigned char auth, 
 				const QString & notice, const QString & description, const std::list< unsigned int > & members )
 {
-	QCString _name = codec->fromUnicode(name);
-	QCString _notice = codec->fromUnicode(notice);
-	QCString _description = codec->fromUnicode(description);
+	Q3CString _name = codec->fromUnicode(name);
+	Q3CString _notice = codec->fromUnicode(notice);
+	Q3CString _description = codec->fromUnicode(description);
 	
 	QunCreatePacket *packet = new QunCreatePacket(_name.data(), category, auth);
 	packet->setNotice(_notice.data());
@@ -2182,7 +2184,7 @@ void EvaPacketManager::doSendFileUdpRequest(const unsigned int id, const QString
 	SendFileExRequestPacket *udpPacket = new SendFileExRequestPacket(QQ_IM_EX_UDP_REQUEST);
 	udpPacket->setReceiver(id);
 	udpPacket->setTransferType(transferType);
-	QCString strName = codec->fromUnicode(fileName);
+	Q3CString strName = codec->fromUnicode(fileName);
 	udpPacket->setFileName(strName.data());
 	udpPacket->setFileSize(fileSize);
 	udpPacket->setSessionId(session);

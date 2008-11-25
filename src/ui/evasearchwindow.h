@@ -30,7 +30,7 @@
 #include <list>
 #include <map>
 #include <string>
-#include <qvaluestack.h>
+#include <q3valuestack.h>
 
 class EvaImageResource;
 
@@ -57,7 +57,7 @@ class EvaSearchWindow : public EvaSearchUIBase
 	Q_OBJECT
 
 public:
-	EvaSearchWindow(EvaImageResource *res = NULL, const int onlineUsers = 0, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaSearchWindow(EvaImageResource *res = NULL, const int onlineUsers = 0, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	~EvaSearchWindow();
 
 public slots:

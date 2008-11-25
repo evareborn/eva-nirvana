@@ -22,36 +22,40 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
  
 #include "evamain.h"
 
 //X #include <kwin.h>
 //X #include <klocale.h>
 
-EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaTipUIBase" );
-    EvaTipUIBaseLayout = new QGridLayout( this, 1, 1, 0, 0, "EvaTipUIBaseLayout"); 
+    EvaTipUIBaseLayout = new Q3GridLayout( this, 1, 1, 0, 0, "EvaTipUIBaseLayout"); 
 
-    fraMain = new QFrame( this, "fraMain" );
-    fraMain->setFrameShape( QFrame::StyledPanel );
-    fraMain->setFrameShadow( QFrame::Sunken );
+    fraMain = new Q3Frame( this, "fraMain" );
+    fraMain->setFrameShape( Q3Frame::StyledPanel );
+    fraMain->setFrameShadow( Q3Frame::Sunken );
     fraMain->setLineWidth( 3 );
     fraMain->setMargin( 0 );
     fraMain->setMidLineWidth( 0 );
     fraMain->setCursor( QCursor( 13 ) );
-    fraMainLayout = new QGridLayout( fraMain, 1, 1, 0, 0, "fraMainLayout"); 
+    fraMainLayout = new Q3GridLayout( fraMain, 1, 1, 0, 0, "fraMainLayout"); 
 
-    layout2 = new QHBoxLayout( 0, 0, 0, "layout2"); 
+    layout2 = new Q3HBoxLayout( 0, 0, 0, "layout2"); 
 
     lblPixmap = new QLabel( fraMain, "lblPixmap" );
     lblPixmap->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, lblPixmap->sizePolicy().hasHeightForWidth() ) );
@@ -59,11 +63,11 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, WFlags fl )
     lblPixmap->setMaximumSize( QSize( 81, 121 ) );
     lblPixmap->setFrameShape( QLabel::NoFrame );
     lblPixmap->setFrameShadow( QLabel::Plain );
-    lblPixmap->setAlignment( int( QLabel::AlignCenter ) );
+    lblPixmap->setAlignment( int( Qt::AlignCenter ) );
     lblPixmap->setCursor( QCursor( 13 ) );
     layout2->addWidget( lblPixmap );
 
-    layout1 = new QVBoxLayout( 0, 6, 0, "layout1"); 
+    layout1 = new Q3VBoxLayout( 0, 6, 0, "layout1"); 
 
     lblNick = new QLabel( fraMain, "lblNick" );
     lblNick->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)1, 0, 0, lblNick->sizePolicy().hasHeightForWidth() ) );
@@ -73,7 +77,7 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, WFlags fl )
     layout1->addWidget( lblNick );
 
     lblMessage = new QLabel( fraMain, "lblMessage" );
-    lblMessage->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop ) );
+    lblMessage->setAlignment( Qt::WordBreak | Qt::AlignTop );
     lblMessage->setMinimumSize( QSize( 120, 81 ) );
     lblMessage->setMaximumSize( QSize( 120, 81 ) );
     lblMessage->setCursor( QCursor( 13 ) );
@@ -85,7 +89,7 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, WFlags fl )
     EvaTipUIBaseLayout->addWidget( fraMain, 0, 0 );
     languageChange();
     resize( QSize(227, 135).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 

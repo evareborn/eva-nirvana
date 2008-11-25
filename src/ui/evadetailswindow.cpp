@@ -35,11 +35,11 @@
 #include <qlabel.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
-#include <qiconview.h>
+#include <q3iconview.h>
 #include <qradiobutton.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
 #include <qpixmap.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qmessagebox.h>
 #include <qtimer.h>
 #include <qstringlist.h>
@@ -51,6 +51,8 @@
 //X #include <kapplication.h>
 #include <qtabwidget.h>
 #include <qcheckbox.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 //#include "../usermsg.ui.h"
 /*
@@ -62,7 +64,7 @@
  */
  
 EvaImageResource *EvaDetailsWindow::faces = NULL;
-EvaDetailsWindow::EvaDetailsWindow(  QStringList &user, QWidget* parent, const char* name, bool modal, WFlags fl)
+EvaDetailsWindow::EvaDetailsWindow(  QStringList &user, QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
 	: EvaUserUIBase( parent, name, modal, fl ),
 	details( user ),selectedFaceIndex( 0 )
 {
@@ -101,12 +103,12 @@ EvaDetailsWindow::EvaDetailsWindow(  QStringList &user, QWidget* parent, const c
 	if(faces){
 		QPixmap *icon = faces->getIcon("QQ_SHOP");
 		if(icon)
-			tbtnShop->setIconSet(QIconSet(*icon));// add Icon to QQShow shop button
+			tbtnShop->setIconSet(QIcon(*icon));// add Icon to QQShow shop button
 	} 
 	if(faces){
 		QPixmap *icon = faces->getIcon("QQ_ALBUM");
 		if(icon)
-			tbtnAlbum->setIconSet(QIconSet(*icon));
+			tbtnAlbum->setIconSet(QIcon(*icon));
 	}
 	
 	UpdateData(true);

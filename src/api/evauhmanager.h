@@ -23,7 +23,7 @@
 
 #include <qobject.h>
 #include <qthread.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qhostaddress.h>
 #include <qdatetime.h>
 #include <qmap.h>
@@ -33,13 +33,14 @@
 #include <list>
 #include "evaqtutil.h"
 
-class QSocketDevice;
-class QDns;
+class Q3SocketDevice;
+class Q3Dns;
 class EvaUHPacket;
 class EvaUHFile;
 class EvaUHProfile;
 
-class EvaUHManager : public QObject, public QThread {
+//X class EvaUHManager : public QObject, public QThread {
+class EvaUHManager : public QThread {
 	Q_OBJECT
 public:
 	EvaUHManager(QObject *receiver, const QString &dir); // set the user head directory
@@ -68,13 +69,13 @@ private:
 	char mBuffer[65535];  // used as internal buffer
 	int bytesRead;
 	std::list<unsigned int> mUHList;
-	QSocketDevice *mSocket;
+	Q3SocketDevice *mSocket;
 	
 	EvaUHProfile *mProfileManager;
 	EvaUHFile *mCurrentFile;
 	
-	QDns *mDns;
-	QValueList<QHostAddress> mHostAddresses;
+	Q3Dns *mDns;
+	Q3ValueList<QHostAddress> mHostAddresses;
 	void doDnsRequest();
 	
 	void send(EvaUHPacket *packet);

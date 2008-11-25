@@ -25,10 +25,12 @@
 #include <qdatetime.h>
 #include <qstringlist.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <QCustomEvent>
 #include <inttypes.h>
 #include <qhostaddress.h>
-#include <qvaluelist.h>
-#include <qpopupmenu.h>
+#include <q3valuelist.h>
+#include <q3popupmenu.h>
 //#include <dcopobject.h>
 
 //X #include "config.h"
@@ -54,7 +56,7 @@
 
 
 // External classes?
-class QPopupMenu;
+class Q3PopupMenu;
 //X class QHelpMenu;
 class QTextCodec;
 class QTimer;
@@ -207,14 +209,14 @@ private:
 	EvaSetting *sysSetting;
 	
 	// system tray menu
-	QPopupMenu *sysMenu;
+	Q3PopupMenu *sysMenu;
 //X 	QHelpMenu *m_helpMenu;
 
 	// user status setting menu, appeared both in main window and tray menu
-	QPopupMenu *statusMenu;
+	Q3PopupMenu *statusMenu;
 
 	// user status setting submenu, custumized leaving auto-reply messages
-	QPopupMenu *autoMenu;
+	Q3PopupMenu *autoMenu;
 
 	// login window, first one you will see
 	EvaLoginWindow *loginWin;
@@ -365,8 +367,8 @@ private slots:
 	void slotUserMemoChanged(const unsigned int id, const MemoItem &memo);
 	void slotModifyMemo(const unsigned int id );
 
-	void slotFileTransferSend(const unsigned int, const unsigned int, const QValueList<QString>,
-				const QValueList<unsigned int>, const unsigned char transferType);
+	void slotFileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
+				const Q3ValueList<unsigned int>, const unsigned char transferType);
 	void slotFileTransferAccept(const unsigned int, const unsigned int, const QString,
 				const unsigned char transferType);
 	void slotFileTransferCancel(const unsigned int, const unsigned int);

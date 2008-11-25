@@ -26,13 +26,13 @@
 #include <qpixmap.h>
 
 class Qun;
-class QListViewItem;
-class QCheckListItem;
+class Q3ListViewItem;
+class Q3CheckListItem;
 class EvaQunMemberPicker : public EvaQunMemberPickerUI
 {
 	Q_OBJECT
 public:
-	EvaQunMemberPicker(QWidget* parent = 0, const char* name = 0, WFlags fl = 0, Qun *qun = NULL);
+	EvaQunMemberPicker(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0, Qun *qun = NULL);
 	~EvaQunMemberPicker() {};
 	
 	void updateBuddyListView();
@@ -42,11 +42,11 @@ public slots:
 	void slotSetMemberOff(const unsigned int id);
 private:
 	Qun *mQun;
-	std::map<int, QCheckListItem*> groups;  // key is group index
-	std::map<int, QCheckListItem*> buddyList; // key is buddy QQ
+	std::map<int, Q3CheckListItem*> groups;  // key is group index
+	std::map<int, Q3CheckListItem*> buddyList; // key is buddy QQ
 	void initListView();
 private slots:
-	void slotClicked(QListViewItem *item);
+	void slotClicked(Q3ListViewItem *item);
 };
 
 #endif

@@ -38,7 +38,7 @@ class EvaFileStatusUIBase : public QWidget
 
 public:
 	EvaFileStatusUIBase( const unsigned int session, const unsigned int size = 0,
-				QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+				QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0 );
 	~EvaFileStatusUIBase();
 	
 	inline unsigned int getSession() const { return m_Session; }

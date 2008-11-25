@@ -22,6 +22,9 @@
 #define QUNDETAILSWINDOW_H
 
 #include "qundetailsui.h"
+//Added by qt3to4:
+#include <QMoveEvent>
+#include <QCloseEvent>
 #include <list>
 
 class Qun;
@@ -35,7 +38,7 @@ class QunDetailsWindow : public QunDetailsUI
 
 public:
 	//QunDetailsWindow(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
-	QunDetailsWindow(Qun *qun, const bool isInList = true, QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	QunDetailsWindow(Qun *qun, const bool isInList = true, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~QunDetailsWindow();
 	
 public slots:

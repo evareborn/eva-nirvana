@@ -28,14 +28,16 @@
 #include <qlabel.h>
 #include <qradiobutton.h>
 #include <qcheckbox.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qmessagebox.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qpixmap.h>
-#include <qiconset.h>
+#include <qicon.h>
 #include <qdatetime.h>
 #include <qtextcodec.h>
 #include <qevent.h>
+//Added by qt3to4:
+#include <QCloseEvent>
 
 //X #include <kmessagebox.h>
 //X #include <klocale.h>
@@ -68,8 +70,8 @@ void EvaAddingNoticeWindow::init()
 
 	QPixmap *facePic = EvaMain::images->getFaceByID( 0 );
 	if(facePic){
-		QIconSet faceIcon;
-		faceIcon.setPixmap(*facePic,QIconSet::Large);
+		QIcon faceIcon;
+		faceIcon.setPixmap(*facePic,QIcon::Large);
 		tbFace->setIconSet(faceIcon);
 	}
 
@@ -134,8 +136,8 @@ void EvaAddingNoticeWindow::processSettings()
 	m_Face = buddy.face;
 	QPixmap *facePic = EvaMain::images->getFaceByID( m_Face );
 	if(facePic){
-		QIconSet faceIcon;
-		faceIcon.setPixmap(*facePic,QIconSet::Large);
+		QIcon faceIcon;
+		faceIcon.setPixmap(*facePic,QIcon::Large);
 		tbFace->setIconSet(faceIcon);
 	}
 

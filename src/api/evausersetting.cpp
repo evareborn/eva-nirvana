@@ -24,7 +24,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <qdatastream.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qdir.h>
@@ -77,7 +77,7 @@ bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> gro
 	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
 	QFile file(fullName);
 	if(file.exists()) file.remove();
-	if(!file.open(IO_WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)){
 		return false;
 	}
 	EvaMain::helper->setCategory(EvaHelper::SaveGroupedUsers, receiver);
@@ -93,7 +93,7 @@ bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
 	
 	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	if(!isVersionCorrect(fullName)){
@@ -261,7 +261,7 @@ bool EvaUserSetting::saveMessage(const int buddy, const int sender, QString sNic
 	
 	QString fullName = getEvaUserDir() + "/" + (isQunMsg?qunMsgFileName:chatMsgFileName);
 	QFile file(fullName);
-	if(!file.open(IO_WriteOnly | IO_Append)){
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Append)){
 		return false;
 	}
 
@@ -306,7 +306,7 @@ std::list<EvaUserSetting::chatMessage> EvaUserSetting::getMessages( const int bu
 	
 	QString fullName = getEvaUserDir() + "/" + (isQunMsg?qunMsgFileName:chatMsgFileName);
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return list;
 	}
 	Q_UINT32 r_buddy;
@@ -386,7 +386,7 @@ std::list<EvaUserSetting::chatMessage> EvaUserSetting::getMessages(const int bud
 	
 	QString fullName = getEvaUserDir() + "/" + (isQunMsg?qunMsgFileName:chatMsgFileName);
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return list;
 	}
 	Q_UINT32 r_buddy;
@@ -476,7 +476,7 @@ bool EvaUserSetting::saveSysMessage(const short msgType, const unsigned char typ
 	QFile file(fullName);
 
 	bool needHeader = false;
-	if(file.open(IO_ReadOnly)){
+	if(file.open(QIODevice::ReadOnly)){
 		QDataStream chkStream(&file);
 		// check version first, if not matched, delete it
 		char *flag = new char[3];
@@ -493,7 +493,7 @@ bool EvaUserSetting::saveSysMessage(const short msgType, const unsigned char typ
 		needHeader = true;
 	}
 	file.close();
-	if(!file.open(IO_WriteOnly | IO_Append)){
+	if(!file.open(QIODevice::WriteOnly | QIODevice::Append)){
 		return false;
 	}
 	QDataStream stream(&file);
@@ -543,7 +543,7 @@ std::list<EvaUserSetting::sysMessage> EvaUserSetting::getSysMessages( const int 
 	
 	QString fullName = getEvaUserDir() + "/" + sysMsgFileName;
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return list;
 	}
 
@@ -969,7 +969,7 @@ bool EvaUserSetting::loadOldProfile()
 		return true;
 	}
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	
@@ -978,7 +978,7 @@ bool EvaUserSetting::loadOldProfile()
 	
 	QString line;
 	QStringList lineList;
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	while(!stream.atEnd()){
 		line = stream.readLine().stripWhiteSpace();
 		lineList = QStringList::split(":", line);
@@ -1202,7 +1202,7 @@ bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
 	QString fullName = getEvaUserDir() + "/" + qunListFileName;
 	QFile file(fullName);
 	if(file.exists()) file.remove();
-	if(!file.open(IO_WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)){
 		return false;
 	}
 	EvaMain::helper->setCategory(EvaHelper::SaveQunUsers, receiver);
@@ -1218,7 +1218,7 @@ bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
 	
 	QString fullName = getEvaUserDir() + "/" + qunListFileName;
 	QFile file(fullName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	
@@ -1389,7 +1389,7 @@ bool EvaUserSetting::isVersionCorrect( const QString fileName )
 {
 	QFile file(fileName);
 	if(!file.exists()) return false;
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	Q_UINT32 version;

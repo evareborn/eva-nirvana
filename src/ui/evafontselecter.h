@@ -38,8 +38,8 @@ class EvaFontSelecter : public QWidget
 {
 	Q_OBJECT
 public:
-	EvaFontSelecter( QWidget* parent = 0, const char* name = 0, WFlags fl = Qt::WStyle_Customize 
-			| Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop | Qt::WType_TopLevel | WType_Popup);
+	EvaFontSelecter( QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl =  
+			Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Window | Qt::Popup);
 	~EvaFontSelecter();
 	void setColor(const QColor &col);
 	void setSize( const int size);

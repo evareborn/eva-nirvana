@@ -27,8 +27,11 @@
 #include <qmessagebox.h>
 #include <qtextcodec.h>
 #include <qevent.h>
-#include <qiconset.h>
-#include <qgroupbox.h>
+#include <qicon.h>
+#include <q3groupbox.h>
+//Added by qt3to4:
+#include <QPixmap>
+#include <QCloseEvent>
 
 //X #include <kmessagebox.h>
 //X #include <klocale.h>
@@ -57,8 +60,8 @@ void EvaAddingQunWindow::setQun(const QunInfo &qun)
 	m_Qun = qun;
 
 	QPixmap *facePic = EvaMain::images->getFaceByID( 0 );
-	QIconSet faceIcon;
-	faceIcon.setPixmap(*facePic,QIconSet::Large);
+	QIcon faceIcon;
+	faceIcon.setPixmap(*facePic,QIcon::Large);
 	tbQunDetails->setIconSet(faceIcon);
 
 	lblQunExtID->setText(QString::number(m_Qun.getExtID()));

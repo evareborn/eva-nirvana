@@ -23,12 +23,18 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QLabel;
 class KURLLabel;
 class QPushButton;
@@ -38,10 +44,10 @@ class EvaSysBroadcastUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaSysBroadcastUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaSysBroadcastUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaSysBroadcastUIBase();
 
-    QFrame* fraContents;
+    Q3Frame* fraContents;
     QLabel* lblTitle;
     QLabel* lblContents;
 //    KURLLabel* kurllblUrl;
@@ -50,13 +56,13 @@ public:
     QPushButton* btnClose;
 
 protected:
-    QGridLayout* EvaSysBroadcastUIBaseLayout;
-    QVBoxLayout* layout7;
-    QGridLayout* fraContentsLayout;
-    QVBoxLayout* layout6;
-    QHBoxLayout* layout5;
+    Q3GridLayout* EvaSysBroadcastUIBaseLayout;
+    Q3VBoxLayout* layout7;
+    Q3GridLayout* fraContentsLayout;
+    Q3VBoxLayout* layout6;
+    Q3HBoxLayout* layout5;
     QSpacerItem* spacer2;
-    QHBoxLayout* layout3;
+    Q3HBoxLayout* layout3;
     QSpacerItem* spacer1;
 
 protected slots:

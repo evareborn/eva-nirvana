@@ -29,7 +29,7 @@
 #include <qlineedit.h>
 
 EvaLoginVeriWindow::EvaLoginVeriWindow(QWidget *p)
-	: EvaLoginVeriUIBase(p, "Verify Window", WType_Dialog)
+	: EvaLoginVeriUIBase(p, "Verify Window", Qt::WType_Dialog)
 				//Qt::WStyle_Customize | Qt::WStyle_Title | Qt::WStyle_SysMenu
 				 //| Qt::WStyle_NormalBorder | Qt::WDestructiveClose)
 {

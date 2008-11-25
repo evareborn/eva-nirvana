@@ -21,11 +21,15 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qcombobox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
  
 #include "evamain.h"
 
@@ -35,21 +39,21 @@
  *  Constructs a QunCategoryUI as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QunCategoryUI::QunCategoryUI( QWidget* parent, const char* name, WFlags fl )
+QunCategoryUI::QunCategoryUI( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "QunCategoryUI" );
-    QunCategoryUILayout = new QGridLayout( this, 1, 1, 11, 6, "QunCategoryUILayout"); 
+    QunCategoryUILayout = new Q3GridLayout( this, 1, 1, 11, 6, "QunCategoryUILayout"); 
 
-    layout5 = new QVBoxLayout( 0, 0, 6, "layout5"); 
+    layout5 = new Q3VBoxLayout( 0, 0, 6, "layout5"); 
 
-    frame3 = new QFrame( this, "frame3" );
-    frame3->setFrameShape( QFrame::StyledPanel );
-    frame3->setFrameShadow( QFrame::Raised );
-    frame3Layout = new QGridLayout( frame3, 1, 1, 11, 6, "frame3Layout"); 
+    frame3 = new Q3Frame( this, "frame3" );
+    frame3->setFrameShape( Q3Frame::StyledPanel );
+    frame3->setFrameShadow( Q3Frame::Raised );
+    frame3Layout = new Q3GridLayout( frame3, 1, 1, 11, 6, "frame3Layout"); 
 
-    layout3 = new QVBoxLayout( 0, 0, 6, "layout3"); 
+    layout3 = new Q3VBoxLayout( 0, 0, 6, "layout3"); 
 
     cbbTop = new QComboBox( FALSE, frame3, "cbbTop" );
     layout3->addWidget( cbbTop );
@@ -63,7 +67,7 @@ QunCategoryUI::QunCategoryUI( QWidget* parent, const char* name, WFlags fl )
     frame3Layout->addLayout( layout3, 0, 0 );
     layout5->addWidget( frame3 );
 
-    layout4 = new QHBoxLayout( 0, 0, 6, "layout4"); 
+    layout4 = new Q3HBoxLayout( 0, 0, 6, "layout4"); 
     spacer2 = new QSpacerItem( 38, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout4->addItem( spacer2 );
 
@@ -77,7 +81,7 @@ QunCategoryUI::QunCategoryUI( QWidget* parent, const char* name, WFlags fl )
     QunCategoryUILayout->addLayout( layout5, 0, 0 );
     languageChange();
     resize( QSize(232, 179).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

@@ -37,6 +37,8 @@
 #include <cstring>
 
 #include "qmdcodec.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 #define QMD5_S11 7
 #define QMD5_S12 12
@@ -145,14 +147,14 @@ static int rikFindChar(register const char * _s, const char c)
   return s - _s;
 }
 
-QCString QCodecs::quotedPrintableEncode(const QByteArray& in, bool useCRLF)
+Q3CString QCodecs::quotedPrintableEncode(const QByteArray& in, bool useCRLF)
 {
   QByteArray out;
   quotedPrintableEncode (in, out, useCRLF);
-  return QCString (out.data(), out.size()+1);
+  return Q3CString (out.data(), out.size()+1);
 }
 
-QCString QCodecs::quotedPrintableEncode(const QCString& str, bool useCRLF)
+Q3CString QCodecs::quotedPrintableEncode(const Q3CString& str, bool useCRLF)
 {
   if (str.isEmpty())
     return "";
@@ -278,14 +280,14 @@ void QCodecs::quotedPrintableEncode(const QByteArray& in, QByteArray& out, bool 
   out.truncate(cursor - out.data());
 }
 
-QCString QCodecs::quotedPrintableDecode(const QByteArray & in)
+Q3CString QCodecs::quotedPrintableDecode(const QByteArray & in)
 {
   QByteArray out;
   quotedPrintableDecode (in, out);
-  return QCString (out.data(), out.size()+1);
+  return Q3CString (out.data(), out.size()+1);
 }
 
-QCString QCodecs::quotedPrintableDecode(const QCString & str)
+Q3CString QCodecs::quotedPrintableDecode(const Q3CString & str)
 {
   if (str.isEmpty())
     return "";
@@ -353,7 +355,7 @@ void QCodecs::quotedPrintableDecode(const QByteArray& in, QByteArray& out)
   out.truncate(cursor - out.data());
 }
 
-QCString QCodecs::base64Encode( const QCString& str, bool insertLFs )
+Q3CString QCodecs::base64Encode( const Q3CString& str, bool insertLFs )
 {
     if ( str.isEmpty() )
         return "";
@@ -363,11 +365,11 @@ QCString QCodecs::base64Encode( const QCString& str, bool insertLFs )
     return base64Encode( in, insertLFs );
 }
 
-QCString QCodecs::base64Encode( const QByteArray& in, bool insertLFs )
+Q3CString QCodecs::base64Encode( const QByteArray& in, bool insertLFs )
 {
     QByteArray out;
     base64Encode( in, out, insertLFs );
-    return QCString( out.data(), out.size()+1 );
+    return Q3CString( out.data(), out.size()+1 );
 }
 
 void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
@@ -379,7 +381,7 @@ void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
         return;
 
     unsigned int sidx = 0;
-    unsigned int didx = 0;
+    int didx = 0;
     const char* data = in.data();
     const unsigned int len = in.size();
 
@@ -442,7 +444,7 @@ void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
     }
 }
 
-QCString QCodecs::base64Decode( const QCString& str )
+Q3CString QCodecs::base64Decode( const Q3CString& str )
 {
     if ( str.isEmpty() )
         return "";
@@ -452,11 +454,11 @@ QCString QCodecs::base64Decode( const QCString& str )
     return base64Decode( in );
 }
 
-QCString QCodecs::base64Decode( const QByteArray& in )
+Q3CString QCodecs::base64Decode( const QByteArray& in )
 {
     QByteArray out;
     base64Decode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return Q3CString( out.data(), out.size()+1 );
 }
 
 void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
@@ -465,8 +467,8 @@ void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
     if ( in.isEmpty() )
         return;
 
-    unsigned int count = 0;
-    unsigned int len = in.size(), tail = len;
+    int count = 0;
+    int len = in.size(), tail = len;
     const char* data = in.data();
 
     // Deal with possible *nix "BEGIN" marker!!
@@ -499,7 +501,7 @@ void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
 
     unsigned int outIdx = 0;
     out.resize( (count=len) );
-    for (unsigned int idx = 0; idx < count; idx++)
+    for ( int idx = 0; idx < count; idx++)
     {
         // Adhere to RFC 2045 and ignore characters
         // that are not part of the encoding table.
@@ -520,7 +522,7 @@ void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
 
     // 4-byte to 3-byte conversion
     len = (tail>(len/4)) ? tail-(len/4) : 0;
-    unsigned int sidx = 0, didx = 0;
+    int sidx = 0, didx = 0;
     if ( len > 1 )
     {
       while (didx < len-2)
@@ -544,7 +546,7 @@ void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
       out.resize(len);
 }
 
-QCString QCodecs::uuencode( const QCString& str )
+Q3CString QCodecs::uuencode( const Q3CString& str )
 {
     if ( str.isEmpty() )
         return "";
@@ -555,11 +557,11 @@ QCString QCodecs::uuencode( const QCString& str )
     return uuencode( in );
 }
 
-QCString QCodecs::uuencode( const QByteArray& in )
+Q3CString QCodecs::uuencode( const QByteArray& in )
 {
     QByteArray out;
     uuencode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return Q3CString( out.data(), out.size()+1 );
 }
 
 void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
@@ -569,7 +571,7 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
         return;
 
     unsigned int sidx = 0;
-    unsigned int didx = 0;
+    int didx = 0;
     unsigned int line_len = 45;
 
     const char nl[] = "\n";
@@ -641,7 +643,7 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
         out.resize( 0 );
 }
 
-QCString QCodecs::uudecode( const QCString& str )
+Q3CString QCodecs::uudecode( const Q3CString& str )
 {
     if ( str.isEmpty() )
         return "";
@@ -652,11 +654,11 @@ QCString QCodecs::uudecode( const QCString& str )
     return uudecode( in );
 }
 
-QCString QCodecs::uudecode( const QByteArray& in )
+Q3CString QCodecs::uudecode( const QByteArray& in )
 {
     QByteArray out;
     uudecode( in, out );
-    return QCString( out.data(), out.size()+1 );
+    return Q3CString( out.data(), out.size()+1 );
 }
 
 void QCodecs::uudecode( const QByteArray& in, QByteArray& out )
@@ -666,9 +668,9 @@ void QCodecs::uudecode( const QByteArray& in, QByteArray& out )
         return;
 
     unsigned int sidx = 0;
-    unsigned int didx = 0;
+    int didx = 0;
     unsigned int len = in.size();
-    unsigned int line_len, end;
+    int line_len, end;
     const char* data = in.data();
 
     // Deal with *nix "BEGIN"/"END" separators!!
@@ -772,7 +774,7 @@ QMD5::QMD5(const QByteArray& in)
     update( in );
 }
 
-QMD5::QMD5(const QCString& in)
+QMD5::QMD5(const Q3CString& in)
 {
     init();
     update( in );
@@ -783,7 +785,7 @@ void QMD5::update(const QByteArray& in)
     update(in.data(), int(in.size()));
 }
 
-void QMD5::update(const QCString& in)
+void QMD5::update(const Q3CString& in)
 {
     update(in.data(), int(in.length()));
 }
@@ -884,7 +886,7 @@ bool QMD5::verify( const QMD5::Digest& digest)
     return (0 == memcmp(rawDigest(), digest, sizeof(QMD5::Digest)));
 }
 
-bool QMD5::verify( const QCString& hexdigest)
+bool QMD5::verify( const Q3CString& hexdigest)
 {
     finalize();
     return (0 == strcmp(hexDigest().data(), hexdigest));
@@ -903,9 +905,9 @@ void QMD5::rawDigest( QMD5::Digest& bin )
 }
 
 
-QCString QMD5::hexDigest()
+Q3CString QMD5::hexDigest()
 {
-    QCString s(33);
+    Q3CString s(33);
 
     finalize();
     sprintf(s.data(), "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -916,7 +918,7 @@ QCString QMD5::hexDigest()
     return s;
 }
 
-void QMD5::hexDigest(QCString& s)
+void QMD5::hexDigest(Q3CString& s)
 {
     finalize();
     s.resize(33);
@@ -926,7 +928,7 @@ void QMD5::hexDigest(QCString& s)
             m_digest[12], m_digest[13], m_digest[14], m_digest[15]);
 }
 
-QCString QMD5::base64Digest()
+Q3CString QMD5::base64Digest()
 {
     QByteArray ba(16);
 

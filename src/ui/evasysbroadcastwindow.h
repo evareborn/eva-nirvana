@@ -22,6 +22,8 @@
 #define EVASYSBROADCASTWINDOW_H
 
 #include "evasysbroadcastuibase.h"
+//Added by qt3to4:
+#include <QCloseEvent>
 
 class EvaSysBroadcastWindow : public EvaSysBroadcastUIBase
 {

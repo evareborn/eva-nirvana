@@ -12,10 +12,15 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
 class QPushButton;
@@ -27,7 +32,7 @@ class CreateSmileyUI : public QWidget
     Q_OBJECT
 
 public:
-    CreateSmileyUI( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    CreateSmileyUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~CreateSmileyUI();
 
     QLabel* lblTop;
@@ -45,18 +50,18 @@ public:
     QPushButton* btnCancel;
 
 protected:
-    QGridLayout* CreateSmileyUILayout;
-    QVBoxLayout* layout21;
-    QHBoxLayout* layout16;
+    Q3GridLayout* CreateSmileyUILayout;
+    Q3VBoxLayout* layout21;
+    Q3HBoxLayout* layout16;
     QSpacerItem* spacer6;
-    QHBoxLayout* layout19;
+    Q3HBoxLayout* layout19;
     QSpacerItem* spacer6_3;
     QSpacerItem* spacer9;
-    QHBoxLayout* layout17;
+    Q3HBoxLayout* layout17;
     QSpacerItem* spacer6_2;
-    QHBoxLayout* layout20;
+    Q3HBoxLayout* layout20;
     QSpacerItem* spacer6_2_2;
-    QHBoxLayout* layout14;
+    Q3HBoxLayout* layout14;
     QSpacerItem* spacer5;
 
 protected slots:

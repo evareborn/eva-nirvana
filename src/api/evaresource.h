@@ -83,10 +83,10 @@ private:
 	QMap<QString, QPixmap> faceList;
 	QMap<QString, QPixmap> iconList;
 	QMap<QString, QString> iconFileNameMap;
-	QMap<QString, QMovie> smileyList;
+	QMap<QString, QMovie*> smileyList;
 	QMap<int, QPixmap> imgOnList;
 	QMap<int, QPixmap> imgOffList;
-	QMovie loginMng;
+	QMovie *loginMng;
 	int faceId[MaxFaceNumber];  // store faceID, index is the fileID
 	QString imageRoot;
 	QString themePath;

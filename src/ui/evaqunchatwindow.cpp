@@ -43,17 +43,17 @@
 #include "evachatwindowmanager.h"
 
 #include <qtextcodec.h>
-#include <qiconset.h>
+#include <qicon.h>
 #include <qpixmap.h>
 #include <qimage.h>
 #include <qevent.h>
 #include <qpushbutton.h>
 #include <qtoolbutton.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qmessagebox.h>
 #include <qtooltip.h>
 #include <qregexp.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qtimer.h>
 #include <qstringlist.h>
 #include <qfile.h>
@@ -61,6 +61,11 @@
 #include <quuid.h>
 #include <qapplication.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QKeyEvent>
+#include <QHideEvent>
+#include <QShowEvent>
+#include <QCloseEvent>
 
 //X #include <klocale.h>
 //X #include <kurl.h>
@@ -77,7 +82,7 @@ EvaImageResource *EvaQunChatWindow::images = NULL;
 bool EvaQunChatWindow::isSentByEnter = false;
 std::list<QString> EvaQunChatWindow::quickList;
 
-EvaQunChatWindow::EvaQunChatWindow( Qun * qun, QWidget * parent, const char * name, WFlags fl )
+EvaQunChatWindow::EvaQunChatWindow( Qun * qun, QWidget * parent, const char * name, Qt::WFlags fl )
 	: EvaQunChatUIBase(parent, name, fl), smileyPopup(NULL), /*fontSelecter(NULL),*/ quickMenu(NULL),
 	mQun(qun), grabber(NULL), viewer(NULL)
 {
@@ -289,7 +294,7 @@ void EvaQunChatWindow::initObjects( )
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector(false);	
 	
-	quickMenu = new QPopupMenu(tbQuickReply);
+	quickMenu = new Q3PopupMenu(tbQuickReply);
 	if(quickList.size()){	
 		std::list<QString>::iterator iter;
 		int index = 0;
@@ -300,10 +305,10 @@ void EvaQunChatWindow::initObjects( )
 		QObject::connect(quickMenu, SIGNAL(activated(int)), this,  SLOT(slotQuickReplyActivated(int)));
 	}
 	
-	sendKey = new QPopupMenu();
+	sendKey = new Q3PopupMenu();
 	sendKey->setCheckable(true);
-	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),SHIFT+ALT+Key_Enter,1);  
-	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),SHIFT+CTRL+ALT+Key_Enter,2);
+	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),Qt::SHIFT+Qt::ALT+Qt::Key_Enter,1);  
+	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),Qt::SHIFT+Qt::CTRL+Qt::ALT+Qt::Key_Enter,2);
 	if(isSentByEnter)
 		sendKey->setItemChecked(1,true);
 	else
@@ -311,7 +316,7 @@ void EvaQunChatWindow::initObjects( )
 	pbSendKey->setPopup(sendKey); 
 	teInput->setEnterSendEnabled(isSentByEnter);
 	
-	tbtnNotice->setIconSet(QIconSet(*(images->getIcon("SYSTEM_MSG"))));
+	tbtnNotice->setIconSet(QIcon(*(images->getIcon("SYSTEM_MSG"))));
 	
 }
 
@@ -322,9 +327,9 @@ void EvaQunChatWindow::initInformation( )
 	QString name = codec->toUnicode(mQun->getDetails().getName().c_str());
 	QString title = i18n("Qun") + QString(" - %1").arg(name);
 	setCaption(title);
-	QIconSet face;
+	QIcon face;
 	setIcon(*(images->getIcon("QUN")));
-	face.setPixmap(*(images->getIcon("QUN")),QIconSet::Large);
+	face.setPixmap(*(images->getIcon("QUN")),QIcon::Large);
 	tbQunDetails->setIconSet(face);
 	tbQunDetails->setTextLabel(name + " ("+QString::number(mQun->getDetails().getExtID()) +")");
 	

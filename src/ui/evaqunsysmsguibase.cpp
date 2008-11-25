@@ -22,15 +22,19 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qtoolbutton.h>
 #include <qlabel.h>
-#include <qbuttongroup.h>
+#include <q3buttongroup.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
 #include "evamain.h"
 
@@ -40,25 +44,25 @@
  *  Constructs a EvaQunSysMsgUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaQunSysMsgUIBase::EvaQunSysMsgUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaQunSysMsgUIBase::EvaQunSysMsgUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )
 	setName( "EvaQunSysMsgUIBase" );
-    EvaQunSysMsgUIBaseLayout = new QGridLayout( this, 1, 1, 17, 6, "EvaQunSysMsgUIBaseLayout"); 
+    EvaQunSysMsgUIBaseLayout = new Q3GridLayout( this, 1, 1, 17, 6, "EvaQunSysMsgUIBaseLayout"); 
 
-    layout12 = new QVBoxLayout( 0, 0, 6, "layout12"); 
+    layout12 = new Q3VBoxLayout( 0, 0, 6, "layout12"); 
 
-    fraMain = new QFrame( this, "fraMain" );
+    fraMain = new Q3Frame( this, "fraMain" );
     fraMain->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)7, 0, 0, fraMain->sizePolicy().hasHeightForWidth() ) );
     fraMain->setPaletteBackgroundColor( QColor( 234, 247, 255 ) );
-    fraMain->setFrameShape( QFrame::StyledPanel );
-    fraMain->setFrameShadow( QFrame::Raised );
-    fraMainLayout = new QVBoxLayout( fraMain, 11, 6, "fraMainLayout"); 
+    fraMain->setFrameShape( Q3Frame::StyledPanel );
+    fraMain->setFrameShadow( Q3Frame::Raised );
+    fraMainLayout = new Q3VBoxLayout( fraMain, 11, 6, "fraMainLayout"); 
 
-    layout6 = new QVBoxLayout( 0, 0, 6, "layout6"); 
+    layout6 = new Q3VBoxLayout( 0, 0, 6, "layout6"); 
 
-    layout5 = new QHBoxLayout( 0, 0, 6, "layout5"); 
+    layout5 = new Q3HBoxLayout( 0, 0, 6, "layout5"); 
 
     tbQQ = new QToolButton( fraMain, "tbQQ" );
     tbQQ->setPaletteBackgroundColor( QColor( 234, 247, 255 ) );
@@ -78,20 +82,20 @@ EvaQunSysMsgUIBase::EvaQunSysMsgUIBase( QWidget* parent, const char* name, WFlag
 
     lblMessage = new QLabel( fraMain, "lblMessage" );
     lblMessage->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)7, 0, 0, lblMessage->sizePolicy().hasHeightForWidth() ) );
-    lblMessage->setAlignment( int( QLabel::WordBreak | QLabel::AlignTop | QLabel::AlignLeft ) );
+    lblMessage->setAlignment( Qt::WordBreak | Qt::AlignTop | Qt::AlignLeft );
     layout6->addWidget( lblMessage );
     fraMainLayout->addLayout( layout6 );
     layout12->addWidget( fraMain );
 
-    bgActions = new QButtonGroup( this, "bgActions" );
-    bgActions->setFrameShape( QButtonGroup::NoFrame );
+    bgActions = new Q3ButtonGroup( this, "bgActions" );
+    bgActions->setFrameShape( Q3ButtonGroup::NoFrame );
     bgActions->setColumnLayout(0, Qt::Vertical );
     bgActions->layout()->setSpacing( 6 );
     bgActions->layout()->setMargin( 0 );
-    bgActionsLayout = new QVBoxLayout( bgActions->layout() );
+    bgActionsLayout = new Q3VBoxLayout( bgActions->layout() );
     bgActionsLayout->setAlignment( Qt::AlignTop );
 
-    layout1 = new QHBoxLayout( 0, 0, 6, "layout1"); 
+    layout1 = new Q3HBoxLayout( 0, 0, 6, "layout1"); 
 
     rbtnAccept = new QRadioButton( bgActions, "rbtnAccept" );
     layout1->addWidget( rbtnAccept );
@@ -103,16 +107,16 @@ EvaQunSysMsgUIBase::EvaQunSysMsgUIBase( QWidget* parent, const char* name, WFlag
     bgActionsLayout->addLayout( layout1 );
     layout12->addWidget( bgActions );
 
-    fraMessage = new QFrame( this, "fraMessage" );
-    fraMessage->setFrameShape( QFrame::NoFrame );
-    fraMessage->setFrameShadow( QFrame::Raised );
-    fraMessageLayout = new QVBoxLayout( fraMessage, 0, 6, "fraMessageLayout"); 
+    fraMessage = new Q3Frame( this, "fraMessage" );
+    fraMessage->setFrameShape( Q3Frame::NoFrame );
+    fraMessage->setFrameShadow( Q3Frame::Raised );
+    fraMessageLayout = new Q3VBoxLayout( fraMessage, 0, 6, "fraMessageLayout"); 
 
     leMessage = new QLineEdit( fraMessage, "leMessage" );
     fraMessageLayout->addWidget( leMessage );
     layout12->addWidget( fraMessage );
 
-    layout10 = new QHBoxLayout( 0, 0, 6, "layout10"); 
+    layout10 = new Q3HBoxLayout( 0, 0, 6, "layout10"); 
 
     chbRejectForever = new QCheckBox( this, "chbRejectForever" );
     layout10->addWidget( chbRejectForever );
@@ -130,7 +134,7 @@ EvaQunSysMsgUIBase::EvaQunSysMsgUIBase( QWidget* parent, const char* name, WFlag
     EvaQunSysMsgUIBaseLayout->addLayout( layout12, 0, 0 );
     languageChange();
     resize( QSize(411, 210).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 }
 
 /*

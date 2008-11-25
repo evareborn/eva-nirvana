@@ -23,26 +23,30 @@
 #include <qpushbutton.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
-#include <qdatetimeedit.h>
-#include <qtable.h>
+#include <q3datetimeedit.h>
+#include <q3table.h>
 #include <qlayout.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
 //X #include <klocale.h>
 
-EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaHistoryUIBase" );
-	EvaHistoryUIBaseLayout = new QGridLayout( this, 1, 1, 0, 0, "EvaHistoryUIBaseLayout"); 
+	EvaHistoryUIBaseLayout = new Q3GridLayout( this, 1, 1, 0, 0, "EvaHistoryUIBaseLayout"); 
 	
-	layout1 = new QVBoxLayout( 0, 0, 6, "layout1"); 
+	layout1 = new Q3VBoxLayout( 0, 0, 6, "layout1"); 
 	
-	layout2 = new QHBoxLayout( 0, 0, 6, "layout2"); 
+	layout2 = new Q3HBoxLayout( 0, 0, 6, "layout2"); 
 	
 	chbSelect = new QCheckBox( this, "chbSelect" );
 	layout2->addWidget( chbSelect );
@@ -51,8 +55,8 @@ EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl
 	lblFrom->setMaximumSize( QSize( 30, 32767 ) );
 	layout2->addWidget( lblFrom );
 	
-	deFrom = new QDateEdit( this, "deFrom" );
-	deFrom->setOrder(QDateEdit::YMD);
+	deFrom = new Q3DateEdit( this, "deFrom" );
+	deFrom->setOrder(Q3DateEdit::YMD);
 	deFrom->setDate(QDate::currentDate());
 	//deFrom->setMaximumSize( QSize( 90, 32767 ) );
 	layout2->addWidget( deFrom );
@@ -61,8 +65,8 @@ EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl
 	lblTo->setMaximumSize( QSize( 20, 32767 ) );
 	layout2->addWidget( lblTo );
 	
-	deTo = new QDateEdit( this, "deTo" );
-	deTo->setOrder(QDateEdit::YMD);
+	deTo = new Q3DateEdit( this, "deTo" );
+	deTo->setOrder(Q3DateEdit::YMD);
 	deTo->setDate(QDate::currentDate());
 	//deTo->setMaximumSize( QSize( 90, 32767 ) );
 	layout2->addWidget( deTo );
@@ -73,8 +77,8 @@ EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl
 	layout2->addWidget( pbShow );
 	layout1->addLayout( layout2 );
 	
-	tblDisplay = new QTable( this, "tblDisplay" );
-	QHeader *vheader = tblDisplay->verticalHeader();
+	tblDisplay = new Q3Table( this, "tblDisplay" );
+	Q3Header *vheader = tblDisplay->verticalHeader();
 	vheader->hide();
 	tblDisplay->setLeftMargin(0);
 	tblDisplay->setNumRows( 0 );
@@ -82,12 +86,12 @@ EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl
 	//tblDisplay->setColumnWidth(0, 10);
 	//tblDisplay->setColumnWidth(1, 5);
 	//tblDisplay->setColumnWidth(2, 5);
-	tblDisplay->setSelectionMode( QTable::SingleRow );
-	tblDisplay->setFocusStyle( QTable::FollowStyle );
+	tblDisplay->setSelectionMode( Q3Table::SingleRow );
+	tblDisplay->setFocusStyle( Q3Table::FollowStyle );
 	tblDisplay->setReadOnly( true );
 	layout1->addWidget( tblDisplay );
 	
-	layout3 = new QHBoxLayout( 0, 0, 6, "layout3"); 
+	layout3 = new Q3HBoxLayout( 0, 0, 6, "layout3"); 
 	spacer2 = new QSpacerItem( 121, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout3->addItem( spacer2 );
 	
@@ -101,7 +105,7 @@ EvaHistoryUIBase::EvaHistoryUIBase( QWidget* parent, const char* name, WFlags fl
 	EvaHistoryUIBaseLayout->addLayout( layout1, 0, 0 );
 	languageChange();
 	resize( QSize(472, 219).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 }
 
 EvaHistoryUIBase::~EvaHistoryUIBase()

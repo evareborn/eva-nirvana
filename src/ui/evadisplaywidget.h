@@ -21,40 +21,44 @@
 #define EVADISPLAYWIDGET_H
 
 #include <qwidget.h>
-#include <qframe.h>
-#include <qwidgetstack.h>
+#include <q3frame.h>
+#include <q3widgetstack.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <QLabel>
 #include "evamainwindow.h"
 
 class QLabel;
-class QProgressBar;
+class Q3ProgressBar;
 class QSpacerItem;
-class QVBoxLayout;
-class QGridLayout;
-class QWidgetStack;
+class Q3VBoxLayout;
+class Q3GridLayout;
+class Q3WidgetStack;
 class EvaTabWidget;
 
-class EvaLoginPageFrame : public QFrame
+class EvaLoginPageFrame : public Q3Frame
 {
 	Q_OBJECT
 public:
-	EvaLoginPageFrame(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaLoginPageFrame(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	virtual ~EvaLoginPageFrame();
 
 	void setTotalSteps(int max);
 	void update(int value, const QString &msg);
 private:
 	QLabel* lblDesc;
-	QProgressBar* qpbProgress;
-	QVBoxLayout* layout1;
+	Q3ProgressBar* qpbProgress;
+	Q3VBoxLayout* layout1;
 	QSpacerItem* spacer1;
 	QSpacerItem* spacer2;
 };
 
-class EvaDisplayWidget : public QWidgetStack
+class EvaDisplayWidget : public Q3WidgetStack
 {
 	Q_OBJECT
 public:
-	EvaDisplayWidget(QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+	EvaDisplayWidget(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
 	virtual ~EvaDisplayWidget();
 
 	/** 
@@ -66,9 +70,9 @@ public:
 
 private:
 	//QGridLayout* wspageLoginLayout;
-	QGridLayout * layoutLogin;
+	Q3GridLayout * layoutLogin;
 	QWidget     * wLogin;
-	QGridLayout * layoutTab;
+	Q3GridLayout * layoutTab;
 	QWidget     * wTab;
 	EvaLoginPageFrame * loginPage;
 	EvaTabWidget      *tab;

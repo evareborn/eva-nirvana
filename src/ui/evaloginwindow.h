@@ -22,6 +22,9 @@
 #define LOGINWINDOW_H
 
 #include "loginuibase.h"
+//Added by qt3to4:
+#include <QPixmap>
+#include <Q3CString>
 class QPixmap;
 class EvaSetting;
 
@@ -30,7 +33,7 @@ class EvaLoginWindow : public LoginUIBase
 	Q_OBJECT
 	friend class EvaMain;
 public:
-	EvaLoginWindow(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+	EvaLoginWindow(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
 	~EvaLoginWindow();
 	enum Type{UDP, TCP, HTTP_Proxy};
 	void setLogo(const QPixmap *);
@@ -47,7 +50,7 @@ public:
 	 QString getProxyUserName() const;
 	 QString getProxyPassword() const;
 	
-	 QCString getProxyParam();
+	 Q3CString getProxyParam();
 public slots:
 	virtual void cancelClickSlot();
 	virtual void loginClickSlot();
@@ -66,7 +69,7 @@ private:
 	int qqNum;
 	char md5Pwd[16];
 	int port;
-	QCString proxyParam;
+	Q3CString proxyParam;
 	
 	bool pwdChanged;
 	bool proxyPwdChanged;

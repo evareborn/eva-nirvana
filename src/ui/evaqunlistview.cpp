@@ -24,28 +24,30 @@
 //#include "evalistview.h"
 #include "evahtmlparser.h"
 #include <qpixmap.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qsize.h>
+//Added by qt3to4:
+#include <QCustomEvent>
 //X #include <klocale.h>
 
 
 
-EvaQunListView::EvaQunListView( QWidget * parent, const char * name, WFlags f )
-	: QListView(parent, name, f)
+EvaQunListView::EvaQunListView( QWidget * parent, const char * name, Qt::WFlags f )
+	: Q3ListView(parent, name, f)
 {
 	//mToolTip = new EvaToolTip(this);
 	
-	popupMenu = new QPopupMenu(0, "QunPopup");
-	popupMenu->insertItem(QIconSet(*(EvaMain::images->getIcon("QUN_CARD"))), i18n( "Qun Card" ), this, SLOT( slotQunCard()));
-	popupMenu->insertItem(QIconSet(*(EvaMain::images->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), -1, 1);
+	popupMenu = new Q3PopupMenu(0, "QunPopup");
+	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("QUN_CARD"))), i18n( "Qun Card" ), this, SLOT( slotQunCard()));
+	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), -1, 1);
 	popupMenu->insertSeparator(-1);
-	popupMenu->insertItem(QIconSet(*(EvaMain::images->getIcon("REFRESH_BUDDIES"))), i18n("Refresh Qun Members"), this,SLOT(slotDoRefreshMembers()));
+	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("REFRESH_BUDDIES"))), i18n("Refresh Qun Members"), this,SLOT(slotDoRefreshMembers()));
 	
-	QObject::connect(this, SIGNAL(contextMenuRequested(QListViewItem *, const QPoint & , int)), this, 
-		SLOT(slotContextMenu(QListViewItem *, const QPoint & , int)));
+	QObject::connect(this, SIGNAL(contextMenuRequested(Q3ListViewItem *, const QPoint & , int)), this, 
+		SLOT(slotContextMenu(Q3ListViewItem *, const QPoint & , int)));
 		
-	QObject::connect(this, SIGNAL(doubleClicked(QListViewItem *, const QPoint & , int)),
-									 SLOT(slotBuddyDoubleClick(QListViewItem *, const QPoint & , int)));
+	QObject::connect(this, SIGNAL(doubleClicked(Q3ListViewItem *, const QPoint & , int)),
+									 SLOT(slotBuddyDoubleClick(Q3ListViewItem *, const QPoint & , int)));
 }
 
 EvaQunListView::~EvaQunListView()
@@ -81,7 +83,7 @@ void EvaQunListView::updateOnlineMembers(const std::list<unsigned int> &onlines)
 	sort();
 }
 
-void EvaQunListView::slotContextMenu(QListViewItem *item, const QPoint &p , int col)
+void EvaQunListView::slotContextMenu(Q3ListViewItem *item, const QPoint &p , int col)
 {
 	if(col!=1) return;
 	EvaQunBuddyItem *q = dynamic_cast<EvaQunBuddyItem *>(item);
@@ -113,7 +115,7 @@ void EvaQunListView::slotQunCard( )
 	emit requestQunCard(item->getQQ());
 }
 
-void EvaQunListView::slotBuddyDoubleClick( QListViewItem * item, const QPoint &, int )
+void EvaQunListView::slotBuddyDoubleClick( Q3ListViewItem * item, const QPoint &, int )
 {
 	EvaQunBuddyItem *b = dynamic_cast<EvaQunBuddyItem *>(item);
 	if(b){
@@ -124,8 +126,8 @@ void EvaQunListView::slotBuddyDoubleClick( QListViewItem * item, const QPoint &,
 /************************************************************************************************************************************************/
 
 
-EvaQunBuddyItem::EvaQunBuddyItem( QListView *parent, const QString &name, const unsigned int id, const QPixmap *pic, const QPixmap *offPic)
-	: QListViewItem(parent,"", name)
+EvaQunBuddyItem::EvaQunBuddyItem( Q3ListView *parent, const QString &name, const unsigned int id, const QPixmap *pic, const QPixmap *offPic)
+	: Q3ListViewItem(parent,"", name)
 {	
 	qqNum = id;
 	nick = name;

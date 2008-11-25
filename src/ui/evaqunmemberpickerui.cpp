@@ -22,15 +22,18 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
-#include <qheader.h>
-#include <qlistview.h>
+#include <q3header.h>
+#include <q3listview.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
  
 #include "evamain.h"
 
@@ -40,40 +43,40 @@
  *  Constructs a EvaQunMemberPickerUI as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaQunMemberPickerUI::EvaQunMemberPickerUI( QWidget* parent, const char* name, WFlags fl )
+EvaQunMemberPickerUI::EvaQunMemberPickerUI( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaQunMemberPickerUI" );
-	EvaQunMemberPickerUILayout = new QGridLayout( this, 1, 1, 0, 0, "EvaQunMemberPickerUILayout"); 
+	EvaQunMemberPickerUILayout = new Q3GridLayout( this, 1, 1, 0, 0, "EvaQunMemberPickerUILayout"); 
 	
-	fraMain = new QFrame( this, "fraMain" );
+	fraMain = new Q3Frame( this, "fraMain" );
 	fraMain->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)5, 0, 0, fraMain->sizePolicy().hasHeightForWidth() ) );
-	fraMain->setFrameShape( QFrame::GroupBoxPanel );
-	fraMain->setFrameShadow( QFrame::Raised );
-	fraMainLayout = new QGridLayout( fraMain, 1, 1, 6, 3, "fraMainLayout"); 
+	fraMain->setFrameShape( Q3Frame::GroupBoxPanel );
+	fraMain->setFrameShadow( Q3Frame::Raised );
+	fraMainLayout = new Q3GridLayout( fraMain, 1, 1, 6, 3, "fraMainLayout"); 
 	
-	layout1 = new QVBoxLayout( 0, 0, 6, "layout1"); 
+	layout1 = new Q3VBoxLayout( 0, 0, 6, "layout1"); 
 	
-	line1 = new QFrame( fraMain, "line1" );
-	line1->setFrameShape( QFrame::HLine );
-	line1->setFrameShadow( QFrame::Raised );
-	line1->setFrameShape( QFrame::HLine );
+	line1 = new Q3Frame( fraMain, "line1" );
+	line1->setFrameShape( Q3Frame::HLine );
+	line1->setFrameShadow( Q3Frame::Raised );
+	line1->setFrameShape( Q3Frame::HLine );
 	layout1->addWidget( line1 );
 	
-	line2 = new QFrame( fraMain, "line2" );
-	line2->setFrameShape( QFrame::HLine );
-	line2->setFrameShadow( QFrame::Raised );
-	line2->setFrameShape( QFrame::HLine );
+	line2 = new Q3Frame( fraMain, "line2" );
+	line2->setFrameShape( Q3Frame::HLine );
+	line2->setFrameShadow( Q3Frame::Raised );
+	line2->setFrameShape( Q3Frame::HLine );
 	layout1->addWidget( line2 );
 	
 	lblTitle = new QLabel( fraMain, "lblTitle" );
 	layout1->addWidget( lblTitle );
 	
-	lvBuddyList = new QListView( fraMain, "lvBuddyList" );
+	lvBuddyList = new Q3ListView( fraMain, "lvBuddyList" );
 	lvBuddyList->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)5, (QSizePolicy::SizeType)7, 0, 0, lvBuddyList->sizePolicy().hasHeightForWidth() ) );
 	lvBuddyList->addColumn("");
-	lvBuddyList->setSelectionMode(QListView::Single);
+	lvBuddyList->setSelectionMode(Q3ListView::Single);
 	layout1->addWidget( lvBuddyList );
 	
 	fraMainLayout->addLayout( layout1, 0, 0 );
@@ -81,7 +84,7 @@ EvaQunMemberPickerUI::EvaQunMemberPickerUI( QWidget* parent, const char* name, W
 	EvaQunMemberPickerUILayout->addWidget( fraMain, 0, 0 );
 	languageChange();
 	resize( QSize(220, 337).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 }
 
 /*

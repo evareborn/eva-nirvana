@@ -22,10 +22,14 @@
 #define EVASYSTEMTRAY_H
 
 //#include <qsystemtrayicon.h>
-#include <qvaluestack.h>
+#include <q3valuestack.h>
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QPixmap>
+#include <Q3PopupMenu>
 
 class EvaImageResource;
-class QPopupMenu;
+class Q3PopupMenu;
 class QMouseEvent;
 class QTimer;
 class QPixmap;

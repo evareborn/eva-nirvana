@@ -26,13 +26,15 @@
 
 #include <stdlib.h>
 #include <qapplication.h>
-#include <qhttp.h>
+#include <q3http.h>
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qdatastream.h>
 #include <qsound.h>
 //X #include <kaudioplayer.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3TextStream>
 //#include <kglobal.h>
 //#include <kstandarddirs.h>
 
@@ -123,7 +125,7 @@ const QString EvaImageResource::getSmiley(const int fileIndex)
 
 const QMovie *EvaImageResource::getLoginMovie()
 {
-	return &loginMng;
+	return loginMng;
 }
 
 bool EvaImageResource::loadImage()
@@ -137,11 +139,11 @@ bool EvaImageResource::loadFace(const QSize &/*size*/)
 {
 	QString path = getFacePath();
 	QFile file( path + "/face.theme");    
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	faceList.clear();
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	QString line, imagePath;
 	QStringList lineList;
 	while(!stream.atEnd()){
@@ -177,11 +179,11 @@ bool EvaImageResource::loadIcon()
 		path = getIconPath() + "/eva.theme";
 	}
 	QFile file( path);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	QString line, imagePath;
 	QStringList lineList;
 	
@@ -196,7 +198,7 @@ bool EvaImageResource::loadIcon()
 		lineList[0].stripWhiteSpace();
 		imagePath = getIconPath() + "/" + lineList[1].stripWhiteSpace();
 		if(lineList[0] == "LOGIN_MNG"){
-			loginMng = QMovie(imagePath);
+			loginMng = new QMovie(imagePath);
 			continue;
 		}
 		QPixmap img(imagePath);
@@ -214,11 +216,11 @@ bool EvaImageResource::loadSmiley()
 {
 	QString path = getSmileyPath();
 	QFile file( path + "/smiley.theme");    
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	QString line, imagePath;
 	QStringList lineList;
 	
@@ -232,8 +234,8 @@ bool EvaImageResource::loadSmiley()
 		
 		lineList[0].stripWhiteSpace();
 		imagePath = path + "/" + lineList[1].stripWhiteSpace();
-		QMovie m(imagePath);
-		if(!m.isNull())
+		QMovie *m = new QMovie(imagePath);
+		if( m != NULL )
 			smileyList[lineList[0]] = m;
 	}
 	
@@ -277,7 +279,7 @@ void EvaImageResource::requestQQShow(const unsigned int id)
 		qqshowFile.remove();
 	}
 	
-	if ( !qqshowFile.open( IO_WriteOnly ) ) {
+	if ( !qqshowFile.open( QIODevice::WriteOnly ) ) {
 		printf("cannot create the image\n");
 		return;
 	}

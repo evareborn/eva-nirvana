@@ -23,15 +23,21 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QLabel;
 class QToolButton;
-class QButtonGroup;
+class Q3ButtonGroup;
 class QRadioButton;
 class QLineEdit;
 class QCheckBox;
@@ -42,19 +48,19 @@ class EvaAddingNoticeUIBase : public QWidget
     Q_OBJECT
 
 public:
-    EvaAddingNoticeUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    EvaAddingNoticeUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~EvaAddingNoticeUIBase();
 
-    QFrame* fraMain;
+    Q3Frame* fraMain;
     QLabel* lblTitle;
     QLabel* lblMessageTag;
     QToolButton* tbFace;
     QLabel* lblMessage;
-    QButtonGroup* btngrpActions;
+    Q3ButtonGroup* btngrpActions;
     QRadioButton* rbtnAcceptAdd;
     QRadioButton* rbtnAccept;
     QRadioButton* rbtnReject;
-    QFrame* fraRejectContents;
+    Q3Frame* fraRejectContents;
     QLineEdit* leRejectMessage;
     QCheckBox* chbRejectForever;
     QToolButton* tbtnAuthSettings;
@@ -62,19 +68,19 @@ public:
     QPushButton* btnCancel;
 
 protected:
-    QGridLayout* EvaAddingNoticeUIBaseLayout;
-    QVBoxLayout* layout15;
+    Q3GridLayout* EvaAddingNoticeUIBaseLayout;
+    Q3VBoxLayout* layout15;
     QSpacerItem* spacer1;
-    QGridLayout* fraMainLayout;
-    QVBoxLayout* layout10;
-    QHBoxLayout* layout9;
+    Q3GridLayout* fraMainLayout;
+    Q3VBoxLayout* layout10;
+    Q3HBoxLayout* layout9;
     QSpacerItem* spacer3;
-    QVBoxLayout* layout4;
-    QGridLayout* btngrpActionsLayout;
-    QHBoxLayout* layout14;
-    QGridLayout* fraRejectContentsLayout;
-    QVBoxLayout* layout2;
-    QHBoxLayout* layout3;
+    Q3VBoxLayout* layout4;
+    Q3GridLayout* btngrpActionsLayout;
+    Q3HBoxLayout* layout14;
+    Q3GridLayout* fraRejectContentsLayout;
+    Q3VBoxLayout* layout2;
+    Q3HBoxLayout* layout3;
     QSpacerItem* spacer2;
 
 protected slots:

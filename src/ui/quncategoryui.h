@@ -22,12 +22,17 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QFrame;
+class Q3Frame;
 class QComboBox;
 class QPushButton;
 
@@ -36,10 +41,10 @@ class QunCategoryUI : public QWidget
     Q_OBJECT
 
 public:
-    QunCategoryUI( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    QunCategoryUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~QunCategoryUI();
 
-    QFrame* frame3;
+    Q3Frame* frame3;
     QComboBox* cbbTop;
     QComboBox* cbbSecond;
     QComboBox* cbbThird;
@@ -47,11 +52,11 @@ public:
     QPushButton* pbOK;
 
 protected:
-    QGridLayout* QunCategoryUILayout;
-    QVBoxLayout* layout5;
-    QGridLayout* frame3Layout;
-    QVBoxLayout* layout3;
-    QHBoxLayout* layout4;
+    Q3GridLayout* QunCategoryUILayout;
+    Q3VBoxLayout* layout5;
+    Q3GridLayout* frame3Layout;
+    Q3VBoxLayout* layout3;
+    Q3HBoxLayout* layout4;
     QSpacerItem* spacer2;
 
 protected slots:

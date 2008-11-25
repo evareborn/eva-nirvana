@@ -20,7 +20,7 @@
 
 #include "quncategorypicker.h"
 #include <qfile.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qstringlist.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
@@ -101,7 +101,7 @@ bool QunCategory::loadList( )
 	return true; 
 }
 
-QunCategoryPicker::QunCategoryPicker(QWidget* parent, const char* name, WFlags fl)
+QunCategoryPicker::QunCategoryPicker(QWidget* parent, const char* name, Qt::WFlags fl)
 	: QunCategoryUI(parent, name, fl), categoryData(NULL)
 {
 	loadCategoryList();

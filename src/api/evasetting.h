@@ -21,7 +21,9 @@
 #define EVASETTING_H
 
 #include <qobject.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 /**
 Eva system setting, saved in directory ".eva" under user's $HOME directory
@@ -36,7 +38,7 @@ Q_UINT8  flag;  //   bit 0 to 2 reserved, bit 3: UDP, bit 4: TCP, bit 5: HTTP Pr
 Q_UINT32 proxy;
 Q_UINT16 port;
 QString  proxyUserName;
-QCString base64param; 
+Q3CString base64param; 
 } LoginRecord;
 
 class EvaSetting : public QObject
@@ -55,7 +57,7 @@ public:
 					 const Q_UINT32 server, 
 					 const Q_UINT16 port, 
 					 const QString username, 
-					 const QCString base64Param); 	
+					 const Q3CString base64Param); 	
 	// load all login records
 	bool loadSetting();
 	int getLastUserIndex(); // the last user id
@@ -64,13 +66,13 @@ public:
 	 bool isHiddenChecked(const int id);
 	
 	const char *getPassword(const int id);
-	QPtrList<LoginRecord> getRecordedList() { return userList; }
+	Q3PtrList<LoginRecord> getRecordedList() { return userList; }
 	
 	 int getConnectType(const int id); // 0: udp, 1: tcp,  2: http proxy
 	 int getServer(const int id);
 	 short getPort(const int id);
 	 const QString getProxyUsername(const int id);
-	 const QCString getProxyParam(const int id);
+	 const Q3CString getProxyParam(const int id);
 	
 	 const QString defaultDownloadDir() { return m_DownloadDir; }
 	
@@ -82,7 +84,7 @@ private:
 	int findUser(const int id); // if id exists, return index of userList, otherwise return -1
 	static QString filename;
 	int lastIndex;
-	QPtrList<LoginRecord> userList;
+	Q3PtrList<LoginRecord> userList;
 	QString m_DownloadDir;
 };
 

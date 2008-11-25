@@ -26,10 +26,13 @@
 #include <qobject.h>
 #include <qthread.h>
 #include <qhostaddress.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qevent.h>
 #include <qdatetime.h>
-#include <qptrlist.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <Q3CString>
 #include <cstring>
 #include <cstdlib>
 
@@ -178,17 +181,18 @@ private:
 
 
 class EvaCachedFile;
-class QDns;
+class Q3Dns;
 
 
-class EvaFileThread : public QObject, public QThread
+//X class EvaFileThread : public QObject, public QThread
+class EvaFileThread : public QThread
 {
 	Q_OBJECT
 public:
 	// for sending
-	EvaFileThread(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList,
-			const QValueList<unsigned int> sizeList, const bool isSender);
+	EvaFileThread(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList,
+			const Q3ValueList<unsigned int> sizeList, const bool isSender);
 
 	~EvaFileThread();
 
@@ -211,9 +215,9 @@ public:
 	 QString getDir() const;
 	 unsigned int getFileSize();
 
-	const QValueList<QString> &getDirList() const { return m_DirList; }
-	const QValueList<QString> &getFileNameList() const { return m_FileNameList; }
-	const QValueList<unsigned int> &getSizeList() const { return m_SizeList; }
+	const Q3ValueList<QString> &getDirList() const { return m_DirList; }
+	const Q3ValueList<QString> &getFileNameList() const { return m_FileNameList; }
+	const Q3ValueList<unsigned int> &getSizeList() const { return m_SizeList; }
 protected:
 	bool m_IsSender;
 	QObject *m_Receiver;
@@ -232,10 +236,10 @@ protected:
 	QDateTime m_StartTime;
 
 	EvaCachedFile *m_File;
-	QPtrList<EvaCachedFile> m_FileList;
-	QValueList<QString> m_DirList;
-	QValueList<QString> m_FileNameList;
-	QValueList<unsigned int> m_SizeList;
+	Q3PtrList<EvaCachedFile> m_FileList;
+	Q3ValueList<QString> m_DirList;
+	Q3ValueList<QString> m_FileNameList;
+	Q3ValueList<unsigned int> m_SizeList;
 	
 	EvaNetwork *m_Connecter;
 	void cleanUp();
@@ -256,9 +260,9 @@ class EvaAgentThread : public EvaFileThread
 {
 	Q_OBJECT
 public:
-	EvaAgentThread(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList,
-			const QValueList<unsigned int> sizeList, const bool isSender);
+	EvaAgentThread(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList,
+			const Q3ValueList<unsigned int> sizeList, const bool isSender);
 	virtual ~EvaAgentThread();
 
 	// user must call following 3 methods before running the thread
@@ -266,7 +270,7 @@ public:
 	void setFileAgentKey(const unsigned char *key);
 
 	void setServerAddress(const unsigned int ip, const unsigned short port);
-	void setProxySettings(const QHostAddress addr, const short port, const QCString &param);
+	void setProxySettings(const QHostAddress addr, const short port, const Q3CString &param);
 
 protected:
 	enum AgentState { ENone, EDnsQuery, EDnsReady, ENetworkReady, ECreatingReady,
@@ -278,7 +282,7 @@ protected:
 	unsigned char *m_Token;
 	int m_TokenLength;
 
-	QValueList<QHostAddress> m_HostAddresses;
+	Q3ValueList<QHostAddress> m_HostAddresses;
 	unsigned short m_ServerPort;
 
 	void doCreateConnection();
@@ -293,7 +297,7 @@ private:
 	bool m_UsingProxy;
 	QHostAddress m_ProxyServer;
 	short m_ProxyPort;
-	QCString m_ProxyAuthParam;
+	Q3CString m_ProxyAuthParam;
 
 
 private slots:
@@ -306,8 +310,8 @@ class EvaAgentUploader : public EvaAgentThread
 {
 	Q_OBJECT
 public:
-	EvaAgentUploader(QObject *receiver, const unsigned int id,const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList);
+	EvaAgentUploader(QObject *receiver, const unsigned int id,const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList);
 	~EvaAgentUploader();
 
 	// user must call this method before running the thread
@@ -322,7 +326,7 @@ private:
 	unsigned int m_OutBufferLength;
 	unsigned int m_OutBytesSent;
 	unsigned int m_NumPackets;
-	QDns *m_Dns;
+	Q3Dns *m_Dns;
 	void doDnsRequest();
 
 	void run();
@@ -359,9 +363,9 @@ class EvaAgentDownloader : public EvaAgentThread
 {
 	Q_OBJECT
 public:
-	EvaAgentDownloader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList,
-			const QValueList<unsigned int> sizeList);
+	EvaAgentDownloader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList,
+			const Q3ValueList<unsigned int> sizeList);
 	~EvaAgentDownloader();
 	/** 
 	* @param factor the times of 50 * EVA_FILE_BUFFER_UNIT, default buffer size is 1, which
@@ -405,9 +409,9 @@ class EvaUDPThread : public EvaFileThread
 {
 	Q_OBJECT
 public:
-	EvaUDPThread(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList,
-			const QValueList<unsigned int> sizeList, const bool isSender);
+	EvaUDPThread(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList,
+			const Q3ValueList<unsigned int> sizeList, const bool isSender);
 	virtual ~EvaUDPThread();
 
 	// user must call following 3 methods before running the thread
@@ -424,7 +428,7 @@ protected:
 	unsigned char *m_Token;
 	int m_TokenLength;
 
-	QValueList<QHostAddress> m_HostAddresses;
+	Q3ValueList<QHostAddress> m_HostAddresses;
 	unsigned short m_ServerPort;
 
 	void doCreateConnection();
@@ -442,12 +446,12 @@ class EvaUdpUploader : public EvaUDPThread
 {
 	Q_OBJECT
 public:
-	EvaUdpUploader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList,
-			const QValueList<QString> &filenameList);
+	EvaUdpUploader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList,
+			const Q3ValueList<QString> &filenameList);
 	~EvaUdpUploader();
 
 private:
-	QDns *m_Dns;
+	Q3Dns *m_Dns;
 	void doDnsRequest();
 
 	void run();
@@ -472,8 +476,8 @@ class EvaUdpDownloader : public EvaUDPThread
 {
 	Q_OBJECT
 public:
-	EvaUdpDownloader(QObject *receiver, const unsigned int id, const QValueList<QString> &dirList, 
-			const QValueList<QString> &filenameList, const QValueList<unsigned int> sizeList)
+	EvaUdpDownloader(QObject *receiver, const unsigned int id, const Q3ValueList<QString> &dirList, 
+			const Q3ValueList<QString> &filenameList, const Q3ValueList<unsigned int> sizeList)
 		: EvaUDPThread(receiver, id, dirList, filenameList, sizeList, false) {};
 	~EvaUdpDownloader() {};
 private:

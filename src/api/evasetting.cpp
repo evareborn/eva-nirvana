@@ -25,7 +25,9 @@
 #include <qdir.h>
 #include <qdatastream.h>
 #include <qtextcodec.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
+//Added by qt3to4:
+#include <Q3CString>
 
 #define DEFAULT_DOWNLOAD_DIR         "Downloads"
 
@@ -37,11 +39,11 @@ void readXdgUserDirs(QString *downloads)
 {
 	QFile f( QDir::homeDirPath() + "/.config/user-dirs.dirs" );
 
-	if (!f.open(IO_ReadOnly))
+	if (!f.open(QIODevice::ReadOnly))
 		return;
 
 	// set the codec for the current locale
-	QTextStream s(&f);
+	Q3TextStream s(&f);
 	s.setCodec( QTextCodec::codecForLocale() );
 
 	QString line = s.readLine();
@@ -92,7 +94,7 @@ EvaSetting::~EvaSetting()
 {}
 
 bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recorded, const bool hidden , 
-			const int type, const Q_UINT32 server, const Q_UINT16 port, const QString username, const QCString base64Param)
+			const int type, const Q_UINT32 server, const Q_UINT16 port, const QString username, const Q3CString base64Param)
 {
 	QString home = QDir::homeDirPath();
 	
@@ -128,7 +130,7 @@ bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recor
 	}	
 	
 	QString s_username = " ";
-	QCString s_param = " ";
+	Q3CString s_param = " ";
 	if( !username.isEmpty() && username.stripWhiteSpace() != "") s_username = username;
 	if( !base64Param.isEmpty() && base64Param.stripWhiteSpace() != "") s_param = base64Param;
 	if( userIndex == -1){
@@ -161,7 +163,7 @@ bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recor
 		userList.at(userIndex)->base64param = s_param;
 	}
 	QFile file(fullName);
-	if(!file.open(IO_WriteOnly)){
+	if(!file.open(QIODevice::WriteOnly)){
 		//QString msg = qApp->translate("QFile",file.errorString());
 		emit exceptionEvent(fullName);
 		return false;
@@ -197,7 +199,7 @@ bool EvaSetting::loadSetting( )
 	QString fullPath = QDir::homeDirPath() + QString("/.eva/") + filename;
 	
 	QFile file(fullPath);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 	Q_UINT32 qq;
@@ -333,7 +335,7 @@ short EvaSetting::getPort(const int id)
 	return 0;
 }
 
-const QCString EvaSetting::getProxyParam(const int id)
+const Q3CString EvaSetting::getProxyParam(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){

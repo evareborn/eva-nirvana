@@ -23,10 +23,15 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QTabWidget;
 class QToolButton;
@@ -38,7 +43,7 @@ class CustomFaceUIBase : public QWidget
     Q_OBJECT
 
 public:
-    CustomFaceUIBase( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    CustomFaceUIBase( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~CustomFaceUIBase();
 
     QTabWidget* twSelector;
@@ -49,9 +54,9 @@ public:
     QToolButton* tbNext;
 
 protected:
-    QGridLayout* CustomFaceUIBaseLayout;
-    QVBoxLayout* layout2;
-    QHBoxLayout* layout1;
+    Q3GridLayout* CustomFaceUIBaseLayout;
+    Q3VBoxLayout* layout2;
+    Q3HBoxLayout* layout1;
     QSpacerItem* spacer1;
 
 protected slots:

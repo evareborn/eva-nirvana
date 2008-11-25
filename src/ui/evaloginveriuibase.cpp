@@ -25,9 +25,13 @@
 #include <qlabel.h>
 #include <qtoolbutton.h>
 #include <qlineedit.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
@@ -37,16 +41,16 @@
  *  Constructs a EvaLoginVeriUIBase as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QDialog( parent, name, false, fl )
 {
     if ( !name )
 	setName( "EvaLoginVeriUIBase" );
-    EvaLoginVeriUIBaseLayout = new QGridLayout( this, 1, 1, 11, 6, "EvaLoginVeriUIBaseLayout"); 
+    EvaLoginVeriUIBaseLayout = new Q3GridLayout( this, 1, 1, 11, 6, "EvaLoginVeriUIBaseLayout"); 
 
-    layout8 = new QVBoxLayout( 0, 0, 6, "layout8"); 
+    layout8 = new Q3VBoxLayout( 0, 0, 6, "layout8"); 
 
-    layout1 = new QHBoxLayout( 0, 0, 6, "layout1"); 
+    layout1 = new Q3HBoxLayout( 0, 0, 6, "layout1"); 
 
     lblTopTip = new QLabel( this, "lblTopTip" );
     layout1->addWidget( lblTopTip );
@@ -54,9 +58,9 @@ EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, WFlag
     layout1->addItem( spacer1 );
     layout8->addLayout( layout1 );
 
-    layout5 = new QHBoxLayout( 0, 8, 10, "layout5"); 
+    layout5 = new Q3HBoxLayout( 0, 8, 10, "layout5"); 
 
-    layout2 = new QVBoxLayout( 0, 0, 6, "layout2"); 
+    layout2 = new Q3VBoxLayout( 0, 0, 6, "layout2"); 
 
     lblGraphicCode = new QLabel( this, "lblGraphicCode" );
     layout2->addWidget( lblGraphicCode );
@@ -65,9 +69,9 @@ EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, WFlag
     layout2->addWidget( lblVeriCode );
     layout5->addLayout( layout2 );
 
-    layout4 = new QVBoxLayout( 0, 0, 6, "layout4"); 
+    layout4 = new Q3VBoxLayout( 0, 0, 6, "layout4"); 
 
-    layout3 = new QHBoxLayout( 0, 4, 6, "layout3"); 
+    layout3 = new Q3HBoxLayout( 0, 4, 6, "layout3"); 
 
     lblGraphic = new QLabel( this, "lblGraphic" );
     lblGraphic->setPaletteForegroundColor( QColor( 112, 162, 255 ) );
@@ -84,14 +88,14 @@ EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, WFlag
     layout5->addLayout( layout4 );
     layout8->addLayout( layout5 );
 
-    line1 = new QFrame( this, "line1" );
-    line1->setFrameShape( QFrame::HLine );
-    line1->setFrameShadow( QFrame::Sunken );
+    line1 = new Q3Frame( this, "line1" );
+    line1->setFrameShape( Q3Frame::HLine );
+    line1->setFrameShadow( Q3Frame::Sunken );
     line1->setMargin( 0 );
-    line1->setFrameShape( QFrame::HLine );
+    line1->setFrameShape( Q3Frame::HLine );
     layout8->addWidget( line1 );
 
-    layout6 = new QHBoxLayout( 0, 10, 6, "layout6"); 
+    layout6 = new Q3HBoxLayout( 0, 10, 6, "layout6"); 
     spacer2 = new QSpacerItem( 71, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout6->addItem( spacer2 );
 
@@ -106,7 +110,7 @@ EvaLoginVeriUIBase::EvaLoginVeriUIBase( QWidget* parent, const char* name, WFlag
     EvaLoginVeriUIBaseLayout->addLayout( layout8, 0, 0 );
     languageChange();
     resize( QSize(320, 182).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+//X     clearWState( WState_Polished );
 
 }
 

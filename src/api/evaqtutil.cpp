@@ -22,20 +22,22 @@
 #include "evautil.h"
 #include "evausersetting.h"
 #include "evamemo.h"
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qimage.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <QPixmap>
 #include <cstring>
 
 const QString EvaTextFilter::filter( const QString & source )
 {
 	QChar ch;
 	QString result;
-	QTextStream stream(&result, IO_WriteOnly);
-	for(uint i=0; i< source.length(); i++){
+	Q3TextStream stream(&result, QIODevice::WriteOnly);
+	for(int i=0; i< source.length(); i++){
 		ch = source.at(i);
 		if(ch.isPrint())
 			stream << ch;
@@ -619,7 +621,7 @@ bool EvaHelper::getFileMD5( const QString & fileName, char *md5)
 	unsigned int len = info.size();
 	char *buf = new char[len];
 	QFile file(fileName);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		printf("EvaHelper:image dose not exists!");
 		delete buf;
 		return false;
@@ -655,7 +657,7 @@ bool EvaHelper::copyFile( const QString & source, const QString & dest )
 	unsigned int len = info.size();
 	char *buf = new char[len];
 	QFile file(source);
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		printf("EvaHelper:image dose not exists!");
 		delete buf;
 		return false;
@@ -669,7 +671,7 @@ bool EvaHelper::copyFile( const QString & source, const QString & dest )
 	
 	QFile destFile(dest);
 	if(!destFile.exists()){
-		if(!destFile.open(IO_WriteOnly | IO_Raw)){
+		if(!destFile.open(QIODevice::WriteOnly | QIODevice::Unbuffered)){
 			printf("EvaHelper:cannot copy image file!\n");
 			delete buf;
 			return false;

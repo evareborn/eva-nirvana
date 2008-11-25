@@ -21,39 +21,43 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 #include <qlabel.h>
 #include <qtoolbutton.h>
-#include <qwidgetstack.h>
-#include <qtextedit.h>
+#include <q3widgetstack.h>
+#include <q3textedit.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
  
 #include "evamain.h"
 
 //X #include <klocale.h>
 
-EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
+EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
 	if ( !name )
 		setName( "EvaNotifyUIBase" );
-	EvaNotifyUIBaseLayout = new QGridLayout( this, 1, 1, 1, 0, "EvaNotifyUIBaseLayout"); 
+	EvaNotifyUIBaseLayout = new Q3GridLayout( this, 1, 1, 1, 0, "EvaNotifyUIBaseLayout"); 
 	
-	layout62 = new QVBoxLayout( 0, 0, 6, "layout62"); 
+	layout62 = new Q3VBoxLayout( 0, 0, 6, "layout62"); 
 	
-	gbFrom = new QGroupBox( this, "gbFrom" );
+	gbFrom = new Q3GroupBox( this, "gbFrom" );
 	gbFrom->setMaximumSize( QSize( 32767, 60 ) );
-	gbFrom->setFrameShape( QGroupBox::GroupBoxPanel );
-	gbFrom->setFrameShadow( QGroupBox::Sunken );
+	gbFrom->setFrameShape( Q3GroupBox::GroupBoxPanel );
+	gbFrom->setFrameShadow( Q3GroupBox::Sunken );
 	gbFrom->setColumnLayout(0, Qt::Vertical );
 	gbFrom->layout()->setSpacing( 0 );
 	gbFrom->layout()->setMargin( 5 );
-	gbFromLayout = new QGridLayout( gbFrom->layout() );
+	gbFromLayout = new Q3GridLayout( gbFrom->layout() );
 	gbFromLayout->setAlignment( Qt::AlignTop );
 	
-	layout49 = new QHBoxLayout( 0, 0, 0, "layout49"); 
+	layout49 = new Q3HBoxLayout( 0, 0, 0, "layout49"); 
 	
 	textLabel1 = new QLabel( gbFrom, "textLabel1" );
 	layout49->addWidget( textLabel1 );
@@ -83,7 +87,7 @@ EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
 	
 	textLabel3 = new QLabel( gbFrom, "textLabel3" );
 	textLabel3->setMaximumSize( QSize( 50, 32767 ) );
-	textLabel3->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+	textLabel3->setAlignment( Qt::WordBreak | Qt::AlignVCenter );
 	layout49->addWidget( textLabel3 );
 	
 	tbDetails = new QToolButton( gbFrom, "tbDetails" );
@@ -94,37 +98,37 @@ EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
 	gbFromLayout->addLayout( layout49, 0, 0 );
 	layout62->addWidget( gbFrom );
 	
-	gbMain = new QGroupBox( this, "gbMain" );
+	gbMain = new Q3GroupBox( this, "gbMain" );
 	gbMain->setColumnLayout(0, Qt::Vertical );
 	gbMain->layout()->setSpacing( 3 );
 	gbMain->layout()->setMargin( 5 );
-	gbMainLayout = new QGridLayout( gbMain->layout() );
+	gbMainLayout = new Q3GridLayout( gbMain->layout() );
 	gbMainLayout->setAlignment( Qt::AlignTop );
 	
-	wsMain = new QWidgetStack( gbMain, "wsMain" );
+	wsMain = new Q3WidgetStack( gbMain, "wsMain" );
 	
 	WStackPage = new QWidget( wsMain, "WStackPage" );
-	WStackPageLayout = new QGridLayout( WStackPage, 1, 1, 11, 6, "WStackPageLayout"); 
+	WStackPageLayout = new Q3GridLayout( WStackPage, 1, 1, 11, 6, "WStackPageLayout"); 
 	
 	tlP0Tip = new QLabel( WStackPage, "tlP0Tip" );
-	tlP0Tip->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+	tlP0Tip->setAlignment( Qt::WordBreak | Qt::AlignVCenter );
 	
 	WStackPageLayout->addWidget( tlP0Tip, 0, 0 );
 	wsMain->addWidget( WStackPage, 0 );
 	
 	WStackPage_2 = new QWidget( wsMain, "WStackPage_2" );
-	WStackPageLayout_2 = new QGridLayout( WStackPage_2, 1, 1, 11, 6, "WStackPageLayout_2"); 
+	WStackPageLayout_2 = new Q3GridLayout( WStackPage_2, 1, 1, 11, 6, "WStackPageLayout_2"); 
 	
-	layout54 = new QHBoxLayout( 0, 0, 6, "layout54"); 
+	layout54 = new Q3HBoxLayout( 0, 0, 6, "layout54"); 
 	
 	tlP1Tip = new QLabel( WStackPage_2, "tlP1Tip" );
-	tlP1Tip->setAlignment( int( QLabel::WordBreak | QLabel::AlignVCenter ) );
+	tlP1Tip->setAlignment( Qt::WordBreak | Qt::AlignVCenter );
 	layout54->addWidget( tlP1Tip );
 	
-	teP1Msg = new QTextEdit( WStackPage_2, "teP1Msg" );
+	teP1Msg = new Q3TextEdit( WStackPage_2, "teP1Msg" );
 	teP1Msg->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)1, (QSizePolicy::SizeType)1, 0, 0, teP1Msg->sizePolicy().hasHeightForWidth() ) );
 	teP1Msg->setMaximumSize( QSize( 150, 60 ) );
-	teP1Msg->setTextFormat( QTextEdit::PlainText );
+	teP1Msg->setTextFormat( Qt::PlainText );
 	layout54->addWidget( teP1Msg );
 	
 	WStackPageLayout_2->addLayout( layout54, 0, 0 );
@@ -133,7 +137,7 @@ EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
 	gbMainLayout->addWidget( wsMain, 0, 0 );
 	layout62->addWidget( gbMain );
 	
-	layout52 = new QHBoxLayout( 0, 0, 6, "layout52"); 
+	layout52 = new Q3HBoxLayout( 0, 0, 6, "layout52"); 
 	
 	pbApprove = new QPushButton( this, "pbApprove" );
 	pbApprove->setMaximumSize( QSize( 70, 32767 ) );
@@ -157,7 +161,7 @@ EvaNotifyUIBase::EvaNotifyUIBase( QWidget* parent, const char* name, WFlags fl )
 	EvaNotifyUIBaseLayout->addLayout( layout62, 0, 0 );
 	languageChange();
 	resize( QSize(372, 249).expandedTo(minimumSizeHint()) );
-	clearWState( WState_Polished );
+//X 	clearWState( WState_Polished );
 	
 }
 

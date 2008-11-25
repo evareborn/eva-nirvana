@@ -21,35 +21,40 @@
 #ifndef EVA_STATUSBAR_H
 #define EVA_STATUSBAR_H
 
-#include <qframe.h>
+#include <q3frame.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QLabel;
 class QToolButton;
 
-class EvaStatusBar : public QFrame
+class EvaStatusBar : public Q3Frame
 {
 public:
-	EvaStatusBar( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+	EvaStatusBar( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
 	~EvaStatusBar();
 	
 	QLabel* lblNotification;
-	QFrame* fraSystem;
+	Q3Frame* fraSystem;
 	QToolButton* tbSearch;
 	QToolButton* tbSysMsg;
 	QToolButton* tbSystem;
-	QFrame* fraStatus;
+	Q3Frame* fraStatus;
 	QToolButton* tbStatus;
 protected:
-	QGridLayout* frame4Layout;
-	QHBoxLayout* layout4;
+	Q3GridLayout* frame4Layout;
+	Q3HBoxLayout* layout4;
 	QSpacerItem* spacer2;
-	QGridLayout* fraSystemLayout;
-	QHBoxLayout* layout3;
-	QGridLayout* fraStatusLayout;
+	Q3GridLayout* fraSystemLayout;
+	Q3HBoxLayout* layout3;
+	Q3GridLayout* fraStatusLayout;
 };
 
 #endif //EVA_STATUSBAR_H

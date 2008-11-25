@@ -24,22 +24,24 @@
 #include "evaresource.h"
 #include <stdlib.h>
 #include <qlabel.h>
-#include <qwidgetstack.h>
+#include <q3widgetstack.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
 #include <qlineedit.h>
 #include <qmessagebox.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qcheckbox.h>
 #include <qtoolbutton.h>
-#include <qgroupbox.h>
-#include <qbuttongroup.h>
+#include <q3groupbox.h>
+#include <q3buttongroup.h>
 #include <qimage.h>
 #include <qtextcodec.h>
 #include <qtabwidget.h>
 #include <qcombobox.h>
 #include <qstringlist.h>
 #include <qrect.h>
+//Added by qt3to4:
+#include <QPixmap>
 //X #include <kmessagebox.h>
 //X #include <krun.h>
 //X #include <klocale.h>
@@ -116,7 +118,7 @@ bool CityList::loadList( )
 }
 /*----------------------------------------------------------*/
 EvaSearchWindow::EvaSearchWindow(EvaImageResource *res, const int onlineUsers, QWidget* parent, 
-		const char* name, WFlags fl)
+		const char* name, Qt::WFlags fl)
 	: EvaSearchUIBase(parent,name, fl),
 	m_BSearchType(B_CUSTOM),
 	m_BCurrentPage(0),

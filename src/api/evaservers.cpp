@@ -19,12 +19,15 @@
  ***************************************************************************/
 #include "evaservers.h"
 #include <stdlib.h>      // rand() function
-#include <qdns.h>
+#include <q3dns.h>
 #include <qfile.h>
 #include <qdatastream.h>
 #include <qdatetime.h>   // seed for rand()
 #include <qtimer.h>
 #include <qdir.h>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3ValueList>
 
 //X #include <kdebug.h>
 //X #include <kconfig.h>
@@ -104,7 +107,7 @@ void EvaServers::fetchAddress( bool isUdp )
 	}
 	
 	// the address should be a URL now, so we try to get the IP
-	QDns * dns =  new QDns(addr.addr, QDns::A);
+	Q3Dns * dns =  new Q3Dns(addr.addr, Q3Dns::A);
 	QObject::connect(dns, SIGNAL(resultsReady()), this, SLOT(getResultsSlot()));
 
 
@@ -116,11 +119,11 @@ void EvaServers::fetchAddress( bool isUdp )
 bool EvaServers::loadServers( )
 {
 	QFile file(filename);    
-	if(!file.open(IO_ReadOnly)){
+	if(!file.open(QIODevice::ReadOnly)){
 		return false;
 	}
 
-	QTextStream stream(&file);
+	Q3TextStream stream(&file);
 	QString line;
 	QStringList lineList;
 	int nextType = 0; 
@@ -178,12 +181,12 @@ void EvaServers::defaultAddress()
 
 void EvaServers::getResultsSlot( )
 {
-	QDns *dns = (QDns *)(QObject::sender());
+	Q3Dns *dns = (Q3Dns *)(QObject::sender());
 	if(dns == 0 ){
         	defaultAddress();
         	return;
 	}
-	QValueList<QHostAddress> list = dns->addresses();
+	Q3ValueList<QHostAddress> list = dns->addresses();
 	if(list.count() == 0 ){
 		defaultAddress();
 		return;
