@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 	QObject::connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
        // args->clear();
 
-    	// mainWin has WDestructiveClose flag by default, so it will delete itself.
+        printf( "main loop!\n" );
 	return app.exec();
 }
 

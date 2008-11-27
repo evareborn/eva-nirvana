@@ -50,7 +50,7 @@ public:
     QLabel* tlNick;
     QLabel* tlQQ;
     //EvaListView* listView;
-    //EvaTabWidget *tab;
+//X     EvaTabWidget *tab;
     EvaDisplayWidget *mainDisplay;
     EvaStatusBar *statusBar;
     //QPushButton* pbSearch;

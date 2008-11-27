@@ -20,7 +20,7 @@
 #ifndef EVACONNECTER_H 
 #define EVACONNECTER_H
 
-#include <qobject.h>
+#include <QObject>
 #include <q3ptrlist.h>
 #include <qhostaddress.h>
 #include <qstring.h>

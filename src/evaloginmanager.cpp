@@ -28,7 +28,7 @@
 #include "evaconnecter.h"
 #include "evaapi.h"
 #include "evaloginveriwindow.h"
-#include <qapplication.h>
+#include <QApplication>
 //X #include <kapplication.h>
 //X #include <kdebug.h>
 
@@ -50,10 +50,18 @@ EvaLoginManager::EvaLoginManager(EvaMain* evaapp )
 
 void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
 {
+        printf( "EvaLoginManager::notifyEvent\n" );
 	EvaNotifyEvent *e = new EvaNotifyEvent(eId);
 	e->m_desc = msg;
 	
-	QApplication::postEvent(g_eva, e);
+//X 	QApplication::postEvent(g_eva, e);
+	QApplication::sendEvent(g_eva, e);
+ 
+        if ( QApplication::hasPendingEvents() ) {
+            printf( "has pending events!\n" );
+        }
+	
+
 }
 
 void EvaLoginManager::setPacketManager( EvaPacketManager * pm )
@@ -131,9 +139,9 @@ void EvaLoginManager::verifyPassed( )
 
 void EvaLoginManager::loginOK( )
 {	
+        printf( "login Ok!\n" );
 	m_status = ELogin;
 	notifyEvent(E_LoggedIn);
-	
 	//We don't care about the reply of this command	
 	m_packetManager->doChangeStatus(EvaMain::user->getStatus());
 
@@ -162,7 +170,7 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 
 void EvaLoginManager::fileAgentInfoReady( )
 {
-//X 	kdDebug() << "[EvaLoginManager] file agent info ready" << endl;
+	printf( "[EvaLoginManager] file agent info ready\n" );
 	if(g_eva && g_eva->m_FileManager){
 		g_eva->m_FileManager->setMyBasicInfo(Packet::getFileAgentKey(),
 						 Packet::getFileAgentToken(), 

@@ -20,7 +20,7 @@
 #ifndef EVASERVERS_H
 #define EVASERVERS_H
 
-#include <qobject.h>
+#include <QObject>
 #include <q3valuelist.h>
 #include <qhostaddress.h>
 

@@ -38,17 +38,21 @@ EvaMainUIBase::EvaMainUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     layout2->addWidget( tbMyFace );
 
     tlNick = new QLabel( this, "tlNick" );
+    tlNick->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tlNick->sizePolicy().hasHeightForWidth() ) );
     layout2->addWidget( tlNick );
 
     tlQQ = new QLabel( this, "tlQQ" );
+    tlQQ->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tlQQ->sizePolicy().hasHeightForWidth() ) );
     layout2->addWidget( tlQQ );
     spacer1 = new QSpacerItem( 50, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
+    spacer1 = new QSpacerItem( 50, 20, QSizePolicy::Minimum, QSizePolicy::Minimum );
     layout2->addItem( spacer1 );
     layout1->addLayout( layout2 );
 
     mainDisplay = new EvaDisplayWidget(this, "mainDisplay");
-    mainDisplay->showInfoFrame();
-    mainDisplay->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, mainDisplay->sizePolicy().hasHeightForWidth() ) );
+    mainDisplay->showInfoFrame(false);
+//X     mainDisplay->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, mainDisplay->sizePolicy().hasHeightForWidth() ) );
+//X     mainDisplay->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)5, 0, 0, mainDisplay->sizePolicy().hasHeightForWidth() ) );
     layout1->addWidget( mainDisplay );
 
     statusBar = new EvaStatusBar(this, "status bar");

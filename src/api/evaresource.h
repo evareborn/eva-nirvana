@@ -21,7 +21,7 @@
 #ifndef EVARESOURCE_H 
 #define EVARESOURCE_H
 
-#include <qobject.h>
+#include <QObject>
 #include <qfile.h>
 #include <qmap.h>
 #include <qpixmap.h>

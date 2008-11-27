@@ -29,7 +29,7 @@
 #include <q3socketdevice.h>
 #include <q3dns.h>
 #include <qstringlist.h>
-#include <qapplication.h>
+#include <QApplication>
 #include <string.h>
 #include <cstring>
 

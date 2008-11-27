@@ -21,7 +21,7 @@
 #define EVANETWORK_H 
 
 
-#include <qobject.h>
+#include <QObject>
 #include <qhostaddress.h>
 //Added by qt3to4:
 #include <Q3CString>

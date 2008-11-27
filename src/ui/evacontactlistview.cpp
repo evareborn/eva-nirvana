@@ -538,6 +538,8 @@ void EvaContactListView::updateContacts()
 			m_groups[i]  = new EvaGroupItem(i, this);
 		i++;
 	}
+ 
+        printf( "%d groups\n", i );
 
 	if (!m_groups.count(user->getAnonymousIndex()))
 		m_groups[user->getAnonymousIndex()] = new EvaGroupItem(user->getAnonymousIndex(), this);
@@ -548,14 +550,17 @@ void EvaContactListView::updateContacts()
 	int gIndex = 0;
 	FriendList *list = EvaMain::user->getFriends();
 	QQFriend *f = list->firstFriend();
+        int j = 0;
 	while( f ){
 		if ((!m_contacts.count(f->getQQ()))&&(f->getQQ()!=0)){
 			gIndex = m_groups.count(f->getGroupIndex())?f->getGroupIndex():0;
 			m_contacts[f->getQQ()] = new EvaBuddyItem(*f, m_groups[gIndex]);
+                        j++;
 		}
 
 		f = list->nextFriend();
 	}
+        printf( "%d friends\n", j );
 	if(user->getSetting()->isShowOnlineEnabled())
 		showOnlineOnly();
 	else

@@ -27,6 +27,7 @@
 #include <Q3VBoxLayout>
 #include <Q3GridLayout>
 #include <QLabel>
+#include <QTabWidget>
 #include "evamainwindow.h"
 
 class QLabel;
@@ -70,12 +71,13 @@ public:
 
 private:
 	//QGridLayout* wspageLoginLayout;
-	Q3GridLayout * layoutLogin;
-	QWidget     * wLogin;
-	Q3GridLayout * layoutTab;
-	QWidget     * wTab;
-	EvaLoginPageFrame * loginPage;
-	EvaTabWidget      *tab;
+//X 	Q3GridLayout * layoutLogin;
+//X 	QWidget     * wLogin;
+//X 	Q3GridLayout * layoutTab;
+//X 	QWidget     * wTab;
+//X 	EvaLoginPageFrame * loginPage;
+//X 	EvaTabWidget      *tab;
+	QTabWidget      *tab;
 	//QWidgetStack      * wsMainDisplay;
 	
 	friend class EvaMainWindow;

@@ -61,7 +61,7 @@
 
 #include <qhostaddress.h>
 #include <q3cstring.h>
-#include <qobject.h>
+#include <QObject>
 #include <qmap.h>
 
 // Implementing UDP & TCP connections to Tencent Server

@@ -24,7 +24,7 @@
 #include "evauser.h"
 #include <map>
 #include <list>
-#include <qobject.h>
+#include <QObject>
 #include <qdatetime.h>
 #include <qstringlist.h>
 #include <q3valuelist.h>
@@ -46,7 +46,7 @@ typedef struct {
 class EvaPacketManager : public QObject {
 	Q_OBJECT
 public:
-	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* evapp);
+	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* evaapp);
 	~EvaPacketManager();
 	
 	EvaUser *getUser() { return user; }
@@ -286,8 +286,8 @@ signals:
 	void receivedQQNews(const QString &title, const QString &brief, const QString &url);
 private:
 
-	QTextCodec *codec;
         EvaMain* g_eva;
+	QTextCodec *codec;
 	EvaUser *user;
 	EvaConnecter *connecter;
 	QTimer *timer; // keep online and get online friends

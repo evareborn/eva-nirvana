@@ -21,7 +21,7 @@
 #ifndef EVA_LOGIN_MANAGER_H 
 #define EVA_LOGIN_MANAGER_H
 
-#include <qobject.h>
+#include <QObject>
 #include <qhostaddress.h>
 
 class EvaPacketManager;

@@ -32,6 +32,7 @@
 #include <Q3Frame>
 #include <QKeyEvent>
 #include <QDesktopWidget>
+#include <QApplication>
  
 #include "evamain.h"
 

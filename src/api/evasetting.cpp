@@ -20,7 +20,6 @@
 #include "evasetting.h"
 #include <stdlib.h>
 #include <cstring>
-#include <qapplication.h>
 #include <qfile.h>
 #include <qdir.h>
 #include <qdatastream.h>

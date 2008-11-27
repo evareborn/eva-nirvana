@@ -443,7 +443,8 @@ void EvaMainWindow::setPosAndSize()
 void EvaMainWindow::ShowTab(int key)
 {
 	if(mainDisplay && mainDisplay->tab)
-		mainDisplay->tab->changeTabTo( key );
+//X 		mainDisplay->tab->changeTabTo( key );
+		mainDisplay->tab->setCurrentIndex( key );
 }
 
 void EvaMainWindow::loadContacts( )
@@ -458,12 +459,13 @@ void EvaMainWindow::loadContacts( )
 	QString name = i18n("Buddy List");
 	//QPixmap *p= EvaMain::images->getIcon("ONLINE");
 	QPixmap *p= EvaMain::images->getIcon("CONTACT");
-	m_buddyTabKey = mainDisplay->tab->addTab(name, *p, name, m_buddyLv);
+//X 	m_buddyTabKey = mainDisplay->tab->addTab(name, *p, name, m_buddyLv);
+	m_buddyTabKey = mainDisplay->tab->addTab(m_buddyLv, QIcon( *p ), "");
 
 	m_buddyLv->loadContacts();
 
 	if(m_buddyLv) m_buddyLv->setColumnWidth(0, width());
-	mainDisplay->tab->changeTabTo( m_buddyTabKey );
+	mainDisplay->tab->setCurrentIndex( m_buddyTabKey );
 
 	QObject::connect(m_buddyLv, SIGNAL(groupDeleted(const int)), this, SIGNAL(groupDeleted(const int)));
 	//QObject::connect(m_buddyLv, SIGNAL(groupAdded(QString, int)), this, SIGNAL(groupAdded(QString, int)));
@@ -499,7 +501,8 @@ void EvaMainWindow::loadQuns( )
 	QString name = i18n("Qun List");
 	//QPixmap *p= EvaMain::images->getIcon("QUN");
 	QPixmap *p= EvaMain::images->getIcon("QUNS");
-	m_qunTabKey = mainDisplay->tab->addTab(name, *p, name, m_qunLv);
+//X 	m_qunTabKey = mainDisplay->tab->addTab(name, *p, name, m_qunLv);
+	m_qunTabKey = mainDisplay->tab->addTab(m_qunLv, QIcon( *p ), "");
 	m_qunLv->loadAllQuns();
 
 	m_qunLv->setColumnWidth(0, width());
@@ -523,7 +526,8 @@ void EvaMainWindow::loadRecentContacts( )
 	m_recentLv = new EvaRecentContactsListView(mainDisplay->tab, "recentLv");
 	QString name = i18n("Recent Contacts List");
 	QPixmap *p= EvaMain::images->getIcon("MSG");
-	m_recentTabKey = mainDisplay->tab->addTab(name, *p, name, m_recentLv);
+//X 	m_recentTabKey = mainDisplay->tab->addTab(name, *p, name, m_recentLv);
+	m_recentTabKey = mainDisplay->tab->addTab(m_recentLv, QIcon( *p ), "");
 
 	m_recentLv->loadRecentContacts();
 
@@ -570,15 +574,17 @@ void EvaMainWindow::addQunToRecentList( const unsigned int id, bool isMyWord )
 
 bool EvaMainWindow::removeTab( int id )
 {
-	bool result = false;
+//X 	bool result = false;
 	if(mainDisplay && mainDisplay->tab ){
-		result = mainDisplay->tab->removeTab( id);
-		mainDisplay->tab->changeTabTo(m_recentTabKey);
+//X 		result = mainDisplay->tab->removeTab( id);
+		mainDisplay->tab->removeTab( id);
+		mainDisplay->tab->setCurrentIndex(m_recentTabKey);
 //X 		m_customTabs.remove(id);
 //X 		m_tabScriptMap.remove(id);
 	}
 	
-	return result;
+//X 	return result;
+        return true;
 }
 
 void EvaMainWindow::updateContacts( )
@@ -607,15 +613,15 @@ void EvaMainWindow::showInfoFrame( bool showInfo )
 {
 	if(mainDisplay){
 		mainDisplay->showInfoFrame(showInfo);
-		mainDisplay->loginPage->adjustSize();
+//X 		mainDisplay->loginPage->adjustSize();
 	}
 }
 
-void EvaMainWindow::UpdateLoginInfo( int value, const QString & msg )
+void EvaMainWindow::UpdateLoginInfo( int /*value*/, const QString & /*msg*/ )
 {
 	if(mainDisplay){
-		mainDisplay->loginPage->update(value, msg);
-		mainDisplay->loginPage->adjustSize();
+//X 		mainDisplay->loginPage->update(value, msg);
+//X 		mainDisplay->loginPage->adjustSize();
 	}
 }
 

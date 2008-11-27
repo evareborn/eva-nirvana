@@ -51,7 +51,7 @@
 #include <q3valuelist.h>
 #include <q3popupmenu.h>
 #include <qmessagebox.h>
-#include <qapplication.h>
+#include <QApplication>
 //#include <qhelpmenu.h>
 #include <quuid.h>
 #include <qdir.h>
@@ -710,7 +710,7 @@ void EvaMain::slotSetupNetwork( )
 	QObject::connect(packetManager, SIGNAL(friendListReady()), SLOT(slotGetOnlineStatus()));
 
 	// friend list related signals
-	//QObject::connect(packetManager, SIGNAL(friendListReady()), SLOT(slotFriendListReady()));
+//X 	QObject::connect(packetManager, SIGNAL(friendListReady()), SLOT(slotFriendListReady()));
 	QObject::connect(packetManager, SIGNAL(deleteMeReady(bool)), SLOT(slotDeleteMeReply( bool )));
 	//QObject::connect(packetManager, SIGNAL(friendGroupsReady()), SLOT(slotFriendGroupsReady()));
 	QObject::connect(packetManager, SIGNAL(friendGroupsUploadReady(bool)), SLOT(slotFriendGroupsUploadReady(bool)));
@@ -2130,7 +2130,7 @@ void EvaMain::slotExtraInfoReady( )
 	
 }
 
-void EvaMain::customEvent( QCustomEvent * e )
+void EvaMain::customEvent( QEvent * e )
 {
 // 	if(e->type() == EvaUserHeadReadyEvent){
 // 		EvaUHReadyEvent *event = (EvaUHReadyEvent *)e;
@@ -2145,6 +2145,7 @@ void EvaMain::customEvent( QCustomEvent * e )
 // 			g_mainWin->updateBuddy(id);
 // 		}
 // 	}
+        printf( "recieved custom event \n" );
 	switch(e->type()){
 		case EvaUserHeadReadyEvent:
 		{
@@ -2163,6 +2164,7 @@ void EvaMain::customEvent( QCustomEvent * e )
 		}
 			break;
 		case EvaEventNotify:
+                        printf( "[EvaMain] EvaEventNotify ready\n" );
 			dispatchEvaEvent((EvaNotifyEvent *)e);
 			break;
 		default:break;
@@ -2581,6 +2583,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		}
 			break;
 		case E_MyInfo:
+                        printf( "[EvaMain] MyInfo ready\n" );
 			g_mainWin->UpdateLoginInfo(E_MyInfo + 1, s_ENotify[E_MyInfo]);
 			g_mainWin->updateMyInfo();
 			g_ChatWindowManager->setMyName(codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str()), 
@@ -2599,10 +2602,12 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->UpdateLoginInfo(E_ContactsDownloading + 1, s_ENotify[E_ContactsDownloading]);
 			break;
 		case E_ContactsDone:
+                        printf( "[EvaMain] Contacts ready\n" );
 			g_mainWin->UpdateLoginInfo(E_ContactsDone + 1, s_ENotify[E_ContactsDone]);
 			//EvaMain::g_contactManager->fetchGroupNames();
 			break;
 		case E_GroupNameDownloadDone:
+                        printf( "[EvaMain] Groups ready\n" );
 			g_mainWin->UpdateLoginInfo(E_GroupNameDownloadDone + 1, s_ENotify[E_GroupNameDownloadDone]);
 			//EvaMain::g_contactManager->fetchGroupedFriends();
 			break;
@@ -2614,7 +2619,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			break;
 		case E_QunInfoFinished:
 		{	
-//X 			kdDebug() << "[EvaMain] Qun Info ready" << endl;
+                        printf( "[EvaMain] Qun Info ready\n" );
 			g_mainWin->UpdateLoginInfo(E_QunInfoFinished + 1, s_ENotify[E_QunInfoFinished]);
 			const Qun *qun = user->getQunList()->getQun((unsigned int)(e->m_param));
 			if(qun){
@@ -2624,7 +2629,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		}
 			break;
 		case E_QunMemberFinished:
-//X 			kdDebug() << "[EvaMain] Qun Member ready" << endl;
+                        printf( "[EvaMain] Qun Member ready\n" );
 			g_mainWin->UpdateLoginInfo(E_QunMemberFinished + 1, s_ENotify[E_QunMemberFinished]);
 			g_ChatWindowManager->slotQunMemberInfoReady((unsigned int)(e->m_param));
 			break;
@@ -2663,6 +2668,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->updateQuns();
 			g_mainWin->updateRecentContacts();
 
+                        printf( "updateContacts() called\n" );
 			connecter->slotClientReady();
 			packetManager->doRequestExtraInfo();
 			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather

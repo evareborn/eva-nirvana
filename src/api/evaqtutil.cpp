@@ -27,7 +27,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
-#include <qapplication.h>
+#include <QApplication>
 //Added by qt3to4:
 #include <QPixmap>
 #include <cstring>

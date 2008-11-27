@@ -21,10 +21,9 @@
 #ifndef EVAMAIN_H
 #define EVAMAIN_H
 
-#include <qobject.h>
+#include <QObject>
 #include <qdatetime.h>
 #include <qstringlist.h>
-#include <qapplication.h>
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <inttypes.h>
@@ -97,7 +96,6 @@ class EvaMain : public QObject
 	Q_OBJECT
 
 public:
-        static EvaMain* getEvaMain();
 	EvaMain();
 	~EvaMain();
 
@@ -152,7 +150,7 @@ public:
 	void openAddFriendDialog(unsigned int id);
 
 protected:
-	virtual void customEvent( QCustomEvent * e );
+	virtual void customEvent( QEvent * e );
 	void dispatchEvaEvent( EvaNotifyEvent * e);
 	
 private:

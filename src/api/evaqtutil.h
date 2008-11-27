@@ -26,7 +26,7 @@
 #include "evahtmlparser.h"
 
 #include <string>
-#include <qobject.h>
+#include <QObject>
 #include <qthread.h>
 #include <qpixmap.h>
 #include <qimage.h>
@@ -36,15 +36,15 @@
 //Added by qt3to4:
 #include <QCustomEvent>
 
-#define EvaLoadGroupedUsersEvent  65535
-#define EvaLoadQunUsersEvent      65534
-#define EvaLoadSysEvent           65533
-#define EvaScaleImageEvent        65532
-#define EvaRequestCustomizedPicEvent 65531
-#define EvaPictureReadyEvent      65530
-#define EvaSendPictureReadyEvent  65529
-#define EvaUserHeadReadyEvent     65528
-#define EvaEventNotify            65527
+#define EvaLoadGroupedUsersEvent  65534
+#define EvaLoadQunUsersEvent      65533
+#define EvaLoadSysEvent           65532
+#define EvaScaleImageEvent        65531
+#define EvaRequestCustomizedPicEvent 65530
+#define EvaPictureReadyEvent      65529
+#define EvaSendPictureReadyEvent  65528
+#define EvaUserHeadReadyEvent     65527
+#define EvaEventNotify            65526
 
 const Q_UINT32 profileVersion = 0x000400;
 

@@ -72,7 +72,7 @@ public:
 	virtual QString tip();
 	
 	virtual void paintCell( QPainter * painter, const QColorGroup & colourGroup, int column, int width, int align );
-	virtual void paintBranches(QPainter * p, const QColorGroup & cg,int w, int y, int h);
+//X 	virtual void paintBranches(QPainter * p, const QColorGroup & cg,int w, int y, int h);
 	LVIType type() const { return m_type; }
 
 protected:

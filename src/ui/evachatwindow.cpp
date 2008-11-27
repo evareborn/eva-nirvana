@@ -36,6 +36,7 @@
 #include "regiongrabber.h"
 #include "evamainwindow.h"
 #include "evahistoryviewer.h"
+#include <QApplication>
 //X #include "evascriptmanager.h"
 
 #include <qtextcodec.h>

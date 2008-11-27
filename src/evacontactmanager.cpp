@@ -394,7 +394,7 @@ void EvaContactManager::fetchDetail( const unsigned int id )
 
 void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * packet )
 {
-//X 	kdDebug()<<"[EvaContactManager] got user info" << endl;
+ 	printf( "[EvaContactManager] got user info\n" );
 	EvaUser *user = EvaMain::user;
 	assert(user);
 	assert(packet);

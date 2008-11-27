@@ -76,32 +76,35 @@ void EvaLoginPageFrame::update(int value, const QString &msg)
 EvaDisplayWidget::EvaDisplayWidget(QWidget* parent, const char* name, Qt::WFlags fl)
 	: Q3WidgetStack(parent, name, fl)
 {
-	wLogin = new QWidget(this);	
-	layoutLogin = new Q3GridLayout( wLogin, 1, 1, 30, 6, "wspageLoginLayout");
-	
-	loginPage = new EvaLoginPageFrame(wLogin, "loginPageFrame");
-	layoutLogin->addWidget(loginPage, 0, 0);
-	addWidget(wLogin, 0);
+//X 	wLogin = new QWidget(this);	
+//X 	layoutLogin = new Q3GridLayout( wLogin, 1, 1, 30, 6, "wspageLoginLayout");
+//X 	
+//X 	loginPage = new EvaLoginPageFrame(wLogin, "loginPageFrame");
+//X 	layoutLogin->addWidget(loginPage, 0, 0);
+//X 	addWidget(wLogin, 0);
 	
 	//wspageLoginLayout = new QGridLayout( loginPage, 1, 1, 30, 6, "wspageLoginLayout");
 	//addWidget(wLogin, 0);
-	wTab = new QWidget(this);
-	layoutTab = new Q3GridLayout( wTab, 1, 1, 3, 3, "wspageLoginLayout");
+//X 	wTab = new QWidget(this);
+//X 	layoutTab = new Q3GridLayout( wTab, 1, 1, 3, 3, "wspageLoginLayout");
 	
-	tab = new EvaTabWidget(wTab, "tabWidget");
-	layoutTab->addWidget(tab, 0, 0);
-	addWidget(wTab, 1);
+//X 	tab = new EvaTabWidget(wTab, "tabWidget");
+	tab = new QTabWidget(this, "tabWidget");
+        tab->setTabPosition( QTabWidget::West );
+//X 	layoutTab->addWidget(tab, 0, 0);
+//X 	addWidget(wTab, 1);
+        addWidget( tab, 0);
 	
-	raiseWidget(0);
+//X 	raiseWidget(0);
 }
 
 EvaDisplayWidget::~EvaDisplayWidget()
 {
 }
 
-void EvaDisplayWidget::showInfoFrame(bool showInfo)
+void EvaDisplayWidget::showInfoFrame(bool /*showInfo*/)
 {
-	if(showInfo)
-		loginPage->update(0, i18n("Start logging in ..."));
-	raiseWidget(showInfo?0:1);
+//X 	if(showInfo)
+//X 		loginPage->update(0, i18n("Start logging in ..."));
+//X 	raiseWidget(showInfo?0:1);
 }

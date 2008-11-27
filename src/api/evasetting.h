@@ -20,7 +20,7 @@
 #ifndef EVASETTING_H
 #define EVASETTING_H
 
-#include <qobject.h>
+#include <QObject>
 #include <q3ptrlist.h>
 //Added by qt3to4:
 #include <Q3CString>

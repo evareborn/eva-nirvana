@@ -118,15 +118,15 @@ QString EvaListViewItem::tip()
     return text(0);
 }
 
-void EvaListViewItem::paintBranches( QPainter * /*p*/, const QColorGroup & /*cg*/, int /*w*/, int /*y*/, int /*h*/ )
-{
-//X 	Q3ListView *lv = listView();
-//X 	lv->style()->drawComplexControl( QStyle::CC_Q3ListView,
-//X 			p, lv, QRect( 0, 0, w, h ), cg,
-//X 			QStyle::State_Enabled | QStyle::State_Default, QStyle::SC_Q3ListView, QStyle::SC_None,
-//X 			QStyleOption() );
-}
-
+//X void EvaListViewItem::paintBranches( QPainter * /*p*/, const QColorGroup & /*cg*/, int /*w*/, int /*y*/, int /*h*/ )
+//X {
+//X //X 	Q3ListView *lv = listView();
+//X //X 	lv->style()->drawComplexControl( QStyle::CC_Q3ListView,
+//X //X 			p, lv, QRect( 0, 0, w, h ), cg,
+//X //X 			QStyle::State_Enabled | QStyle::State_Default, QStyle::SC_Q3ListView, QStyle::SC_None,
+//X //X 			QStyleOption() );
+//X }
+//X 
 void EvaListViewItem::paintCell( QPainter * painter, const QColorGroup & colourGroup, int column, int width, int align )
 {
     if( ! isVisible() ) return;

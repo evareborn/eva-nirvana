@@ -25,7 +25,6 @@
 #include "evauser.h"
 
 #include <stdlib.h>
-#include <qapplication.h>
 #include <q3http.h>
 #include <qdir.h>
 #include <qfileinfo.h>

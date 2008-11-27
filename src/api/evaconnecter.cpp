@@ -24,12 +24,12 @@
 #include "evaimsend.h"
 #include "evaqun.h"
 #include "evalogintoken.h"
-#include <qapplication.h>
 #include <qtimer.h> 
 #include <qmutex.h>
 #include <arpa/inet.h>
 #include <stdlib.h>
 #include <cstring>
+#include <QApplication>
 //X #include <kdebug.h>
 
 #define POOL_CHECK_INTERVAL  2000    /// every 2 second check two pools

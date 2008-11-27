@@ -21,7 +21,7 @@
 #ifndef EVASYSMSGMANAGER_H
 #define EVASYSMSGMANAGER_H
 
-#include <qobject.h>
+#include <QObject>
 #include <q3cstring.h>
 #include <qpixmap.h>
 #include <qfile.h>

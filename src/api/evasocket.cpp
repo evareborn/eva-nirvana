@@ -29,7 +29,6 @@
 #include <stdlib.h>
 #include <q3socketdevice.h> 
 #include <qsocketnotifier.h>
-#include <qapplication.h>
 #include <qmutex.h>
 #include <qtimer.h>
 #include <qstringlist.h>

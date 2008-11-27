@@ -25,7 +25,7 @@
 #include "evacontactmanager.h"
 #include "evamain.h"
 #include "evaapi.h"
-#include <qapplication.h>
+#include <QApplication>
 #include <qdatetime.h>
 #include <qtimer.h>
 #include <qtextcodec.h>
@@ -35,11 +35,11 @@
 #include <stdlib.h>
 #include <map>
 
-EvaPacketManager::EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* g_eva)
+EvaPacketManager::EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* evaapp)
 {
 	codec = QTextCodec::codecForName("GB18030");
 	this->user = user;
-        this->g_eva = g_eva;
+        this->g_eva = evaapp;
 	addingBuddyQQ = 0;
 	deletingBuddyQQ = 0;
 	processQunID = 0;
@@ -337,7 +337,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 //X 				<< "\" logged in from "
 //X 				<< QHostAddress(packet->getMyIP()).toString()
 //X 				<< ":" << packet->getMyPort()<< endl;
-// 		printf("EvaPacketManager::processLoginReply -- \n");
+ 		printf("EvaPacketManager::processLoginReply -- \n");
 // 		for(int i=0; i<packet->getLength(); i++){
 // 			if(!(i%8)) printf("\n%d: ",i);
 // 			char t = packet->getBody()[i];
@@ -356,13 +356,17 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 		///connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_FILE_AGENT_KEY));
 		//connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_UNKNOWN_KEY));
 		if(user->isBuddiesLoaded())
-			connecter->append(new GetOnlineFriendsPacket());
+                {
+                        printf("EvaPacketManager: get online friend packet -- \n");
+//X 			connecter->append(new GetOnlineFriendsPacket());
+                        doGetOnlineFriends();
+                }
 		if(!timer->isActive()){
 			timer->start(60000, false);
 		}else
 			printf("impossible! \n");
 		//emit loginOK();
-		g_eva->g_loginManager->loginOK();
+                EvaMain::g_loginManager->loginOK();
 		}
 		break;
 	case QQ_LOGIN_REPLY_REDIRECT:
@@ -374,7 +378,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 			//ServerDetectorPacket::nextStep();
 			//ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
 			//redirectTo(packet->getRedirectedIP(),packet->getRedirectedPort());
-			g_eva->g_loginManager->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
+			EvaMain::g_loginManager->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
 								   packet->getRedirectedIP(),
 								   packet->getRedirectedPort());
 // 			emit loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
@@ -385,11 +389,11 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 	case QQ_LOGIN_REPLY_PWD_ERROR:
 	case QQ_LOGIN_REPLY_NEED_REACTIVATE:
 		printf("something wrong:%s\n",codec->toUnicode(packet->getReplyMessage().c_str()).local8Bit().data());
-		g_eva->g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		EvaMain::g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
 		//emit wrongPassword(codec->toUnicode(packet->getReplyMessage().c_str()));
 		break;
 	case QQ_LOGIN_REPLY_PWD_ERROR_EX:
-		g_eva->g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		EvaMain::g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
 		break;
 	case QQ_LOGIN_REPLY_MISC_ERROR:
 		printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
@@ -445,7 +449,7 @@ void EvaPacketManager::processGetUserInfoReply( const InPacket * in )
             EvaMain::g_contactManager->processGetUserInfoReply( packet);
 	} else {
 		if(id == user->getQQ())
-			g_eva->g_loginManager->myInfoReady(info);
+			EvaMain::g_loginManager->myInfoReady(info);
 	}
 	 
 
@@ -517,6 +521,7 @@ void EvaPacketManager::doGetAllFriends( )
 
 void EvaPacketManager::processGetFriendListReply( const InPacket * in )
 {
+        printf( "EvaPacketManager::processGetFriendListReply \n" );
 	GetFriendListReplyPacket *packet = new GetFriendListReplyPacket();
 	packet->setInPacket(in);
 	if(!packet->parse()){
@@ -548,7 +553,7 @@ void EvaPacketManager::doSendMessage( const unsigned int receiver, const bool is
 // 		emit sentMessageResult(receiver, false);
 // 		return;
 // 	}
-	if(!g_eva->g_loginManager->isLoggedIn()){
+	if(!EvaMain::g_loginManager->isLoggedIn()){
 		printf("Client Not ready, ignore sending request!\n");
 		emit sentMessageResult(receiver, false);
 		return;
@@ -662,6 +667,7 @@ void EvaPacketManager::processKeepAliveReply( const InPacket * in )
 
 void EvaPacketManager::processGetOnlineFriendReply( const InPacket * in )
 {
+        printf( "EvaPacketManager::processGetOnlineFriendListReply \n" );
 	GetOnlineFriendReplyPacket *packet = new GetOnlineFriendReplyPacket();
 	packet->setInPacket(in);
 	if(!packet->parse()){
@@ -1987,7 +1993,7 @@ void EvaPacketManager::processRequestKeyReply( const InPacket * in )
 // 		user->loginManager()->finishedCommand(QQ_CMD_REQUEST_KEY);
 // 	}
 	//emit fileAgentInfoReady();
-	g_eva->g_loginManager->fileAgentInfoReady();
+	EvaMain::g_loginManager->fileAgentInfoReady();
 }
 
 void EvaPacketManager::doRequestQunCard( const unsigned int id, const unsigned int qq )
@@ -2347,7 +2353,7 @@ void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 			code.setData(packet->getData(), packet->getDataLength());
 			user->addLoginVerifyInfo( code);
 			if( user->getNumVerifyCodes()==1 ){
-				g_eva->g_loginManager->loginVerification();
+				EvaMain::g_loginManager->loginVerification();
 				//emit loginNeedVerification();
 			}
 			delete packet;
@@ -2357,7 +2363,7 @@ void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 		delete packet;
 	}
 	// notify login verirfy window that the verification got passed
-	g_eva->g_loginManager->verifyPassed();
+	EvaMain::g_loginManager->verifyPassed();
 	//emit loginVerifyPassed();
 
 	//user->loginManager()->finishedCommand(QQ_CMD_REQUEST_LOGIN_TOKEN);
