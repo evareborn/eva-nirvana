@@ -838,7 +838,7 @@ void CustomSmileyManager::slotMoveToSmiley( )
 			disconnect(m_MoveToMenu, 0, 0, 0);
 			delete m_MoveToMenu;
 		}
-		m_MoveToMenu = new Q3PopupMenu(0,"moveto");
+		m_MoveToMenu = new QMenu("moveto");
 
 		int currIndex = m_Config->groupIndex( item->text( 0 ) );
 		QStringList groups = m_Config->groupNames();

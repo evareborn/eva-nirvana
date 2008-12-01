@@ -29,7 +29,8 @@
 #include "evafriendlist.h"
 #include "evatextedit.h"
 #include "evahtmlparser.h"
-#include "simplechatview.h"
+//X #include "simplechatview.h"
+#include "webkitchatview.h"
 #include "evaipseeker.h"
 //X #include "evafilepanel.h"
 #include "evafilestatusuibase.h"
@@ -147,7 +148,7 @@ void EvaChatWindow::initObjects()
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector();
 	
-	quickMenu = new Q3PopupMenu(tbQuickReply);
+	quickMenu = new QMenu(tbQuickReply);
 	if(quickList.size()){	
 		std::list<QString>::iterator iter;
 		int index = 0;
@@ -158,7 +159,7 @@ void EvaChatWindow::initObjects()
 		QObject::connect(quickMenu, SIGNAL(activated(int)), this,  SLOT(slotQuickReplyActivated(int)));
 	}
 	
-	sendKey = new Q3PopupMenu();
+	sendKey = new QMenu();
 	sendKey->setCheckable(true);
 	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),Qt::SHIFT+Qt::ALT+Qt::Key_Enter,1);  
 	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),Qt::SHIFT+Qt::CTRL+Qt::ALT+Qt::Key_Enter,2);
@@ -520,6 +521,7 @@ void EvaChatWindow::slotSend()
 	sendtime = QDateTime::currentDateTime(Qt::LocalTime);
 
 	QString toSend = msg;
+        printf( "%s\n", toSend.ascii( ) );
 	QString sendFileNameBase; 
 	int numFiles = parser.convertToPlainTxt(toSend, sendFileNameBase);
 	
@@ -551,6 +553,8 @@ void EvaChatWindow::slotSend()
 	EvaMainWindow *mainWin = EvaMain::g_mainWin;
 	if(mainWin)
 		mainWin->addBuddyToRecentList( getBuddyQQ(), true);
+ 
+        printf( "%s\n", toSend.ascii( ) );
 	emit sendMessage(getBuddyQQ(), true, toSend, (char)chatSize, tbU->isOn(), tbI->isOn(), tbB->isOn(),
 			(char)(chatColor.blue()) , (char)(chatColor.green()), (char)(chatColor.red()));
 

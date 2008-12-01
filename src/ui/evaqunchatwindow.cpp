@@ -29,7 +29,8 @@
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evatextedit.h"
-#include "simplechatview.h"
+//X #include "simplechatview.h"
+#include "webkitchatview.h"
 #include "evaqunlist.h"
 #include "evaqunlistview.h"
 #include "evahistoryviewer.h"
@@ -294,7 +295,7 @@ void EvaQunChatWindow::initObjects( )
 	if(smileyPopup) delete smileyPopup;
 	smileyPopup = new CustomFaceSelector(false);	
 	
-	quickMenu = new Q3PopupMenu(tbQuickReply);
+	quickMenu = new QMenu(tbQuickReply);
 	if(quickList.size()){	
 		std::list<QString>::iterator iter;
 		int index = 0;
@@ -305,7 +306,7 @@ void EvaQunChatWindow::initObjects( )
 		QObject::connect(quickMenu, SIGNAL(activated(int)), this,  SLOT(slotQuickReplyActivated(int)));
 	}
 	
-	sendKey = new Q3PopupMenu();
+	sendKey = new QMenu();
 	sendKey->setCheckable(true);
 	sendKey->insertItem(i18n("Press \"Enter\" to Send"),this,SLOT(setEnterSend()),Qt::SHIFT+Qt::ALT+Qt::Key_Enter,1);  
 	sendKey->insertItem(i18n("Press \"Ctrl+Enter\" to Send"),this, SLOT(setCtrlEnterSend()),Qt::SHIFT+Qt::CTRL+Qt::ALT+Qt::Key_Enter,2);

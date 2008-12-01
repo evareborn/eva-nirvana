@@ -53,7 +53,7 @@ public:
     int addTab(QString &name, QPixmap icon, QString &tip);
     bool removeTab(int key);
 
-    void changeTabTo(int key);
+    void setCurrentIndex(int key);
      int numTabs() const { return m_d.size(); }
 
     void setGridColor(const QColor &c) { m_gridColor = c; }
@@ -177,7 +177,7 @@ protected:
     Q3HBoxLayout* layout;
 
 public slots:
-    void changeTabTo(int key);
+    void setCurrentIndex(int key);
 
 };
 

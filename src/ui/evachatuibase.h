@@ -40,7 +40,7 @@ class QLineEdit;
 class EvaTextEdit;
 class Q3TextEdit;
 //X class EvaChatView;
-class SimpleChatView;
+class WebkitChatView;
 class QPushButton;
 class QSplitter;
 class Q3Frame;
@@ -58,7 +58,7 @@ public:
 	QLabel* lblIP;
 	QLineEdit* leIP;
 	QLabel* lblSignature;
-	SimpleChatView *chatDisplay;
+	WebkitChatView *chatDisplay;
 	QWidget *lowerLayoutWidget;
 	QToolButton* tbSmiley;
 	QToolButton* tbFont;

@@ -267,10 +267,10 @@ void EvaUser::clearAllVerifyCodes( )
 		m_CodeList.clear();
 }
 
-KConfig *EvaUser::config(const QString &group)
-{
-	return setting->config(group);
-}
+//X KConfig *EvaUser::config(const QString &group)
+//X {
+//X 	return setting->config(group);
+//X }
 
 /// DCOP calls for category Contacts
 

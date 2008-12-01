@@ -3,7 +3,9 @@
 ######################################################################
 
 TEMPLATE = app
-QT += qt3support
+TARGET = eva
+QT += webkit qt3support
+CONFIG += qt debug
 DEPENDPATH += api \
               libeva \
               ui \
@@ -130,6 +132,7 @@ HEADERS += evaaddingmanager.h \
            ui/qundetailsui.h \
            ui/qundetailswindow.h \
            ui/simplechatview.h \
+           ui/webkitchatview.h \
            api/filetrans/evacachedfile.h \
            api/filetrans/evafiledownloader.h \
            api/filetrans/evafilemanager.h \
@@ -248,6 +251,7 @@ SOURCES += evaaddingmanager.cpp \
            ui/qundetailsui.cpp \
            ui/qundetailswindow.cpp \
            ui/simplechatview.cpp \
+           ui/webkitchatview.cpp \
            api/filetrans/evacachedfile.cpp \
            api/filetrans/evafiledownloader.cpp \
            api/filetrans/evafilemanager.cpp \

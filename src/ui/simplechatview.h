@@ -22,7 +22,7 @@
 #include <qdatetime.h>
 #include <q3textedit.h>
 //Added by qt3to4:
-#include <Q3PopupMenu>
+#include <QMenu>
  
 class QAction;
  
@@ -41,6 +41,10 @@ class SimpleChatView : public Q3TextEdit {
 				const unsigned int session, const bool isSend = false);
 	void askResumeMode(const QString filename, const unsigned int session);
 	void showContents();
+ 
+    private slots:
+
+	void slotScrollToBottom();
 
     private:
 	QString wrapFontAttributes(QColor color, Q_UINT8 size, 
@@ -49,7 +53,7 @@ class SimpleChatView : public Q3TextEdit {
 	
 	void updateContents(const QString &contents);
 
-	Q3PopupMenu *menu;
+	QMenu *menu;
 	QAction *copyAction;
 	QString buffer;
 	bool m_isScrollAtBottom;

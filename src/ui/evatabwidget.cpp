@@ -131,7 +131,7 @@ bool EvaTabBar::removeTab(int key)
     return true;
 }
 
-void EvaTabBar::changeTabTo(int key)
+void EvaTabBar::setCurrentIndex(int key)
 {
     int seq = getTabSequence(key);
     if(seq == -1) return;
@@ -208,7 +208,7 @@ void EvaTabBar::wheelEvent ( QWheelEvent * e )
 
     int next = getTabKey(seq + offset);
     if(next == -1 ) return;
-    changeTabTo(next);
+    setCurrentIndex(next);
     emit clicked(next);
 }
 
@@ -225,7 +225,7 @@ void EvaTabBar::mouseReleaseEvent( QMouseEvent *e)
 
     int key = getTabKey(seq);
     if(key == -1 ) return;
-    changeTabTo( key );
+    setCurrentIndex( key );
     emit clicked(key);
 }
 
@@ -375,7 +375,7 @@ EvaTabWidget::EvaTabWidget( QWidget* parent, const char* name, Qt::WFlags fl )
     resize( QSize(350, 233).expandedTo(minimumSizeHint()) );
 //X     clearWState( WState_Polished );
 
-    QObject::connect(evaTabBar, SIGNAL(clicked(int)), SLOT(changeTabTo(int)));
+    QObject::connect(evaTabBar, SIGNAL(clicked(int)), SLOT(setCurrentIndex(int)));
 }
 
 
@@ -409,9 +409,9 @@ bool EvaTabWidget::removeTab(int key)
     return true;
 }
 
-void EvaTabWidget::changeTabTo(int key)
+void EvaTabWidget::setCurrentIndex(int key)
 {
-    evaTabBar->changeTabTo(key);
+    evaTabBar->setCurrentIndex(key);
     wsView->raiseWidget( key, evaTabBar->getTabSequence(key));
 }
 

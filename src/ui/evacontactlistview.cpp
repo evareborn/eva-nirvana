@@ -834,28 +834,28 @@ void EvaContactListView::deleteBuddy( const unsigned int id)
 void EvaContactListView::initPopup( )
 {
 	EvaImageResource *img = EvaMain::images;
-	m_groupMenu = new Q3PopupMenu();
-	m_groupMenu->insertItem(QIcon(*(img->getIcon("RENAME"))), i18n("Rename"), this, SLOT(slotRenameGroup()), -1, 0);
-	m_groupMenu->insertItem(QIcon(*(img->getIcon("ADD_GROUP"))), i18n( "New Group"), this, SLOT(slotNewGroup()), -1, 1);
-	m_groupMenu->insertItem(QIcon(*(img->getIcon("DEL_GROUP"))), i18n( "Delele Group"), this, SLOT(slotDelGroup()), -1, 2);	
+	m_groupMenu = new QMenu();
+	m_groupMenu->insertItem(QIcon(*(img->getIcon("RENAME"))), i18n("Rename"), this, SLOT(slotRenameGroup()), QKeySequence::UnknownKey, 0);
+	m_groupMenu->insertItem(QIcon(*(img->getIcon("ADD_GROUP"))), i18n( "New Group"), this, SLOT(slotNewGroup()), QKeySequence::UnknownKey, 1);
+	m_groupMenu->insertItem(QIcon(*(img->getIcon("DEL_GROUP"))), i18n( "Delele Group"), this, SLOT(slotDelGroup()), QKeySequence::UnknownKey, 2);	
 	m_groupMenu->insertSeparator(-1);
 	//m_groupMenu->insertItem(QIconSet(*qun), i18n( "Create Qun"), this, SLOT(slotQunCreate()), -1);
 	//m_groupMenu->insertSeparator(-1);
 	m_groupMenu->insertItem(QIcon(*(img->getIcon("SHOW_ONLINE_BUDDIES"))), i18n( "Show Online"), this, 
-				SLOT(showOnlineOnly()), -1);
-	m_groupMenu->insertItem(QIcon(*(img->getIcon("SHOW_ALL_BUDDIES"))), i18n( "Show All"), this, SLOT(showAll()), -1);
+				SLOT(showOnlineOnly()));
+	m_groupMenu->insertItem(QIcon(*(img->getIcon("SHOW_ALL_BUDDIES"))), i18n( "Show All"), this, SLOT(showAll()));
 
-	m_buddyMenu = new Q3PopupMenu();
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMChat()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("FILE_TRANSFER"))), i18n( "Send File"), this, SLOT(slotSendFile()), -1);
+	m_buddyMenu = new QMenu();
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMChat()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("FILE_TRANSFER"))), i18n( "Send File"), this, SLOT(slotSendFile()));
 	m_buddyMenu->insertSeparator(-1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("TIME_SUN"))), i18n( "Update Level"), this, SLOT(slotUpdataLevel()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("MEMO"))), i18n("Modify Memo"), this, SLOT(slotModifyMemo()),-1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotHistory()), -1);
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("TIME_SUN"))), i18n( "Update Level"), this, SLOT(slotUpdataLevel()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("MEMO"))), i18n("Modify Memo"), this, SLOT(slotModifyMemo()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotHistory()));
 	m_buddyMenu->insertSeparator(-1);
 	
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DEL_BUDDY"))), i18n( "Delete Buddy"), this, SLOT(slotDelBuddy()), -1);
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DEL_BUDDY"))), i18n( "Delete Buddy"), this, SLOT(slotDelBuddy()));
 }
 
 void EvaContactListView::slotRenameGroup( )
@@ -1153,14 +1153,14 @@ EvaQunsListView::EvaQunsListView( QWidget * parent, const char * name, Qt::WFlag
 void EvaQunsListView::initPopup( )
 {
 	EvaImageResource *img = EvaMain::images;
-	m_popup =  new Q3PopupMenu();
-	m_popup->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMQunChat()), -1);
+	m_popup =  new QMenu();
+	m_popup->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMQunChat()));
 	m_popup->insertSeparator(-1);
-	m_popup->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotQunDetails()), -1);
-	m_popup->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotQunHistory()), -1);
+	m_popup->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotQunDetails()));
+	m_popup->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotQunHistory()));
 	m_popup->insertSeparator(-1);
-	m_popup->insertItem(QIcon(*(img->getIcon("QUN"))), i18n( "Create Qun"), this, SIGNAL(requestQunCreate()), -1);
-	m_popup->insertItem(QIcon(*(img->getIcon("QUN_EXIT"))), i18n( "Exit Qun" ), this, SLOT(slotQunExit()), -1);
+	m_popup->insertItem(QIcon(*(img->getIcon("QUN"))), i18n( "Create Qun"), this, SIGNAL(requestQunCreate()));
+	m_popup->insertItem(QIcon(*(img->getIcon("QUN_EXIT"))), i18n( "Exit Qun" ), this, SLOT(slotQunExit()));
 }
 
 void EvaQunsListView::slotIMQunChat( )
@@ -1640,30 +1640,30 @@ EvaRecentContactsListView::EvaRecentContactsListView( QWidget * parent, const ch
 void EvaRecentContactsListView::initBuddyPopup( )
 {
 	EvaImageResource *img = EvaMain::images;
-	m_buddyMenu = new Q3PopupMenu();
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMChat()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("FILE_TRANSFER"))), i18n( "Send File"), this, SLOT(slotSendFile()), -1);
+	m_buddyMenu = new QMenu();
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMChat()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("FILE_TRANSFER"))), i18n( "Send File"), this, SLOT(slotSendFile()));
 	m_buddyMenu->insertSeparator(-1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("TIME_SUN"))), i18n( "Update Level"), this, SLOT(slotUpdataLevel()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), -1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("MEMO"))), i18n("Modify Memo"), this, SLOT(slotModifyMemo()),-1);
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotHistory()), -1);
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("TIME_SUN"))), i18n( "Update Level"), this, SLOT(slotUpdataLevel()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("MEMO"))), i18n("Modify Memo"), this, SLOT(slotModifyMemo()));
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotHistory()));
 	m_buddyMenu->insertSeparator(-1);
 	
-	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DEL_BUDDY"))), i18n( "Delete Buddy"), this, SLOT(slotDelBuddy()), -1);
+	m_buddyMenu->insertItem(QIcon(*(img->getIcon("DEL_BUDDY"))), i18n( "Delete Buddy"), this, SLOT(slotDelBuddy()));
 }
 
 void EvaRecentContactsListView::initQunPopup( )
 {
 	EvaImageResource *img = EvaMain::images;
-	m_qunMenu =  new Q3PopupMenu();
-	m_qunMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMQunChat()), -1);
+	m_qunMenu =  new QMenu();
+	m_qunMenu->insertItem(QIcon(*(img->getIcon("CHAT"))), i18n( "Chat"), this, SLOT(slotIMQunChat()));
 	m_qunMenu->insertSeparator(-1);
-	m_qunMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotQunDetails()), -1);
-	m_qunMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotQunHistory()), -1);
+	m_qunMenu->insertItem(QIcon(*(img->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotQunDetails()));
+	m_qunMenu->insertItem(QIcon(*(img->getIcon("HISTORY"))), i18n( "History"), this, SLOT(slotQunHistory()));
 	m_qunMenu->insertSeparator(-1);
-	m_qunMenu->insertItem(QIcon(*(img->getIcon("QUN"))), i18n( "Create Qun"), this, SIGNAL(requestQunCreate()), -1);
-	m_qunMenu->insertItem(QIcon(*(img->getIcon("QUN_EXIT"))), i18n( "Exit Qun" ), this, SLOT(slotQunExit()), -1);
+	m_qunMenu->insertItem(QIcon(*(img->getIcon("QUN"))), i18n( "Create Qun"), this, SIGNAL(requestQunCreate()));
+	m_qunMenu->insertItem(QIcon(*(img->getIcon("QUN_EXIT"))), i18n( "Exit Qun" ), this, SLOT(slotQunExit()));
 }
 
 void EvaRecentContactsListView::slotContextMenu( Q3ListViewItem *item, const QPoint  &p, int col)

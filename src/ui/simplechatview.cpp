@@ -13,7 +13,7 @@ SimpleChatView::SimpleChatView( QWidget * parent, const char * name )
 	: Q3TextEdit(parent, name), m_isScrollAtBottom(true)
 {
 	//setOnlyLocalReferences(true);
-	menu = new Q3PopupMenu(0, "popup");
+	menu = new QMenu("popup");
 //X 	copyAction = KStdAction::copy( this, SLOT(copy()), actionCollection());
 //X 	copyAction->setText(i18n("&Copy Text"));
 //X 	copyAction->setShortcut( KShortcut("Ctrl+C"));
@@ -21,11 +21,12 @@ SimpleChatView::SimpleChatView( QWidget * parent, const char * name )
 //X 	setDNDEnabled(true);
 //X 	setAutoloadImages(true);
 	setHScrollBarMode(Q3ScrollView::AlwaysOff);
+        setReadOnly( true );
 	
 	//setStandardFont("Helvetica");
 	//buffer += "<body style=\"font-size:9pt;font-family:Helvetica\">";
 	
-//X 	QObject::connect(view(), SIGNAL(finishedLayout()), SLOT(slotScrollToBottom()));
+//X 	QObject::connect(this, SIGNAL(finishedLayout()), SLOT(slotScrollToBottom()));
 	QObject::connect(this, SIGNAL(selectionChanged()), SLOT(slotSelectionChanged()));
 	QObject::connect(this, SIGNAL(popupMenu(const QString &, const QPoint &)), 
 			SLOT(slotPopupMenu(const QString &, const QPoint &)));
@@ -82,12 +83,19 @@ void SimpleChatView::updatePicture( const QString /*filename*/ , const QString /
 //X 	end();
 }
 
+void SimpleChatView::slotScrollToBottom()
+{
+	if(m_isScrollAtBottom){
+		setContentsPos(contentsX(), contentsHeight() - visibleHeight() );
+	}
+}
+
 void SimpleChatView::showInfomation( const QString & info )
 {
-//X 	QString picPath = "<img src = \"" + EvaMain::images->getIconFullPath("MSG_INFO") + "\">";
+	QString picPath = "<img src = \"" + EvaMain::images->getIconFullPath("MSG_INFO") + "\">";
 	QString msg = wrapFontAttributes(Qt::gray, 9, false, false, false, info);
 	updateContents( msg );
-//X 	updateContents("&nbsp;" + picPath + "&nbsp;" + msg );
+	updateContents("&nbsp;" + picPath + "&nbsp;" + msg );
 	showContents();
 }
 
@@ -165,6 +173,7 @@ void SimpleChatView::askResumeMode( const QString /*filename*/, const unsigned i
 void SimpleChatView::showContents()
 {
 	m_isScrollAtBottom =  ( contentsHeight() == (contentsY() + visibleHeight()) );
+        slotScrollToBottom();
 
 //X 	begin();
 	setText(buffer);

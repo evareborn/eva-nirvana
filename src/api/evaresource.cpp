@@ -29,7 +29,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 #include <qdatastream.h>
-#include <qsound.h>
+#include <QSound>
 //X #include <kaudioplayer.h>
 #include <qpixmap.h>
 //Added by qt3to4:
@@ -101,7 +101,10 @@ QPixmap *EvaImageResource::getFaceByID( const unsigned short faceId, const bool 
 QPixmap *EvaImageResource::getIcon(QString name)
 {
 	QMap<QString, QPixmap>::Iterator iter = iconList.find(name);
-	if(iter== iconList.end()) return BAD_ICON;
+	if(iter== iconList.end()) {
+            printf( "bad icon: %s\n", name.ascii( ) );
+            return BAD_ICON;
+        }
 	return &(iter.data());
 }
 
@@ -153,7 +156,7 @@ bool EvaImageResource::loadFace(const QSize &/*size*/)
 			continue;
 		
 		lineList[0].stripWhiteSpace();
-		imagePath = path + "/" + lineList[1].stripWhiteSpace();
+		imagePath = getFacePath() + "/" + lineList[1].stripWhiteSpace();
 		QPixmap img(imagePath);
 		if(!img.isNull()){
 //			faceList[lineList[0]] = img.convertToImage().smoothScale(size);
@@ -383,7 +386,7 @@ void EvaSoundResource::playSound(const QString &filename)
         printf( "playin sound %s\n", absPath.ascii() );
 //X 	KAudioPlayer snd(absPath);
 //X 	snd.play();
-        QSound::play( absPath );
+//X         QSound::play( absPath );
 }
 
 /*  ---------------------------------------------------------------------------------------------- */

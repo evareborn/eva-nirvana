@@ -55,13 +55,14 @@
 
 
 // External classes?
-class Q3PopupMenu;
+class QMenu;
 //X class QHelpMenu;
 class QTextCodec;
 class QTimer;
 //class KAboutData;
 //class KAboutApplication;
 //class KGlobalAccel;
+class QShortcut;
 
 class EvaUser;
 class EvaConnecter;
@@ -207,14 +208,14 @@ private:
 	EvaSetting *sysSetting;
 	
 	// system tray menu
-	Q3PopupMenu *sysMenu;
+	QMenu *sysMenu;
 //X 	QHelpMenu *m_helpMenu;
 
 	// user status setting menu, appeared both in main window and tray menu
-	Q3PopupMenu *statusMenu;
+	QMenu *statusMenu;
 
 	// user status setting submenu, custumized leaving auto-reply messages
-	Q3PopupMenu *autoMenu;
+	QMenu *autoMenu;
 
 	// login window, first one you will see
 	EvaLoginWindow *loginWin;
@@ -222,8 +223,8 @@ private:
 // 	// the main guy, with your friend list in
 // 	EvaMainWindow *mainWin;	
 
-//X 	// system tray icon
-//X 	EvaSystemTray *tray;
+	// system tray icon
+	EvaSystemTray *tray;
 
 	// login retry times
 	int numLoginRetry;
@@ -233,6 +234,7 @@ private:
 
 	// accelerate key, maybe officially CTRL+ALT+Z
 	//KGlobalAccel *accelKey;
+//X         QShortcut *accelKey;
 
 	// FIXME: wanna integrate with kwallet? why not then?
 	//KWallet::Wallet *_wallet;

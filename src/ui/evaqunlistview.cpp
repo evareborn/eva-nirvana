@@ -37,9 +37,9 @@ EvaQunListView::EvaQunListView( QWidget * parent, const char * name, Qt::WFlags 
 {
 	//mToolTip = new EvaToolTip(this);
 	
-	popupMenu = new Q3PopupMenu(0, "QunPopup");
+	popupMenu = new QMenu("QunPopup");
 	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("QUN_CARD"))), i18n( "Qun Card" ), this, SLOT( slotQunCard()));
-	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), -1, 1);
+	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("DETAILS"))), i18n( "Details"), this, SLOT(slotDetails()), QKeySequence::UnknownKey, 1);
 	popupMenu->insertSeparator(-1);
 	popupMenu->insertItem(QIcon(*(EvaMain::images->getIcon("REFRESH_BUDDIES"))), i18n("Refresh Qun Members"), this,SLOT(slotDoRefreshMembers()));
 	
@@ -221,7 +221,7 @@ QString EvaQunBuddyItem::tip()
 	return tip;
 }
 
-void EvaQunBuddyItem::customEvent( QCustomEvent *e)
+void EvaQunBuddyItem::customEvent( QEvent *e)
 {
 	if(e->type() == EvaScaleImageEvent){
 		EvaScaleEvent *se = (EvaScaleEvent *)e;

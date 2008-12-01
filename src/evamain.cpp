@@ -52,6 +52,7 @@
 #include <q3popupmenu.h>
 #include <qmessagebox.h>
 #include <QApplication>
+#include <QShortcut>
 //#include <qhelpmenu.h>
 #include <quuid.h>
 #include <qdir.h>
@@ -121,7 +122,7 @@ EvaMain::EvaMain() :
             return; // load image first
 	loginWin = new EvaLoginWindow(0);
 	g_mainWin = new EvaMainWindow(0);
-//	tray = new EvaSystemTray(g_mainWin);
+	tray = new EvaSystemTray(g_mainWin);
 	helper = new EvaHelper();
 	idt = new IdleTimeDetector(5);
 	if(!doInitUI()){
@@ -390,8 +391,8 @@ bool EvaMain::doInitUI()
 	g_mainWin->setStatusMenu(statusMenu);
 	g_mainWin->setSystemMenu(sysMenu);
 	
-//X 	tray->setImagesResource(images);
-//X 	tray->setupMenus(sysMenu, statusMenu);
+	tray->setImagesResource(images);
+	tray->setupMenus(sysMenu, statusMenu);
 	
 	EvaDetailsWindow::setImageResource(images);
 	return true;
@@ -399,31 +400,31 @@ bool EvaMain::doInitUI()
 
 void EvaMain::initMenus()
 {
-	statusMenu = new Q3PopupMenu();
-	statusMenu->insertItem(QIcon(*(images->getIcon("ONLINE"))), i18n("Online"), this,SLOT(slotDoOnline()), -1);
-	statusMenu->insertItem(QIcon(*(images->getIcon("OFFLINE"))), i18n("Offline"), this,SLOT(slotDoOffline()), -1);
-	statusMenu->insertItem(QIcon(*(images->getIcon("LEAVE"))), i18n("Leave"), this,SLOT(slotDoLeave()), -1);
-	statusMenu->insertItem(QIcon(*(images->getIcon("INVISIBLE"))), i18n("Invisible"), this,SLOT(slotDoInvisible()), -1);
+	statusMenu = new QMenu();
+	statusMenu->insertItem(QIcon(*(images->getIcon("ONLINE"))), i18n("Online"), this,SLOT(slotDoOnline()));
+	statusMenu->insertItem(QIcon(*(images->getIcon("OFFLINE"))), i18n("Offline"), this,SLOT(slotDoOffline()));
+	statusMenu->insertItem(QIcon(*(images->getIcon("LEAVE"))), i18n("Leave"), this,SLOT(slotDoLeave()));
+	statusMenu->insertItem(QIcon(*(images->getIcon("INVISIBLE"))), i18n("Invisible"), this,SLOT(slotDoInvisible()));
 	
-	sysMenu = new Q3PopupMenu();
-	Q3PopupMenu *group = new Q3PopupMenu();
+	sysMenu = new QMenu();
+	QMenu *group = new QMenu();
 
-	group->insertItem(QIcon(*(images->getIcon("UPLOAD_GROUPS"))), i18n("Upload Group"),this, SLOT(slotDoUploadGroups()), -1);
-	group->insertItem(QIcon(*(images->getIcon("DOWNLOAD_GROUPS"))), i18n("Download Group"),this, SLOT(slotDoDownloadGroups()), -1);
+	group->insertItem(QIcon(*(images->getIcon("UPLOAD_GROUPS"))), i18n("Upload Group"),this, SLOT(slotDoUploadGroups()));
+	group->insertItem(QIcon(*(images->getIcon("DOWNLOAD_GROUPS"))), i18n("Download Group"),this, SLOT(slotDoDownloadGroups()));
 	
 	sysMenu->insertItem(QIcon(*(images->getIcon("GROUP"))), i18n("Group"),group);
-	sysMenu->insertItem(QIcon(*(images->getIcon("REFRESH_BUDDIES"))), i18n("Update Buddies"), this,SLOT(slotDoDownloadBuddies()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("REFRESH_BUDDIES"))), i18n("Update Buddies"), this,SLOT(slotDoDownloadBuddies()));
 	sysMenu->insertSeparator(-1);
 	sysMenu->insertItem(QIcon(*(images->getIcon("SYSTEM_OPTIONS"))), i18n("System Options"),this, SLOT(slotRequestSystemSettingWindow()));
 	sysMenu->insertItem(QIcon(*(images->getIcon("SCRIPT"))), i18n("Script Manager"),this, SLOT(slotShowScriptManager()));
-	sysMenu->insertItem(QIcon(*(images->getIcon("CHANGE_USER"))), i18n("Change User"), this,SLOT(slotDoChangeUser()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("CHANGE_USER"))), i18n("Change User"), this,SLOT(slotDoChangeUser()));
 	sysMenu->insertSeparator(-1);
 	//sysMenu->insertItem(QIconSet(*(images->getIcon("EVA"))), i18n("About Eva"), this,SLOT(doAbout()), -1);
 //X 	m_helpMenu = new QHelpMenu(g_mainWin, KGlobal::instance()->aboutData(), 
 //X 				 false);
 //X 	sysMenu->insertItem(SmallIcon("help"),KStdGuiItem::help().text(), m_helpMenu->menu());
 	sysMenu->insertSeparator(-1);
-	sysMenu->insertItem(QIcon(*(images->getIcon("QUIT"))), i18n("Quit"), this,SLOT(doQuit()), -1);
+	sysMenu->insertItem(QIcon(*(images->getIcon("QUIT"))), i18n("Quit"), this,SLOT(doQuit()));
 }
 
 void EvaMain::initUserLeaveMenu()
@@ -435,7 +436,7 @@ void EvaMain::initUserLeaveMenu()
 	
 	statusMenu->removeItemAt(2);
 	if(autoMenu) delete autoMenu;
-	autoMenu = new Q3PopupMenu();
+	autoMenu = new QMenu();
 	autoMenu->setCheckable(true);
 	autoMenu->insertItem(QString(i18n("No Auto-Reply")), 0);
 	int id=1;
@@ -494,9 +495,9 @@ void EvaMain::doSlotConnection()
 	QObject::connect(g_mainWin, SIGNAL(requestQunCreate()), this, SLOT(slotQunCreate()));
 	QObject::connect(g_mainWin, SIGNAL(requestQunHistory(const unsigned int)), this, SLOT(slotRequestQunHistory(const unsigned int)));
 	
-//X 	QObject::connect(tray, SIGNAL(requestChat(const unsigned int)), this, SLOT(slotRequestChat(const unsigned int)));
-//X 	QObject::connect(tray, SIGNAL(requestQunChat(const unsigned int)), this, SLOT(slotRequestQunChat(const unsigned int)));
-//X 	QObject::connect(tray, SIGNAL(requestSystemMessage()), m_SysMsgManager, SLOT(showSysMessage()));
+	QObject::connect(tray, SIGNAL(requestChat(const unsigned int)), this, SLOT(slotRequestChat(const unsigned int)));
+	QObject::connect(tray, SIGNAL(requestQunChat(const unsigned int)), this, SLOT(slotRequestQunChat(const unsigned int)));
+	QObject::connect(tray, SIGNAL(requestSystemMessage()), m_SysMsgManager, SLOT(showSysMessage()));
 	QObject::connect(g_mainWin, SIGNAL(requestModifyMemo(const unsigned int)), this, SLOT(slotModifyMemo(const unsigned int)));
 
 	QObject::connect(g_AddingManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
@@ -544,7 +545,7 @@ void EvaMain::slotDoLoginClick()
 //X 	GetScriptManager()->releaseScripts();
 	if(g_mainWin) g_mainWin->offline();
 	
-//X 	if(tray) tray->reset();
+	if(tray) tray->reset();
 	numLoginRetry = 0;
 	isClientSet = false;
 	g_mainWin->showInfoFrame(true);
@@ -734,7 +735,7 @@ void EvaMain::slotSetupNetwork( )
 			const bool, const bool, const bool, const char, const char, const char)));
 
 	// Qun related signals
-//X 	QObject::connect(packetManager, SIGNAL(qunSystemMessageRequest(const unsigned int, QString)), tray, SLOT(newSysMessage()));	
+	QObject::connect(packetManager, SIGNAL(qunSystemMessageRequest(const unsigned int, QString)), tray, SLOT(newSysMessage()));	
 	QObject::connect(packetManager, SIGNAL(qunInfomationReady(const unsigned int, const bool, QString)), 
 					SLOT(slotQunInfomationReady(const unsigned int, const bool, QString)));
 	QObject::connect(packetManager, SIGNAL(qunSystemMessageRequest(const unsigned int, QString)), 
@@ -910,7 +911,7 @@ void EvaMain::slotSetupEvaClient()
 
 	user->loadGroupedBuddyList();
 	user->loadQunList();
-//X 	tray->show();
+	tray->show();
 
 	g_mainWin->updateMyInfo();
 	g_mainWin->showInfoFrame(true);
@@ -923,7 +924,7 @@ void EvaMain::slotDoLogin()
 {
 	if(!isClientSet)
 		slotSetupEvaClient();
-//X 	tray->setLoginWaiting();
+	tray->setLoginWaiting();
 	//ServerDetectorPacket::setStep(0);
 	//ServerDetectorPacket::setFromIP(0);
 	//connecter->redirectTo(QQServer.toIPv4Address(), -1);
@@ -937,10 +938,10 @@ void EvaMain::slotDoCancel()
 	if(!g_mainWin->isVisible() && !isClientSet )
 		doQuit();
 	else{
-//X 		if(!tray->isVisible())
-//X 		{
-//X 			tray->show();
-//X 		}
+		if(!tray->isVisible())
+		{
+			tray->show();
+		}
 		if(!g_mainWin->isVisible())
 			g_mainWin->show();
 	}
@@ -958,19 +959,19 @@ void EvaMain::loginOK( )
 	switch(user->getStatus()){
 	case EvaUser::Eva_Online:
 		g_mainWin->online();
-//X 		tray->setOnline();
+		tray->setOnline();
 		break;
 	case EvaUser::Eva_Offline:
 		g_mainWin->offline();
-//X 		tray->setOffline();
+		tray->setOffline();
 		break;
 	case EvaUser::Eva_Leave:
 		g_mainWin->leave();
-//X 		tray->setLeave();
+		tray->setLeave();
 		break;
 	case EvaUser::Eva_Invisible:
 		g_mainWin->invisible();
-//X 		tray->setInvisible();
+		tray->setInvisible();
 	}
 
 	//packetManager->doGetUserInfo(user->getQQ());
@@ -987,7 +988,7 @@ void EvaMain::loginOK( )
 void EvaMain::slotOfflineReady()
 { 
 	g_mainWin->offline();
-//X 	tray->setOffline();
+	tray->setOffline();
 	//loggedIn = false;
 	g_loginManager->setLoggedOut();
 	//user->loginManager()->reset();
@@ -1002,28 +1003,28 @@ void EvaMain::slotOfflineReady()
 void EvaMain::slotOnlineReady( )
 {
 	g_mainWin->online();
-//X 	tray->setOnline();
+	tray->setOnline();
 //X 	GetScriptManager()->notifyStatusChange(user->getQQ());
 }
 
 void EvaMain::slotInvisibleReady( )
 {
 	g_mainWin->invisible();
-//X 	tray->setInvisible();
+	tray->setInvisible();
 //X 	GetScriptManager()->notifyStatusChange(user->getQQ());
 }
 
 void EvaMain::slotLeaveReady( )
 {
 	g_mainWin->leave();
-//X 	tray->setLeave();
+	tray->setLeave();
 //X 	GetScriptManager()->notifyStatusChange(user->getQQ());
 }
 
 void EvaMain::slotNetworkException( int/* exp*/)
 {
 	g_mainWin->offline();
-//X 	tray->setOffline();
+	tray->setOffline();
 	numOfLostKeepAlivePackets++; 
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
@@ -1052,7 +1053,7 @@ void EvaMain::slotPacketException( int cmd)
 	}
 	if(!g_loginManager->isLoggedIn() && ( cmd == QQ_CMD_LOGIN || cmd == QQ_CMD_REQUEST_LOGIN_TOKEN )){
 		g_mainWin->offline();
-//X 		tray->setOffline();
+		tray->setOffline();
 		packetManager->doLogout();
 		
 		if(onlineFriendTimer->isActive())
@@ -1064,7 +1065,7 @@ void EvaMain::slotPacketException( int cmd)
 	
 	if(numOfLostKeepAlivePackets>=2){
 		g_mainWin->offline();
-//X 		tray->setOffline();
+		tray->setOffline();
 		packetManager->doLogout();
 		picManager->stop();
 		numOfLostKeepAlivePackets = 0;
@@ -1091,7 +1092,7 @@ void EvaMain::slotPacketException( int cmd)
 void EvaMain::slotKickedOut(const QString msg)
 {
 	g_mainWin->offline();
-//X 	tray->setOffline();
+	tray->setOffline();
 	//loggedIn = false;
 	g_loginManager->setLoggedOut();
 	user->setStatus(EvaUser::Eva_Offline);
@@ -1169,7 +1170,7 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 		short faceId = 0x0000;
 		if(frd)
 			faceId = frd->getFace();
-//X 		tray->newTxtMessage(sender, faceId);
+		tray->newTxtMessage(sender, faceId);
 		if(user->getSetting()->isShowMessageTipEnabled()){
 			EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), sender, faceId, message);
 			QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
@@ -1358,7 +1359,7 @@ void EvaMain::slotRequestChat(const unsigned int id)
 {
 	QQFriend *frd = user->getFriendList().getFriend(id);
 	g_mainWin->gotMessage(id);
-//X 	tray->gotTxtMessage(id);
+	tray->gotTxtMessage(id);
 	g_ChatWindowManager->openChatWindow(frd);
 }
 
@@ -1366,7 +1367,7 @@ void EvaMain::slotRequestSendFile(const unsigned int id)
 {
 	QQFriend *frd = user->getFriendList().getFriend(id);
 	g_mainWin->gotMessage(id);
-//X 	tray->gotTxtMessage(id);
+	tray->gotTxtMessage(id);
 	g_ChatWindowManager->openChatWindow(frd, true);
 }
 
@@ -1896,7 +1897,7 @@ void EvaMain::slotRequestQunChat( const unsigned int id)
 	Qun *qun = user->getQunList()->getQun(id);
 	if(!qun) return;
 	g_mainWin->gotQunMessage(id);
-//X 	tray->gotTxtMessage(id);
+	tray->gotTxtMessage(id);
 	g_ChatWindowManager->openQunChatWindow(qun);
 }
 
@@ -1920,7 +1921,7 @@ void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ,
 				break;
 			default:
 				g_mainWin->newQunMessage(qunID);
-//X 				tray->newTxtMessage(qunID, -2); // -2 means qun message;
+				tray->newTxtMessage(qunID, -2); // -2 means qun message;
 				needSound = true;
 		}
 		if(user->getSetting()->isSoundEnabled() && needSound)
@@ -1941,32 +1942,32 @@ void EvaMain::slotQunPictureReady( const unsigned int id, const QString fileName
 
 void EvaMain::slotShotcutKeyPressed( )
 {
-//X 	if(!tray) return;
-//X 	int id = tray->getSenderID();
-//X 	
-//X 	QQFriend *frd = user->getFriendList().getFriend(id);
-//X 	if(frd){
-//X 		g_mainWin->gotMessage(id);
-//X 		tray->gotTxtMessage(id);
-//X 		g_ChatWindowManager->openChatWindow(frd);
-//X 		return;
-//X 	}
-//X 	
-//X 	Qun *qun = user->getQunList()->getQun(id);
-//X 	if(qun){
-//X 		g_mainWin->gotQunMessage(id);
-//X 		tray->gotTxtMessage(id);
-//X 		g_ChatWindowManager->openQunChatWindow(qun);
-//X 		return;
-//X 	}
-//X /*	EvaUserSetting::sysMessage m = user->getSetting()->getLastSysMessage();
-//X 	if(!(m.type == 0 && m.from == 0)){
-//X 		m_SysMsgManager->showSysMessage( m.messageType, m.type, m.from, m.to, m.message, m.internalQunID);
-//X 		return;
-//X 	}*/	
-//X 	m_SysMsgManager->showSysMessage();
-//X 
-//X 	if(!g_mainWin->isVisible()) g_mainWin->show();
+	if(!tray) return;
+	int id = tray->getSenderID();
+	
+	QQFriend *frd = user->getFriendList().getFriend(id);
+	if(frd){
+		g_mainWin->gotMessage(id);
+		tray->gotTxtMessage(id);
+		g_ChatWindowManager->openChatWindow(frd);
+		return;
+	}
+	
+	Qun *qun = user->getQunList()->getQun(id);
+	if(qun){
+		g_mainWin->gotQunMessage(id);
+		tray->gotTxtMessage(id);
+		g_ChatWindowManager->openQunChatWindow(qun);
+		return;
+	}
+/*	EvaUserSetting::sysMessage m = user->getSetting()->getLastSysMessage();
+	if(!(m.type == 0 && m.from == 0)){
+		m_SysMsgManager->showSysMessage( m.messageType, m.type, m.from, m.to, m.message, m.internalQunID);
+		return;
+	}*/	
+	m_SysMsgManager->showSysMessage();
+
+	if(!g_mainWin->isVisible()) g_mainWin->show();
 //X 	else
 //X 		KWin::forceActiveWindow(g_mainWin->winId());
 }
@@ -2064,6 +2065,12 @@ void EvaMain::slotUpdateShortcut( )
 //X 			user->getSetting()->getMessageShortcut(), KKey::QtWIN+Key_F12, this, SLOT(slotShotcutKeyPressed( )));
 //X 	if(!accelKey->updateConnections())
 //X 		kdDebug() << "F12 Key registered failed!" << endl;
+        /**
+         * Fix this: this work went the main window get minimized! -- George Ang
+         */
+//X         accelKey = new QShortcut( g_mainWin );
+//X         accelKey->setKey( user->getSetting( )->getMessageShortcut( ) );
+//X         connect( accelKey, SIGNAL( activated() ), tray, SLOT( popMessageOrMainWin() ) );
 }
 
 void EvaMain::slotFaceSizeChanged()
@@ -2277,7 +2284,7 @@ void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned in
 			switch(transferType){
 			case QQ_TRANSFER_IMAGE:
 				dirList.append(user->getSetting()->getPictureCacheDir());
-//X 				tray->gotTxtMessage( id); // since the chat win will show very shortly,
+				tray->gotTxtMessage( id); // since the chat win will show very shortly,
 							// we cancel the face flashing
 				break;
 			case QQ_TRANSFER_FILE:
@@ -2552,7 +2559,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		case E_PwWrong:
 			g_mainWin->UpdateLoginInfo(E_PwWrong + 1, s_ENotify[E_PwWrong]);
 			g_mainWin->offline();
-//X 			tray->setOffline();
+			tray->setOffline();
 			//loggedIn = false;
 			g_loginManager->setLoggedOut();
 			user->setStatus(EvaUser::Eva_Offline);
@@ -2652,14 +2659,14 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->UpdateLoginInfo(E_LoginProcessDone + 1, s_ENotify[E_LoginProcessDone]);
 			// should be everyting ready(contacts, groups, Quns)
 			QString nick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
-//X 			int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
+			int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
 			
 //			g_mainWin->clearList();
 			g_mainWin->updateMyInfo();//update my info first
 			g_ChatWindowManager->setMyName(nick, user->getQQ());
 
 	
-//X 			tray->changeToolTip(user->getQQ(), nick, faceId);			
+			tray->changeToolTip(user->getQQ(), nick, faceId);			
 			g_mainWin->showInfoFrame(false);
 
 			g_mainWin->ShowTab(g_mainWin->m_buddyTabKey);

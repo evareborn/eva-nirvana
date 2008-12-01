@@ -29,7 +29,7 @@
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
 #include <QLabel>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QCloseEvent>
 
 class CustomFaceConfig;
@@ -113,7 +113,7 @@ private slots:
 	void slotCancelClicked();
 };
 
-class Q3PopupMenu;
+class QMenu;
 
 class CustomSmileyManager : public CustomFaceManagerUI
 {
@@ -130,7 +130,7 @@ private:
 	CustomFaceConfig *m_Config;
 	bool m_IsChanged;
 	GroupActionPrivate *d;
-	Q3PopupMenu *m_MoveToMenu;
+	QMenu *m_MoveToMenu;
 
 	virtual void closeEvent ( QCloseEvent *e);
 

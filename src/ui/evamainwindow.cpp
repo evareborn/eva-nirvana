@@ -36,7 +36,7 @@
 //Added by qt3to4:
 #include <QMoveEvent>
 #include <QResizeEvent>
-#include <Q3PopupMenu>
+#include <QMenu>
 
 //X #include <klocale.h>
 //X #include <kpopupmenu.h>
@@ -110,12 +110,17 @@ EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name,
 
 	offline();
 }
+ 
+
 
 EvaMainWindow::~EvaMainWindow()
 {
 //X 	m_customTabs.clear();
 }
 
+void EvaMainWindow::toggleVisible() {
+    setVisible( !isVisible() );
+}
 void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPixmap *pix)
 {
 	qqNum = id;
@@ -130,6 +135,7 @@ void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPix
 
 	if(pix)
 		tbMyFace->setIconSet( QIcon(*pix));
+        setToolTip( myInfoTip() );
 //
 //
 //	loadContacts();
@@ -144,7 +150,7 @@ void EvaMainWindow::slotUpdateBuddyStat()
 	tlQQ->setText(" ( "+ QString::number(onlines) + "/" + QString::number(all) + ")");
 }
 
-void EvaMainWindow::setSystemMenu( Q3PopupMenu *sys)
+void EvaMainWindow::setSystemMenu( QMenu *sys)
 {
 	if(sys){
 		sysMenu = sys;
@@ -152,7 +158,7 @@ void EvaMainWindow::setSystemMenu( Q3PopupMenu *sys)
 	}
 }
 
-void EvaMainWindow::setStatusMenu( Q3PopupMenu *status)
+void EvaMainWindow::setStatusMenu( QMenu *status)
 {
 	if(status){
 		statusMenu = status;
@@ -459,8 +465,8 @@ void EvaMainWindow::loadContacts( )
 	QString name = i18n("Buddy List");
 	//QPixmap *p= EvaMain::images->getIcon("ONLINE");
 	QPixmap *p= EvaMain::images->getIcon("CONTACT");
-//X 	m_buddyTabKey = mainDisplay->tab->addTab(name, *p, name, m_buddyLv);
-	m_buddyTabKey = mainDisplay->tab->addTab(m_buddyLv, QIcon( *p ), "");
+	m_buddyTabKey = mainDisplay->tab->addTab(name, *p, name, m_buddyLv);
+//X 	m_buddyTabKey = mainDisplay->tab->addTab(m_buddyLv, QIcon( *p ), QString::null);
 
 	m_buddyLv->loadContacts();
 
@@ -501,8 +507,8 @@ void EvaMainWindow::loadQuns( )
 	QString name = i18n("Qun List");
 	//QPixmap *p= EvaMain::images->getIcon("QUN");
 	QPixmap *p= EvaMain::images->getIcon("QUNS");
-//X 	m_qunTabKey = mainDisplay->tab->addTab(name, *p, name, m_qunLv);
-	m_qunTabKey = mainDisplay->tab->addTab(m_qunLv, QIcon( *p ), "");
+	m_qunTabKey = mainDisplay->tab->addTab(name, *p, name, m_qunLv);
+//X 	m_qunTabKey = mainDisplay->tab->addTab(m_qunLv, QIcon( *p ), "");
 	m_qunLv->loadAllQuns();
 
 	m_qunLv->setColumnWidth(0, width());
@@ -526,8 +532,8 @@ void EvaMainWindow::loadRecentContacts( )
 	m_recentLv = new EvaRecentContactsListView(mainDisplay->tab, "recentLv");
 	QString name = i18n("Recent Contacts List");
 	QPixmap *p= EvaMain::images->getIcon("MSG");
-//X 	m_recentTabKey = mainDisplay->tab->addTab(name, *p, name, m_recentLv);
-	m_recentTabKey = mainDisplay->tab->addTab(m_recentLv, QIcon( *p ), "");
+	m_recentTabKey = mainDisplay->tab->addTab(name, *p, name, m_recentLv);
+//X 	m_recentTabKey = mainDisplay->tab->addTab(m_recentLv, QIcon( *p ), "");
 
 	m_recentLv->loadRecentContacts();
 

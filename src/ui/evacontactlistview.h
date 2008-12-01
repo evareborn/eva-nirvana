@@ -27,12 +27,12 @@
 //Added by qt3to4:
 #include <QDropEvent>
 #include <QPixmap>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QKeyEvent>
 #include <QDragEnterEvent>
 
 class QQFriend;
-class Q3PopupMenu;
+class QMenu;
 
 class EvaBuddyItem : public EvaListViewItem
 {
@@ -122,8 +122,8 @@ private:
 	std::map<int, EvaGroupItem *> m_groups;
 	std::map<unsigned int, EvaBuddyItem *> m_contacts;
 
-	Q3PopupMenu *m_groupMenu; 
-	Q3PopupMenu *m_buddyMenu;
+	QMenu *m_groupMenu; 
+	QMenu *m_buddyMenu;
 
 	void initPopup();
 
@@ -198,7 +198,7 @@ signals:
 	void requestQunHistory(const unsigned int);
 
 private:
-	Q3PopupMenu *m_popup;
+	QMenu *m_popup;
 
 	void initPopup();
 private slots:
@@ -283,8 +283,8 @@ signals:
 
 private:
 //	std::list<RecentContact>
-	Q3PopupMenu *m_buddyMenu;
-	Q3PopupMenu *m_qunMenu;
+	QMenu *m_buddyMenu;
+	QMenu *m_qunMenu;
 
 	void initBuddyPopup();
 	void initQunPopup();

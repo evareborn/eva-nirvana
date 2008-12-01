@@ -20,7 +20,8 @@
 
 #include "evaqunchatuibase.h"
 #include "evatextedit.h"
-#include "simplechatview.h"
+//X #include "simplechatview.h"
+#include "webkitchatview.h"
 #include "evaqunlistview.h"
 
 #include <qvariant.h>
@@ -80,8 +81,8 @@ EvaQunChatUIBase::EvaQunChatUIBase( QWidget* parent, const char* name, Qt::WFlag
 	splitter = new QSplitter( this, "splitter" );
 	splitter->setOrientation( Qt::Vertical );
 
-	chatDisplay = new SimpleChatView(splitter, "chatDisplay");
-	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
+	chatDisplay = new WebkitChatView(splitter, "chatDisplay");
+//X 	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
 	//chatDisplay->view()->setMinimumSize(QSize( 0, 170 ) );
 	//layout15->addWidget( chatDisplay->view() );
 

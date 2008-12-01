@@ -88,9 +88,9 @@ EvaDisplayWidget::EvaDisplayWidget(QWidget* parent, const char* name, Qt::WFlags
 //X 	wTab = new QWidget(this);
 //X 	layoutTab = new Q3GridLayout( wTab, 1, 1, 3, 3, "wspageLoginLayout");
 	
-//X 	tab = new EvaTabWidget(wTab, "tabWidget");
-	tab = new QTabWidget(this, "tabWidget");
-        tab->setTabPosition( QTabWidget::West );
+	tab = new EvaTabWidget(this, "tabWidget");
+//X 	tab = new QTabWidget(this, "tabWidget");
+//X         tab->setTabPosition( QTabWidget::West );
 //X 	layoutTab->addWidget(tab, 0, 0);
 //X 	addWidget(wTab, 1);
         addWidget( tab, 0);

@@ -29,7 +29,7 @@
 #include <QCloseEvent>
 #include <QShowEvent>
 #include <QPixmap>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QHideEvent>
 #include <QKeyEvent>
 #include <list> 
@@ -41,7 +41,7 @@ class CustomFaceSelector;
 class QTextCodec;
 class QKeyEvent;
 //X class EvaFontSelecter;
-class Q3PopupMenu;
+class QMenu;
 class QTimer;
 class QShowEvent;
 class QCloseEvent;
@@ -127,8 +127,8 @@ private:
 	static std::list<QString> quickList;
 	
 //X 	EvaFontSelecter *fontSelecter;
-	Q3PopupMenu *sendKey;
-	Q3PopupMenu *quickMenu;
+	QMenu *sendKey;
+	QMenu *quickMenu;
 	
 	Qun *mQun;
 	QTextCodec *codec;

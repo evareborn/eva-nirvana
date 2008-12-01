@@ -21,9 +21,7 @@
 #ifndef EVACHATVIEW_H
 #define EVACHATVIEW_H
 
-#include <khtmlview.h>
-#include <khtml_part.h>
-#include <kurl.h>
+#include <QWebPage>
 #include <qdatetime.h>
 #include <qcolor.h>
 

@@ -29,7 +29,7 @@
 #include <QMoveEvent>
 #include <QResizeEvent>
 #include <QPixmap>
-#include <Q3PopupMenu>
+#include <QMenu>
 
 //X #include <kurl.h>
 //X #include <khtml_part.h>
@@ -50,7 +50,7 @@ protected:
 
 class QResizeEvent;
 class Q3ListViewItem;
-class Q3PopupMenu;
+class QMenu;
 //X class KHTMLPart;
 class EvaContactListView;
 class EvaQunsListView;
@@ -68,8 +68,8 @@ public:
 	QRect tipRect(const QPoint &pos);
 	QString myInfoTip();
 	unsigned int getQQ() const { return qqNum; }
-	void setSystemMenu( Q3PopupMenu *sys);
-	void setStatusMenu( Q3PopupMenu *status);
+	void setSystemMenu( QMenu *sys);
+	void setStatusMenu( QMenu *status);
 	
 	void setPosAndSize();
 	const QPoint &getPosition() const { return nowPosition; }
@@ -124,6 +124,7 @@ public slots:
 	void addBuddyToRecentList(const unsigned int id, bool isMyWord = false);
 	void addQunToRecentList(const unsigned int id, bool isMyWord = false);
 	void slotFaceSizeChanged();
+        void toggleVisible();
 	
 	void deleteBuddy(unsigned int id);
 	
@@ -176,8 +177,8 @@ private:
 //X 	QMap<int, EvaScriptWidget *> m_customTabs;
 //X 	QMap<int, QString> m_tabScriptMap;
 
-	Q3PopupMenu *sysMenu;
-	Q3PopupMenu *statusMenu;
+	QMenu *sysMenu;
+	QMenu *statusMenu;
 
 	QPixmap *pixOnline;
 	QPixmap *pixOffline;

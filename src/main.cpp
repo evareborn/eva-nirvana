@@ -85,6 +85,7 @@ int main(int argc, char **argv)
 //X 	KCmdLineArgs::init(argc, argv, &about);
 //X 	KCmdLineArgs::addCmdLineOptions( options );
 	QApplication app( argc, argv );
+        app.setQuitOnLastWindowClosed(false );
 	EvaMain *mainWin = 0;
 
         //KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -93,7 +94,7 @@ int main(int argc, char **argv)
 
         mainWin = new EvaMain();
 
-	QObject::connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
+//X 	QObject::connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
        // args->clear();
 
         printf( "main loop!\n" );

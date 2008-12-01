@@ -25,13 +25,13 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <QCustomEvent>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <list>
 
 class QPixmap;
 //class EvaToolTip;
 class QCustomEvent;
-class Q3PopupMenu;
+class QMenu;
 
 
 class EvaQunBuddyItem :  public QObject, public Q3ListViewItem
@@ -53,7 +53,7 @@ public:
 	virtual QString key( int col, bool ascending) const;
 	QString tip(); 
 protected:
-	virtual void customEvent( QCustomEvent *e);
+	virtual void customEvent( QEvent *e);
 private:
 	unsigned int qqNum;
 	QString nick;
@@ -83,7 +83,7 @@ signals:
 	void requestChat(const unsigned int);
 private:
 	//EvaToolTip *mToolTip;
-	Q3PopupMenu *popupMenu;
+	QMenu *popupMenu;
 private slots:
 	void slotContextMenu(Q3ListViewItem *, const QPoint & , int);
 	void slotDetails();

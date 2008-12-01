@@ -32,9 +32,9 @@
 #include <qpoint.h>
 #include <qsize.h>
 #include <qcolor.h>
-//X #include <kshortcut.h>
+//X #include <kkeysequence.h>
+#include <QKeySequence>
 #include <cstring>
-class KConfig;
 
 typedef struct BuddyInfoCacheItem{
 	unsigned int id;
@@ -213,8 +213,8 @@ public:
 	 QString getUserHeadDir() const { return userHeadDir; }
 	void setUserHeadDir(const QString path) { userHeadDir = path; }	
 	
-//X 	const KShortcut &getMessageShortcut() const { return shortcut; }
-//X 	void setMessageShortcut( const KShortcut &key) { shortcut = key; }
+	const QKeySequence &getMessageShortcut() const { return keysequence; }
+	void setMessageShortcut( const QKeySequence &key) { keysequence = key; }
 	
 	static bool isVersionCorrect(const QString fileName);
 	
@@ -330,7 +330,7 @@ public:
 	std::list<RecentContact> getRecentContacts ();
 	void updateRecentContact(std::list<RecentContact>& list);
 	
-	KConfig *config( const QString &group );
+//X 	KConfig *config( const QString &group );
 	
 	// used in EvaContactListView to check if setting changed
 	inline void setNeedRepaint(const bool repaint = true);
@@ -363,7 +363,7 @@ private:
 	bool isSendKeyEnter;
 	bool playSound;
 	bool autoReply;
-//X 	KShortcut shortcut;
+	QKeySequence keysequence;
 	int idleMaxTime;
 	
 	QColor m_BuddyNameColor;
@@ -411,7 +411,7 @@ private:
 
 	std::list<unsigned int> m_RejectForever;
 	std::map<unsigned int, std::list<unsigned int> > m_QunRejectForever;
-	KConfig *m_config;
+//X 	KConfig *m_config;
 	bool m_NeedRepaint;
 	
 	friend class EvaUser;

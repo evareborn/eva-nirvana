@@ -20,7 +20,8 @@
 
 #include "evachatuibase.h"
 #include "evatextedit.h"
-#include "simplechatview.h"
+//X #include "simplechatview.h"
+#include "webkitchatview.h"
 //X #include "evafilepanel.h"
 
 #include <qvariant.h>
@@ -88,9 +89,9 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
 	lblSignature->setAlignment( Qt::WordBreak | Qt::AlignTop | Qt::AlignLeft );
 	layout5->addWidget(lblSignature);
 	
-	chatDisplay = new SimpleChatView(upperLayoutWidget, "chatDisplay");
+	chatDisplay = new WebkitChatView(upperLayoutWidget, "chatDisplay");
 	chatDisplay->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred, 0, 3, chatDisplay->sizePolicy().hasHeightForWidth() ) );
-	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
+//X 	chatDisplay->setHScrollBarMode(Q3ScrollView::AlwaysOff);
 	layout5->addWidget( chatDisplay );
 	
 	
@@ -193,7 +194,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
 	lowerLayout->addLayout(layout3);
 	
 	kteInput = new EvaTextEdit( lowerLayoutWidget, "kteInput" );
-	kteInput->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)2, (QSizePolicy::SizeType)1, 0, 2, kteInput->sizePolicy().hasHeightForWidth() ) );
+	kteInput->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding, 0, 2, kteInput->sizePolicy().hasHeightForWidth() ) );
 	kteInput->setMinimumSize( QSize( 0, 10 ) );
 	kteInput->setHScrollBarMode( Q3TextEdit::AlwaysOff );
 	kteInput->setTextFormat(Qt::RichText);

@@ -31,7 +31,7 @@
 //Added by qt3to4:
 #include <QCloseEvent>
 #include <QPixmap>
-#include <Q3PopupMenu>
+#include <QMenu>
 #include <QKeyEvent>
 #include <list>
 
@@ -42,7 +42,7 @@ class QTextCodec;
 class QKeyEvent;
 class QCloseEvent;
 //X class EvaFontSelecter;
-class Q3PopupMenu;
+class QMenu;
 class RegionGrabber;
 class EvaHistoryViewer;
 
@@ -122,10 +122,10 @@ private:
 	static EvaImageResource *images;
 	
 	static std::list<QString> quickList;
-	Q3PopupMenu *quickMenu;
+	QMenu *quickMenu;
 	
 //X 	EvaFontSelecter *fontSelecter;
-	Q3PopupMenu *sendKey;
+	QMenu *sendKey;
 	
 	QQFriend *buddy;
 	QTextCodec *codec;

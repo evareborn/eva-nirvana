@@ -76,8 +76,8 @@ private:
 //X 	Q3GridLayout * layoutTab;
 //X 	QWidget     * wTab;
 //X 	EvaLoginPageFrame * loginPage;
-//X 	EvaTabWidget      *tab;
-	QTabWidget      *tab;
+	EvaTabWidget      *tab;
+//X         QTabWidget      *tab;
 	//QWidgetStack      * wsMainDisplay;
 	
 	friend class EvaMainWindow;

@@ -270,11 +270,12 @@ int EvaHtmlParser::convertToPlainTxt(QString &html, QString &sendFileNameBase)
 		}
 	}
 	
-	QString start = "<p>";
+	QString start = "<p dir=\"ltr\">";
 	pos = html.find(start, 0);
 	if(pos!= -1){
 		html = html.right(html.length() - pos - start.length());
 	}
+	html.replace( "<p dir=\"ltr\">", "" );
 	html.replace("<br /></p>\n</body></html>", "");
 	html.replace("</p>\n</body></html>", "");
 	html.replace("\n","");
