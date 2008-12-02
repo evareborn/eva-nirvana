@@ -1122,10 +1122,11 @@ void EvaMain::slotFriendStatusChanged( unsigned int id )
 		case QQ_FRIEND_STATUS_ONLINE:
 			g_mainWin->changeToOnline(id);
 			if(user->getSetting()->isShowBudyOnlineNotifyEnabled()){
-				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
-									id, frd->getFace(), i18n("I am online."));
-				QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
-				tip->show();
+//X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am online." ) );
+//X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
+//X 									id, frd->getFace(), i18n("I am online."));
+//X 				QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 				tip->show();
 				if(user->getSetting()->isSoundEnabled())
 					global->getSoundResource()->playOnlineSound();
 			}
@@ -1136,10 +1137,11 @@ void EvaMain::slotFriendStatusChanged( unsigned int id )
 		case QQ_FRIEND_STATUS_LEAVE:
 			g_mainWin->changeToLeave(id);
 			if(user->getSetting()->isShowBudyOnlineNotifyEnabled()){
-				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
-									id, frd->getFace(), i18n("I am busy ..."));
-				QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
-				tip->show();
+//X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am busy ..." ) );
+//X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
+//X 									id, frd->getFace(), i18n("I am busy ..."));
+//X 				QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 				tip->show();
 			}
 			break;
 		case QQ_FRIEND_STATUS_INVISIBLE:
@@ -1153,7 +1155,7 @@ void EvaMain::slotFriendStatusChanged( unsigned int id )
 //X 	GetScriptManager()->notifyStatusChange(id);
 }
 
-void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTime, const char, 
+void EvaMain::slotTxtMessage(unsigned int sender, bool, QString /*message*/, QDateTime, const char, 
 			const bool, const bool, const bool, 
 			const char, const char, const char)
 {
@@ -1172,9 +1174,10 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 			faceId = frd->getFace();
 		tray->newTxtMessage(sender, faceId);
 		if(user->getSetting()->isShowMessageTipEnabled()){
-			EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), sender, faceId, message);
-			QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
-			tip->show();
+//X                         tray->showMessageTip( sender, codec->toUnicode(frd->getNick().c_str() ), message  );
+//X 			EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), sender, faceId, message);
+//X 			QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 			tip->show();
 		}
 	}
 	if( g_ChatWindowManager && g_ChatWindowManager->isChatWindowExisted(sender)){
@@ -2025,7 +2028,7 @@ void EvaMain::slotQunCreate( )
 	win->show();
 }
 
-void EvaMain::slotFriendSignatureChanged( const unsigned int qq, const QDateTime /*time*/, const QString signature )
+void EvaMain::slotFriendSignatureChanged( const unsigned int qq, const QDateTime /*time*/, const QString /*signature*/ )
 {
 	
 	const QQFriend *frd = (user->getFriendList()).getFriend(qq);
@@ -2033,9 +2036,10 @@ void EvaMain::slotFriendSignatureChanged( const unsigned int qq, const QDateTime
 		if(g_mainWin) g_mainWin->updateBuddy(qq);
 		QString nick = codec->toUnicode(frd->getNick().c_str());
 		nick = nick + "(" + i18n("signature") + ")" ;
-		EvaTipWindow *tip = new EvaTipWindow(images, nick, qq, frd->getFace(), signature);
-		QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
-		tip->show();
+//X                 tray->showMessageTip( qq, nick, signature  );
+//X 		EvaTipWindow *tip = new EvaTipWindow(images, nick, qq, frd->getFace(), signature);
+//X 		QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 		tip->show();
 	}else{
 		printf("buddy %d not in list\n", qq);
 	}	

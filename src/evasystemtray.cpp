@@ -47,6 +47,7 @@ EvaSystemTray::EvaSystemTray(QWidget* parent, const char* /*name*/)
 	clickTimer = new QTimer(this);
 	QObject::connect(clickTimer, SIGNAL(timeout()), SLOT(slotClickTimeout()));
         QObject::connect( this, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ), SLOT( slotActivited(QSystemTrayIcon::ActivationReason) ) );
+//X         QObject::connect( this, SIGNAL( messageClicked() ), SLOT( popMessageOrMainWin() ) );
 }
 
 EvaSystemTray::~EvaSystemTray()
@@ -82,6 +83,10 @@ void EvaSystemTray::reset()
 	messageStack.clear();
 	iconStack.clear();
 	setOffline();
+}
+ 
+void EvaSystemTray::showMessageTip( const int sender, const QString& nick, const QString& message ) {
+    showMessage( QString( "%1 (%2) sayed:" ).arg( nick ).arg( sender ) , message );
 }
 
 void EvaSystemTray::changeToolTip(const unsigned int id, const QString &nick, const short face)

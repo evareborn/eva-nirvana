@@ -46,6 +46,7 @@ public:
 	void setupMenus(QMenu *sys, QMenu *status);
 	void reset();
 public slots:	
+        void showMessageTip( const int sender, const QString &nick, const QString &message );
 	void changeToolTip(const unsigned int id, const QString &nick, const short face);
 	void setOnline();
 	void setOffline();
