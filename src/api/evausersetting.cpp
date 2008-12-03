@@ -808,7 +808,7 @@ bool EvaUserSetting::loadSettings()
 	
 	QString fullName = getEvaUserDir() + "/" + userProfileFileName;
 	QDir d;
-	if(d.exists(fullName)){
+	if(!d.exists(fullName)){
 		loadOldProfile();
 		QFile::remove(fullName);
 		saveSettings();

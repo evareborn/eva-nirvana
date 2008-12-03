@@ -28,6 +28,8 @@
 #include <qimage.h>
 #include <qmovie.h>
 #include <qsize.h>
+ 
+#include <QProcess>
 
 #ifndef MaxFaceNumber
 //#define MaxFaceNumber 117

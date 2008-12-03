@@ -54,9 +54,10 @@ public slots:
 	void setInvisible();
 	void setLoginWaiting();
 	
-	void newTxtMessage(const unsigned int id, short face = 0);
+	void newTxtMessage(const unsigned int id, const QString &nick , const QString &message);
+        void newQunMessage( const unsigned int id, const QString &nick, const QString &message );
 	void gotTxtMessage(const unsigned int id);
-	void newSysMessage();
+	void newSysMessage(const QString &message);
 	void gotSysMessage();
 	int getSenderID();
         void popMessageOrMainWin();

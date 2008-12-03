@@ -31,6 +31,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <cstring>
+#include <QProcess>
 
 const QString EvaTextFilter::filter( const QString & source )
 {
@@ -46,6 +47,14 @@ const QString EvaTextFilter::filter( const QString & source )
 } 
  
 /* ***********************************************************/
+ 
+EvaSoundThread::EvaSoundThread( const QString& path )
+    : soundPath( path )
+{}
+ 
+void EvaSoundThread::run() {
+    QProcess::execute( QString( "aplay %1" ).arg( soundPath ) );
+}
 
 QMutex EvaHelper::mutex;
 void EvaHelper::run()
@@ -71,7 +80,7 @@ void EvaHelper::run()
 	}
 	mutex.unlock();
 }
-
+ 
 void EvaHelper::doSysLoading( )
 {
 }
@@ -334,7 +343,7 @@ void EvaHelper::setSaveQunListArgs( QFile * file, QunList & list )
 	this->file = file;
 	qunList = list;
 }
-
+ 
 void EvaHelper::doQunUserSaving( )
 {
 	if(type != SaveQunUsers) return;

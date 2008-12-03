@@ -201,6 +201,8 @@ public:
 	
 	// for loading Qun list
 	void setLoadQunListArgs(QFile *file);
+ 
+        void setSoundFile( const QString& file );
 	
 	// for saving Qun list
 	void setSaveQunListArgs(QFile *file, QunList &list);
@@ -258,6 +260,15 @@ private:
 	void doImageScaling();
 	
 	friend class EvaContactManager;
+};
+ 
+class EvaSoundThread : public QThread {
+    public:
+        EvaSoundThread( const QString& path );
+ 
+        void run();
+    private:
+        QString soundPath;
 };
 
 // return QString

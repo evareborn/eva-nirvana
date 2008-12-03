@@ -1155,7 +1155,7 @@ void EvaMain::slotFriendStatusChanged( unsigned int id )
 //X 	GetScriptManager()->notifyStatusChange(id);
 }
 
-void EvaMain::slotTxtMessage(unsigned int sender, bool, QString /*message*/, QDateTime, const char, 
+void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTime, const char, 
 			const bool, const bool, const bool, 
 			const char, const char, const char)
 {
@@ -1172,7 +1172,7 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString /*message*/, QDa
 		short faceId = 0x0000;
 		if(frd)
 			faceId = frd->getFace();
-		tray->newTxtMessage(sender, faceId);
+		tray->newTxtMessage(sender, codec->toUnicode( frd->getNick().c_str() ), message);
 		if(user->getSetting()->isShowMessageTipEnabled()){
 //X                         tray->showMessageTip( sender, codec->toUnicode(frd->getNick().c_str() ), message  );
 //X 			EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), sender, faceId, message);
@@ -1904,11 +1904,12 @@ void EvaMain::slotRequestQunChat( const unsigned int id)
 	g_ChatWindowManager->openQunChatWindow(qun);
 }
 
-void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ, QString /*msg*/, QDateTime /*time*/, const char /*fontSize*/, 
+void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ, QString msg, QDateTime /*time*/, const char /*fontSize*/, 
 				const bool /*u*/, const bool /*i*/, const bool /*b*/, const char /*blue*/, const char /*green*/, const char /*red*/)
 {
 	//note that: Qun never show tip
 	Qun *qun = user->getQunList()->getQun(qunID);
+        QString message = msg;
 	if(!qun) return;
 	if(senderQQ == user->getQQ()) return;
 	if(!(g_ChatWindowManager && g_ChatWindowManager->isQunChatWindowExisted(qunID))){
@@ -1924,7 +1925,9 @@ void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ,
 				break;
 			default:
 				g_mainWin->newQunMessage(qunID);
-				tray->newTxtMessage(qunID, -2); // -2 means qun message;
+                                const FriendItem* frd = qun->getMemberDetails( senderQQ );
+                                if ( frd )
+                                    tray->newQunMessage(qunID, codec->toUnicode(frd->getNick().c_str()), message ); 
 				needSound = true;
 		}
 		if(user->getSetting()->isSoundEnabled() && needSound)

@@ -23,6 +23,7 @@
 #include "evasocket.h"
 #include "evamain.h"
 #include "evauser.h"
+#include "evaqtutil.h"
 
 #include <stdlib.h>
 #include <q3http.h>
@@ -34,6 +35,7 @@
 #include <qpixmap.h>
 //Added by qt3to4:
 #include <Q3TextStream>
+#include <QProcess>
 //#include <kglobal.h>
 //#include <kstandarddirs.h>
 
@@ -387,6 +389,13 @@ void EvaSoundResource::playSound(const QString &filename)
 //X 	KAudioPlayer snd(absPath);
 //X 	snd.play();
 //X         QSound::play( absPath );
+//X         EvaMain::helper->setCategory( EvaHelper::PlaySound, NULL );
+//X         EvaMain::helper->setSoundFile(absPath );
+//X         EvaMain::helper->run();
+        EvaSoundThread* thread = new EvaSoundThread( absPath );
+        thread->start();
+//X         QProcess *process = new QProcess();
+//X         process->start( QString( "aplay " ) + absPath );
 }
 
 /*  ---------------------------------------------------------------------------------------------- */

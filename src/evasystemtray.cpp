@@ -47,7 +47,7 @@ EvaSystemTray::EvaSystemTray(QWidget* parent, const char* /*name*/)
 	clickTimer = new QTimer(this);
 	QObject::connect(clickTimer, SIGNAL(timeout()), SLOT(slotClickTimeout()));
         QObject::connect( this, SIGNAL( activated(QSystemTrayIcon::ActivationReason) ), SLOT( slotActivited(QSystemTrayIcon::ActivationReason) ) );
-//X         QObject::connect( this, SIGNAL( messageClicked() ), SLOT( popMessageOrMainWin() ) );
+        QObject::connect( this, SIGNAL( messageClicked() ), SLOT( popMessageOrMainWin() ) );
 }
 
 EvaSystemTray::~EvaSystemTray()
@@ -151,17 +151,29 @@ void EvaSystemTray::setLoginWaiting()
 //X 	setMovie(images->getLoginMovie());
 }
 
-void EvaSystemTray::newTxtMessage(const unsigned int id, short face)
+void EvaSystemTray::newTxtMessage(const unsigned int id, const QString& nick, const QString& message)
 {
 	if(messageStack.findIndex(id) != -1) return; // if exists, do nothing
 	messageStack.push(id);
-	iconStack.push(face);
+	iconStack.push(0);
 	if(!blinkTimer->isActive()){
 		//statusPix =  *QLabel::pixmap();
 		blinkTimer->start(300, false);
 	}
+        showMessageTip( id, nick, message );
 }
 
+void EvaSystemTray::newQunMessage(const unsigned int id, const QString& nick, const QString& message)
+{
+	if(messageStack.findIndex(id) != -1) return; // if exists, do nothing
+	messageStack.push(id);
+	iconStack.push(-2);
+	if(!blinkTimer->isActive()){
+		//statusPix =  *QLabel::pixmap();
+		blinkTimer->start(300, false);
+	}
+        showMessageTip( id, nick, message );
+}
 void EvaSystemTray::gotTxtMessage(const unsigned int id)
 {
 	int index = messageStack.findIndex(id);
@@ -175,8 +187,9 @@ void EvaSystemTray::gotTxtMessage(const unsigned int id)
 	}
 }
 
-void EvaSystemTray::newSysMessage()
+void EvaSystemTray::newSysMessage(const QString& message)
 {
+        showMessage( "system message:" , message );
 	messageStack.push(-1);
 	iconStack.push(-1);
 	if(!blinkTimer->isActive()){
