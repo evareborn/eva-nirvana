@@ -26,7 +26,7 @@
 #include <qtextcodec.h>
 #include <q3textstream.h>
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #define DEFAULT_DOWNLOAD_DIR         "Downloads"
 
@@ -61,7 +61,7 @@ void readXdgUserDirs(QString *downloads)
 
 EvaSetting::EvaSetting()
 {
-	userList.setAutoDelete(true);
+//X 	userList.setAutoDelete(true);
 	QString home = QDir::homeDirPath();
 	QDir d;
 	if (!d.exists(home + "/.eva")){
@@ -90,10 +90,16 @@ EvaSetting::EvaSetting()
 
 
 EvaSetting::~EvaSetting()
-{}
+{ 
+    while ( userList.size() ) {
+        LoginRecord* record = userList.first();
+        userList.pop_front();
+        delete record;
+    }
+}
 
 bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recorded, const bool hidden , 
-			const int type, const Q_UINT32 server, const Q_UINT16 port, const QString username, const Q3CString base64Param)
+			const int type, const Q_UINT32 server, const Q_UINT16 port, const QString username, const QByteArray base64Param)
 {
 	QString home = QDir::homeDirPath();
 	
@@ -129,7 +135,7 @@ bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recor
 	}	
 	
 	QString s_username = " ";
-	Q3CString s_param = " ";
+	QByteArray s_param = " ";
 	if( !username.isEmpty() && username.stripWhiteSpace() != "") s_username = username;
 	if( !base64Param.isEmpty() && base64Param.stripWhiteSpace() != "") s_param = base64Param;
 	if( userIndex == -1){
@@ -172,7 +178,7 @@ bool EvaSetting::saveSetting(const int id, const char * md5Pwd, const bool recor
 	// save the lastest user's id
 	stream<<(Q_UINT32)(userIndex);
 	// saving now
-	for(uint i=0; i<userList.count(); i++){
+	for(int i=0; i<userList.count(); i++){
 		LoginRecord *r= userList.at(i);
 		stream<<r->id;
 		stream.writeRawBytes((char *)(r->md5Pwd), 16);
@@ -252,7 +258,7 @@ bool EvaSetting::loadSetting( )
 // return index of the id user
 int EvaSetting::findUser(const int id )
 {
-	for(uint i=0; i<userList.count(); i++){
+	for(int i=0; i<userList.count(); i++){
 		if(userList.at(i)->id==(uint)id)
 			return i;
 	}
@@ -334,7 +340,7 @@ short EvaSetting::getPort(const int id)
 	return 0;
 }
 
-const Q3CString EvaSetting::getProxyParam(const int id)
+const QByteArray EvaSetting::getProxyParam(const int id)
 {
 	int index = findUser(id);
 	if(index!=-1){

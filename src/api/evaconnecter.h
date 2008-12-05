@@ -65,8 +65,8 @@ private:
 	bool connectionReady;
 	bool m_IsDetecting;
 	bool isClientSetup;
-	Q3PtrList<InPacket> inPool;
-	Q3PtrList<OutPacket> outPool;
+	QList<InPacket*> inPool;
+	QList<OutPacket*> outPool;
 	QTimer *timer;
 	bool isConnected;
 	EvaNetwork *connecter;

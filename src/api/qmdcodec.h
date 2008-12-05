@@ -40,7 +40,7 @@
 #include <qstring.h>
 #include <qiodevice.h>
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 /**
  * A wrapper class for the most commonly used encoding and
@@ -83,8 +83,8 @@ public:
    *                breaks, too.
    * @return        quoted-printable encoded data.
    */
-  static Q3CString quotedPrintableEncode(const QByteArray & in,
-                                        bool useCRLF = true);
+//X   static QByteArray quotedPrintableEncode(const QByteArray & in,
+//X                                         bool useCRLF = true);
 
   /**
    * @overload
@@ -98,7 +98,7 @@ public:
    *                breaks, too.
    * @return        quoted-printable encoded data.
    */
-  static Q3CString quotedPrintableEncode(const Q3CString & str,
+  static QByteArray quotedPrintableEncode(const QByteArray & str,
                                         bool useCRLF = true);
 
   /**
@@ -131,7 +131,7 @@ public:
    * @param in  the data to be decoded.
    * @return    decoded data.
    */
-  static Q3CString quotedPrintableDecode(const QByteArray & in);
+  static QByteArray quotedPrintableDecode(const QByteArray & in);
 
   /**
    * @overload
@@ -142,7 +142,7 @@ public:
    * @param str  the data to be decoded.
    * @return     decoded data.
    */
-  static Q3CString quotedPrintableDecode(const Q3CString & str);
+//X   static QByteArray quotedPrintableDecode(const QByteArray & str);
 
   /**
    * Decodes a quoted-printable encoded data.
@@ -177,7 +177,7 @@ public:
    * @param in   the data to be uuencoded
    * @return     a uuencoded data.
    */
-  static Q3CString uuencode( const QByteArray& in );
+  static QByteArray uuencode( const QByteArray& in );
 
   /**
    * @overload
@@ -188,7 +188,7 @@ public:
    * @param str   the string to be uuencoded.
    * @return      the encoded string.
    */
-  static Q3CString uuencode( const Q3CString& str );
+//X   static QByteArray uuencode( const QByteArray& str );
 
   /**
    * Encodes the given data using the uuencode algorithm.
@@ -217,7 +217,7 @@ public:
    * @param in   the data uuencoded data to be decoded.
    * @return     a decoded string.
    */
-  static Q3CString uudecode( const QByteArray& in );
+  static QByteArray uudecode( const QByteArray& in );
 
   /**
    * @overload
@@ -228,7 +228,7 @@ public:
    * @param str   the string to be decoded.
    * @return      a uudecoded string.
    */
-  static Q3CString uudecode( const Q3CString& str );
+//X   static QByteArray uudecode( const QByteArray& str );
 
   /**
    * Decodes the given data using the uudecode algorithm.
@@ -265,7 +265,7 @@ public:
    *
    * @return           a base64 encoded string.
    */
-  static Q3CString base64Encode( const QByteArray& in, bool insertLFs = false);
+  static QByteArray base64Encode( const QByteArray& in, bool insertLFs = false);
 
   /**
    * @overload
@@ -277,7 +277,7 @@ public:
    * @param insertLFs limit the number of characters per line.
    * @return          the decoded string.
    */
-  static Q3CString base64Encode( const Q3CString& str, bool insertLFs = false );
+//X   static QByteArray base64Encode( const QByteArray& str, bool insertLFs = false );
 
   /**
    * Encodes the given data using the base64 algorithm.
@@ -310,7 +310,7 @@ public:
    * @param in   the base64-encoded data to be decoded.
    * @return     the decoded data.
    */
-  static Q3CString base64Decode( const QByteArray& in );
+  static QByteArray base64Decode( const QByteArray& in );
 
   /**
    * @overload
@@ -321,7 +321,7 @@ public:
    * @param str  the base64-encoded string.
    * @return     the decoded string.
    */
-  static Q3CString base64Decode( const Q3CString& str );
+//X   static QByteArray base64Decode( const QByteArray& str );
 
   /**
    * Decodes the given data that was encoded with the base64
@@ -433,7 +433,7 @@ public:
    *
    * Same as above except it accepts a QByteArray as its argument.
    */
-  QMD5(const Q3CString& a );
+//X   QMD5(const QByteArray& a );
 
   /**
    * Updates the message to be digested. Be sure to add all data
@@ -462,7 +462,7 @@ public:
    *
    * @param in     message to be added to the digest (QByteArray).
    */
-  void update(const Q3CString& in );
+//X   void update(const QByteArray& in );
 
   /**
    * @overload
@@ -504,18 +504,18 @@ public:
    * Returns the value of the calculated message digest in
    * a hexadecimal representation.
    */
-  Q3CString hexDigest ();
+  QByteArray hexDigest ();
 
   /**
    * @overload
    */
-  void hexDigest(Q3CString&);
+  void hexDigest(QByteArray&);
 
   /**
    * Returns the value of the calculated message digest in
    * a base64-encoded representation.
    */
-  Q3CString base64Digest ();
+  QByteArray base64Digest ();
 
   /**
    * returns true if the calculated digest for the given
@@ -526,7 +526,7 @@ public:
   /**
    * @overload
    */
-  bool verify(const Q3CString&);
+  bool verify(const QByteArray&);
 
 protected:
   /**

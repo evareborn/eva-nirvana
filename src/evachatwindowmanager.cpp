@@ -34,7 +34,7 @@
 #include <qmessagebox.h>
 #include <qapplication.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 //X #include <kwin.h>
 //X #include <klocale.h>
 		
@@ -49,17 +49,39 @@ EvaChatWindowManager::EvaChatWindowManager(EvaImageResource *img, EvaUserSetting
 	EvaQunChatWindow::myName = myNickname;
 	
 	userSetting = setting;
-	windowList.setAutoDelete(true);
-	messageQueue.setAutoDelete(true);
-	
-	qunWindowList.setAutoDelete(true);
-	qunMessageQueue.setAutoDelete(true);
+//X 	windowList.setAutoDelete(true);
+//X 	messageQueue.setAutoDelete(true);
+//X 	
+//X 	qunWindowList.setAutoDelete(true);
+//X 	qunMessageQueue.setAutoDelete(true);
 	
 }
 
 EvaChatWindowManager::~EvaChatWindowManager()
 {
-	//closeAllWindows();
+//X 	closeAllWindows();
+        while ( windowList.size() ) {
+            EvaChatWindow* win = windowList.last();
+            windowList.pop_back();
+            delete win;
+        }
+ 
+        while ( messageQueue.size() ) {
+            Message* msg = messageQueue.last();
+            messageQueue.pop_back();
+            delete msg;
+        }
+        while ( qunWindowList.size() ) {
+            EvaQunChatWindow* win = qunWindowList.last();
+            qunWindowList.pop_back();
+            delete win;
+        }
+        while ( qunMessageQueue.size() ) {
+            QunMessage* msg = qunMessageQueue.last();
+            qunMessageQueue.pop_back();
+            delete msg;
+        }
+
 }
 
 void EvaChatWindowManager::setMyName(QString myName, const unsigned int id)
@@ -90,7 +112,8 @@ EvaChatWindow * EvaChatWindowManager::openChatWindow(QQFriend * frd, const bool 
 	EvaChatWindow *win = getWindow(frd->getQQ());
 	if(win){
 		if(win->isHidden()){
-			windowList.removeRef(win);
+			windowList.remove(win);
+                        delete win;
 			win = newWindow(frd);
 			//win->show();
 		}else{
@@ -103,12 +126,13 @@ EvaChatWindow * EvaChatWindowManager::openChatWindow(QQFriend * frd, const bool 
 	}
 	
 	Message *msg;
-	for(uint i = 0; i<messageQueue.count(); i++){
+	for(int i = 0; i<messageQueue.count(); i++){
 		msg = messageQueue.at(i);
 		if(msg->sender == frd->getQQ()){
 			win->slotReceivedMessage(msg->sender, msg->isNormal, msg->message, msg->time, msg->size,
 						msg->u, msg->i, msg->b, msg->blue, msg->green, msg->red);
-			messageQueue.remove(i--);
+			messageQueue.remove(msg);
+                        delete msg;
 		}
 	}
 	win->show();
@@ -121,14 +145,14 @@ EvaChatWindow * EvaChatWindowManager::openChatWindow(QQFriend * frd, const bool 
 void EvaChatWindowManager::closeAllWindows()
 {
 	EvaChatWindow *win;
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		win = windowList.at(i);
 		if(win){
 			if(win->isVisible()){
 				win->close();
 			}
 			delete win;
-			windowList.remove(i--);
+			windowList.remove(win);
 		}
 	}
 	//m_btnList.clear();
@@ -137,7 +161,7 @@ void EvaChatWindowManager::closeAllWindows()
 std::list<int> EvaChatWindowManager::getMessages()
 {
 	std::list<int> list;
-	for(uint i=0; i<messageQueue.count();i++){
+	for(int i=0; i<messageQueue.count();i++){
 		list.push_back(messageQueue.at(i)->sender);
 	}
 	return list;
@@ -146,11 +170,12 @@ std::list<int> EvaChatWindowManager::getMessages()
 void EvaChatWindowManager::graphicChanged()
 {
 	EvaChatWindow *win;
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		win = windowList.at(i);
 		if(win->isVisible()){
 			win->close();
-			windowList.remove(i--);
+			windowList.remove(win);
+                        delete win;
 			continue;
 		}
 		win->graphicChanged();
@@ -211,7 +236,7 @@ void EvaChatWindowManager::slotBuddyQQShowReady(const unsigned int id)
 
 void EvaChatWindowManager::slotMyQQShowReady()
 {
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		if(windowList.at(i)->isVisible())
 			windowList.at(i)->slotMyQQShowReady();
 	}	
@@ -235,10 +260,10 @@ EvaChatWindow *EvaChatWindowManager::newWindow(QQFriend *frd)
 	QObject::connect(win, SIGNAL(requestBuddyQQShow(const unsigned int)), this, SIGNAL(requestBuddyQQShow(const unsigned int)));
 	QObject::connect(win, SIGNAL(requestMyQQShow()), this, SIGNAL(requestMyQQShow()));
 
-	QObject::connect(win, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
-							const Q3ValueList<unsigned int>, const unsigned char)),
-				SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
-							const Q3ValueList<unsigned int>, const unsigned char)));
+	QObject::connect(win, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
+							const QList<unsigned int>, const unsigned char)),
+				SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
+							const QList<unsigned int>, const unsigned char)));
 	QObject::connect(win, SIGNAL(fileTransferAccept(const unsigned int, const unsigned int, const QString,
 							const unsigned char )),
 				SIGNAL(fileTransferAccept(const unsigned int, const unsigned int, const QString,
@@ -253,7 +278,7 @@ EvaChatWindow *EvaChatWindowManager::newWindow(QQFriend *frd)
 
 EvaChatWindow *EvaChatWindowManager::getWindow(const unsigned int id)
 {
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		if(windowList.at(i)->getBuddyQQ() == id)
 			return windowList.at(i);
 	}
@@ -357,7 +382,7 @@ void EvaChatWindowManager::slotQunJoinEvent(const unsigned int qunID,
 
 EvaQunChatWindow * EvaChatWindowManager::getQunWindow( const unsigned int id )
 {
-	for(uint i=0; i<qunWindowList.count();i++){
+	for(int i=0; i<qunWindowList.count();i++){
 		if(qunWindowList.at(i)->getQunID() == id)
 			return qunWindowList.at(i);
 	}
@@ -409,7 +434,8 @@ void EvaChatWindowManager::openQunChatWindow( Qun * qun )
 	EvaQunChatWindow *win = getQunWindow(qun->getQunID());
 	if(win){
 		if(win->isHidden()){
-			qunWindowList.removeRef(win);
+			qunWindowList.remove(win);
+                        delete win;
 			win = newQunWindow(qun);
 			//win->show();
 		}else{
@@ -422,12 +448,13 @@ void EvaChatWindowManager::openQunChatWindow( Qun * qun )
 	}
 	
 	QunMessage *msg;
-	for(uint i = 0; i<qunMessageQueue.count(); i++){
+	for(int i = 0; i<qunMessageQueue.count(); i++){
 		msg = qunMessageQueue.at(i);
 		if(msg->qunID == qun->getQunID()){
 			win->slotReceivedMessage(msg->qunID, msg->sender, msg->message, msg->time, msg->size,
 						msg->u, msg->i, msg->b, msg->blue, msg->green, msg->red);
-			qunMessageQueue.remove(i--);
+			qunMessageQueue.remove(msg);
+                        delete msg;
 		}
 	}
 	win->show();
@@ -474,12 +501,13 @@ void EvaChatWindowManager::slotQunListUpdated()
 {
 	int id = 0;
 	EvaQunChatWindow *win = 0;
-	for(uint i=0; i<qunWindowList.count();i++){
+	for(int i=0; i<qunWindowList.count();i++){
 		win = qunWindowList.at(i);
 		id = win->getQunID();
 		if( ! (EvaMain::user->getQunList()->getQun(id) ) ){
 			win->hide();
-			qunWindowList.removeRef(win);
+			qunWindowList.remove(win);
+                        delete win;
 		}
 	}
 }
@@ -554,7 +582,7 @@ void EvaChatWindowManager::removeButton( QString &scriptName, const QString &but
 
 void EvaChatWindowManager::addBuddyWindowButton( CustomButton & btn )
 {
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		if(windowList.at(i))
 			windowList.at(i)->addToolButton(btn.script, btn.button, btn.image, btn.tip);
 	}
@@ -562,7 +590,7 @@ void EvaChatWindowManager::addBuddyWindowButton( CustomButton & btn )
 
 void EvaChatWindowManager::addQunWindowButton( CustomButton & btn )
 {
-	for(uint i=0; i<qunWindowList.count();i++){
+	for(int i=0; i<qunWindowList.count();i++){
 		if(qunWindowList.at(i))
 			qunWindowList.at(i)->addToolButton(btn.script, btn.button, btn.image, btn.tip);
 	}
@@ -570,7 +598,7 @@ void EvaChatWindowManager::addQunWindowButton( CustomButton & btn )
 
 void EvaChatWindowManager::removeBuddyWindowButton( CustomButton & btn )
 {
-	for(uint i=0; i<windowList.count();i++){
+	for(int i=0; i<windowList.count();i++){
 		if(windowList.at(i))
 			windowList.at(i)->removeToolButton(btn.script, btn.button);
 	}
@@ -578,7 +606,7 @@ void EvaChatWindowManager::removeBuddyWindowButton( CustomButton & btn )
 
 void EvaChatWindowManager::removeQunWindowButton( CustomButton & btn )
 {
-	for(uint i=0; i<qunWindowList.count();i++){
+	for(int i=0; i<qunWindowList.count();i++){
 		if(qunWindowList.at(i))
 			qunWindowList.at(i)->removeToolButton(btn.script, btn.button);
 	}

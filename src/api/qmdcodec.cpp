@@ -38,7 +38,7 @@
 
 #include "qmdcodec.h"
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 #define QMD5_S11 7
 #define QMD5_S12 12
@@ -146,15 +146,15 @@ static int rikFindChar(register const char * _s, const char c)
 
   return s - _s;
 }
-
-Q3CString QCodecs::quotedPrintableEncode(const QByteArray& in, bool useCRLF)
-{
-  QByteArray out;
-  quotedPrintableEncode (in, out, useCRLF);
-  return Q3CString (out.data(), out.size()+1);
-}
-
-Q3CString QCodecs::quotedPrintableEncode(const Q3CString& str, bool useCRLF)
+//X 
+//X QByteArray QCodecs::quotedPrintableEncode(const QByteArray& in, bool useCRLF)
+//X {
+//X   QByteArray out;
+//X   quotedPrintableEncode (in, out, useCRLF);
+//X   return QByteArray (out.data(), out.size()+1);
+//X }
+//X 
+QByteArray QCodecs::quotedPrintableEncode(const QByteArray& str, bool useCRLF)
 {
   if (str.isEmpty())
     return "";
@@ -280,14 +280,14 @@ void QCodecs::quotedPrintableEncode(const QByteArray& in, QByteArray& out, bool 
   out.truncate(cursor - out.data());
 }
 
-Q3CString QCodecs::quotedPrintableDecode(const QByteArray & in)
-{
-  QByteArray out;
-  quotedPrintableDecode (in, out);
-  return Q3CString (out.data(), out.size()+1);
-}
+//X QByteArray QCodecs::quotedPrintableDecode(const QByteArray & in)
+//X {
+//X   QByteArray out;
+//X   quotedPrintableDecode (in, out);
+//X   return QByteArray (out.data(), out.size()+1);
+//X }
 
-Q3CString QCodecs::quotedPrintableDecode(const Q3CString & str)
+QByteArray QCodecs::quotedPrintableDecode(const QByteArray & str)
 {
   if (str.isEmpty())
     return "";
@@ -354,22 +354,22 @@ void QCodecs::quotedPrintableDecode(const QByteArray& in, QByteArray& out)
 
   out.truncate(cursor - out.data());
 }
-
-Q3CString QCodecs::base64Encode( const Q3CString& str, bool insertLFs )
-{
-    if ( str.isEmpty() )
-        return "";
-
-    QByteArray in (str.length());
-    memcpy( in.data(), str.data(), str.length() );
-    return base64Encode( in, insertLFs );
-}
-
-Q3CString QCodecs::base64Encode( const QByteArray& in, bool insertLFs )
+//X 
+//X QByteArray QCodecs::base64Encode( const QByteArray& str, bool insertLFs )
+//X {
+//X     if ( str.isEmpty() )
+//X         return "";
+//X 
+//X     QByteArray in (str.length());
+//X     memcpy( in.data(), str.data(), str.length() );
+//X     return base64Encode( in, insertLFs );
+//X }
+//X 
+QByteArray QCodecs::base64Encode( const QByteArray& in, bool insertLFs )
 {
     QByteArray out;
     base64Encode( in, out, insertLFs );
-    return Q3CString( out.data(), out.size()+1 );
+    return QByteArray( out.data(), out.size()+1 );
 }
 
 void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
@@ -443,22 +443,22 @@ void QCodecs::base64Encode( const QByteArray& in, QByteArray& out,
         didx++;
     }
 }
+//X 
+//X QByteArray QCodecs::base64Decode( const QByteArray& str )
+//X {
+//X     if ( str.isEmpty() )
+//X         return "";
+//X 
+//X     QByteArray in( str.length() );
+//X     memcpy( in.data(), str.data(), str.length() );
+//X     return base64Decode( in );
+//X }
 
-Q3CString QCodecs::base64Decode( const Q3CString& str )
-{
-    if ( str.isEmpty() )
-        return "";
-
-    QByteArray in( str.length() );
-    memcpy( in.data(), str.data(), str.length() );
-    return base64Decode( in );
-}
-
-Q3CString QCodecs::base64Decode( const QByteArray& in )
+QByteArray QCodecs::base64Decode( const QByteArray& in )
 {
     QByteArray out;
     base64Decode( in, out );
-    return Q3CString( out.data(), out.size()+1 );
+    return QByteArray( out.data(), out.size()+1 );
 }
 
 void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
@@ -545,23 +545,23 @@ void QCodecs::base64Decode( const QByteArray& in, QByteArray& out )
     if ( len == 0 || len < out.size() )
       out.resize(len);
 }
+//X 
+//X QByteArray QCodecs::uuencode( const QByteArray& str )
+//X {
+//X     if ( str.isEmpty() )
+//X         return "";
+//X 
+//X     QByteArray in;
+//X     in.resize( str.length() );
+//X     memcpy( in.data(), str.data(), str.length() );
+//X     return uuencode( in );
+//X }
 
-Q3CString QCodecs::uuencode( const Q3CString& str )
-{
-    if ( str.isEmpty() )
-        return "";
-
-    QByteArray in;
-    in.resize( str.length() );
-    memcpy( in.data(), str.data(), str.length() );
-    return uuencode( in );
-}
-
-Q3CString QCodecs::uuencode( const QByteArray& in )
+QByteArray QCodecs::uuencode( const QByteArray& in )
 {
     QByteArray out;
     uuencode( in, out );
-    return Q3CString( out.data(), out.size()+1 );
+    return QByteArray( out.data(), out.size()+1 );
 }
 
 void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
@@ -642,23 +642,23 @@ void QCodecs::uuencode( const QByteArray& in, QByteArray& out )
     if ( didx != out.size() )
         out.resize( 0 );
 }
+//X 
+//X QByteArray QCodecs::uudecode( const QByteArray& str )
+//X {
+//X     if ( str.isEmpty() )
+//X         return "";
+//X 
+//X     QByteArray in;
+//X     in.resize( str.length() );
+//X     memcpy( in.data(), str.data(), str.length() );
+//X     return uudecode( in );
+//X }
 
-Q3CString QCodecs::uudecode( const Q3CString& str )
-{
-    if ( str.isEmpty() )
-        return "";
-
-    QByteArray in;
-    in.resize( str.length() );
-    memcpy( in.data(), str.data(), str.length() );
-    return uudecode( in );
-}
-
-Q3CString QCodecs::uudecode( const QByteArray& in )
+QByteArray QCodecs::uudecode( const QByteArray& in )
 {
     QByteArray out;
     uudecode( in, out );
-    return Q3CString( out.data(), out.size()+1 );
+    return QByteArray( out.data(), out.size()+1 );
 }
 
 void QCodecs::uudecode( const QByteArray& in, QByteArray& out )
@@ -767,25 +767,25 @@ QMD5::QMD5(const char *in, int len)
     init();
     update(in, len);
 }
+//X 
+//X QMD5::QMD5(const QByteArray& in)
+//X {
+//X     init();
+//X     update( in );
+//X }
 
 QMD5::QMD5(const QByteArray& in)
 {
     init();
     update( in );
 }
-
-QMD5::QMD5(const Q3CString& in)
-{
-    init();
-    update( in );
-}
-
+//X 
+//X void QMD5::update(const QByteArray& in)
+//X {
+//X     update(in.data(), int(in.size()));
+//X }
+//X 
 void QMD5::update(const QByteArray& in)
-{
-    update(in.data(), int(in.size()));
-}
-
-void QMD5::update(const Q3CString& in)
 {
     update(in.data(), int(in.length()));
 }
@@ -886,7 +886,7 @@ bool QMD5::verify( const QMD5::Digest& digest)
     return (0 == memcmp(rawDigest(), digest, sizeof(QMD5::Digest)));
 }
 
-bool QMD5::verify( const Q3CString& hexdigest)
+bool QMD5::verify( const QByteArray& hexdigest)
 {
     finalize();
     return (0 == strcmp(hexDigest().data(), hexdigest));
@@ -905,9 +905,9 @@ void QMD5::rawDigest( QMD5::Digest& bin )
 }
 
 
-Q3CString QMD5::hexDigest()
+QByteArray QMD5::hexDigest()
 {
-    Q3CString s(33);
+    QByteArray s(33);
 
     finalize();
     sprintf(s.data(), "%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
@@ -918,7 +918,7 @@ Q3CString QMD5::hexDigest()
     return s;
 }
 
-void QMD5::hexDigest(Q3CString& s)
+void QMD5::hexDigest(QByteArray& s)
 {
     finalize();
     s.resize(33);
@@ -928,7 +928,7 @@ void QMD5::hexDigest(Q3CString& s)
             m_digest[12], m_digest[13], m_digest[14], m_digest[15]);
 }
 
-Q3CString QMD5::base64Digest()
+QByteArray QMD5::base64Digest()
 {
     QByteArray ba(16);
 

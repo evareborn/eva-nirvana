@@ -30,6 +30,8 @@
 #include <q3dns.h>
 #include <qstringlist.h>
 #include <QApplication>
+#include <QUdpSocket>
+#include <QHostInfo>
 #include <string.h>
 #include <cstring>
 
@@ -409,7 +411,7 @@ QString EvaUHProfile::getStrMd5(const unsigned int id)
 EvaUHManager::EvaUHManager(QObject *receiver, const QString &dir)
 	: QThread(), mReceiver(receiver), m_retryCount(0), AllInfoGotCounter(0), 
 	mUHDir(dir), mAskForStop(false), mSocket(NULL), 
-	mProfileManager(NULL), mCurrentFile(NULL), mDns(NULL)
+	mProfileManager(NULL), mCurrentFile(NULL)//, mDns(NULL)
 {
 }
 
@@ -452,55 +454,82 @@ void EvaUHManager::initiate(QSize /*size*/)
 void EvaUHManager::run()
 {
 	doDnsRequest();
-	int availableBytes = 0;
+//X 	int availableBytes = 0;
 	bytesRead = 0;
-	mSocket = new Q3SocketDevice(Q3SocketDevice::Datagram);
+//X 	mSocket = new Q3SocketDevice(Q3SocketDevice::Datagram);
+        mSocket = new QUdpSocket();
+        connect(mSocket, SIGNAL(readyRead()),
+                this, SLOT(readPendingDatagrams()));
+
 	doAllInfoRequest();
-	while(1){
-		if( (availableBytes = mSocket->bytesAvailable()) ){
-			bytesRead = mSocket->readBlock(mBuffer, availableBytes);
-			if(bytesRead != availableBytes)
-				fprintf(stderr, "EvaUHManager:run -- bytes read might not be accurate\n");
-			if(bytesRead)
-				processComingData();
-		} else{
-			checkTimeout();
-			msleep( 200 );
-		}
-		if(mAskForStop) break;
-	}
+//X 	while(1){
+//X //X 		if( (availableBytes = mSocket->bytesAvailable()) ){
+//X 		if(mAskForStop) break;
+//X 		if( (mSocket->hasPendingDatagrams()) ){
+//X                         availableBytes =  mSocket->pendingDatagramSize();
+//X 			bytesRead = mSocket->readDatagram(mBuffer, availableBytes);
+//X 			if(bytesRead != availableBytes)
+//X 				fprintf(stderr, "EvaUHManager:run -- bytes read might not be accurate\n");
+//X 			if(bytesRead)
+//X 				processComingData();
+//X 		} else{
+//X 			checkTimeout();
+//X 			msleep( 200 );
+//X 		}
+//X 	}
 	//printf("EvaUHManager runs finished\n");
-	cleanUp();
+//X 	cleanUp();
+}
+ 
+void EvaUHManager::readPendingDatagrams() {
+    printf("EvaUHManager -- data recieved!");
+    while( (mSocket->hasPendingDatagrams()) ){
+        int availableBytes =  mSocket->pendingDatagramSize();
+        bytesRead = mSocket->readDatagram(mBuffer, availableBytes);
+        if(bytesRead != availableBytes)
+            fprintf(stderr, "EvaUHManager:run -- bytes read might not be accurate\n");
+        if(bytesRead)
+            processComingData();
+    }
+
 }
 
 void EvaUHManager::doDnsRequest()
 {
-	mHostAddresses.clear();
-	if(mDns) delete mDns;
-	mDns = new Q3Dns(CFACE_SERVER);
-	QObject::connect(mDns, SIGNAL(resultsReady()), SLOT(slotDnsReady()));
-	
-	while(!mHostAddresses.size()){
-		if(mAskForStop) break;
-		//printf("EvaUHManager::doDnsRequest -- waiting DNS\n");
-		sleep(1);
-	}
-}
-
-void EvaUHManager::slotDnsReady()
-{
-	//printf("EvaUHManager::slotDnsReady ----   got\n");
-	mHostAddresses = mDns->addresses();
+//X 	mHostAddresses.clear();
+//X 	if(mDns) delete mDns;
+//X 	mDns = new Q3Dns(CFACE_SERVER);
+//X 	QObject::connect(mDns, SIGNAL(resultsReady()), SLOT(slotDnsReady()));
+//X 	
+//X 	while(!mHostAddresses.size()){
+//X 		if(mAskForStop) break;
+//X 		//printf("EvaUHManager::doDnsRequest -- waiting DNS\n");
+//X 		sleep(1);
+//X 	}
+        QHostInfo info = QHostInfo::fromName(CFACE_SERVER);
+        mHostAddresses = info.addresses( );
 	if(!mHostAddresses.size()){
 		QHostAddress host;
 		host.setAddress("219.133.51.161");
 		mHostAddresses.append(host);
 	}
 }
+//X 
+//X void EvaUHManager::slotDnsReady()
+//X {
+//X 	printf("EvaUHManager::slotDnsReady ----   got\n");
+//X 	mHostAddresses = mDns->addresses();
+//X 	if(!mHostAddresses.size()){
+//X 		QHostAddress host;
+//X 		host.setAddress("219.133.51.161");
+//X 		mHostAddresses.append(host);
+//X 	}
+//X 	doAllInfoRequest();
+//X }
 
 void EvaUHManager::send(EvaUHPacket *packet)
 {
-	if(! (mSocket && mSocket->isValid()) ){
+	if(! (mSocket /*&& mSocket->isValid()*/) ){
 		fprintf(stderr, "EvaUHManager::send -- socket error\n");
 		delete packet;
 		return;
@@ -508,7 +537,8 @@ void EvaUHManager::send(EvaUHPacket *packet)
 	unsigned char *buffer = new unsigned char[4096];
 	int len = 0;
 	packet->fill(buffer, &len);
-	int results = mSocket->writeBlock((char*)buffer, len, mHostAddresses.first(), CFACE_PORT);
+	int results = mSocket->writeDatagram((char*)buffer, len, mHostAddresses.first(), CFACE_PORT);
+        printf( "send uh request to %s\n", mHostAddresses.first().toString().ascii() );
 	delete []buffer;
 	if(results ==-1 ){
 		fprintf(stderr, "EvaUHManager::send -- socket error, writing failed\n");
@@ -524,7 +554,7 @@ void EvaUHManager::doAllInfoRequest()
 	std::list<unsigned int> toSend;
 	std::list<unsigned int>::iterator it;
 	int counter = 0;
-	//printf("EvaUHManager::doAllInfoRequest -- AllInfoGotCounter: %d\n", AllInfoGotCounter);
+	printf("EvaUHManager::doAllInfoRequest -- AllInfoGotCounter: %d\n", AllInfoGotCounter);
 	if(AllInfoGotCounter < mUHList.size()){
 		it=mUHList.begin();
 		for(unsigned int i=0; i<AllInfoGotCounter ;++it) i++;
@@ -535,7 +565,7 @@ void EvaUHManager::doAllInfoRequest()
 		}
 	}
 	if(!toSend.size()) return;
-	//printf("EvaUHManager::doAllInfoRequest -- %d Buddies sent\n", toSend.size());
+	printf("EvaUHManager::doAllInfoRequest -- %d Buddies sent\n", toSend.size());
 	EvaUHInfoRequest *packet = new EvaUHInfoRequest();
 	packet->setQQList(toSend);
 	send(packet);
@@ -760,13 +790,14 @@ void EvaUHManager::cleanUp()
 	mSocket = NULL;
 	if(mCurrentFile) delete mCurrentFile;
 	mCurrentFile = NULL;
-	if(mDns) delete mDns;
-	mDns = NULL;
+//X 	if(mDns) delete mDns;
+//X 	mDns = NULL;
 }
 
 void EvaUHManager::stop( )
 {
-	mAskForStop = true;
+    cleanUp();
+    mAskForStop = true;
 }
 
 QString EvaUHManager::getFileName(const unsigned int id, bool isGrayscale)

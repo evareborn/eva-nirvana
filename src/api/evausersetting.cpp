@@ -808,11 +808,17 @@ bool EvaUserSetting::loadSettings()
 	
 	QString fullName = getEvaUserDir() + "/" + userProfileFileName;
 	QDir d;
-	if(!d.exists(fullName)){
+	if(d.exists(fullName)){
 		loadOldProfile();
 		QFile::remove(fullName);
 		saveSettings();
-	}
+	} else {
+            if (!d.exists( getEvaUserDir() + "/" + userConfigFileName ) ) {
+                loadDefaultSettings();
+                saveSettings();
+            }
+        }
+ 
 	
 //X 	KConfig *cfg = new KConfig(getEvaUserDir() + "/" + userConfigFileName);
 	

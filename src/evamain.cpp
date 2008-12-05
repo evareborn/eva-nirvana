@@ -366,11 +366,15 @@ void EvaMain::doQuit()
 
 	
 	if(user){
-//X 		user->getSetting()->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
-//X 		user->getSetting()->saveSettings();
+		user->getSetting()->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
+		user->getSetting()->saveSettings();
 		delete user;
 		user = 0;
 	}
+ 
+        if ( helper ) {
+            delete helper;
+        }
 	
         printf( "Quiting Eva..\n" );
         exit( 0 );
@@ -838,10 +842,10 @@ void EvaMain::slotSetupWindowManager()
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestBuddyQQShow(const unsigned int)), this, SLOT(slotRequestQQShow(const unsigned int)));	
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestMyQQShow()), this, SLOT(slotRequestMyQQShow()));
 
-	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
-							const Q3ValueList<unsigned int>, const unsigned char)), 
-				SLOT(slotFileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
-							const Q3ValueList<unsigned int>, const unsigned char)));
+	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
+							const QList<unsigned int>, const unsigned char)), 
+				SLOT(slotFileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
+							const QList<unsigned int>, const unsigned char)));
 	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferAccept(const unsigned int, const unsigned int,
 							const QString, const unsigned char)),
 				SLOT(slotFileTransferAccept(const unsigned int, const unsigned int,
@@ -2226,11 +2230,11 @@ void EvaMain::slotModifyMemo(const unsigned int id )
 }
 
 void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned int session,
-				const Q3ValueList<QString> fileNameList,
-				const Q3ValueList<unsigned int> sizeList, const unsigned char transferType)
+				const QList<QString> fileNameList,
+				const QList<unsigned int> sizeList, const unsigned char transferType)
 {
 	if(user->getFriendList().hasFriend(receiver)){
-		Q3ValueListConstIterator<QString> iter = fileNameList.begin();
+		QList<QString>::const_iterator iter = fileNameList.begin();
 		if(iter == fileNameList.end()) return;
 		QString fileName = *iter;
 		QString dir = fileName.left(fileName.findRev("/"));
@@ -2239,8 +2243,8 @@ void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned 
 		unsigned int size = sizeList.first();
 		if(packetManager)
 			packetManager->doSendFileUdpRequest(receiver, file, size, session, transferType);
-		Q3ValueList<QString> dirList;
-		Q3ValueList<QString> fileList;
+		QList<QString> dirList;
+		QList<QString> fileList;
 		for(iter = fileNameList.begin(); iter != fileNameList.end(); ++iter){
 			dir = (*iter).left((*iter).findRev("/"));
 			file = (*iter).right((*iter).length() - (*iter).findRev("/") - 1);
@@ -2285,9 +2289,9 @@ void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned in
 	if(g_ChatWindowManager && frd){
 		if(m_FileManager){
 			printf("EvaMain::slotReceivedFileRequest: -- new session: %d\n", session);
-			Q3ValueList<QString> dirList;
-			Q3ValueList<QString> fileList;
-			Q3ValueList<unsigned int> sizeList;
+			QList<QString> dirList;
+			QList<QString> fileList;
+			QList<unsigned int> sizeList;
 			switch(transferType){
 			case QQ_TRANSFER_IMAGE:
 				dirList.append(user->getSetting()->getPictureCacheDir());
@@ -2616,12 +2620,10 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->UpdateLoginInfo(E_ContactsDownloading + 1, s_ENotify[E_ContactsDownloading]);
 			break;
 		case E_ContactsDone:
-                        printf( "[EvaMain] Contacts ready\n" );
 			g_mainWin->UpdateLoginInfo(E_ContactsDone + 1, s_ENotify[E_ContactsDone]);
 			//EvaMain::g_contactManager->fetchGroupNames();
 			break;
 		case E_GroupNameDownloadDone:
-                        printf( "[EvaMain] Groups ready\n" );
 			g_mainWin->UpdateLoginInfo(E_GroupNameDownloadDone + 1, s_ENotify[E_GroupNameDownloadDone]);
 			//EvaMain::g_contactManager->fetchGroupedFriends();
 			break;
@@ -2633,7 +2635,6 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			break;
 		case E_QunInfoFinished:
 		{	
-                        printf( "[EvaMain] Qun Info ready\n" );
 			g_mainWin->UpdateLoginInfo(E_QunInfoFinished + 1, s_ENotify[E_QunInfoFinished]);
 			const Qun *qun = user->getQunList()->getQun((unsigned int)(e->m_param));
 			if(qun){
@@ -2643,7 +2644,6 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		}
 			break;
 		case E_QunMemberFinished:
-                        printf( "[EvaMain] Qun Member ready\n" );
 			g_mainWin->UpdateLoginInfo(E_QunMemberFinished + 1, s_ENotify[E_QunMemberFinished]);
 			g_ChatWindowManager->slotQunMemberInfoReady((unsigned int)(e->m_param));
 			break;
@@ -2682,7 +2682,6 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->updateQuns();
 			g_mainWin->updateRecentContacts();
 
-                        printf( "updateContacts() called\n" );
 			connecter->slotClientReady();
 			packetManager->doRequestExtraInfo();
 			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather

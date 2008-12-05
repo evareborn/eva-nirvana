@@ -102,9 +102,9 @@ const char * EvaLoginWindow::getMd5Password() const
 EvaLoginWindow::Type EvaLoginWindow::getConnectionType() const
 {
 	int index = cbbLoginType->currentItem();
-	if(index == 0) return UDP;
-	if(index == 1) return TCP;
-	if(index == 2) return HTTP_Proxy;
+	if(index == 1) return UDP;
+	if(index == 2) return TCP;
+	if(index == 3) return HTTP_Proxy;
 	return UDP;
 }
 
@@ -181,7 +181,7 @@ void EvaLoginWindow::iniRecords( )
 	if(!setting->loadSetting())
 		return;
 	cbQQ->clear();
-	for(uint i=0; i<setting->getRecordedList().count();i++){
+	for(int i=0; i<setting->getRecordedList().count();i++){
 		int id = setting->getRecordedList().at(i)->id;
 		cbQQ->insertItem(QString::number(id));
 	}
@@ -199,7 +199,7 @@ void EvaLoginWindow::slotIDChanged( const QString &)
 
 void EvaLoginWindow::slotSelectChanged( int index)
 {
-	if((uint)(index) >= setting->getRecordedList().count()) return;
+	if((int)(index) >= setting->getRecordedList().count()) return;
 	currentIndex = index;	
  	setupOtherSetings( currentIndex);
 	proxyPwdChanged = false;
@@ -242,7 +242,7 @@ void EvaLoginWindow::updateProxyLoginParam()
 void EvaLoginWindow::setupOtherSetings( int index )
 {
 	if(!setting) return;
-	if((uint)(index) >= setting->getRecordedList().count()) return;
+	if(index >= setting->getRecordedList().count()) return;
 		
 	QString sid = cbQQ->text(index);
 	bool ok;

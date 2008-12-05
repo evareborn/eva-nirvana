@@ -20,7 +20,7 @@
 #include "evasocket.h"
 #include "qmdcodec.h"
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,6 +37,9 @@
 #include <q3textstream.h>
 #include <q3dns.h>
 #include <q3cstring.h>
+ 
+#include <QUdpSocket>
+#include <QTcpSocket>
 //X #include <kdebug.h>
 
 
@@ -51,53 +54,60 @@
 	setHost() is called.
  */
 EvaSocket::EvaSocket(const  QHostAddress &host, const short port, const Type type)
-	: socketReadNotifier(NULL), socketWriteNotifier(NULL)
+    : connectSocket( NULL )
+//X 	: socketReadNotifier(NULL), socketWriteNotifier(NULL)
 {
-	connectionStatus = None;
+	connectionType = type;
 	receivedLength = 0;
 	receivedBuffer = NULL;
-	connectionType = type;
-        server = host;
-	serverPort = port;
-	if(connectionType == UDP){
-		connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
-	}else{
-		connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream);
-		connectSocket->setBlocking(false);
-        	socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
-							QSocketNotifier::Write,0,"writeNotifier");
-		QObject::connect(socketWriteNotifier,SIGNAL(activated(int)),SLOT(slotWriteReady(int)));
-		socketWriteNotifier->setEnabled(false);
-	}
-	socketReadNotifier = new QSocketNotifier(connectSocket->socket(),
-						QSocketNotifier::Read,0,"readNotifier");
-	connectionStatus = Init;
-	QObject::connect(socketReadNotifier,SIGNAL(activated(int)),SLOT(slotReceiveReady(int)));
-	socketReadNotifier->setEnabled(false);
+ 
+        setHost( host, port );
+
+//X 	connectionStatus = None;
+//X         server = host;
+//X 	serverPort = port;
+//X 	if(connectionType == UDP){
+//X //X 		connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
+//X 		connectSocket = new QUdpSocket(); 
+//X 	}else{
+//X //X 		connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream);
+//X 		connectSocket = new QTcpSocket();
+//X 		connectSocket->setBlocking(false);
+//X //X         	socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
+//X //X 							QSocketNotifier::Write,0,"writeNotifier");
+//X //X 		QObject::connect(socketWriteNotifier,SIGNAL(activated(int)),SLOT(slotWriteReady(int)));
+//X //X 		socketWriteNotifier->setEnabled(false);
+//X 	}
+//X //X 	socketReadNotifier = new QSocketNotifier(connectSocket->socket(),
+//X //X 						QSocketNotifier::Read,0,"readNotifier");
+//X 	connectionStatus = Init;
+//X         QObject::connect( connectSocket, SIGNAL( readReady() ), SLOT( slotReceiveReady( int ) ) );
+//X //X 	QObject::connect(socketReadNotifier,SIGNAL(activated(int)),SLOT(slotReceiveReady(int)));
+//X //X 	socketReadNotifier->setEnabled(false);
 }
 
 EvaSocket::~EvaSocket()
 {
 	delete connectSocket;
-	if(socketReadNotifier) {
-		socketReadNotifier->setEnabled(false);
-		delete socketReadNotifier;
-	}
-	if(socketWriteNotifier) {
-		socketWriteNotifier->setEnabled(false);
-		delete socketWriteNotifier;
-	}
+//X 	if(socketReadNotifier) {
+//X 		socketReadNotifier->setEnabled(false);
+//X 		delete socketReadNotifier;
+//X 	}
+//X 	if(socketWriteNotifier) {
+//X 		socketWriteNotifier->setEnabled(false);
+//X 		delete socketWriteNotifier;
+//X 	}
 }
 
 const QHostAddress EvaSocket::getSocketAddress( )
 {
-	if(connectSocket) return connectSocket->address();
+	if(connectSocket) return connectSocket->localAddress();
 	return QHostAddress();
 }
 
 unsigned short EvaSocket::getSocketPort( )
 {
-	if(connectSocket) return connectSocket->port();
+	if(connectSocket) return connectSocket->localPort();
 	return 0;
 }
 
@@ -106,33 +116,39 @@ void EvaSocket::setHost(const QHostAddress &address, const short port)
 	server = address;
 	serverPort = port;  
 	connectionStatus = None;
-	if(connectSocket->isValid()){
+	if(connectSocket && connectSocket->isValid()){
 		delete connectSocket;
-		if(socketReadNotifier) {
-			socketReadNotifier->setEnabled(false);
-			delete socketReadNotifier;
-		}
-		if(socketWriteNotifier) {
-			socketWriteNotifier->setEnabled(false);
-			delete socketWriteNotifier;
-		}
-		if(connectionType == UDP){
-			connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
-		}else{
-			connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream); 
-			connectSocket->setBlocking(false);
-			socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
-								QSocketNotifier::Write,0,"writeNotifier");
-			QObject::connect(socketWriteNotifier,SIGNAL(activated(int)),SLOT(slotWriteReady(int)));
-			socketWriteNotifier->setEnabled(false);
-		}
-		socketReadNotifier = new QSocketNotifier(connectSocket->socket(),
-							QSocketNotifier::Read,0,"SocketNotifier");
-		QObject::connect(socketReadNotifier,SIGNAL(activated(int)),SLOT(slotReceiveReady(int)));
-		if(connectionType == TCP)
-			socketReadNotifier->setEnabled(false);
-	}
+//X 		if(socketReadNotifier) {
+//X 			socketReadNotifier->setEnabled(false);
+//X 			delete socketReadNotifier;
+//X 		}
+//X 		if(socketWriteNotifier) {
+//X 			socketWriteNotifier->setEnabled(false);
+//X 			delete socketWriteNotifier;
+//X 		}
+        }
+
+        if(connectionType == UDP){
+		connectSocket = new QUdpSocket(); 
+//X                 connectSocket = new Q3SocketDevice(Q3SocketDevice::Datagram); 
+        }else{
+		connectSocket = new QTcpSocket();
+//X 		connectSocket->setBlocking(false);
+//X                 connectSocket = new Q3SocketDevice(Q3SocketDevice::Stream); 
+//X                 connectSocket->setBlocking(false);
+//X 			socketWriteNotifier =  new QSocketNotifier(connectSocket->socket(),
+//X 								QSocketNotifier::Write,0,"writeNotifier");
+//X 			QObject::connect(socketWriteNotifier,SIGNAL(activated(int)),SLOT(slotWriteReady(int)));
+//X 			socketWriteNotifier->setEnabled(false);
+        }
+//X 		socketReadNotifier = new QSocketNotifier(connectSocket->socket(),
+//X 							QSocketNotifier::Read,0,"SocketNotifier");
+//X 		QObject::connect(socketReadNotifier,SIGNAL(activated(int)),SLOT(slotReceiveReady(int)));
+//X 		if(connectionType == TCP)
+//X 			socketReadNotifier->setEnabled(false);
 	connectionStatus = Init;
+        QObject::connect( connectSocket, SIGNAL( readyRead() ), SLOT( slotReceiveReady() ) );
+        QObject::connect( connectSocket, SIGNAL( error(QAbstractSocket::SocketError) ), SLOT( slotError(QAbstractSocket::SocketError) ) );
 }
 
 void EvaSocket::closeConnection()
@@ -149,79 +165,81 @@ void EvaSocket::startConnecting()
 		return;
 	}
 	connectionStatus = Connecting;
+        connectSocket->connectToHost(server, serverPort);
 	if(connectionType == TCP){
-		if(!connectSocket->connect(server, serverPort)){
-			fprintf(stderr,"connecting server failed\nError type: ");
-			connectionStatus = Failed;
-			switch(connectSocket->error()){
-				case Q3SocketDevice::NoError:
-					fprintf(stderr,"NoError\n");
-					break;
-				case Q3SocketDevice::AlreadyBound:
-					fprintf(stderr,"AlreadyBound\n");
-					break; 
-				case Q3SocketDevice::Inaccessible:
-					fprintf(stderr,"Inaccessible\n");
-					break;
-				case Q3SocketDevice::NoResources:
-					fprintf(stderr,"NoResources\n");
-					break;
-				case Q3SocketDevice::InternalError:
-					fprintf(stderr,"InternalError\n");
-					break;
-				case Q3SocketDevice::Impossible:
-					fprintf(stderr,"Impossible\n");
-					break;
-				case Q3SocketDevice::NoFiles:
-					fprintf(stderr,"NoFiles\n");
-					break;
-				case Q3SocketDevice::ConnectionRefused:
-					fprintf(stderr,"ConnectionRefused\n");
-					break;
-				case Q3SocketDevice::NetworkFailure:
-					fprintf(stderr,"NetworkFailure\n");
-					break;
-				case Q3SocketDevice::UnknownError:
-					fprintf(stderr,"UnknownError\n");
-					break;
-				default:
-					printf("not listed error\n");
-			}
-			emit exceptionEvent(connectionStatus);
-			return;
-		}
+//X 		if(!connectSocket->connectToHost(server, serverPort)){
+//X 			fprintf(stderr,"connecting server failed\nError type: ");
+//X 			connectionStatus = Failed;
+//X 			switch(connectSocket->error()){
+//X 				case Q3SocketDevice::NoError:
+//X 					fprintf(stderr,"NoError\n");
+//X 					break;
+//X 				case Q3SocketDevice::AlreadyBound:
+//X 					fprintf(stderr,"AlreadyBound\n");
+//X 					break; 
+//X 				case Q3SocketDevice::Inaccessible:
+//X 					fprintf(stderr,"Inaccessible\n");
+//X 					break;
+//X 				case Q3SocketDevice::NoResources:
+//X 					fprintf(stderr,"NoResources\n");
+//X 					break;
+//X 				case Q3SocketDevice::InternalError:
+//X 					fprintf(stderr,"InternalError\n");
+//X 					break;
+//X 				case Q3SocketDevice::Impossible:
+//X 					fprintf(stderr,"Impossible\n");
+//X 					break;
+//X 				case Q3SocketDevice::NoFiles:
+//X 					fprintf(stderr,"NoFiles\n");
+//X 					break;
+//X 				case Q3SocketDevice::ConnectionRefused:
+//X 					fprintf(stderr,"ConnectionRefused\n");
+//X 					break;
+//X 				case Q3SocketDevice::NetworkFailure:
+//X 					fprintf(stderr,"NetworkFailure\n");
+//X 					break;
+//X 				case Q3SocketDevice::UnknownError:
+//X 					fprintf(stderr,"UnknownError\n");
+//X 					break;
+//X 				default:
+//X 					printf("not listed error\n");
+//X 			}
+//X 			emit exceptionEvent(connectionStatus);
+//X 			return;
+//X 		}
 	}
-	if(socketReadNotifier) socketReadNotifier->setEnabled(true);
-	if(connectionType == TCP && socketWriteNotifier) {
-		socketWriteNotifier->setEnabled(true);
-	}else{
+        emit isReady();
+//X 	if(socketReadNotifier) socketReadNotifier->setEnabled(true);
+//X 	if(connectionType == TCP && socketWriteNotifier) {
+//X 		socketWriteNotifier->setEnabled(true);
+//X 	}else{
 		connectionStatus = Ready;
-		emit isReady();
-	}
+//X 	}
 }
 
 bool EvaSocket::write(const char *buf, const int len)
 {
 	if(connectionStatus != Ready || !buf ) return false;
 	if(!connectSocket->isValid()){
-		if(connectionType == TCP && socketReadNotifier && socketWriteNotifier){
-			socketReadNotifier->setEnabled(false);
-			socketWriteNotifier->setEnabled(false);
-		}
+//X 		if(connectionType == TCP && socketReadNotifier && socketWriteNotifier){
+//X 			socketReadNotifier->setEnabled(false);
+//X 			socketWriteNotifier->setEnabled(false);
+//X 		}
 		emit exceptionEvent(Failed);
 		return false;
 	}
 	QMutex mutex;
 	mutex.lock();
 	int BytesSent = 0;
-	if(socketWriteNotifier) socketWriteNotifier->setEnabled(false);
+//X 	if(socketWriteNotifier) socketWriteNotifier->setEnabled(false);
 	if(connectionType == UDP){
-		BytesSent =connectSocket->writeBlock(buf, len, server, serverPort);
+//X 		BytesSent =connectSocket->writeBlock(buf, len, server, serverPort);
+		BytesSent =connectSocket->write(buf, len);
 	}else{
 		int bytes = 0;
 		int times = 0;
 		while(BytesSent < len){
-			bytes =connectSocket->writeBlock(buf + BytesSent, len - BytesSent);
+			bytes =connectSocket->write(buf + BytesSent, len - BytesSent);
 			if(bytes == -1) {
 				printf("EvaSocket::write retry :%d\n", times);
 				if(!connectSocket->error()){
@@ -255,18 +273,22 @@ bool EvaSocket::read(char *buf, int len)
 		return false;
 	}
 	memcpy(buf, receivedBuffer, receivedLength);
-	if(socketReadNotifier) socketReadNotifier->setEnabled(true);
+//X 	if(socketReadNotifier) socketReadNotifier->setEnabled(true);
 	return true;
 }
 
-void EvaSocket::setWriteNotifierEnabled( bool enabled )
+void EvaSocket::setWriteNotifierEnabled( bool /*enabled*/ )
 {
-	if(socketWriteNotifier) socketWriteNotifier->setEnabled(enabled);
+//X 	if(socketWriteNotifier) socketWriteNotifier->setEnabled(enabled);
+}
+ 
+void EvaSocket::slotError(QAbstractSocket::SocketError) {
+    printf( "EvaSocket error: %s\n", connectSocket->errorString().toStdString().c_str() );
 }
 
 void EvaSocket::slotWriteReady(int /*socket */)
 {
-	if(socketWriteNotifier) socketWriteNotifier->setEnabled(false);
+//X 	if(socketWriteNotifier) socketWriteNotifier->setEnabled(false);
 	if(connectionStatus == Connecting){
 		connectionStatus = Ready;
 		emit isReady();
@@ -275,14 +297,14 @@ void EvaSocket::slotWriteReady(int /*socket */)
 	}
 }
 
-void EvaSocket::slotReceiveReady(int /*socket*/)
+void EvaSocket::slotReceiveReady()
 {
-	if( (socketReadNotifier->type() != QSocketNotifier::Read) || (!connectSocket->isValid()) ){
-		socketReadNotifier->setEnabled(false);
-		printf("EvaSocket::slotReceiveReady -- socket not valid or notifier not set to Read \n");
-		emit exceptionEvent(Failed);
-		return;
-	}
+//X 	if( (socketReadNotifier->type() != QSocketNotifier::Read) || (!connectSocket->isValid()) ){
+//X 		socketReadNotifier->setEnabled(false);
+//X 		printf("EvaSocket::slotReceiveReady -- socket not valid or notifier not set to Read \n");
+//X 		emit exceptionEvent(Failed);
+//X 		return;
+//X 	}
 		
 	int ByteCount = 0;
 	ByteCount = connectSocket->bytesAvailable();
@@ -290,20 +312,20 @@ void EvaSocket::slotReceiveReady(int /*socket*/)
 	if(receivedBuffer!=NULL) delete receivedBuffer;
 	receivedBuffer = new char[ByteCount * 2];  
 	
-	receivedLength = connectSocket->readBlock(receivedBuffer,ByteCount*2);
+	receivedLength = connectSocket->read(receivedBuffer,ByteCount*2);
 	if(!receivedLength){
 		printf("EvaSocket::slotReceiveReady -- connection closed due to ZERO byte\n");
-		socketReadNotifier->setEnabled(false);
+//X 		socketReadNotifier->setEnabled(false);
 		emit exceptionEvent(Failed);
 		return;
 	}
 	
 	if(receivedLength == -1){
-		printf("EvaSocket::slotReceiveReady -- readBlock return -1\n");
+		printf("EvaSocket::slotReceiveReady -- read return -1\n");
 		emit exceptionEvent(Failed);
 		return;
 	}
-	if(socketReadNotifier) socketReadNotifier->setEnabled(false);
+//X 	if(socketReadNotifier) socketReadNotifier->setEnabled(false);
 	emit receivedData(receivedLength);
 	if(receivedLength != ByteCount)
 		printf("EvaSocket::slotReceiveReady -- bytesAvailable() might not be accurate.\n");
@@ -335,7 +357,7 @@ void EvaHttpProxy::setDestinationServer(const QString &server, const int port) /
 
 void EvaHttpProxy::setAuthParameter(const QString &username, const QString &password)
 {
-	Q3CString para = (username + ':' + password).local8Bit();
+	QByteArray para = (username + ':' + password).local8Bit();
 	base64AuthParam = QCodecs::base64Encode(para);
 	status = Proxy_None;
 }
@@ -447,7 +469,7 @@ HttpHeader::HttpHeader(const QByteArray &data)
 
 bool HttpHeader::parseHeader(const QByteArray &data)
 {
-	Q3CString buf(data);
+	QByteArray buf(data);
 	if (buf.left(strlen(HTTP_VERSION)) != HTTP_VERSION){
 		//kdDebug() << "[HttpHeader] Not a HTTP command return, but might be data packet" << endl;
 		return false;
@@ -488,23 +510,23 @@ bool HttpHeader::parseHeader(const QByteArray &data)
 	return true;
 }
 
-const Q3CString HttpHeader::toCString()
+const QByteArray HttpHeader::toCString()
 {
 	return "GET /forum/ HTTP/1.1\r\nHost: www.myswear.net\r\nUser-Agent: Eva 0.4.2\r\nAccept: */*\r\nConnection: Keep-Alive\r\n\r\n";
 }
 
-Q3CString HttpHeader::getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth)
+QByteArray HttpHeader::getProxyConnectHeader( const QString &destHost, const unsigned short port, const bool needAuth)
 {
-	Q3CString buf;
+	QByteArray buf;
 	Q3TextStream stream(buf, QIODevice::WriteOnly);
 	stream << HTTP_CONNECT << " " << (destHost + ":" + QString::number(port)) << " " << HTTP_VERSION << HTTP_NEW_LINE;
 	if(needAuth){
 		stream << HTTP_PROXY_BASIC;
 		
 		if(m_Base64AuthParam.isEmpty()){
-			stream << (QCodecs::base64Encode( (m_Username + ":" + m_Password).local8Bit()));
+			stream << QCodecs::base64Encode( (m_Username + ":" + m_Password).local8Bit()).data();
 		} else
-			stream << m_Base64AuthParam;
+			stream << m_Base64AuthParam.data();
 		
 		stream << HTTP_NEW_LINE;
 	}
@@ -516,7 +538,7 @@ Q3CString HttpHeader::getProxyConnectHeader( const QString &destHost, const unsi
 	return buf;
 }
 
-Q3CString HttpHeader::getCmdGetHeader(const bool useProxy, const bool needAuth)
+QByteArray HttpHeader::getCmdGetHeader(const bool useProxy, const bool needAuth)
 {
 	QString buf;
 	Q3TextStream stream(buf, QIODevice::WriteOnly);
@@ -531,9 +553,9 @@ Q3CString HttpHeader::getCmdGetHeader(const bool useProxy, const bool needAuth)
 		stream << HTTP_PROXY_BASIC;
 		
 		if(m_Base64AuthParam.isEmpty()){
-			stream << (QCodecs::base64Encode( (m_Username + ":" + m_Password).local8Bit()));
+			stream << QCodecs::base64Encode( (m_Username + ":" + m_Password).local8Bit()).data();
 		} else
-			stream << m_Base64AuthParam;
+			stream << m_Base64AuthParam.data();
 
 		stream << HTTP_NEW_LINE;
 	}
@@ -585,7 +607,7 @@ void HttpHeader::setAuthInfo(const QString &user, const QString &password)
 	m_Password = password;
 }
 
-void HttpHeader::setBase64AuthParam( const Q3CString & param )
+void HttpHeader::setBase64AuthParam( const QByteArray & param )
 {
 	m_Base64AuthParam = param;
 }
@@ -686,7 +708,7 @@ void EvaHttp::setProxyAuthInfo( const QString & username, const QString & passwo
 	m_Header.setAuthInfo(username, password);
 }
 
-void EvaHttp::setBase64AuthParam( const Q3CString & param )
+void EvaHttp::setBase64AuthParam( const QByteArray & param )
 {
 	if(param.isEmpty()) return;
 	m_IsProxyReady = false;
@@ -726,7 +748,7 @@ void EvaHttp::get( const QString & path, QIODevice * to )
 
 void EvaHttp::tcpReady( )
 {
-	Q3CString toSend;
+	QByteArray toSend;
 	if(m_UseProxy){
 		toSend = m_Header.getCmdGetHeader(true, m_NeedAuth);
 		//kdDebug() << "[EvaHttp] ("<< toSend.length() << ") connecting to proxy:\r\n" << endl;
@@ -771,7 +793,7 @@ void EvaHttp::parseData( int len )
 		case 200:
 			if(m_UseProxy && !m_IsProxyReady){
 				m_IsProxyReady = true;
-				Q3CString toSend = m_Header.getCmdGetHeader();
+				QByteArray toSend = m_Header.getCmdGetHeader();
 				write(toSend.data(), toSend.length());
 			}else{ 
 				// do nothing, just wait for the contents
@@ -795,7 +817,7 @@ void EvaHttp::parseData( int len )
 		//		<< ", contentsLength:"<<m_Header.getContentLength() << endl;
 		if(len > (int)(m_Header.getHeaderLength())){
 			m_BytesReceived = len - m_Header.getHeaderLength();
-			int ret = m_IODevice->writeBlock(buf.data() + m_Header.getContentsOffset(), m_BytesReceived);
+			int ret = m_IODevice->write(buf.data() + m_Header.getContentsOffset(), m_BytesReceived);
 			if(ret == -1 || ret !=  m_BytesReceived ){
 //X 				kdDebug() << "[EvaHttp] write error" << endl;
 				closeConnection();
@@ -816,7 +838,7 @@ void EvaHttp::parseData( int len )
 		if(!m_IODevice){
 			emit readReady();
 		}else{
-			int ret = m_IODevice->writeBlock(buf.data(), bytesToWrite);
+			int ret = m_IODevice->write(buf.data(), bytesToWrite);
 			if(ret == -1){
 //X 				kdDebug() << "[EvaHttp] write error" << endl;
 				closeConnection();
@@ -848,7 +870,7 @@ void EvaHttp::getResultsSlot( )
 		emit requestFinished(true);
         	return;
 	}
-	Q3ValueList<QHostAddress> list = dns->addresses();
+	QList<QHostAddress> list = dns->addresses();
 	if(list.count() == 0 ){
 //X         	kdDebug() << "[EvaHttp] Dns lookup error - no address" << endl;
 		emit requestFinished(true);

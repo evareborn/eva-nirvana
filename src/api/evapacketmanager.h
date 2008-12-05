@@ -298,8 +298,8 @@ private:
 	int processQunID;
 	bool qunMemberInfoFinished;
 	ContactInfo changingDetails;
-	Q3ValueList<int>receivedPacketList;
-	Q3ValueList<int>receivedCacheList;
+	QList<int>receivedPacketList;
+	QList<int>receivedCacheList;
 	
 	std::map<short, pcMsg> pcMsgCache;
 

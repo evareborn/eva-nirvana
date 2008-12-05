@@ -521,7 +521,6 @@ void EvaPacketManager::doGetAllFriends( )
 
 void EvaPacketManager::processGetFriendListReply( const InPacket * in )
 {
-        printf( "EvaPacketManager::processGetFriendListReply \n" );
 	GetFriendListReplyPacket *packet = new GetFriendListReplyPacket();
 	packet->setInPacket(in);
 	if(!packet->parse()){

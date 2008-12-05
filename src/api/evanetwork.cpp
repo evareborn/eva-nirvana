@@ -21,7 +21,7 @@
 #include "evanetwork.h"
 #include "evasocket.h"
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 
 EvaNetwork::EvaNetwork(const QHostAddress &host, const short port, const Type type)
  	:socket(NULL)
@@ -87,7 +87,7 @@ void EvaNetwork::setAuthParameter(const QString &username, const QString &passwo
  	 ((EvaHttpProxy*)(socket))->setAuthParameter(username, password);
 }
 
-void EvaNetwork::setAuthParameter(const Q3CString &param)
+void EvaNetwork::setAuthParameter(const QByteArray &param)
 {
 	((EvaHttpProxy*)(socket))->setBase64AuthParam(param);
 }

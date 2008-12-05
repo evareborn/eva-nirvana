@@ -27,7 +27,7 @@
 #include <qdir.h>
 //Added by qt3to4:
 #include <Q3TextStream>
-#include <Q3ValueList>
+#include <QList>
 
 //X #include <kdebug.h>
 //X #include <kconfig.h>
@@ -186,7 +186,7 @@ void EvaServers::getResultsSlot( )
         	defaultAddress();
         	return;
 	}
-	Q3ValueList<QHostAddress> list = dns->addresses();
+	QList<QHostAddress> list = dns->addresses();
 	if(list.count() == 0 ){
 		defaultAddress();
 		return;

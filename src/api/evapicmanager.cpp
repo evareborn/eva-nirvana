@@ -37,7 +37,7 @@
 #include <qtimer.h>
 //Added by qt3to4:
 #include <QCustomEvent>
-#include <Q3CString>
+#include <QByteArray>
 
 #define QUEUE_INTERVAL 10000
 EvaPicManager::EvaPicManager(EvaUser *u, bool useProxy)
@@ -56,7 +56,7 @@ EvaPicManager::EvaPicManager(EvaUser *u, bool useProxy)
 	isAppending = false;
 	isRemoving = false;
 	
-	outPool.setAutoDelete(true);
+//X 	outPool.setAutoDelete(true);
 	
 	timer = new QTimer(this, "sendOutQueue");
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(packetMonitor()));
@@ -70,7 +70,7 @@ EvaPicManager::~EvaPicManager()
 	clearManager();
 }
 
-void EvaPicManager::setProxyServer( const QString ip, const short port, Q3CString proxyParam )
+void EvaPicManager::setProxyServer( const QString ip, const short port, QByteArray proxyParam )
 {
 	proxyIP = ip;
 	proxyPort = port;
@@ -187,7 +187,7 @@ void EvaPicManager::append(EvaPicOutPacket *packet)
 	isAppending = true;
 	sendPacket(packet);   // force to send
 	if(packet->needAck())
-		outPool.append(packet);
+		outPool.push_back(packet);
 	else
 		delete packet;
 	isAppending = false;
@@ -285,8 +285,9 @@ void EvaPicManager::doRequestData(CustomizedPic pic, const bool isReply)
 void EvaPicManager::slotException(int /*type*/)
 {
 	isRemoving = true;
-	outPool.first();
-	outPool.remove();
+	EvaPicOutPacket * packet = outPool.first();
+        delete packet;
+        outPool.pop_front();
 	isRemoving = false;
 	//printf("EvaPicManager::slotException -- type %d\n", type);
 	bufLength = 0;
@@ -558,7 +559,12 @@ void EvaPicManager::doSendNextFragment()
 
 void EvaPicManager::clearManager()
 {
-	outPool.clear();
+    while ( outPool.size( ) ) {
+        EvaPicOutPacket *packet = outPool.last();
+        delete packet;
+        outPool.pop_back();
+    }
+//X 	outPool.clear();
 	outList.clear();
 	currentIndex = -1;
 	bufLength = 0;
@@ -576,10 +582,13 @@ void EvaPicManager::removePacket( const int hashCode )
 	isRemoving = true;
 	QMutex mutex;
 	mutex.lock();
-	EvaPicOutPacket *packet;
-	for(packet=outPool.first(); packet; packet = outPool.next()){
-		if(packet->hashCode() == hashCode)
-			outPool.remove();
+        QList<EvaPicOutPacket*>::iterator iter;
+	for(iter = outPool.begin(); iter != outPool.end(); iter++){
+                EvaPicOutPacket *packet = *iter;
+		if(packet->hashCode() == hashCode) {
+                        delete packet;
+                        outPool.remove( iter );
+                }
 	}
 	mutex.unlock();
 	isRemoving = false;
@@ -588,7 +597,7 @@ void EvaPicManager::removePacket( const int hashCode )
 void EvaPicManager::packetMonitor( )
 {
 	if(isAppending || isRemoving ) return;
-	for ( uint i=0;  i < outPool.count(); i++ ){
+	for ( int i=0;  i < outPool.count(); i++ ){
 		if(outPool.at(i)->needResend()){
 			sendPacket(outPool.at(i));
 		}else{

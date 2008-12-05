@@ -24,7 +24,7 @@
 #include <qstringlist.h>
 #include <qdom.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 #define QQ_FACE_THUMBNAIL_SIZE    20
 
@@ -59,7 +59,7 @@ private:
 	int m_Frames, m_GroupId;
 };
 
-typedef Q3ValueList<CustomFace> FaceList;
+typedef QList<CustomFace> FaceList;
 
 class CustomFaceConfig {
 public:

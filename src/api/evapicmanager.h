@@ -24,7 +24,7 @@
 #include <QObject>
 #include <q3ptrlist.h>
 //Added by qt3to4:
-#include <Q3CString>
+#include <QByteArray>
 #include <QCustomEvent>
 #include "evahtmlparser.h"
 
@@ -42,7 +42,7 @@ public:
 	EvaPicManager(EvaUser *u, bool useProxy = false);
 	virtual ~EvaPicManager();
 	
-	void setProxyServer(const QString ip = "", const short port = 0, Q3CString proxyParam = "");
+	void setProxyServer(const QString ip = "", const short port = 0, QByteArray proxyParam = "");
 	void append(EvaPicOutPacket *packet);
 	void stop();
 signals:
@@ -65,7 +65,7 @@ private:
 	QString proxyIP;
 	short proxyPort;
 	bool usingProxy;
-	Q3CString proxyAuthParam;
+	QByteArray proxyAuthParam;
 	int sendCount;
 	
 	QTextCodec *codec;
@@ -112,7 +112,7 @@ private:
 	bool isSend;
 	bool isAppending, isRemoving;
 	
-	Q3PtrList<EvaPicOutPacket> outPool;
+	QList<EvaPicOutPacket*> outPool;
 	QTimer *timer;
 	void removePacket(const int hashCode ); // remove packet which needs acknowlegement
 	void clearManager();

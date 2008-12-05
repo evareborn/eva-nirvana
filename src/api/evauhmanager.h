@@ -33,8 +33,7 @@
 #include <list>
 #include "evaqtutil.h"
 
-class Q3SocketDevice;
-class Q3Dns;
+class QUdpSocket;
 class EvaUHPacket;
 class EvaUHFile;
 class EvaUHProfile;
@@ -69,13 +68,14 @@ private:
 	char mBuffer[65535];  // used as internal buffer
 	int bytesRead;
 	std::list<unsigned int> mUHList;
-	Q3SocketDevice *mSocket;
+//X 	Q3SocketDevice *mSocket;
+        QUdpSocket *mSocket;
 	
 	EvaUHProfile *mProfileManager;
 	EvaUHFile *mCurrentFile;
 	
-	Q3Dns *mDns;
-	Q3ValueList<QHostAddress> mHostAddresses;
+//X 	Q3Dns *mDns;
+	QList<QHostAddress> mHostAddresses;
 	void doDnsRequest();
 	
 	void send(EvaUHPacket *packet);
@@ -92,7 +92,8 @@ private:
 	void checkTimeout();
 	void cleanUp();
 private slots:
-	void slotDnsReady();
+//X 	void slotDnsReady();
+        void readPendingDatagrams();
 };
 
 #endif 

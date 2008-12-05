@@ -367,8 +367,8 @@ private slots:
 	void slotUserMemoChanged(const unsigned int id, const MemoItem &memo);
 	void slotModifyMemo(const unsigned int id );
 
-	void slotFileTransferSend(const unsigned int, const unsigned int, const Q3ValueList<QString>,
-				const Q3ValueList<unsigned int>, const unsigned char transferType);
+	void slotFileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
+				const QList<unsigned int>, const unsigned char transferType);
 	void slotFileTransferAccept(const unsigned int, const unsigned int, const QString,
 				const unsigned char transferType);
 	void slotFileTransferCancel(const unsigned int, const unsigned int);

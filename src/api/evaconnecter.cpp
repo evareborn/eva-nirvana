@@ -47,8 +47,8 @@ EvaConnecter::EvaConnecter(EvaNetwork *network)
 	QObject::connect(connecter, SIGNAL(dataComming(int)), this, SLOT(dataCommingSlot(int)));
 	QObject::connect(connecter, SIGNAL(exceptionEvent(int)), this, SLOT(slotNetworkException(int)));
 	
-        outPool.setAutoDelete(true);
-        inPool.setAutoDelete(false);
+//X         outPool.setAutoDelete(true);
+//X         inPool.setAutoDelete(false);
 	
 	timer = new QTimer(this);
 	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(packetMonitor()));
@@ -60,6 +60,17 @@ EvaConnecter::~EvaConnecter()
 	if(timer->isActive())
 		timer->stop();
 	delete timer;
+        while ( inPool.size() ) {
+            InPacket* packet = inPool.last();
+            inPool.pop_back();
+            delete packet;
+        }
+        while ( outPool.size() ) {
+            OutPacket* packet = outPool.last();
+            outPool.pop_back();
+            delete packet;
+        }
+
 }
 
 void EvaConnecter::append(OutPacket *out)
@@ -79,7 +90,9 @@ InPacket *EvaConnecter::getInPacket()
 		emit packetException(-1);
 		return NULL;
 	}
-	return inPool.take();
+        InPacket *packet = inPool.last();
+        inPool.pop_back();
+	return packet;
 }
 
 void EvaConnecter::redirectTo(const int ip, const short port)
@@ -147,9 +160,11 @@ void EvaConnecter::removePacket(const int hashCode)
 {
 	QMutex mutex;
 	mutex.lock();
-	for( uint i = 0; i < outPool.count(); i++){
-		if(outPool.at(i)->hashCode() == hashCode){
-			outPool.remove(i);
+	for( int i = 0; i < outPool.count(); i++){
+            OutPacket* packet = outPool.at( i );
+		if(packet->hashCode() == hashCode){
+			outPool.removeAt(i);
+                        delete packet;
 			--i;
 		}
 	}
@@ -158,9 +173,11 @@ void EvaConnecter::removePacket(const int hashCode)
 
 void EvaConnecter::removeOutRequests(const short cmd)
 {
-	for( uint i = 0; i < outPool.count(); i++){
-		if(outPool.at(i)->getCommand() == cmd){
-			outPool.remove(i);
+	for( int i = 0; i < outPool.count(); i++){
+            OutPacket* packet = outPool.at( i );
+		if(packet->getCommand() == cmd){
+			outPool.removeAt(i);
+                        delete packet;
 			--i;
 		}
 	}
@@ -286,7 +303,7 @@ void EvaConnecter::processPacket( char * data, int len )
 void EvaConnecter::packetMonitor()
 {
 	if(!connectionReady)  return;
-	for ( uint i=0;  i < outPool.count(); i++ ){
+	for ( int i=0;  i < outPool.count(); i++ ){
 		if(outPool.at(i)->needResend()){
 			sendOut(outPool.at(i));
 		}else{

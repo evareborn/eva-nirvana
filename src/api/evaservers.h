@@ -67,8 +67,8 @@ private:
 	bool m_StopDns;
 	QTimer *m_Timeout;
 	int m_CurrAddrIndex;
-	Q3ValueList<serverItem> TCPServers;
-	Q3ValueList<serverItem> UDPServers;
+	QList<serverItem> TCPServers;
+	QList<serverItem> UDPServers;
 	
 	bool m_bIsFirst;
 	

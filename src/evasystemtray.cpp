@@ -153,26 +153,27 @@ void EvaSystemTray::setLoginWaiting()
 
 void EvaSystemTray::newTxtMessage(const unsigned int id, const QString& nick, const QString& message)
 {
-	if(messageStack.findIndex(id) != -1) return; // if exists, do nothing
-	messageStack.push(id);
-	iconStack.push(0);
+	if(messageStack.contains( id)) return; // if exists, do nothing
+        showMessageTip( id, nick, message );
+	messageStack.push_back(id);
+	iconStack.push_back(0);
 	if(!blinkTimer->isActive()){
 		//statusPix =  *QLabel::pixmap();
 		blinkTimer->start(300, false);
 	}
-        showMessageTip( id, nick, message );
 }
 
 void EvaSystemTray::newQunMessage(const unsigned int id, const QString& nick, const QString& message)
 {
-	if(messageStack.findIndex(id) != -1) return; // if exists, do nothing
-	messageStack.push(id);
-	iconStack.push(-2);
+	if(messageStack.contains( id )) return; // if exists, do nothing
+        showMessageTip( id, nick, message );
+	messageStack.push_back(id);
+	iconStack.push_back(-2);
+        printf( "id: %d, msgs: %d, icons: %d\n", id, messageStack.size(), iconStack.size() );
 	if(!blinkTimer->isActive()){
 		//statusPix =  *QLabel::pixmap();
 		blinkTimer->start(300, false);
 	}
-        showMessageTip( id, nick, message );
 }
 void EvaSystemTray::gotTxtMessage(const unsigned int id)
 {
@@ -190,8 +191,8 @@ void EvaSystemTray::gotTxtMessage(const unsigned int id)
 void EvaSystemTray::newSysMessage(const QString& message)
 {
         showMessage( "system message:" , message );
-	messageStack.push(-1);
-	iconStack.push(-1);
+	messageStack.push_back(-1);
+	iconStack.push_back(-1);
 	if(!blinkTimer->isActive()){
 		//statusPix =  *QLabel::pixmap();
 		blinkTimer->start(300, false);
@@ -204,7 +205,7 @@ void EvaSystemTray::gotSysMessage()
 	if( index == -1) return; // if not exist, just return
 	if(iconStack[index] != -1) return; // if not a sys msg icon, return
 	
-	Q3ValueStack<int>::iterator iter = messageStack.find(-1);
+	QList<int>::iterator iter = messageStack.find(-1);
 	messageStack.remove(iter);
 	iter = iconStack.find(-1);
 	iconStack.remove(iter);
@@ -237,16 +238,19 @@ void EvaSystemTray::mousePressEvent(QMouseEvent *me)
 }
  
 void EvaSystemTray::slotActivited( QSystemTrayIcon::ActivationReason reason ) {
-    printf( "slot activited!\n" );
     if ( reason == Trigger ) {
         popMessageOrMainWin();
     }
 }
  
 void EvaSystemTray::popMessageOrMainWin() {
+        printf( "msgs: %d, icons: %d\n", messageStack.size(), iconStack.size() );
 	if(!messageStack.isEmpty() && !iconStack.isEmpty() ){
-		int id = messageStack.pop();
-		int face = iconStack.pop();
+		int id = messageStack.last();
+                messageStack.pop_back( );
+		int face = iconStack.last();
+                iconStack.pop_back();
+                printf( "id: %d, msgs: %d, icons: %d\n", id, messageStack.size(), iconStack.size() );
 		if(id == -1 && face == -1){
 			emit requestSystemMessage();
 			return;
@@ -274,8 +278,10 @@ void EvaSystemTray::mouseDoubleClickEvent( QMouseEvent *me )
 	if(clickTimer->isActive())
 		clickTimer->stop();
 	if(!messageStack.isEmpty() && !iconStack.isEmpty() && (me->button() == Qt::LeftButton || me->button() == Qt::MidButton)){
-		int id = messageStack.pop();
-		int face = iconStack.pop();
+		int id = messageStack.last();
+                messageStack.pop_back();
+		int face = iconStack.last();
+                iconStack.pop_back();
 		if(id == -1 && face == -1){
 			me->accept();
 			emit requestSystemMessage();
@@ -333,8 +339,8 @@ void EvaSystemTray::slotTimeout()
 //X 		QLabel::setPixmap(QPixmap());
 		isBlinkOn = false;
 	}else{
-		int id = messageStack.top();
-		int face = iconStack.top();
+		int id = messageStack.last();
+		int face = iconStack.last();
 		
 		if(id == -1 && face == -1){
 			if(images)
@@ -382,8 +388,10 @@ int EvaSystemTray::getSenderID( )
 	if(messageStack.isEmpty()) return -1000;
 	if(iconStack.isEmpty()) return -1001;
 	
-	int id = messageStack.pop();
-	int face = iconStack.pop();
+	int id = messageStack.last();
+        messageStack.pop_back( );
+	int face = iconStack.last();
+        iconStack.pop_back( );
 	if(id == -1 && face == -1){
 		//emit requestSystemMessage();
 		return -1; // system message

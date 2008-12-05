@@ -22,7 +22,7 @@
 #define EVASYSTEMTRAY_H
 
 //#include <qsystemtrayicon.h>
-#include <q3valuestack.h>
+#include <QList>
 //Added by qt3to4:
 #include <QMouseEvent>
 #include <QPixmap>
@@ -77,8 +77,8 @@ private:
 	QPixmap *statusPix;
 	bool isBlinkOn;
 	
-	Q3ValueStack<int> messageStack; // store user qq id or -1 for system message
-	Q3ValueStack<int> iconStack; // store the corresponding face number or -1 for system message icon
+	QList<int> messageStack; // store user qq id or -1 for system message
+	QList<int> iconStack; // store the corresponding face number or -1 for system message icon
 	
 	void setIconTo(QPixmap *pix);
 private slots:
