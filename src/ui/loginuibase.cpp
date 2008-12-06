@@ -54,7 +54,7 @@ LoginUIBase::LoginUIBase( QWidget* parent, const char* name, bool modal, Qt::WFl
 
     tbNetSetup = new QToolButton( this, "tbNetSetup" );
     tbNetSetup->setGeometry( QRect( 9, 170, 51, 23 ) );
-    tbNetSetup->setCursor( QCursor( 13 ) );
+    tbNetSetup->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbNetSetup->setToggleButton( TRUE );
     tbNetSetup->setAutoRepeat( TRUE );
     tbNetSetup->setAutoRaise( TRUE );

@@ -24,8 +24,12 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef _WIN32
+#include <winsock.h>
+#else
 #include <arpa/inet.h>
 #include <sys/mman.h>
+#endif
 #include <stdlib.h>
 #include <q3socketdevice.h> 
 #include <qsocketnotifier.h>
@@ -248,7 +252,11 @@ bool EvaSocket::write(const char *buf, const int len)
 						mutex.unlock();
 						return false;
 					}
+					#ifdef _WIN32
+					Sleep(10000);
+					#else
 					usleep(10000);
+					#endif
 					//qApp->processEvents();
 					times++;
 					continue;

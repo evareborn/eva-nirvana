@@ -26,7 +26,7 @@
 #define QQ_SMILEY_AMOUNT 135
 
 /** Visual Studio .NET 2002/2003 Additional Definitions */
-#ifdef WIN32
+#ifdef _WIN32
 #pragma warning(disable: 4309 4800)
 typedef unsigned int uint;
 typedef unsigned char uint8_t;

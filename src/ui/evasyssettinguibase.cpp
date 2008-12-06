@@ -380,7 +380,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	tbtnHome = new QToolButton( privateLayoutWidget, "tbtnHome" );
 	tbtnHome->setPaletteForegroundColor( QColor( 0, 0, 255 ) );
-	tbtnHome->setCursor( QCursor( 13 ) );
+	tbtnHome->setCursor( QCursor( Qt::PointingHandCursor ) );
 	tbtnHome->setAutoRaise( TRUE );
 	tbtnHome->setUsesTextLabel( TRUE );
 	tbtnHome->setTextPosition( QToolButton::BesideIcon );
@@ -389,7 +389,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	tbtnAlbum = new QToolButton( privateLayoutWidget, "tbtnAlbum" );
 	tbtnAlbum->setPaletteForegroundColor( QColor( 0, 0, 255 ) );
-	tbtnAlbum->setCursor( QCursor( 13 ) );
+	tbtnAlbum->setCursor( QCursor( Qt::PointingHandCursor ) );
 	tbtnAlbum->setAutoRaise( TRUE );
 	tbtnAlbum->setUsesTextLabel( TRUE );
 	tbtnAlbum->setTextPosition( QToolButton::BesideIcon );
@@ -402,7 +402,7 @@ EvaSysSettingUIBase::EvaSysSettingUIBase( QWidget* parent, const char* name, boo
 	
 	tbtnShop = new QToolButton( privateLayoutWidget, "tbtnShop" );
 	tbtnShop->setPaletteForegroundColor( QColor( 0, 0, 255 ) );
-	tbtnShop->setCursor( QCursor( 13 ) );
+	tbtnShop->setCursor( QCursor( Qt::PointingHandCursor ) );
 	tbtnShop->setAutoRaise( TRUE );
 	tbtnShop->setUsesTextLabel( TRUE );
 	tbtnShop->setTextPosition( QToolButton::BesideIcon );

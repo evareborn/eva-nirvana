@@ -111,7 +111,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, Qt:
 
     tbtnAlbum = new QToolButton( privateLayoutWidget, "tbtnAlbum" );
     tbtnAlbum->setPaletteForegroundColor( QColor( 0, 0, 255 ) );
-    tbtnAlbum->setCursor( QCursor( 13 ) );
+    tbtnAlbum->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbtnAlbum->setAutoRaise( TRUE );
     tbtnAlbum->setUsesTextLabel( TRUE );
     tbtnAlbum->setTextPosition( QToolButton::BesideIcon );
@@ -124,7 +124,7 @@ EvaUserUIBase::EvaUserUIBase( QWidget* parent, const char* name, bool modal, Qt:
 
     tbtnShop = new QToolButton( privateLayoutWidget, "tbtnShop" );
     tbtnShop->setPaletteForegroundColor( QColor( 0, 0, 255 ) );
-    tbtnShop->setCursor( QCursor( 13 ) );
+    tbtnShop->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbtnShop->setAutoRaise( TRUE );
     tbtnShop->setUsesTextLabel( TRUE );
     tbtnShop->setTextPosition( QToolButton::BesideIcon );

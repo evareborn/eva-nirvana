@@ -250,22 +250,22 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout46_2->addItem( spacer47 );
 
     tbBSAll = new QToolButton( wsBSResultPage, "tbBSAll" );
-    tbBSAll->setCursor( QCursor( 13 ) );
+    tbBSAll->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbBSAll->setAutoRaise( TRUE );
     layout46_2->addWidget( tbBSAll );
 
     tbBSDetails = new QToolButton( wsBSResultPage, "tbBSDetails" );
-    tbBSDetails->setCursor( QCursor( 13 ) );
+    tbBSDetails->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbBSDetails->setAutoRaise( TRUE );
     layout46_2->addWidget( tbBSDetails );
 
     tbBSPrev = new QToolButton( wsBSResultPage, "tbBSPrev" );
-    tbBSPrev->setCursor( QCursor( 13 ) );
+    tbBSPrev->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbBSPrev->setAutoRaise( TRUE );
     layout46_2->addWidget( tbBSPrev );
 
     tbBSNext = new QToolButton( wsBSResultPage, "tbBSNext" );
-    tbBSNext->setCursor( QCursor( 13 ) );
+    tbBSNext->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbBSNext->setAutoRaise( TRUE );
     layout46_2->addWidget( tbBSNext );
     layout47->addLayout( layout46_2 );
@@ -413,22 +413,22 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout46_2_2->addItem( spacer50 );
 
     tbASAll = new QToolButton( wsASResultPage, "tbASAll" );
-    tbASAll->setCursor( QCursor( 13 ) );
+    tbASAll->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbASAll->setAutoRaise( TRUE );
     layout46_2_2->addWidget( tbASAll );
 
     tbASDetails = new QToolButton( wsASResultPage, "tbASDetails" );
-    tbASDetails->setCursor( QCursor( 13 ) );
+    tbASDetails->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbASDetails->setAutoRaise( TRUE );
     layout46_2_2->addWidget( tbASDetails );
 
     tbASPrev = new QToolButton( wsASResultPage, "tbASPrev" );
-    tbASPrev->setCursor( QCursor( 13 ) );
+    tbASPrev->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbASPrev->setAutoRaise( TRUE );
     layout46_2_2->addWidget( tbASPrev );
 
     tbASNext = new QToolButton( wsASResultPage, "tbASNext" );
-    tbASNext->setCursor( QCursor( 13 ) );
+    tbASNext->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbASNext->setAutoRaise( TRUE );
     layout46_2_2->addWidget( tbASNext );
     layout47_2->addLayout( layout46_2_2 );
@@ -610,22 +610,22 @@ EvaSearchUIBase::EvaSearchUIBase( QWidget* parent, const char* name, bool modal,
     layout46_3->addItem( spacer51 );
 
     tbQSAll = new QToolButton( wsQSResultPage, "tbQSAll" );
-    tbQSAll->setCursor( QCursor( 13 ) );
+    tbQSAll->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbQSAll->setAutoRaise( TRUE );
     layout46_3->addWidget( tbQSAll );
 
     tbQSDetails = new QToolButton( wsQSResultPage, "tbQSDetails" );
-    tbQSDetails->setCursor( QCursor( 13 ) );
+    tbQSDetails->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbQSDetails->setAutoRaise( TRUE );
     layout46_3->addWidget( tbQSDetails );
 
     tbQSPrev = new QToolButton( wsQSResultPage, "tbQSPrev" );
-    tbQSPrev->setCursor( QCursor( 13 ) );
+    tbQSPrev->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbQSPrev->setAutoRaise( TRUE );
     layout46_3->addWidget( tbQSPrev );
 
     tbQSNext = new QToolButton( wsQSResultPage, "tbQSNext" );
-    tbQSNext->setCursor( QCursor( 13 ) );
+    tbQSNext->setCursor( QCursor( Qt::PointingHandCursor ) );
     tbQSNext->setAutoRaise( TRUE );
     layout46_3->addWidget( tbQSNext );
     layout49->addLayout( layout46_3 );

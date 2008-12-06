@@ -26,7 +26,11 @@
 #include "evalogintoken.h"
 #include <qtimer.h> 
 #include <qmutex.h>
+#ifdef _WIN32
+#include <winsock.h>
+#else
 #include <arpa/inet.h>
+#endif
 #include <stdlib.h>
 #include <cstring>
 #include <QApplication>

@@ -25,7 +25,7 @@
 typedef unsigned int uint;
 
 /** Visual Studio .NET 2002/2003 Additional Definitions */
-#ifdef WIN32
+#ifdef _WIN32
 #pragma warning(disable: 4309 4800)
 typedef unsigned char uint8_t;
 #include <malloc.h>

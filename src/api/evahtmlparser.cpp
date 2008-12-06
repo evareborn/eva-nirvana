@@ -20,7 +20,11 @@
 
 #include "evahtmlparser.h"
 #include "evapacket.h"
+#ifdef _WIN32
+#include <winsock.h>
+#else
 #include <arpa/inet.h>
+#endif
 #include <qregexp.h>
 #include <qfile.h>
 #include <qpixmap.h>

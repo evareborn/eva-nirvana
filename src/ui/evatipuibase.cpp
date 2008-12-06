@@ -52,7 +52,7 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     fraMain->setLineWidth( 3 );
     fraMain->setMargin( 0 );
     fraMain->setMidLineWidth( 0 );
-    fraMain->setCursor( QCursor( 13 ) );
+    fraMain->setCursor( QCursor( Qt::PointingHandCursor ) );
     fraMainLayout = new Q3GridLayout( fraMain, 1, 1, 0, 0, "fraMainLayout"); 
 
     layout2 = new Q3HBoxLayout( 0, 0, 0, "layout2"); 
@@ -64,7 +64,7 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     lblPixmap->setFrameShape( QLabel::NoFrame );
     lblPixmap->setFrameShadow( QLabel::Plain );
     lblPixmap->setAlignment( int( Qt::AlignCenter ) );
-    lblPixmap->setCursor( QCursor( 13 ) );
+    lblPixmap->setCursor( QCursor( Qt::PointingHandCursor ) );
     layout2->addWidget( lblPixmap );
 
     layout1 = new Q3VBoxLayout( 0, 6, 0, "layout1"); 
@@ -73,14 +73,14 @@ EvaTipUIBase::EvaTipUIBase( QWidget* parent, const char* name, Qt::WFlags fl )
     lblNick->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)1, 0, 0, lblNick->sizePolicy().hasHeightForWidth() ) );
     lblNick->setMinimumSize( QSize( 120, 30 ) );
     lblNick->setMaximumSize( QSize( 120, 30 ) );
-    lblNick->setCursor( QCursor( 13 ) );
+    lblNick->setCursor( QCursor( Qt::PointingHandCursor ) );
     layout1->addWidget( lblNick );
 
     lblMessage = new QLabel( fraMain, "lblMessage" );
     lblMessage->setAlignment( Qt::WordBreak | Qt::AlignTop );
     lblMessage->setMinimumSize( QSize( 120, 81 ) );
     lblMessage->setMaximumSize( QSize( 120, 81 ) );
-    lblMessage->setCursor( QCursor( 13 ) );
+    lblMessage->setCursor( QCursor( Qt::PointingHandCursor ) );
     layout1->addWidget( lblMessage );
     layout2->addLayout( layout1 );
 
