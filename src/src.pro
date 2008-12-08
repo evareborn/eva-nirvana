@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = eva
 QT += webkit qt3support xml network
-CONFIG += qt debug
+CONFIG += qt release
 DEPENDPATH += api \
  libeva \
  ui \
@@ -260,4 +260,5 @@ SOURCES += evaaddingmanager.cpp \
  libeva/libuh/evauhprotocols.cpp
 win32 {
  LIBS +=  -lwsock32
+ RC_FILE = eva.rc
 }
