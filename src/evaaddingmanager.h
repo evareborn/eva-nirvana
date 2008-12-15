@@ -22,7 +22,6 @@
 #define EVAADDINGMANAGER_H
 
 #include <QObject>
-#include <q3cstring.h>
 #include <qpixmap.h>
 #include <qfile.h>
 #include "evaqun.h"

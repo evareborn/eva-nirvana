@@ -27,7 +27,8 @@
 #include <q3textedit.h>
 #include <qtimer.h>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 //X #include <klocale.h>
   

@@ -22,7 +22,6 @@
 #define EVAPICMANAGER_H
 
 #include <QObject>
-#include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QByteArray>
 #include <QCustomEvent>

@@ -37,7 +37,8 @@
 #include <Q3Frame>
 #include <Q3VBoxLayout>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 //X #include <klocale.h>
 

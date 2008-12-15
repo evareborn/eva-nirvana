@@ -24,7 +24,7 @@
 #include "evachatwindow.h"
 #include "evaqunchatwindow.h"
 #include "evaqunlist.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evauser.h"
 #include "evaresource.h"
 #include "evaqtutil.h"
@@ -290,7 +290,7 @@ void EvaChatWindowManager::slotReceivedQunMessage( unsigned int qunID, unsigned 
 						const char blue, const char green, const char red )
 {
 	// notify script
-//X 	int extId = EvaMain::user->getQunList()->getQunExtID(qunID);
+//X 	int extId = EvaMain::getInstance()->getUser()->getQunList()->getQunExtID(qunID);
 	
 //X 	GetScriptManager()->notifyMessage( true, extId, time, message);
 	EvaQunChatWindow *win = getQunWindow(qunID);
@@ -319,14 +319,14 @@ void EvaChatWindowManager::slotReceivedQunMessage( unsigned int qunID, unsigned 
 	qunMessageQueue.append(msg);
 	
 	EvaHtmlParser parser;
-	QString cachesPath = EvaMain::user->getSetting()->getPictureCacheDir();
+	QString cachesPath = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir();
 	parser.setAbsImagePath(EvaMain::images->getSmileyPath(), cachesPath);
 	std::list<CustomizedPic> picList = parser.convertToHtml(message, true, true);
 	if(picList.size()){
 		EvaAskForCustomizedPicEvent *event = new EvaAskForCustomizedPicEvent();
 		event->setPicList(picList);
 		event->setQunID(qunID);
-		QApplication::postEvent((QObject *)EvaMain::picManager, event);
+		QApplication::postEvent((QObject *)EvaMain::getInstance()->getPicManager(), event);
 	}
 }
 
@@ -504,7 +504,7 @@ void EvaChatWindowManager::slotQunListUpdated()
 	for(int i=0; i<qunWindowList.count();i++){
 		win = qunWindowList.at(i);
 		id = win->getQunID();
-		if( ! (EvaMain::user->getQunList()->getQun(id) ) ){
+		if( ! (EvaMain::getInstance()->getUser()->getQunList()->getQun(id) ) ){
 			win->hide();
 			qunWindowList.remove(win);
                         delete win;

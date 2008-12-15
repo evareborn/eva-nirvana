@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "evacontactlistview.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evaaddingmanager.h"
 #include "evaipseeker.h"
 #include "evauser.h"
@@ -30,6 +30,7 @@
 #include "evahtmlparser.h"
 #include "evauhmanager.h"
 #include "evaqunlist.h"
+#include "defines.h"
 
 #include <q3dragobject.h>
 #include <qtextcodec.h>
@@ -97,7 +98,7 @@ void EvaBuddyItem::update( )
 	
 	EvaImageResource *images = EvaMain::images;
 
-	m_buddy = *(EvaMain::user->getFriends()->getFriend(m_buddy.getQQ()));
+	m_buddy = *(EvaMain::getInstance()->getUser()->getFriends()->getFriend(m_buddy.getQQ()));
 	
 // 	if((m_buddy.isStatusChanged() && s != m_buddy.getStatus()) || !m_icon ){
 // 		m_buddy.inactiveEvaUpdateFlag(StatusChanged);
@@ -144,7 +145,7 @@ void EvaBuddyItem::update( )
 		updateIcon(pixmap);
 //   }
 
-	EvaUserSetting * setting = EvaMain::user->getSetting();
+	EvaUserSetting * setting = EvaMain::getInstance()->getUser()->getSetting();
 // 	if(m_buddy->isNickChanged() || m_buddy->isSignatureChanged() || setting->needRepaint()){
 
 // 		m_buddy->inactiveEvaUpdateFlag(NickChanged);
@@ -235,8 +236,8 @@ QString EvaBuddyItem::tip()
 	QString facePath = "<img src=\"" + EvaMain::images->getFacePath() + "/" +
 		QString::number(EvaMain::images->getFaceFileIndex(m_buddy.getFace())) + 
 		".png\"></img>";
-	if(m_buddy.hasUserHead() && EvaMain::uhManager){
-		QString uhFileName = EvaMain::uhManager->getFileName(m_buddy.getQQ());
+	if(m_buddy.hasUserHead() && EvaMain::getInstance()->getUHManager()){
+		QString uhFileName = EvaMain::getInstance()->getUHManager()->getFileName(m_buddy.getQQ());
 		if(!uhFileName.isEmpty())
 			facePath = "<img src=\"" + uhFileName + "\"></img>";
 	}
@@ -332,7 +333,7 @@ bool EvaGroupItem::hasMessage()
 
 void EvaGroupItem::setOpen(bool o)
 {
-//X     KConfig* const config = EvaMain::user->config( "Group Open Status" );
+//X     KConfig* const config = EvaMain::getInstance()->getUser()->config( "Group Open Status" );
 //X     config->writeEntry(groupName(), o);
 
     EvaImageResource *images = EvaMain::images;
@@ -362,7 +363,7 @@ void EvaGroupItem::cancelRename( int col )
 
 QString EvaGroupItem::groupName()
 {
-    return codec->toUnicode(EvaMain::user->groupNameAtIndex(m_groupIndex).c_str());
+    return codec->toUnicode(EvaMain::getInstance()->getUser()->groupNameAtIndex(m_groupIndex).c_str());
 }
 
 int EvaGroupItem::countOnlineFriends()
@@ -384,7 +385,7 @@ void EvaGroupItem::update()
 	sort();
 	int num = countOnlineFriends();
 
-	EvaUserSetting * setting = EvaMain::user->getSetting();
+	EvaUserSetting * setting = EvaMain::getInstance()->getUser()->getSetting();
 	QColor showColor = Qt::black;
 	QString fontedName = groupName();
 	if(hasMessage()){
@@ -486,7 +487,7 @@ void EvaContactListView::loadContacts()
 //	QListView::clear();	
 /*	
 	/// load groups
-	EvaUser *user =  EvaMain::user;
+	EvaUser *user =  EvaMain::getInstance()->getUser();
 	if(!user) return;
 	std::list<std::string> names = user->getGroupNames();
 	std::list<std::string>::iterator iter;
@@ -502,7 +503,7 @@ void EvaContactListView::loadContacts()
 	m_groups[user->getAnonymousIndex()] = new EvaGroupItem(user->getAnonymousIndex(), this);
 	m_groups[user->getBlackIndex()] = new EvaGroupItem(user->getBlackIndex(), this);
 	/// load all contacts
-	FriendList *list = EvaMain::user->getFriends();
+	FriendList *list = EvaMain::getInstance()->getUser()->getFriends();
 	QQFriend *f = list->firstFriend();
 	while( f ){
 		m_contacts[f->getQQ()] = new EvaBuddyItem(*f, m_groups[f->getGroupIndex()]);
@@ -513,7 +514,7 @@ void EvaContactListView::loadContacts()
 	else
 		showAll();
 	// update group online counts
-	KConfig* const config = EvaMain::user->config( "Group Open Status" );
+	KConfig* const config = EvaMain::getInstance()->getUser()->config( "Group Open Status" );
 	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
 	while(it != m_groups.end()){
 		it->second->setOpen( config->readBoolEntry(it->second->groupName(), false) );
@@ -528,7 +529,8 @@ void EvaContactListView::loadContacts()
 void EvaContactListView::updateContacts()
 {
 	/// load groups
-	EvaUser *user =  EvaMain::user;
+        if ( !EvaMain::getInstance() ) return;
+	EvaUser *user =  EvaMain::getInstance()->getUser();
 	if(!user) return;
 	std::list<std::string> names = user->getGroupNames();
 	std::list<std::string>::iterator iter;
@@ -548,7 +550,7 @@ void EvaContactListView::updateContacts()
 
 	/// load all contacts
 	int gIndex = 0;
-	FriendList *list = EvaMain::user->getFriends();
+	FriendList *list = EvaMain::getInstance()->getUser()->getFriends();
 	QQFriend *f = list->firstFriend();
         int j = 0;
 	while( f ){
@@ -567,7 +569,7 @@ void EvaContactListView::updateContacts()
 		showAll();
 	
 	// update group online counts
-//X 	KConfig* const config = EvaMain::user->config( "Group Open Status" );
+//X 	KConfig* const config = EvaMain::getInstance()->getUser()->config( "Group Open Status" );
 //X 	std::map<int, EvaGroupItem *>::iterator it = m_groups.begin();
 //X 	while(it != m_groups.end()){
 //X 		it->second->setOpen( config->readBoolEntry(it->second->groupName(), false) );
@@ -585,7 +587,7 @@ void EvaContactListView::updateContacts()
 
 void EvaContactListView::slotFaceSizeChanged()
 {
-	FriendList *list = EvaMain::user->getFriends();
+	FriendList *list = EvaMain::getInstance()->getUser()->getFriends();
 	QQFriend *f = list->firstFriend();
 	while( f ){
 		if (!m_contacts.count(f->getQQ()))
@@ -611,8 +613,8 @@ void EvaContactListView::showAll()
 	for(iter = m_contacts.begin(); iter != m_contacts.end(); ++iter){
 		if(!iter->second->isVisible()) iter->second->setVisible( true);
 	}
-	EvaMain::user->getSetting()->setShowOnlineEnabled(false);
-	EvaMain::user->getSetting()->saveSettings();
+	EvaMain::getInstance()->getUser()->getSetting()->setShowOnlineEnabled(false);
+	EvaMain::getInstance()->getUser()->getSetting()->saveSettings();
 }
 
 void EvaContactListView::showOnlineOnly()
@@ -628,8 +630,8 @@ void EvaContactListView::showOnlineOnly()
 		else
 			iter->second->setVisible(false);
 	}
-	EvaMain::user->getSetting()->setShowOnlineEnabled(true);
-	EvaMain::user->getSetting()->saveSettings();
+	EvaMain::getInstance()->getUser()->getSetting()->setShowOnlineEnabled(true);
+	EvaMain::getInstance()->getUser()->getSetting()->saveSettings();
 }
 
 void EvaContactListView::keyPressEvent( QKeyEvent *e )
@@ -680,9 +682,9 @@ void EvaContactListView::dropEvent(QDropEvent *event)
         unsigned int id = text.toUInt(&ok);
 
         // if id is in my friend list
-        if( EvaMain::user->getFriends()->hasFriend(id)){
+        if( EvaMain::getInstance()->getUser()->getFriends()->hasFriend(id)){
 
-		QQFriend* f = EvaMain::user->getFriends()->getFriend(id);
+		QQFriend* f = EvaMain::getInstance()->getUser()->getFriends()->getFriend(id);
             int index = f->getGroupIndex();
             // drop in same group
             if( index == group->groupIndex())
@@ -696,7 +698,7 @@ void EvaContactListView::dropEvent(QDropEvent *event)
 
             // if drag buddy from Anonymous or Black List into other group
             if(index == EvaUser::getAnonymousIndex() || index == EvaUser::getBlackIndex()){
-                EvaMain::g_AddingManager->slotAddBuddy(id);
+                EvaMain::getInstance()->getAddingManager()->slotAddBuddy(id);
                 return;
             }
 
@@ -708,7 +710,7 @@ void EvaContactListView::dropEvent(QDropEvent *event)
                 group->setOpen(true);
                 f->setGroupIndex(group->groupIndex());
                 m_contacts[id]->update();
-                EvaMain::user->saveGroupedBuddyList();
+                EvaMain::getInstance()->getUser()->saveGroupedBuddyList();
                 updateAllGroups();
                 emit groupChanged(id, group->groupIndex());
             }
@@ -720,7 +722,7 @@ void EvaContactListView::dropEvent(QDropEvent *event)
             }
 
             // otherwise, add her/him :)
-            EvaMain::g_AddingManager->slotAddBuddy(id);
+            EvaMain::getInstance()->getAddingManager()->slotAddBuddy(id);
         }
     }
 }
@@ -763,12 +765,12 @@ void EvaContactListView::friendStatusChanged(const int id)
 	
 	QQFriend *f;
 	char s = QQ_FRIEND_STATUS_OFFLINE;
-	f = EvaMain::user->getFriends()->getFriend(id);
+	f = EvaMain::getInstance()->getUser()->getFriends()->getFriend(id);
 	if(!f->isStatusChanged()) return;
 	s = f->getStatus();
 	if( s==QQ_FRIEND_STATUS_ONLINE || s==QQ_FRIEND_STATUS_LEAVE )
 		b->setVisible(true);
-	else if(EvaMain::user->getSetting()->isShowOnlineEnabled())
+	else if(EvaMain::getInstance()->getUser()->getSetting()->isShowOnlineEnabled())
 		b->setVisible(false);
 
 	b->update();
@@ -794,7 +796,7 @@ void EvaContactListView::newMessage(const unsigned int id)
 {
 	std::map<unsigned int,  EvaBuddyItem *>::iterator it = m_contacts.find(id);
 	if(it == m_contacts.end()) {
-		QQFriend *f = EvaMain::user->getFriends()->getFriend(id);
+		QQFriend *f = EvaMain::getInstance()->getUser()->getFriends()->getFriend(id);
 		if(!f) {
 //X 			kdDebug() << "[EvaContactListView] no friend in the friend list" << endl;
 			return;
@@ -872,12 +874,12 @@ void EvaContactListView::slotNewGroup( )
 {
 	QString name(i18n( "new group"));
 	std::string gname = std::string(codec->fromUnicode(name));
-	EvaMain::user->newGroup( gname );
+	EvaMain::getInstance()->getUser()->newGroup( gname );
 	
-	int index = EvaMain::user->getGroupIndexOf( gname ); // minus Black list & Anonymous
+	int index = EvaMain::getInstance()->getUser()->getGroupIndexOf( gname ); // minus Black list & Anonymous
 	EvaGroupItem *g = new EvaGroupItem(index, this);
 	m_groups[index]  = g;
-	EvaMain::user->saveGroupedBuddyList();
+	EvaMain::getInstance()->getUser()->saveGroupedBuddyList();
 	//emit groupAdded(name, index);
 	
 	clearSelection();
@@ -898,7 +900,7 @@ void EvaContactListView::slotDelGroup( )
 	}
 	int index = g->groupIndex();
 
-	EvaMain::user->removeGroupName(index);
+	EvaMain::getInstance()->getUser()->removeGroupName(index);
 
 	takeItem(g);
 
@@ -1023,7 +1025,7 @@ void EvaContactListView::buddyAdded( const unsigned int id )
 {
 	/// load all contacts
 	
-	std::map<unsigned int, QQFriend> list = EvaMain::user->getFriendList().getAllFriendsMap();
+	std::map<unsigned int, QQFriend> list = EvaMain::getInstance()->getUser()->getFriendList().getAllFriendsMap();
 
 	if (m_groups.size() == 0)
 		return;
@@ -1035,7 +1037,7 @@ void EvaContactListView::buddyAdded( const unsigned int id )
 		printf("add friend: %d\n", f.getQQ());
 		m_contacts[f.getQQ()] = new EvaBuddyItem(f, m_groups[f.getGroupIndex()]);
 		m_groups[f.getGroupIndex()]->update();
-		if(EvaMain::user->getSetting()->isShowOnlineEnabled())
+		if(EvaMain::getInstance()->getUser()->getSetting()->isShowOnlineEnabled())
 			showOnlineOnly();
 		else
 			showAll();
@@ -1076,7 +1078,7 @@ void EvaQunListViewItem::getMessage( )
 
 void EvaQunListViewItem::update( )
 {
-	EvaUserSetting * setting = EvaMain::user->getSetting();
+	EvaUserSetting * setting = EvaMain::getInstance()->getUser()->getSetting();
 	QString fontedName = name();
 	QColor showColor = Qt::black;
 	if(m_numOfMessages){
@@ -1222,7 +1224,8 @@ void EvaQunsListView::loadAllQuns( )
 {	
 	Q3ListView::clear();
 
-	EvaUser *user = EvaMain::user;
+        if ( !EvaMain::getInstance() ) return;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(!user) return;
 
 	QunList *list = user->getQunList();
@@ -1272,7 +1275,7 @@ void EvaQunsListView::updateQun( const unsigned int id )
 
 void EvaQunsListView::addQun( const unsigned int id )
 {
-	QunList *list = EvaMain::user->getQunList();
+	QunList *list = EvaMain::getInstance()->getUser()->getQunList();
 	
 	Qun *q = list->getQun( id);
 	if(!q) return;
@@ -1398,7 +1401,7 @@ void EvaRecentContactLVItem::buddyUpdate( )
     updateIcon(pixmap);
 
 
-    EvaUserSetting * setting = EvaMain::user->getSetting();
+    EvaUserSetting * setting = EvaMain::getInstance()->getUser()->getSetting();
     QString htmlName = nick;
     if(setting->isShowSmileyInNickName()){
             EvaHtmlParser parser;
@@ -1458,7 +1461,7 @@ void EvaRecentContactLVItem::qunUpdate( )
 		}
 	}
 	
-	EvaUserSetting * setting = EvaMain::user->getSetting();
+	EvaUserSetting * setting = EvaMain::getInstance()->getUser()->getSetting();
 	QString fontedName = QunName();
 	QColor showColor = Qt::black;
 	if(m_numOfMessages){
@@ -1525,8 +1528,8 @@ QString EvaRecentContactLVItem::buddyTip( )
 		QString facePath = "<img src=\"" + EvaMain::images->getFacePath() + "/" +
 				QString::number(EvaMain::images->getFaceFileIndex(m_buddy->getFace())) + 
 				".png\"></img>";
-		if(m_buddy->hasUserHead() && EvaMain::uhManager){
-			QString uhFileName = EvaMain::uhManager->getFileName(m_buddy->getQQ());
+		if(m_buddy->hasUserHead() && EvaMain::getInstance()->getUHManager()){
+			QString uhFileName = EvaMain::getInstance()->getUHManager()->getFileName(m_buddy->getQQ());
 			if(!uhFileName.isEmpty())
 				facePath = "<img src=\"" + uhFileName + "\"></img>";
 		}
@@ -1787,7 +1790,8 @@ void EvaRecentContactsListView::loadRecentContacts( )
 {
 	Q3ListView::clear();
 
-	EvaUser *user = EvaMain::user;
+        if ( !EvaMain::getInstance() ) return;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(!user) return;
 
 	EvaUserSetting * setting = user->getSetting();
@@ -1824,7 +1828,7 @@ void EvaRecentContactsListView::updateConfig( )
 		list.push_back(c);
 		item = dynamic_cast<EvaRecentContactLVItem *>(item->nextSibling());
 	}
-	EvaMain::user->getSetting()->updateRecentContact(list);
+	EvaMain::getInstance()->getUser()->getSetting()->updateRecentContact(list);
 }
 
 void EvaRecentContactsListView::newMessage( const unsigned int id, bool isInChat, const unsigned int time)
@@ -1885,14 +1889,14 @@ EvaRecentContactLVItem * EvaRecentContactsListView::addBuddy( const unsigned int
 	}
 
 	// so should be someone who is not in the recent list
-	int max = EvaMain::user->getSetting()->recentContactListSize();
+	int max = EvaMain::getInstance()->getUser()->getSetting()->recentContactListSize();
 	if(childCount() >= max){
 		// remove the oldest contact if list size reached the max
 		takeItem(oldest);
 		delete oldest;
 	}
 
-	QQFriend *f = EvaMain::user->getFriends()->getFriend(id);
+	QQFriend *f = EvaMain::getInstance()->getUser()->getFriends()->getFriend(id);
 	if(f){
 		item = new EvaRecentContactLVItem(false, f, 0, this);
 		item->setTime(time);
@@ -1930,13 +1934,13 @@ EvaRecentContactLVItem * EvaRecentContactsListView::addQun( const unsigned int i
 	}
 
 	// so should be someone who is not in the recent list
-	int max = EvaMain::user->getSetting()->recentContactListSize();
+	int max = EvaMain::getInstance()->getUser()->getSetting()->recentContactListSize();
 	if(childCount() >= max){
 		takeItem(oldest);
 		delete oldest;
 	}
 
-	Qun *q = EvaMain::user->getQunList()->getQun( id );
+	Qun *q = EvaMain::getInstance()->getUser()->getQunList()->getQun( id );
 	if(q){
 		item = new EvaRecentContactLVItem(true, 0, q, this);
 		item->setTime(time);

@@ -20,6 +20,9 @@
 #include "evasocket.h"
 #include "qmdcodec.h"
 //Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3Dns>
+#include <Q3Url>
 #include <QList>
 #include <unistd.h>
 #include <stdio.h>
@@ -31,16 +34,11 @@
 #include <sys/mman.h>
 #endif
 #include <stdlib.h>
-#include <q3socketdevice.h> 
 #include <qsocketnotifier.h>
 #include <qmutex.h>
 #include <qtimer.h>
 #include <qstringlist.h>
-#include <q3url.h>
 #include <qiodevice.h>
-#include <q3textstream.h>
-#include <q3dns.h>
-#include <q3cstring.h>
  
 #include <QUdpSocket>
 #include <QTcpSocket>

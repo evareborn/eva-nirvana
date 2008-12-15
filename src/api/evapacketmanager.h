@@ -27,7 +27,6 @@
 #include <QObject>
 #include <qdatetime.h>
 #include <qstringlist.h>
-#include <q3valuelist.h>
 
 
 // passing a connected EvaConnecter in, otherwise whenever sending a packet will cause an exception

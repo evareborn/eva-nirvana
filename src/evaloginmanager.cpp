@@ -23,7 +23,7 @@
 #include "evapacketmanager.h"
 #include <qhostaddress.h>
 #include <assert.h>
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evasetting.h"
 #include "evaconnecter.h"
 #include "evaapi.h"
@@ -143,9 +143,9 @@ void EvaLoginManager::loginOK( )
 	m_status = ELogin;
 	notifyEvent(E_LoggedIn);
 	//We don't care about the reply of this command	
-	m_packetManager->doChangeStatus(EvaMain::user->getStatus());
+	m_packetManager->doChangeStatus(EvaMain::getInstance()->getUser()->getStatus());
 
-	m_packetManager->doGetUserInfo(EvaMain::user->getQQ());
+	m_packetManager->doGetUserInfo(EvaMain::getInstance()->getUser()->getQQ());
 
 }
 
@@ -185,7 +185,7 @@ void EvaLoginManager::fileAgentInfoReady( )
 void EvaLoginManager::myInfoReady( const ContactInfo info)
 {
 	m_status = EUserInfo;
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user)
 		user->setDetails(info);
 	notifyEvent(E_MyInfo);

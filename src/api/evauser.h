@@ -81,184 +81,190 @@ public:
 
 class EvaUserSetting;
 class CustomEvent;
-class KConfig;
+//X class KConfig;
 
 class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
 {
-	Q_OBJECT
-public:
-	EvaUser(const unsigned int id, const std::string &password);
-	EvaUser(const unsigned int id, const char *md5Password);
-	virtual ~EvaUser();
-	
-	enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
-	unsigned int getQQ() const { return qqNum; }
-	const char *getMd5Password() const { return md5Password; }
-	
-	void setStatus(const UserStatus status) { this->status = status; }
-	UserStatus getStatus() const { return status; }
-	static char getStatusCode(const UserStatus status) ;
-	
-	void setDetails(const ContactInfo &details) { this->details = details; }
-	const ContactInfo &getDetails() const { return details; }
-	
-	FriendList &getFriendList() { return myFriends; }
+    Q_OBJECT
+    public:
+        enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
+
+    public:
+        EvaUser(const unsigned int id, const std::string &password);
+        EvaUser(const unsigned int id, const char *md5Password);
+        virtual ~EvaUser();
+
+        unsigned int getQQ() const { return qqNum; }
+        const char *getMd5Password() const { return md5Password; }
+
+        void setDetails(const ContactInfo &details) { this->details = details; }
+        const ContactInfo &getDetails() const { return details; }
+
+        FriendList &getFriendList() { return myFriends; }
         FriendList *getFriends() { return &myFriends; }
-	void setFriendList(const FriendList &l) { myFriends.clearFriendList(); myFriends = l; }
+        void setFriendList(const FriendList &l) { myFriends.clearFriendList(); myFriends = l; }
 
-	
-	unsigned int getOnlineTime() const { return timeOnline;}     // the following 6 funs are about the level requst
-	unsigned short getLevel() const { return level; }
-	unsigned short getHoursToLevelUp() const { return hoursToLevelUp;}
-	
-	void setOnlineTime(const unsigned int time ) { timeOnline = time;}
-	void setLevel(const unsigned short l ) { level = l;}
-	void setHoursToLevelUp(const unsigned short time ) { hoursToLevelUp = time;}
-		
-	bool newGroup(const std::string &name);
-	void clearGroupNames();
-	void setGroupNames(const std::list<std::string> &groups);
-	void removeGroupName(const int index);
-	int getGroupIndexOf(const std::string &name);
-	void updateGroupName(const std::string &newName, const int index);
-	
-	void setQunGroupName(const std::string &name) { qunName = name; }
-	void setAnonymousGroupName(const std::string &name) { anonymousName = name; }
-	void setBlackGroupName(const std::string &name) { blackName = name; }	
-	
-	const std::string getQunGroupName() const { return qunName; }
-	const std::string getAnonymousGroupName() const { return anonymousName; }
-	const std::string getBlackGroupName() const { return blackName; }
-	
-	static int getQunIndex() { return qunIndex; }
-	static int getAnonymousIndex() { return anonymousIndex; }
-	static int getBlackIndex() { return blackIndex; }
-	
-	std::list<std::string> &getGroupNames() { return groupNames; }
-	void setGroupNames(std::list<std::string> &list);
-	const std::string groupNameAtIndex(const int index);
-	
-	EvaUserSetting *getSetting() { return setting; }
-	KConfig *config(const QString &group);
-	
-	 bool loadGroupedBuddyList();
-	 bool saveGroupedBuddyList();
-	void setBuddyLoadedEnabled( const bool v) { isBuddyListLoaded = v; }
-	 bool isBuddiesLoaded() const { return isBuddyListLoaded; }
 
-	QunList *getQunList() { return &qunList; }
-	void setQunList( const QunList &l) { qunList = l; }
-	 bool loadQunList();
-	 bool saveQunList();
-	 bool isQunLoaded() const { return isQunListLoaded; }
-	
-	void setExtraInfo( const unsigned long long info) { mExtraInfo = info; }
-	 unsigned long long getExtraInfo() const { return mExtraInfo; }
-	 bool hasSignature() { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
-	 bool hasQQTang() { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
-	 bool hasQQAlbum() { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
-	 bool hasPalEntry() { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
-	 bool hasUserHead() { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
-		
-	void setSignature(const std::string sig, const unsigned int time) { mSignature = sig;  mSignatureModifyTime = time; }
-	const std::string &getSignature() const { return mSignature; }
-	 unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
-	
-	//EvaLoginProcess *loginManager() { return mLoginManager; }
+        unsigned int getOnlineTime() const { return timeOnline;}     // the following 6 funs are about the level requst
+        unsigned short getLevel() const { return level; }
+        unsigned short getHoursToLevelUp() const { return hoursToLevelUp;}
 
-	void setLoginWanIp(const unsigned int ip) { m_LoginIp = ip; }
-	void setLoginWanPort(const unsigned short port) { m_LoginPort = port; }
-	void setLoginLanIp(const unsigned int ip) { m_LanIp = ip; }
-	void setLoginLanPort(const unsigned short port) { m_LanPort = port; }
-	void setLastLoginIp(const unsigned int ip) { m_LastLoginIp = ip; }
-	void setLastLoginTime(const unsigned int time) { m_LastLoginTime = time; }
+        void setOnlineTime(const unsigned int time ) { timeOnline = time;}
+        void setLevel(const unsigned short l ) { level = l;}
+        void setHoursToLevelUp(const unsigned short time ) { hoursToLevelUp = time;}
 
-	 unsigned int getLoginWanIp() const { return m_LoginIp; }
-	 unsigned short getLoginWanPort() const { return m_LoginPort; }
-	 unsigned int getLoginLanIp() const { return m_LanIp; }
-	 unsigned short getLoginLanPort() const { return m_LanPort; }
-	 unsigned int getLastLoginIp() const { return m_LastLoginIp; }
-	 unsigned int getLastLoginTime() const { return m_LastLoginTime; }
+        bool newGroup(const std::string &name);
+        void clearGroupNames();
+        void setGroupNames(const std::list<std::string> &groups);
+        void removeGroupName(const int index);
+        int getGroupIndexOf(const std::string &name);
+        void updateGroupName(const std::string &newName, const int index);
 
-	 bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
-	void addLoginVerifyInfo(const GraphicVerifyCode &info);
-	 GraphicVerifyCode getLoginVerifyInfo();
-	GraphicVerifyCode getNextLoginVerifyInfo();
-	 int getNumVerifyCodes() const { return m_CodeList.size(); }
-	void clearAllVerifyCodes();
+        void setQunGroupName(const std::string &name) { qunName = name; }
+        void setAnonymousGroupName(const std::string &name) { anonymousName = name; }
+        void setBlackGroupName(const std::string &name) { blackName = name; }	
 
-// DCOP calls
-	int numFriends();
-	QStringList friends();
-	bool hasFriend(unsigned int id);
-	QString nickOf(unsigned int id);
-	QString faceOf(unsigned int id, bool isOff);
-	int genderOf(unsigned int id);
-	int levelOf(unsigned int id);
-	QString signatureOf(unsigned int id);
-	int numGroups();
-	QString groupName(int index);
-	int group(unsigned int id);
-	int numQuns();
-	QStringList Quns();
-	QString QunName(unsigned int ext);
-	QString QunNotice(unsigned int ext);
-	QString QunDescription(unsigned int ext);
-	int numQunMembers(unsigned int ext);
-	QStringList QunMembers(unsigned int ext);
-	QString QunMemberNick(unsigned int ext, unsigned int id);
-	QString QunMemberFace(unsigned int ext, unsigned int id, bool isOff);
-	unsigned int myQQ();
-	int onlineStatus(unsigned int id);
-	QString currentLoginIP();
-	QString lastLoginIP();
-	QString lastLoginTime(); // format in yyyy-MM-dd hh:mm:ss
-signals:
-	void loadGroupedBuddiesReady();
-	void loadQunListReady();
-protected:
-	virtual void customEvent( QCustomEvent * e );
-private:
-	unsigned int qqNum;
-	char *md5Password;
-	UserStatus status;
-	ContactInfo details;
-	FriendList myFriends;
-	std::list<std::string> groupNames;
-	EvaUserSetting *setting;
-	bool isBuddyListLoaded;
-	bool isQunListLoaded;
-	
-	unsigned int timeOnline;
-	unsigned short level;
-	unsigned short hoursToLevelUp;
-	
-	unsigned long long mExtraInfo;
-	unsigned int mSignatureModifyTime;
-	std::string mSignature;
-	
-	QunList qunList;
-	
-	//EvaLoginProcess *mLoginManager;
-	
-	static std::string qunName;
-	static std::string anonymousName;
-	static std::string blackName;
-	static const int qunIndex = 0xfffd;
-	static const int anonymousIndex = 0xfffe;
-	static const int blackIndex = 0xffff;
+        const std::string getQunGroupName() const { return qunName; }
+        const std::string getAnonymousGroupName() const { return anonymousName; }
+        const std::string getBlackGroupName() const { return blackName; }
 
-	unsigned int m_LoginIp;
-	unsigned short m_LoginPort;
-	unsigned int m_LastLoginIp;
-	unsigned int m_LastLoginTime;
+        static int getQunIndex() { return qunIndex; }
+        static int getAnonymousIndex() { return anonymousIndex; }
+        static int getBlackIndex() { return blackIndex; }
 
-	unsigned int m_LanIp;
-	unsigned short m_LanPort;
+        std::list<std::string> &getGroupNames() { return groupNames; }
+        void setGroupNames(std::list<std::string> &list);
+        const std::string groupNameAtIndex(const int index);
 
-	std::list<GraphicVerifyCode> m_CodeList;
-	
-	friend class EvaUserSetting;
+        EvaUserSetting *getSetting() { return setting; }
+        //X 	KConfig *config(const QString &group);
+
+        bool loadGroupedBuddyList();
+        bool saveGroupedBuddyList();
+        void setBuddyLoadedEnabled( const bool v) { isBuddyListLoaded = v; }
+        bool isBuddiesLoaded() const { return isBuddyListLoaded; }
+
+        QunList *getQunList() { return &qunList; }
+        void setQunList( const QunList &l) { qunList = l; }
+        bool loadQunList();
+        bool saveQunList();
+        //X 	 bool isQunLoaded() const { return isQunListLoaded; }
+
+        void setExtraInfo( const unsigned long long info) { mExtraInfo = info; }
+        unsigned long long getExtraInfo() const { return mExtraInfo; }
+        bool hasSignature() { return mExtraInfo & QQ_EXTAR_INFO_SIGNATURE; }
+        bool hasQQTang() { return mExtraInfo & QQ_EXTAR_INFO_TANG; }
+        bool hasQQAlbum() { return mExtraInfo & QQ_EXTAR_INFO_ALBUM; }
+        bool hasPalEntry() { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
+        bool hasUserHead() { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
+
+        void setSignature(const std::string sig, const unsigned int time) { mSignature = sig;  mSignatureModifyTime = time; }
+        const std::string &getSignature() const { return mSignature; }
+        unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
+
+        //EvaLoginProcess *loginManager() { return mLoginManager; }
+
+        /**
+         * Session related methods
+         */
+
+        void setStatus(const UserStatus status) { this->status = status; }
+        UserStatus getStatus() const { return status; }
+        static char getStatusCode(const UserStatus status) ;
+
+        void setLoginWanIp(const unsigned int ip) { m_LoginIp = ip; }
+        void setLoginWanPort(const unsigned short port) { m_LoginPort = port; }
+        void setLoginLanIp(const unsigned int ip) { m_LanIp = ip; }
+        void setLoginLanPort(const unsigned short port) { m_LanPort = port; }
+        void setLastLoginIp(const unsigned int ip) { m_LastLoginIp = ip; }
+        void setLastLoginTime(const unsigned int time) { m_LastLoginTime = time; }
+
+        unsigned int getLoginWanIp() const { return m_LoginIp; }
+        unsigned short getLoginWanPort() const { return m_LoginPort; }
+        unsigned int getLoginLanIp() const { return m_LanIp; }
+        unsigned short getLoginLanPort() const { return m_LanPort; }
+        unsigned int getLastLoginIp() const { return m_LastLoginIp; }
+        unsigned int getLastLoginTime() const { return m_LastLoginTime; }
+
+        bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
+        void addLoginVerifyInfo(const GraphicVerifyCode &info);
+        GraphicVerifyCode getLoginVerifyInfo();
+        GraphicVerifyCode getNextLoginVerifyInfo();
+        int getNumVerifyCodes() const { return m_CodeList.size(); }
+        void clearAllVerifyCodes();
+
+        // DCOP calls
+        //X 	int numFriends();
+        //X 	QStringList friends();
+        //X 	bool hasFriend(unsigned int id);
+        //X 	QString nickOf(unsigned int id);
+        //X 	QString faceOf(unsigned int id, bool isOff);
+        //X 	int genderOf(unsigned int id);
+        //X 	int levelOf(unsigned int id);
+        //X 	QString signatureOf(unsigned int id);
+        //X 	int numGroups();
+        //X 	QString groupName(int index);
+        //X 	int group(unsigned int id);
+        //X 	int numQuns();
+        //X 	QStringList Quns();
+        //X 	QString QunName(unsigned int ext);
+        //X 	QString QunNotice(unsigned int ext);
+        //X 	QString QunDescription(unsigned int ext);
+        //X 	int numQunMembers(unsigned int ext);
+        //X 	QStringList QunMembers(unsigned int ext);
+        //X 	QString QunMemberNick(unsigned int ext, unsigned int id);
+        //X 	QString QunMemberFace(unsigned int ext, unsigned int id, bool isOff);
+        //X 	unsigned int myQQ();
+        //X 	int onlineStatus(unsigned int id);
+        //X 	QString currentLoginIP();
+        //X 	QString lastLoginIP();
+        //X 	QString lastLoginTime(); // format in yyyy-MM-dd hh:mm:ss
+    signals:
+        void loadGroupedBuddiesReady();
+        void loadQunListReady();
+    protected:
+        virtual void customEvent( QCustomEvent * e );
+    private:
+        unsigned int qqNum;
+        char *md5Password;
+        UserStatus status;
+        ContactInfo details;
+        FriendList myFriends;
+        std::list<std::string> groupNames;
+        EvaUserSetting *setting;
+        bool isBuddyListLoaded;
+        bool isQunListLoaded;
+
+        unsigned int timeOnline;
+        unsigned short level;
+        unsigned short hoursToLevelUp;
+
+        unsigned long long mExtraInfo;
+        unsigned int mSignatureModifyTime;
+        std::string mSignature;
+
+        QunList qunList;
+
+        //EvaLoginProcess *mLoginManager;
+
+        static std::string qunName;
+        static std::string anonymousName;
+        static std::string blackName;
+        static const int qunIndex = 0xfffd;
+        static const int anonymousIndex = 0xfffe;
+        static const int blackIndex = 0xffff;
+
+        unsigned int m_LoginIp;
+        unsigned short m_LoginPort;
+        unsigned int m_LastLoginIp;
+        unsigned int m_LastLoginTime;
+
+        unsigned int m_LanIp;
+        unsigned short m_LanPort;
+
+        std::list<GraphicVerifyCode> m_CodeList;
+
+        friend class EvaUserSetting;
 };
 
 #endif

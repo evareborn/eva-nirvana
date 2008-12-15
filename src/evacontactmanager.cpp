@@ -19,7 +19,7 @@
  ***************************************************************************/ 
 
 #include "evacontactmanager.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evapacketmanager.h"
 #include "evagroup.h"
 #include "evaqun.h"
@@ -78,7 +78,7 @@ void EvaContactManager::fetchContacts( )
 	m_status = ESCM_CONTACTLIST;
 	
 	//we try to load local cache first
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user && 
 	   user->loadGroupedBuddyList() &&
 	   user->loadQunList() ){
@@ -111,13 +111,13 @@ void EvaContactManager::processGetFriendListReply( const GetFriendListReplyPacke
 		m_packetManager->doGetContacts( packet->getPosition());
 		notifyEvent(E_ContactsDownloading);
 	}else{
-// 		EvaUser * user = EvaMain::user;
+// 		EvaUser * user = EvaMain::getInstance()->getUser();
 // 		if(user){
 // 			user->setFriendList(m_Contacts);
 // 		}
 		notifyEvent(E_ContactsDone);
 		m_status = ESCM_NONE;
-		EvaUser *user = EvaMain::user;
+		EvaUser *user = EvaMain::getInstance()->getUser();
 		if(user) user->saveGroupedBuddyList();
 		if(m_downloadAll){
 			fetchGroupNames();
@@ -140,7 +140,7 @@ void EvaContactManager::processDownloadGroupName( const GroupNameOpReplyPacket *
 	if( m_status != ESCM_GROUPNAMES) return;
 		
 	m_GroupNames = packet->getGroupNames();
-// 	EvaUser *user = EvaMain::user;
+// 	EvaUser *user = EvaMain::getInstance()->getUser();
 // 	if(user){
 // 		user->setGroupNames(m_GroupNames);
 // 	}
@@ -205,7 +205,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 		//	doRequestQunInfo(qunList->getQunList().begin()->getQunID());
 		//}
 		//user->getFriendList().clearFriendList();
-		EvaUser *user = EvaMain::user;
+		EvaUser *user = EvaMain::getInstance()->getUser();
 		if(user){
 			user->setGroupNames(m_GroupNames);
 			user->setFriendList(m_Contacts);
@@ -246,7 +246,7 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 	m_QunList.setDetails(m_QunInfo);
 	m_QunList.setMemberArgs(m_QunInfo.getQunID(), m_QunMembers);
 
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user){
 		user->getQunList()->setDetails(m_QunInfo);
 		user->getQunList()->setMemberArgs(m_QunInfo.getQunID(), m_QunMembers);
@@ -288,7 +288,7 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirst/* = true*/)
 {
 //X 	kdDebug() << "fetchQunMembersInfo" << endl;
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	assert(user);
 	Qun *qun = user->getQunList()->getQun(id);
 	if(!qun){
@@ -337,7 +337,7 @@ void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirs
 void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 {
 //X 	kdDebug() << "processQunMemberReply" << endl;
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	assert(user);
 	assert(packet);
 	if( m_status != ESCM_QUNMEMBERS) return;
@@ -395,7 +395,7 @@ void EvaContactManager::fetchDetail( const unsigned int id )
 void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * packet )
 {
  	printf( "[EvaContactManager] got user info\n" );
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	assert(user);
 	assert(packet);
 	//if( m_status != ESCM_CONTACTDETAIL) return;
@@ -429,7 +429,7 @@ void EvaContactManager::fetchAllSignatures( )
 
 void EvaContactManager::processSignatureReply( const SignatureReplyPacket * packet )
 {
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	assert(user);
 	assert(packet);
 
@@ -469,7 +469,7 @@ void EvaContactManager::fetchLevel( const unsigned int id )
 
 void EvaContactManager::processGetLevelReply( const EvaGetLevelReplyPacket * packet )
 {
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	assert(user);
 	assert(packet);
 

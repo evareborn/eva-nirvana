@@ -20,15 +20,16 @@
   
 #include "evausersetting.h"
 #include "evaqtutil.h"
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include <vector>
 #include <stdlib.h>
 #include <qdatastream.h>
-#include <q3textstream.h>
 #include <qstringlist.h>
 #include <qfile.h>
 #include <qdir.h>
 #include <QSettings>
+#include <Q3TextStream>
 //X #include <kconfig.h>
 //X #include <klocale.h>
 //X #include <kdebug.h>
@@ -227,7 +228,7 @@ bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
 	delete []str;
 	file.close();
 	
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user)
 	{
 		user->details              = myInfo;
@@ -1392,7 +1393,7 @@ bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
 	delete []str;
 	file.close();
 	
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user){
 		user->qunList = list;
 		return true;

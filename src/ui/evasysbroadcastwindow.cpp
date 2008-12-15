@@ -28,7 +28,8 @@
 //Added by qt3to4:
 #include <QCloseEvent>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 //X #include <kapp.h>
 //X #include <kurllabel.h>

@@ -22,17 +22,17 @@
 #define EVASYSMSGMANAGER_H
 
 #include <QObject>
-#include <q3cstring.h>
 #include <qpixmap.h>
 #include <qfile.h>
 
+class EvaMain;
 class EvaPacketManager;
 
 class EvaSysMsgManager : public QObject
 {
 	Q_OBJECT
 public:
-	EvaSysMsgManager( );
+	EvaSysMsgManager( EvaMain* evapp );
 	virtual ~EvaSysMsgManager();
 
 	void setPacketManager(EvaPacketManager *packetManager);
@@ -49,6 +49,7 @@ signals:
 
 private:
 	EvaPacketManager *m_PacketManager;
+        EvaMain* g_eva;
 
 private slots:
 	void slotReceivedQQNews(const QString &title, const QString &brief, const QString &url);

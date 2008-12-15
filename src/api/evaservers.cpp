@@ -19,7 +19,6 @@
  ***************************************************************************/
 #include "evaservers.h"
 #include <stdlib.h>      // rand() function
-#include <q3dns.h>
 #include <qfile.h>
 #include <qdatastream.h>
 #include <qdatetime.h>   // seed for rand()
@@ -27,12 +26,13 @@
 #include <qdir.h>
 //Added by qt3to4:
 #include <Q3TextStream>
+#include <Q3Dns>
 #include <QList>
 
 //X #include <kdebug.h>
 //X #include <kconfig.h>
 
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evauser.h"
 #include "evausersetting.h"
 

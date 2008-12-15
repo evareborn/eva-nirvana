@@ -21,7 +21,6 @@
 #define EVACONNECTER_H
 
 #include <QObject>
-#include <q3ptrlist.h>
 #include <qhostaddress.h>
 #include <qstring.h>
 #include "evapacket.h"

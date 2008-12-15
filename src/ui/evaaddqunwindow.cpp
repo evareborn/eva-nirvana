@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 #include "evaaddqunwindow.h"
+#include "defines.h"
 
 #include <qlabel.h>
 #include <qlineedit.h>
@@ -39,7 +40,7 @@
 #include <list>
 #include <string>
 
-#include "../evamain.h"
+#include "../evaguimain.h"
 #include "evaresource.h"
 #include "evauser.h" 
 

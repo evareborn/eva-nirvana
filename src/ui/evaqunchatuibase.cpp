@@ -43,7 +43,8 @@
 #include <Q3GridLayout>
 #include <Q3VBoxLayout>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 //X #include <klocale.h>
 //X 

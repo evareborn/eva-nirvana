@@ -18,6 +18,7 @@
 //X #include <klocale.h>
 #include "evadisplaywidget.h"
 #include "evastatusbar.h"
+#include "defines.h"
 //#include "evalistview.h"
 
 EvaMainUIBase::EvaMainUIBase( QWidget* parent, const char* name, Qt::WFlags fl )

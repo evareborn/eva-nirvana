@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 
-#include "evamain.h"
+#include "evaguimain.h"
 
 #include "evautil.h"
 
@@ -37,6 +37,7 @@
 
 #include "evaidt.h"
 
+#include <string>
 #include <unistd.h>
 #include <assert.h>
 #include <qimage.h>
@@ -48,8 +49,6 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
-#include <q3valuelist.h>
-#include <q3popupmenu.h>
 #include <qmessagebox.h>
 #include <QApplication>
 #include <QShortcut>
@@ -80,24 +79,30 @@
 //X EvaMain * g_eva = NULL;
 		
 		
-EvaUser *EvaMain::user = NULL;
+//X EvaUser *EvaMain::user = NULL;
 EvaGlobal *EvaMain::global = NULL;
 EvaImageResource *EvaMain::images = NULL;
 EvaHelper *EvaMain::helper = NULL;
-EvaConnecter *EvaMain::connecter = NULL;
-EvaPicManager *EvaMain::picManager = NULL;
-EvaUHManager *EvaMain::uhManager = NULL;
-EvaAddingManager *EvaMain::g_AddingManager = NULL;
+//X EvaConnecter *EvaMain::connecter = NULL;
+//X EvaPicManager *EvaMain::picManager = NULL;
+//X EvaUHManager *EvaMain::uhManager = NULL;
+//X EvaAddingManager *EvaMain::m_addingManager = NULL;
 EvaChatWindowManager *EvaMain::g_ChatWindowManager = NULL;
 EvaMainWindow *EvaMain::g_mainWin = NULL;
-EvaLoginManager* EvaMain::g_loginManager = NULL;
-EvaContactManager* EvaMain::g_contactManager = NULL;
+QTextCodec* EvaMain::codec = QTextCodec::codecForName("GB18030");
+EvaMain* EvaMain::g_eva = NULL;
+//X EvaLoginManager* EvaMain::g_loginManager = NULL;
+//X EvaContactManager* m_contactManager = NULL;
  
 EvaMain::EvaMain() :
 //X 	DCOPObject("Actions"),
 	m_FileManager(NULL),
+        user( NULL ),
+        uhManager( NULL ),
+        picManager( NULL ),
 	packetManager(NULL),
 	m_SysMsgManager(NULL),
+        m_loginManager( NULL ),
 	numOfLostKeepAlivePackets(0),
 	sysMenu(NULL),
 	statusMenu(NULL),
@@ -105,7 +110,6 @@ EvaMain::EvaMain() :
         loginWin( NULL )
 // 	accelKey(NULL)
 {
-//X 	g_eva = this;
 	
 	//loggedIn=false;
 	isClientSet=false;
@@ -114,14 +118,14 @@ EvaMain::EvaMain() :
 	m_IsShowingGroups = false;
 	inIdleStatus = false;
 	EvaUtil::initMap();
-	codec = QTextCodec::codecForName("GB18030");
 	onlineFriendTimer = new QTimer();
-        g_contactManager = new EvaContactManager( this );
-        g_loginManager = new EvaLoginManager( this );
+        m_loginManager = new EvaLoginManager( this );
+        m_contactManager = new EvaContactManager( this );
+//X 	codec = QTextCodec::codecForName("GB18030");
         if ( !initSettings() )
             return; // load image first
 	loginWin = new EvaLoginWindow(0);
-	g_mainWin = new EvaMainWindow(0);
+	g_mainWin = new EvaMainWindow(this);
 	tray = new EvaSystemTray(g_mainWin);
 	helper = new EvaHelper();
 	idt = new IdleTimeDetector(5);
@@ -135,6 +139,7 @@ EvaMain::EvaMain() :
 //X 	}
 	doSlotConnection();
 	processCLIArgs();
+        g_eva = this;
 }
 
 EvaMain::~EvaMain()
@@ -149,13 +154,13 @@ EvaMain::~EvaMain()
 		delete picManager;
 		picManager = 0;
 	}
-	if(g_AddingManager){
-		delete g_AddingManager;
-		g_AddingManager = 0;
+	if(m_addingManager){
+		delete m_addingManager;
+		m_addingManager = 0;
 	}
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
-	if(g_loginManager->isLoggedIn() || packetManager)
+	if(m_loginManager->isLoggedIn() || packetManager)
 		packetManager->doLogout();
 
 //X 	GetScriptManager()->releaseScripts();
@@ -297,9 +302,9 @@ bool EvaMain::initSettings()
 	QObject::connect(images, SIGNAL(qqShowReady(const unsigned int)), SLOT(slotQQShowReady(const unsigned int)));
 	
 	// setup adding manager
-	g_AddingManager = new EvaAddingManager();	
+	m_addingManager = new EvaAddingManager();	
 
-	m_SysMsgManager = new EvaSysMsgManager();
+	m_SysMsgManager = new EvaSysMsgManager(this);
 	//_wallet = 0;
         return true;
 }
@@ -351,9 +356,9 @@ void EvaMain::doQuit()
 		delete picManager;
 		picManager = 0;
 	}
-	if(g_AddingManager){
-		delete g_AddingManager;
-		g_AddingManager = 0;
+	if(m_addingManager){
+		delete m_addingManager;
+		m_addingManager = 0;
 	}
 	if(m_SysMsgManager)
 		delete m_SysMsgManager;
@@ -361,7 +366,7 @@ void EvaMain::doQuit()
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
 
-	if(g_loginManager->isLoggedIn() || packetManager)
+	if(m_loginManager->isLoggedIn() || packetManager)
 		packetManager->doLogout();
 
 	
@@ -481,7 +486,7 @@ void EvaMain::doSlotConnection()
 	QObject::connect(g_mainWin, SIGNAL(groupRenamed(QString, int)), this, SLOT(slotGroupRenamed(QString, int)));
 	QObject::connect(g_mainWin, SIGNAL(deleteMeFrom(const unsigned int)), this, SLOT(slotDeleteMeFrom(const unsigned int)));
 	QObject::connect(g_mainWin, SIGNAL(groupChanged(const unsigned int, int)), this, SLOT(slotGroupChanged(const unsigned int, int)));
-	//QObject::connect(g_mainWin, SIGNAL(requestAddBuddy(const unsigned int)),g_AddingManager, SLOT(slotAddBuddy(const unsigned int)));
+	//QObject::connect(g_mainWin, SIGNAL(requestAddBuddy(const unsigned int)),m_addingManager, SLOT(slotAddBuddy(const unsigned int)));
 	
 	
 	QObject::connect(g_mainWin, SIGNAL(requestDelete(const unsigned int)), this, SLOT(slotRequestDelete(const unsigned int)));
@@ -504,8 +509,8 @@ void EvaMain::doSlotConnection()
 	QObject::connect(tray, SIGNAL(requestSystemMessage()), m_SysMsgManager, SLOT(showSysMessage()));
 	QObject::connect(g_mainWin, SIGNAL(requestModifyMemo(const unsigned int)), this, SLOT(slotModifyMemo(const unsigned int)));
 
-	QObject::connect(g_AddingManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
-	QObject::connect(g_AddingManager, SIGNAL(buddyAdded(const unsigned int, const QString, const unsigned short, const int)),
+	QObject::connect(m_addingManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
+	QObject::connect(m_addingManager, SIGNAL(buddyAdded(const unsigned int, const QString, const unsigned short, const int)),
 					SLOT(slotBuddyAdded(const unsigned int, const QString, const unsigned short, const int)));
 
 	QObject::connect(m_SysMsgManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
@@ -514,7 +519,7 @@ void EvaMain::doSlotConnection()
 					SLOT(slotBuddyAdded(const unsigned int, const QString, const unsigned short, const int)));
 //X 	QObject::connect(m_SysMsgManager, SIGNAL(sysMessage()), tray, SLOT(newSysMessage()));
 	QObject::connect(m_SysMsgManager, SIGNAL(requestAddBuddy(const unsigned int, const QString, const unsigned short)),
-			g_AddingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)));
+			m_addingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)));
 	QObject::connect(m_SysMsgManager, SIGNAL(qunListChanged()), SLOT(slotLoadQunListReady()));
 
 	QObject::connect(idt, SIGNAL(idleTimeUp()), this, SLOT(slotIdleTimeUp()));
@@ -627,7 +632,7 @@ void EvaMain::slotSetupUser()
 ///NOTE: must call slotSetupUser before calling this method
 void EvaMain::slotSetupNetwork( )
 {
-	if(g_loginManager->isLoggedIn()) slotDoLogout();
+	if(m_loginManager->isLoggedIn()) slotDoLogout();
 	if(packetManager) {
 		delete packetManager;
 	}
@@ -799,10 +804,10 @@ void EvaMain::slotSetupNetwork( )
 							const unsigned int, const unsigned short, const unsigned char)));
 
 	// let Adding Manager know connection changed
-	g_AddingManager->setPacketManager( packetManager);
+	m_addingManager->setPacketManager( packetManager);
 	m_SysMsgManager->setPacketManager( packetManager);
-	g_loginManager->setPacketManager( packetManager);
-	EvaMain::g_contactManager->setPacketManager( packetManager);
+	m_loginManager->setPacketManager( packetManager);
+	m_contactManager->setPacketManager( packetManager);
 }
 
 /**
@@ -932,7 +937,7 @@ void EvaMain::slotDoLogin()
 	//ServerDetectorPacket::setStep(0);
 	//ServerDetectorPacket::setFromIP(0);
 	//connecter->redirectTo(QQServer.toIPv4Address(), -1);
-	g_loginManager->login(QQServer);
+	m_loginManager->login(QQServer);
 }
 
 void EvaMain::slotDoCancel()
@@ -994,7 +999,7 @@ void EvaMain::slotOfflineReady()
 	g_mainWin->offline();
 	tray->setOffline();
 	//loggedIn = false;
-	g_loginManager->setLoggedOut();
+	m_loginManager->setLoggedOut();
 	//user->loginManager()->reset();
 	//user->loginManager()->finishedCommand(QQ_CMD_REQUEST_LOGIN_TOKEN);
 	picManager->stop();
@@ -1035,7 +1040,7 @@ void EvaMain::slotNetworkException( int/* exp*/)
 	packetManager->doLogout();
 	picManager->stop();
 	//loggedIn = false;
-	g_loginManager->setLoggedOut();
+	m_loginManager->setLoggedOut();
 	
 	//user->loginManager()->reset();
 	QMessageBox::information(0, i18n("Network error occurred, check your network then try Eva later please."),
@@ -1055,7 +1060,7 @@ void EvaMain::slotPacketException( int cmd)
 			numOfLostKeepAlivePackets++; 
 			
 	}
-	if(!g_loginManager->isLoggedIn() && ( cmd == QQ_CMD_LOGIN || cmd == QQ_CMD_REQUEST_LOGIN_TOKEN )){
+	if(!m_loginManager->isLoggedIn() && ( cmd == QQ_CMD_LOGIN || cmd == QQ_CMD_REQUEST_LOGIN_TOKEN )){
 		g_mainWin->offline();
 		tray->setOffline();
 		packetManager->doLogout();
@@ -1063,7 +1068,7 @@ void EvaMain::slotPacketException( int cmd)
 		if(onlineFriendTimer->isActive())
 			onlineFriendTimer->stop();
 		//loggedIn = false;
-		g_loginManager->setLoggedOut();
+		m_loginManager->setLoggedOut();
 		QMessageBox::information(0, i18n("Cannot login, try later please."), i18n("Eva Login"));
 	}
 	
@@ -1077,7 +1082,7 @@ void EvaMain::slotPacketException( int cmd)
 			onlineFriendTimer->stop();
 		//user->loginManager()->reset();
 		//loggedIn = false;
-		g_loginManager->setLoggedOut();
+		m_loginManager->setLoggedOut();
 		QMessageBox::information(0, i18n("Lost connection with server, try later please."), i18n("Eva Connection"));
 	}
 }
@@ -1098,7 +1103,7 @@ void EvaMain::slotKickedOut(const QString msg)
 	g_mainWin->offline();
 	tray->setOffline();
 	//loggedIn = false;
-	g_loginManager->setLoggedOut();
+	m_loginManager->setLoggedOut();
 	user->setStatus(EvaUser::Eva_Offline);
 	numOfLostKeepAlivePackets = 0;
 	QMessageBox::critical(g_mainWin, msg, i18n("Eva Login"));
@@ -1256,7 +1261,7 @@ void EvaMain::slotDoLogout()
 		onlineFriendTimer->stop();
 	packetManager->doLogout();
 	//loggedIn = false;
-	g_loginManager->setLoggedOut();
+	m_loginManager->setLoggedOut();
 }
 
 void EvaMain::slotDoDownloadGroups()
@@ -1380,7 +1385,7 @@ void EvaMain::slotRequestSendFile(const unsigned int id)
 
 void EvaMain::slotRequestLevel(const unsigned int id)
 {
-	if(g_loginManager->isLoggedIn())
+	if(m_loginManager->isLoggedIn())
 		packetManager->requestFriendLevel(id);
 }
 
@@ -1446,7 +1451,7 @@ void EvaMain::slotRequestSearch( )
 //	QObject::connect(win, SIGNAL(requestBuddyAuthStatus(const int, const short, const QString&)), 
 //				SLOT(slotRequestBuddyAuthStatus(const int, const short, const QString&)));
 // 	QObject::connect(win, SIGNAL(requestAddBuddy(const unsigned int, const QString, const unsigned short)),
-// 			g_AddingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)) );
+// 			m_addingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)) );
 
 	QObject::connect(win, SIGNAL(requestAdvancedSearch(const int, const bool, const bool, const int, const int, const int, const int)),
 			packetManager, SLOT(doAdvancedSearch(const int, const bool, const bool, const int, const int, const int, const int)));
@@ -1803,7 +1808,7 @@ void EvaMain::slotRequestQunDetails( const unsigned int id)
 			win, SLOT(slotModifyQunMembers(const unsigned int, const bool, QString)));
 
 	QObject::connect(win, SIGNAL(requestAddBuddy(const unsigned int , const QString, const unsigned short )),
-			g_AddingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
+			m_addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
 	
 	QObject::connect(packetManager, SIGNAL(qunMemberInfoReady(const unsigned int)), 
 			win, SLOT(slotMembersUpdated(const unsigned int)));
@@ -1853,7 +1858,7 @@ void EvaMain::slotRequestQunCardReady(const unsigned int id, const bool ok, cons
 			win, SLOT(slotModifyQunMembers(const unsigned int, const bool, QString)));
 	
 	QObject::connect(win, SIGNAL(requestAddBuddy(const unsigned int , const QString, const unsigned short )),
-			g_AddingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
+			m_addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
 
 	QObject::connect(packetManager, SIGNAL(qunMemberInfoReady(const unsigned int)), 
 			win, SLOT(slotMembersUpdated(const unsigned int)));
@@ -1930,8 +1935,11 @@ void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ,
 			default:
 				g_mainWin->newQunMessage(qunID);
                                 const FriendItem* frd = qun->getMemberDetails( senderQQ );
-                                if ( frd )
-                                    tray->newQunMessage(qunID, codec->toUnicode(frd->getNick().c_str()), message ); 
+                                if ( frd ) {
+                                    std::string name = frd->getQunRealName( );
+                                    name = (!name.empty() ) ? name : frd->getNick();
+                                    tray->newQunMessage(qunID, codec->toUnicode(name.c_str()), message ); 
+                                }
 				needSound = true;
 		}
 		if(user->getSetting()->isSoundEnabled() && needSound)
@@ -2548,7 +2556,7 @@ void EvaMain::imageReady( unsigned int id, QString path, bool isQun )
 
 void EvaMain::openAddFriendDialog( unsigned int id )
 {
-	g_AddingManager->slotAddBuddy( id);
+	m_addingManager->slotAddBuddy( id);
 }
 
 void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
@@ -2572,7 +2580,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->offline();
 			tray->setOffline();
 			//loggedIn = false;
-			g_loginManager->setLoggedOut();
+			m_loginManager->setLoggedOut();
 			user->setStatus(EvaUser::Eva_Offline);
 			numOfLostKeepAlivePackets = 0;
 			QMessageBox::information(g_mainWin, e->m_desc, i18n("Eva Login"));
@@ -2614,18 +2622,18 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->UpdateLoginInfo(E_LoginFinished + 1, s_ENotify[E_LoginFinished]);
 			//EvaScriptManager::instance();// very urgly way to ensure dcop category Tools registered
 			// we should start getting buddy list
-			EvaMain::g_contactManager->fetchContacts();
+			m_contactManager->fetchContacts();
 			break;
 		case E_ContactsDownloading:
 			g_mainWin->UpdateLoginInfo(E_ContactsDownloading + 1, s_ENotify[E_ContactsDownloading]);
 			break;
 		case E_ContactsDone:
 			g_mainWin->UpdateLoginInfo(E_ContactsDone + 1, s_ENotify[E_ContactsDone]);
-			//EvaMain::g_contactManager->fetchGroupNames();
+			//m_contactManager->fetchGroupNames();
 			break;
 		case E_GroupNameDownloadDone:
 			g_mainWin->UpdateLoginInfo(E_GroupNameDownloadDone + 1, s_ENotify[E_GroupNameDownloadDone]);
-			//EvaMain::g_contactManager->fetchGroupedFriends();
+			//m_contactManager->fetchGroupedFriends();
 			break;
 		case E_GroupContactsReceived:
 			g_mainWin->UpdateLoginInfo(E_GroupContactsReceived + 1, s_ENotify[E_GroupContactsReceived]);
@@ -2640,7 +2648,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			if(qun){
 				g_mainWin->updateQun((unsigned int)(e->m_param));
 			}
-			//EvaMain::g_contactManager->fetchQunMembersInfo( (unsigned int)(e->m_param));
+			//m_contactManager->fetchQunMembersInfo( (unsigned int)(e->m_param));
 		}
 			break;
 		case E_QunMemberFinished:
@@ -2686,8 +2694,8 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			packetManager->doRequestExtraInfo();
 			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather
 			
-			EvaMain::g_contactManager->fetchAllLevels();
-			EvaMain::g_contactManager->fetchAllSignatures();
+			m_contactManager->fetchAllLevels();
+			m_contactManager->fetchAllSignatures();
 
 //X 			GetScriptManager()->findScripts();
 

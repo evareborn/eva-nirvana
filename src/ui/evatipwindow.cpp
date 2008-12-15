@@ -31,7 +31,8 @@
 //Added by qt3to4:
 #include <QMouseEvent>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 EvaTipWindow::EvaTipWindow(EvaImageResource *res, const QString nick, const unsigned int id, const short face, const QString &message)
     : EvaTipUIBase(0, 0, Qt::WType_TopLevel | Qt::WStyle_Customize | Qt::WStyle_NoBorder | Qt::WStyle_StaysOnTop | Qt::WX11BypassWM | Qt::WNoAutoErase | Qt::WDestructiveClose)

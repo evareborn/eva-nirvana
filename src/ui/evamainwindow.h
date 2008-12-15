@@ -36,7 +36,7 @@
 #include <list>
 #include <string>
 #include "evalistview.h"
-#include "evamain.h"
+#include "evaguimain.h"
 //X #include "evadcopview.h"
 
 class MainWindowTip : public QToolTip{

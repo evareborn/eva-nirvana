@@ -34,7 +34,8 @@
 #include <QDesktopWidget>
 #include <QApplication>
  
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 
 //X #include <kglobalsettings.h>
 //X #include <klocale.h>

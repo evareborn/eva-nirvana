@@ -20,7 +20,7 @@
  
 #include "evauser.h"
 #include "evaresource.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evaqtutil.h"
 #include "evautil.h"
 #include "evafriend.h"
@@ -273,276 +273,276 @@ void EvaUser::clearAllVerifyCodes( )
 //X }
 
 /// DCOP calls for category Contacts
-
-int EvaUser::numFriends( )
-{
-	return myFriends.numberOfFriends();
-}
-
-QStringList EvaUser::friends( )
-{
-	QStringList list;
-	std::map<unsigned int, QQFriend>::iterator iter = myFriends.getAllFriendsMap().begin();
-	for(; iter != myFriends.getAllFriendsMap().end(); ++iter){
-		list.append( QString::number(iter->first));
-	}
-	return list;
-}
-
-bool EvaUser::hasFriend( unsigned int id )
-{
-	 return myFriends.hasFriend( id);
-}
-
-QString EvaUser::nickOf( unsigned int id )
-{
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	std::string nick = "";
-	if(id == qqNum){
-		nick = details.at( ContactInfo::Info_nick );
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			nick = frd->getNick();
-		}
-	}
-	return codec->toUnicode(nick.c_str());
-}
-
-QString EvaUser::faceOf( unsigned int id, bool isOff)
-{
-	unsigned short face = 0;
-	if(id == qqNum){
-		std::string str = details.at( ContactInfo::Info_face );
-		face = atoi(str.c_str());
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			face = frd->getFace();
-		}
-	}
-	int index = EvaMain::images->getFaceFileIndex(face);
-	QString ret = EvaMain::images->getFacePath() + "/";
-		ret +=  QString::number(index);
-		ret += (isOff?("off"):"" + QString(".png"));
-	return ret;
-}
-
-int EvaUser::genderOf( unsigned int id )
-{
-	int g = 0;
-	if(id == qqNum){
-		std::string str = details.at( ContactInfo::Info_gender );
-		g = atoi(str.c_str());
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			g = frd->getGender();
-		}
-	}
-	return g;
-}
-
-int EvaUser::levelOf( unsigned int id )
-{
-	int l = 0;
-	if(id == qqNum){
-		l = level;
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			l = frd->getLevel();
-		}
-	}
-	return l;
-}
-
-QString EvaUser::signatureOf( unsigned int id)
-{
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	std::string s = "";
-	if(id == qqNum){
-		s = mSignature;
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			s = frd->getSignature();
-		}
-	}
-	return codec->toUnicode(s.c_str());
-}
-
-int EvaUser::numGroups( )
-{
-	return groupNames.size();
-}
-
-QString EvaUser::groupName( int index )
-{
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	std::string g = groupNameAtIndex(index);
-	return codec->toUnicode(g.c_str());
-}
-
-int EvaUser::group( unsigned int id )
-{
-	int index = 0;
-	QQFriend * frd = myFriends.getFriend( id);
-	if(frd){
-		index = frd->getGroupIndex();
-	}
-	return index;
-}
-
-int EvaUser::numQuns( )
-{
-	return qunList.numQuns();
-}
-
-QStringList EvaUser::Quns( )
-{
-	QStringList qlist;
-	std::list<Qun> list = qunList.getQunList();
-	std::list<Qun>::iterator iter;
-	for(iter = list.begin(); iter!=list.end(); ++iter){
-		qlist.append(QString::number(iter->getExtQunID()));
-	}
-	return qlist;
-}
-
-QString EvaUser::QunName( unsigned int ext )
-{
-	std::string q = "";
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		q = qun->getDetails().getName();
-	}
-
-	return codec->toUnicode(q.c_str());
-}
-
-QString EvaUser::QunNotice( unsigned int ext )
-{
-	std::string n = "";
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		n = qun->getDetails().getNotice();
-	}
-
-	return codec->toUnicode(n.c_str());
-}
-
-QString EvaUser::QunDescription( unsigned int ext )
-{
-	std::string d = "";
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		d = qun->getDetails().getDescription();
-	}
-
-	return codec->toUnicode(d.c_str());
-}
-
-int EvaUser::numQunMembers( unsigned int ext )
-{
-	int n = 0;
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		n = qun->numMembers();
-	}
-	return n;
-}
-
-QStringList EvaUser::QunMembers( unsigned int ext )
-{
-	QStringList members;
-
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		//std::list<unsigned int> list = qun->getQQList();
-		std::list<FriendItem> list = qun->getMembers();
-		std::list<FriendItem>::iterator iter;
-		for(iter = list.begin(); iter!= list.end(); ++iter){
-			members.append(QString::number(iter->getQQ()));
-		}
-	}
-	return members;
-}
-
-QString EvaUser::QunMemberNick( unsigned int ext, unsigned int id )
-{
-	std::string n = "";
-
-	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		const FriendItem *m = qun->getMemberDetails(id);
-		n = m->getNick();
-	}
-	return codec->toUnicode(n.c_str());
-}
-
-QString EvaUser::QunMemberFace( unsigned int ext, unsigned int id, bool isOff)
-{
-	unsigned short face = 0;
-
-	Qun *qun = qunList.getQunByExtID( ext);
-	if(qun){
-		const FriendItem *m = qun->getMemberDetails(id);
-		face = m->getFace();
-	}
-
-	int index = EvaMain::images->getFaceFileIndex(face);
-	QString ret = EvaMain::images->getFacePath() + "/";
-		ret += QString::number(index);
-		ret += (isOff?("off"):"" + QString(".png"));
-	return ret;
-}
-
-unsigned int EvaUser::myQQ( )
-{
-	return qqNum;
-}
-
-int EvaUser::onlineStatus( unsigned int id )
-{
-	int s = 0;
-	if(id == qqNum){
-		s = status;
-	} else {
-		QQFriend * frd = myFriends.getFriend( id);
-		if(frd){
-			s = frd->getStatus();
-		}
-	}
-	return s;
-}
-
-QString EvaUser::currentLoginIP( )
-{
-	QHostAddress addr(getLoginWanIp());
-	return addr.toString();
-}
-
-QString EvaUser::lastLoginIP( )
-{
-	//FIXME: this one is wrong getLastLoginIP is actually not the right one
-	//       we should use 0x00DA command to get the information
-	QHostAddress addr(getLastLoginIp());
-	return addr.toString();
-}
-
-QString EvaUser::lastLoginTime( )
-{
-	QDateTime time;
-	time.setTime_t(getLastLoginTime());
-	return time.toString("yyyy-MM-dd hh:mm:ss");
-}
-
-
+//X 
+//X int EvaUser::numFriends( )
+//X {
+//X 	return myFriends.numberOfFriends();
+//X }
+//X 
+//X QStringList EvaUser::friends( )
+//X {
+//X 	QStringList list;
+//X 	std::map<unsigned int, QQFriend>::iterator iter = myFriends.getAllFriendsMap().begin();
+//X 	for(; iter != myFriends.getAllFriendsMap().end(); ++iter){
+//X 		list.append( QString::number(iter->first));
+//X 	}
+//X 	return list;
+//X }
+//X 
+//X bool EvaUser::hasFriend( unsigned int id )
+//X {
+//X 	 return myFriends.hasFriend( id);
+//X }
+//X 
+//X QString EvaUser::nickOf( unsigned int id )
+//X {
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 	std::string nick = "";
+//X 	if(id == qqNum){
+//X 		nick = details.at( ContactInfo::Info_nick );
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			nick = frd->getNick();
+//X 		}
+//X 	}
+//X 	return codec->toUnicode(nick.c_str());
+//X }
+//X 
+//X QString EvaUser::faceOf( unsigned int id, bool isOff)
+//X {
+//X 	unsigned short face = 0;
+//X 	if(id == qqNum){
+//X 		std::string str = details.at( ContactInfo::Info_face );
+//X 		face = atoi(str.c_str());
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			face = frd->getFace();
+//X 		}
+//X 	}
+//X 	int index = EvaMain::images->getFaceFileIndex(face);
+//X 	QString ret = EvaMain::images->getFacePath() + "/";
+//X 		ret +=  QString::number(index);
+//X 		ret += (isOff?("off"):"" + QString(".png"));
+//X 	return ret;
+//X }
+//X 
+//X int EvaUser::genderOf( unsigned int id )
+//X {
+//X 	int g = 0;
+//X 	if(id == qqNum){
+//X 		std::string str = details.at( ContactInfo::Info_gender );
+//X 		g = atoi(str.c_str());
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			g = frd->getGender();
+//X 		}
+//X 	}
+//X 	return g;
+//X }
+//X 
+//X int EvaUser::levelOf( unsigned int id )
+//X {
+//X 	int l = 0;
+//X 	if(id == qqNum){
+//X 		l = level;
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			l = frd->getLevel();
+//X 		}
+//X 	}
+//X 	return l;
+//X }
+//X 
+//X QString EvaUser::signatureOf( unsigned int id)
+//X {
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 	std::string s = "";
+//X 	if(id == qqNum){
+//X 		s = mSignature;
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			s = frd->getSignature();
+//X 		}
+//X 	}
+//X 	return codec->toUnicode(s.c_str());
+//X }
+//X 
+//X int EvaUser::numGroups( )
+//X {
+//X 	return groupNames.size();
+//X }
+//X 
+//X QString EvaUser::groupName( int index )
+//X {
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 	std::string g = groupNameAtIndex(index);
+//X 	return codec->toUnicode(g.c_str());
+//X }
+//X 
+//X int EvaUser::group( unsigned int id )
+//X {
+//X 	int index = 0;
+//X 	QQFriend * frd = myFriends.getFriend( id);
+//X 	if(frd){
+//X 		index = frd->getGroupIndex();
+//X 	}
+//X 	return index;
+//X }
+//X 
+//X int EvaUser::numQuns( )
+//X {
+//X 	return qunList.numQuns();
+//X }
+//X 
+//X QStringList EvaUser::Quns( )
+//X {
+//X 	QStringList qlist;
+//X 	std::list<Qun> list = qunList.getQunList();
+//X 	std::list<Qun>::iterator iter;
+//X 	for(iter = list.begin(); iter!=list.end(); ++iter){
+//X 		qlist.append(QString::number(iter->getExtQunID()));
+//X 	}
+//X 	return qlist;
+//X }
+//X 
+//X QString EvaUser::QunName( unsigned int ext )
+//X {
+//X 	std::string q = "";
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		q = qun->getDetails().getName();
+//X 	}
+//X 
+//X 	return codec->toUnicode(q.c_str());
+//X }
+//X 
+//X QString EvaUser::QunNotice( unsigned int ext )
+//X {
+//X 	std::string n = "";
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		n = qun->getDetails().getNotice();
+//X 	}
+//X 
+//X 	return codec->toUnicode(n.c_str());
+//X }
+//X 
+//X QString EvaUser::QunDescription( unsigned int ext )
+//X {
+//X 	std::string d = "";
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		d = qun->getDetails().getDescription();
+//X 	}
+//X 
+//X 	return codec->toUnicode(d.c_str());
+//X }
+//X 
+//X int EvaUser::numQunMembers( unsigned int ext )
+//X {
+//X 	int n = 0;
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		n = qun->numMembers();
+//X 	}
+//X 	return n;
+//X }
+//X 
+//X QStringList EvaUser::QunMembers( unsigned int ext )
+//X {
+//X 	QStringList members;
+//X 
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		//std::list<unsigned int> list = qun->getQQList();
+//X 		std::list<FriendItem> list = qun->getMembers();
+//X 		std::list<FriendItem>::iterator iter;
+//X 		for(iter = list.begin(); iter!= list.end(); ++iter){
+//X 			members.append(QString::number(iter->getQQ()));
+//X 		}
+//X 	}
+//X 	return members;
+//X }
+//X 
+//X QString EvaUser::QunMemberNick( unsigned int ext, unsigned int id )
+//X {
+//X 	std::string n = "";
+//X 
+//X 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		const FriendItem *m = qun->getMemberDetails(id);
+//X 		n = m->getNick();
+//X 	}
+//X 	return codec->toUnicode(n.c_str());
+//X }
+//X 
+//X QString EvaUser::QunMemberFace( unsigned int ext, unsigned int id, bool isOff)
+//X {
+//X 	unsigned short face = 0;
+//X 
+//X 	Qun *qun = qunList.getQunByExtID( ext);
+//X 	if(qun){
+//X 		const FriendItem *m = qun->getMemberDetails(id);
+//X 		face = m->getFace();
+//X 	}
+//X 
+//X 	int index = EvaMain::images->getFaceFileIndex(face);
+//X 	QString ret = EvaMain::images->getFacePath() + "/";
+//X 		ret += QString::number(index);
+//X 		ret += (isOff?("off"):"" + QString(".png"));
+//X 	return ret;
+//X }
+//X 
+//X unsigned int EvaUser::myQQ( )
+//X {
+//X 	return qqNum;
+//X }
+//X 
+//X int EvaUser::onlineStatus( unsigned int id )
+//X {
+//X 	int s = 0;
+//X 	if(id == qqNum){
+//X 		s = status;
+//X 	} else {
+//X 		QQFriend * frd = myFriends.getFriend( id);
+//X 		if(frd){
+//X 			s = frd->getStatus();
+//X 		}
+//X 	}
+//X 	return s;
+//X }
+//X 
+//X QString EvaUser::currentLoginIP( )
+//X {
+//X 	QHostAddress addr(getLoginWanIp());
+//X 	return addr.toString();
+//X }
+//X 
+//X QString EvaUser::lastLoginIP( )
+//X {
+//X 	//FIXME: this one is wrong getLastLoginIP is actually not the right one
+//X 	//       we should use 0x00DA command to get the information
+//X 	QHostAddress addr(getLastLoginIp());
+//X 	return addr.toString();
+//X }
+//X 
+//X QString EvaUser::lastLoginTime( )
+//X {
+//X 	QDateTime time;
+//X 	time.setTime_t(getLastLoginTime());
+//X 	return time.toString("yyyy-MM-dd hh:mm:ss");
+//X }
+//X 
+//X 

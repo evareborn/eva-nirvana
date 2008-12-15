@@ -19,11 +19,12 @@
  ***************************************************************************/
 #include "evasyshistoryviewer.h"
 #include "evadefines.h"
+#include "defines.h"
 
 #include <qpushbutton.h>
 #include <q3table.h>
  
-#include "evamain.h"
+#include "evaguimain.h"
 
 //X #include <klocale.h>
 #include <qcheckbox.h>

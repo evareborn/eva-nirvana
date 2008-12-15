@@ -19,7 +19,8 @@
  ***************************************************************************/
 
 #include "evalistview.h"
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include "evaresource.h"
 #include <q3header.h>
 #include <qpixmap.h>

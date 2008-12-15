@@ -21,19 +21,17 @@
 #include "evauhmanager.h"
 #include "evauhpacket.h"
 #include "evauhprotocols.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evaresource.h"
 #include <qfile.h>
 #include <qdatastream.h>
-#include <q3textstream.h>
-#include <q3socketdevice.h>
-#include <q3dns.h>
 #include <qstringlist.h>
 #include <QApplication>
 #include <QUdpSocket>
 #include <QHostInfo>
 #include <string.h>
 #include <cstring>
+#include <Q3TextStream>
 
 #define MaxBlockSize       800
 

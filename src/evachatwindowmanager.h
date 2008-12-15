@@ -22,8 +22,6 @@
 
 #include "../api/filetrans/evafiledownloader.h"
 #include <QObject>
-#include <q3ptrlist.h>
-#include <q3valuelist.h>
 #include <qdatetime.h>
 //X #include <kurl.h>
 #include <list>

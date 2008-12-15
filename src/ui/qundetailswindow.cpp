@@ -20,6 +20,7 @@
 
 
 #include "qundetailswindow.h"
+#include "defines.h"
 #include <qlineedit.h>
 #include <q3textedit.h>
 #include <qcombobox.h>
@@ -41,7 +42,7 @@
 #include <QMoveEvent>
 #include <QCloseEvent>
 #include "evaqunlist.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evaresource.h"
 #include "evauser.h"
 #include "evaqtutil.h"
@@ -121,8 +122,8 @@ void QunDetailsWindow::initInformation( )
 	QString notice = codec->toUnicode(mQun->getDetails().getNotice().c_str());
 	QString description = codec->toUnicode(mQun->getDetails().getDescription().c_str());
 	
-	if(mQun->getDetails().getCreator() == EvaMain::user->getQQ() ||
-			(mQun->isAdmin(EvaMain::user->getQQ())) ){
+	if(mQun->getDetails().getCreator() == EvaMain::getInstance()->getUser()->getQQ() ||
+			(mQun->isAdmin(EvaMain::getInstance()->getUser()->getQQ())) ){
 		leQunName->setEnabled(true);
 		teNotice->setEnabled(true);
 		teDescription->setEnabled(true);
@@ -195,8 +196,8 @@ void QunDetailsWindow::initInformation( )
 
 void QunDetailsWindow::slotUpdateClicked( )
 {
-	if(mQun->getDetails().getCreator() != EvaMain::user->getQQ() &&  // not creator
-		!(mQun->isAdmin(EvaMain::user->getQQ())) &&              // not admin
+	if(mQun->getDetails().getCreator() != EvaMain::getInstance()->getUser()->getQQ() &&  // not creator
+		!(mQun->isAdmin(EvaMain::getInstance()->getUser()->getQQ())) &&              // not admin
 		tabWMain->currentPageIndex() != 2 &&                     // not message setting
 		tabWMain->currentPageIndex() != 3){                      // not modifying qun card
 		pbUpdate->setEnabled(false);
@@ -260,7 +261,7 @@ void QunDetailsWindow::slotModifyQunInfo(const unsigned int id, bool ok , QStrin
 {
 	if(id != mQun->getQunID()) return;
 	setWidgetEnabledForInformation(true);
-        EvaMain::g_contactManager->fetchQunDetails( mQun->getQunID());
+        EvaMain::getInstance()->getContactManager()->fetchQunDetails( mQun->getQunID());
 	QString title = i18n("Eva Modify Qun Inforamtion");
 	if(ok){
 		QMessageBox::information(this, title, i18n("Modify Qun information sucessfully."));
@@ -279,7 +280,7 @@ void QunDetailsWindow::slotQunInfomationReady(const unsigned int id, const bool 
 	
 	if(id != mQun->getQunID()) return;
 
-	mQun = EvaMain::user->getQunList()->getQun(id);
+	mQun = EvaMain::getInstance()->getUser()->getQunList()->getQun(id);
 	
 	QString name = codec->toUnicode(mQun->getDetails().getName().c_str());
 	QString title = i18n("Qun") + QString(" - %1").arg(name);
@@ -312,7 +313,7 @@ void QunDetailsWindow::slotQunInfomationReady(const unsigned int id, const bool 
 
 void QunDetailsWindow::slotModifyQunCard( )
 {
-	if(m_CardId && m_CardId != EvaMain::user->getQQ()){
+	if(m_CardId && m_CardId != EvaMain::getInstance()->getUser()->getQQ()){
 		emit requestQunCard(mQun->getQunID(), m_CardId);
 		return;
 	}
@@ -346,7 +347,7 @@ void QunDetailsWindow::slotModifyQunCard( )
 	}
 	 
 	pbUpdate->setEnabled(false);
-	emit requestModifyQunCard(mQun->getQunID(), EvaMain::user->getQQ(), name, gender, phone, email, memo);
+	emit requestModifyQunCard(mQun->getQunID(), EvaMain::getInstance()->getUser()->getQQ(), name, gender, phone, email, memo);
 }
 
 void QunDetailsWindow::slotModifyQunCardReply( const unsigned int id, const bool ok, const unsigned int /*qqID*/, QString msg)
@@ -367,7 +368,7 @@ void QunDetailsWindow::slotModifyQunCardReply( const unsigned int id, const bool
 		std::string stdPhone = codec->fromUnicode(phone).data();
 		std::string stdEmail = codec->fromUnicode(email).data();
 		std::string stdMemo = codec->fromUnicode(memo).data();
-		EvaMain::user->getQunList()->setMyQunCardInfo(id, stdName, gender, stdPhone, stdEmail, stdMemo);
+		EvaMain::getInstance()->getUser()->getQunList()->setMyQunCardInfo(id, stdName, gender, stdPhone, stdEmail, stdMemo);
 		return;
 	} else {
 		QMessageBox::information(0, title, msg);
@@ -440,7 +441,7 @@ void QunDetailsWindow::initTable( )
 	tblMembers->setReadOnly( true );
 	QObject::connect(tblMembers, SIGNAL(clicked(int,int,int,const QPoint&)), SLOT(slotTableClicked(int,int,int,const QPoint&)));
 
-	unsigned int myid = EvaMain::user->getQQ();
+	unsigned int myid = EvaMain::getInstance()->getUser()->getQQ();
 	if( mQun->isAdmin( myid) || mQun->getDetails().getCreator() == myid){
 		pbSetMembers->setEnabled(true);
 		printf("setMember enabled\n");
@@ -469,7 +470,7 @@ void QunDetailsWindow::slotTableClicked( int row, int /*col*/, int /*button*/, c
 	bool ok;
 	unsigned int id = num.toUInt(&ok);
 	
-	unsigned int myID = EvaMain::user->getQQ();
+	unsigned int myID = EvaMain::getInstance()->getUser()->getQQ();
 	if(ok){
 		const FriendItem *item = mQun->getMemberDetails(id);
 		if(!item){
@@ -481,7 +482,7 @@ void QunDetailsWindow::slotTableClicked( int row, int /*col*/, int /*button*/, c
 			pbTransfer->setEnabled(false);
 			return;
 		}
-		if(EvaMain::user->getFriendList().hasFriend(id) || myID == item->getQQ()){
+		if(EvaMain::getInstance()->getUser()->getFriendList().hasFriend(id) || myID == item->getQQ()){
 			pbAddToMe->setEnabled(false);
 		}else{
 			pbAddToMe->setEnabled(true);
@@ -553,7 +554,7 @@ void QunDetailsWindow::slotDelMembersClicked()
 	unsigned int id = txt.toUInt(&ok);
 	if(!ok) return;
 	
-	if(id == EvaMain::user->getQQ()) return;
+	if(id == EvaMain::getInstance()->getUser()->getQQ()) return;
 	
 	tblMembers->removeRow(row);
 	tblMembers->selectRow(0);
@@ -654,7 +655,7 @@ void QunDetailsWindow::slotPickerMemberClicked( const unsigned int id, const boo
 	bool ok;
 	QString txt;
 	if(isChecked){
-		const QQFriend * frd = (EvaMain::user->getFriendList()).getFriend(id);
+		const QQFriend * frd = (EvaMain::getInstance()->getUser()->getFriendList()).getFriend(id);
 		if(!frd) return;
 		//if(mQun->hasMember(frd->getQQ())) return;
 		for(row=0; row<tblMembers->numRows(); row++){

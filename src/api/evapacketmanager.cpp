@@ -23,7 +23,7 @@
 #include "evaconnecter.h"
 #include "evaloginmanager.h"
 #include "evacontactmanager.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evaapi.h"
 #include <QApplication>
 #include <qdatetime.h>
@@ -366,7 +366,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 		}else
 			printf("impossible! \n");
 		//emit loginOK();
-                EvaMain::g_loginManager->loginOK();
+                g_eva->getLoginManager()->loginOK();
 		}
 		break;
 	case QQ_LOGIN_REPLY_REDIRECT:
@@ -378,7 +378,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 			//ServerDetectorPacket::nextStep();
 			//ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
 			//redirectTo(packet->getRedirectedIP(),packet->getRedirectedPort());
-			EvaMain::g_loginManager->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
+			g_eva->getLoginManager()->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
 								   packet->getRedirectedIP(),
 								   packet->getRedirectedPort());
 // 			emit loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
@@ -389,11 +389,11 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 	case QQ_LOGIN_REPLY_PWD_ERROR:
 	case QQ_LOGIN_REPLY_NEED_REACTIVATE:
 		printf("something wrong:%s\n",codec->toUnicode(packet->getReplyMessage().c_str()).local8Bit().data());
-		EvaMain::g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		g_eva->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
 		//emit wrongPassword(codec->toUnicode(packet->getReplyMessage().c_str()));
 		break;
 	case QQ_LOGIN_REPLY_PWD_ERROR_EX:
-		EvaMain::g_loginManager->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		g_eva->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
 		break;
 	case QQ_LOGIN_REPLY_MISC_ERROR:
 		printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
@@ -445,11 +445,11 @@ void EvaPacketManager::processGetUserInfoReply( const InPacket * in )
 	ContactInfo info = packet->contactInfo();
 	std::string strID = info.at(ContactInfo::Info_qqID);
 	unsigned int id = atoi(strID.c_str());
-	if(EvaMain::g_loginManager->isLoggedIn()){
-            EvaMain::g_contactManager->processGetUserInfoReply( packet);
+	if(g_eva->getLoginManager()->isLoggedIn()){
+            g_eva->getContactManager()->processGetUserInfoReply( packet);
 	} else {
 		if(id == user->getQQ())
-			EvaMain::g_loginManager->myInfoReady(info);
+			g_eva->getLoginManager()->myInfoReady(info);
 	}
 	 
 
@@ -527,7 +527,7 @@ void EvaPacketManager::processGetFriendListReply( const InPacket * in )
 		delete packet;
 		return;
 	}
-	EvaMain::g_contactManager->processGetFriendListReply( packet);
+	g_eva->getContactManager()->processGetFriendListReply( packet);
 // 	friendItemList gotList = packet->getFriendList();
 // 	friendItemList::iterator iter;
 // 	for(iter = gotList.begin(); iter!= gotList.end(); ++iter){
@@ -552,7 +552,7 @@ void EvaPacketManager::doSendMessage( const unsigned int receiver, const bool is
 // 		emit sentMessageResult(receiver, false);
 // 		return;
 // 	}
-	if(!EvaMain::g_loginManager->isLoggedIn()){
+	if(!g_eva->getLoginManager()->isLoggedIn()){
 		printf("Client Not ready, ignore sending request!\n");
 		emit sentMessageResult(receiver, false);
 		return;
@@ -1007,7 +1007,7 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 		}else if( im->getVersionID() != qun->getDetails().getVersionID()){
 				printf("Qun version changed to: %d\n", im->getVersionID());
 				//doRequestQunInfo(packet->getSender());
-				EvaMain::g_contactManager->fetchQunDetails(packet->getSender());
+				g_eva->getContactManager()->fetchQunDetails(packet->getSender());
 			}
 		if(qun->getMessageType() == Qun::Reject){
 			delete im;
@@ -1200,7 +1200,7 @@ void EvaPacketManager::processGroupNameOp( const InPacket * in )
 		return;
 	}
 	if(packet->isDownloadReply()){
-		EvaMain::g_contactManager->processDownloadGroupName(packet);
+		g_eva->getContactManager()->processDownloadGroupName(packet);
 // 		std::list<std::string>::iterator iter;
 // 		std::list<std::string> names = packet->getGroupNames();
 // 		user->clearGroupNames(); // note that the first group won't be deleted
@@ -1240,7 +1240,7 @@ void EvaPacketManager::processDownloadGroupFriendReply( const InPacket * in )
 		return;
 	}
 
-	EvaMain::g_contactManager->processDownloadGroupFriendReply(packet);
+	g_eva->getContactManager()->processDownloadGroupFriendReply(packet);
 		
 // 	std::list<DownloadFriendEntry> friends = packet->getGroupedFriends();
 // 	std::list<DownloadFriendEntry>::iterator iter;
@@ -1589,7 +1589,7 @@ void EvaPacketManager::processQunReply( const InPacket * in )
 			processQunID = 0;
 			return;
 		}
-		EvaMain::g_contactManager->processQunInfoReply(packet);
+		g_eva->getContactManager()->processQunInfoReply(packet);
 // 		QunInfo info = packet->getQunInfo();
 // 		user->getQunList()->setDetails(info);
 // 		user->getQunList()->setMemberArgs(info.getQunID(), packet->getMemberList());
@@ -1636,7 +1636,7 @@ void EvaPacketManager::processQunReply( const InPacket * in )
 		}
 		break;
 	case QQ_QUN_CMD_GET_MEMBER_INFO:{
-		EvaMain::g_contactManager->processQunMemberReply(packet);
+		g_eva->getContactManager()->processQunMemberReply(packet);
 /*		user->getQunList()->setMembers(packet->getQunID(), packet->getMemberInfoList());
 		if(!qunMemberInfoFinished) break;
 		user->saveQunList();*/
@@ -1992,7 +1992,7 @@ void EvaPacketManager::processRequestKeyReply( const InPacket * in )
 // 		user->loginManager()->finishedCommand(QQ_CMD_REQUEST_KEY);
 // 	}
 	//emit fileAgentInfoReady();
-	EvaMain::g_loginManager->fileAgentInfoReady();
+	g_eva->getLoginManager()->fileAgentInfoReady();
 }
 
 void EvaPacketManager::doRequestQunCard( const unsigned int id, const unsigned int qq )
@@ -2111,7 +2111,7 @@ void EvaPacketManager::processSignatureReply( const InPacket * in )
 		}
 		break;
 	case QQ_SIGNATURE_REQUEST:{
-		EvaMain::g_contactManager->processSignatureReply(packet);
+		g_eva->getContactManager()->processSignatureReply(packet);
 // 		std::map<unsigned int, SignatureElement> members = packet->getMembers();
 // 		std::map<unsigned int, SignatureElement>::iterator iter;
 // 		for(iter = members.begin(); iter!= members.end(); ++iter){
@@ -2352,7 +2352,7 @@ void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 			code.setData(packet->getData(), packet->getDataLength());
 			user->addLoginVerifyInfo( code);
 			if( user->getNumVerifyCodes()==1 ){
-				EvaMain::g_loginManager->loginVerification();
+				g_eva->getLoginManager()->loginVerification();
 				//emit loginNeedVerification();
 			}
 			delete packet;
@@ -2362,7 +2362,7 @@ void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 		delete packet;
 	}
 	// notify login verirfy window that the verification got passed
-	EvaMain::g_loginManager->verifyPassed();
+	g_eva->getLoginManager()->verifyPassed();
 	//emit loginVerifyPassed();
 
 	//user->loginManager()->finishedCommand(QQ_CMD_REQUEST_LOGIN_TOKEN);

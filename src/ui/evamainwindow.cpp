@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/ 
 #include "evamainwindow.h"
+#include "defines.h"
 
 #include <stdlib.h>
 
@@ -145,8 +146,8 @@ void EvaMainWindow::setMainInfo(const unsigned int id, const QString &nick, QPix
 
 void EvaMainWindow::slotUpdateBuddyStat()
 {
-	int all = EvaMain::user->getFriendList().numberOfFriends();
-	int onlines = EvaMain::user->getFriendList().numberOfOnlines();
+	int all = EvaMain::getInstance()->getUser()->getFriendList().numberOfFriends();
+	int onlines = EvaMain::getInstance()->getUser()->getFriendList().numberOfOnlines();
 	tlQQ->setText(" ( "+ QString::number(onlines) + "/" + QString::number(all) + ")");
 }
 
@@ -176,7 +177,7 @@ void EvaMainWindow::changeGroupTo(const unsigned int id, const int index)
 void EvaMainWindow::updateBuddy(const unsigned int id)
 {
 	/*
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user && id == user->getQQ()){
 		//QString myNick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
 		QString myNick = GB2Unicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
@@ -198,7 +199,7 @@ void EvaMainWindow::updateBuddy(const unsigned int id)
 
 void EvaMainWindow::updateMyInfo()
 {
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(user){
 		QString myNick = GB2Unicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
 		if(myNick.isNull()) myNick = "";
@@ -365,15 +366,15 @@ QRect EvaMainWindow::tipRect( const QPoint & /*pos*/ )
 
 QString EvaMainWindow::myInfoTip( )
 {
-	//const QQFriend *frd = (EvaMain::user->getFriendList()).getFriend(qqNum); 
-// 	if(!EvaMain::user->loginManager()->isCommandFinished(QQ_CMD_GET_USER_INFO))
+	//const QQFriend *frd = (EvaMain::getInstance()->getUser()->getFriendList()).getFriend(qqNum); 
+// 	if(!EvaMain::getInstance()->getUser()->loginManager()->isCommandFinished(QQ_CMD_GET_USER_INFO))
 // 		return "Eva";
-	if(!g_eva->g_loginManager->isLoggedIn())
+	if(!g_eva->getLoginManager()->isLoggedIn())
 		return "Eva";
 	QString tip = "<qt>";
 	//EvaIPSeeker ipAddr(EvaGlobal::getDirPath().latin1());
 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	QString nickName = codec->toUnicode(EvaMain::user->getDetails().at(ContactInfo::Info_nick).c_str());
+	QString nickName = codec->toUnicode(EvaMain::getInstance()->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
 	//QString addr = codec->toUnicode(ipAddr.getIPLocation(frd->getIP()).c_str());
 	//if(addr.length()<4) addr = "0.0.0.0";
 	
@@ -382,24 +383,24 @@ QString EvaMainWindow::myInfoTip( )
 	parser.setAbsImagePath(EvaMain::images->getSmileyPath());
 	parser.convertToHtml(htmlName, false, true);
 	
-	QString signature = codec->toUnicode(EvaMain::user->getSignature().c_str());
+	QString signature = codec->toUnicode(EvaMain::getInstance()->getUser()->getSignature().c_str());
 	if(signature.length() > 40)
 		signature = signature.left(37) + "...";
 	if(!signature.isEmpty())
 		signature = "[" + signature + "]";
 	
 	QString facePath = "<img src=\"" + EvaMain::images->getFacePath() + "/" +
-			QString::number(EvaMain::images->getFaceFileIndex(atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str()))) + 
+			QString::number(EvaMain::images->getFaceFileIndex(atoi(EvaMain::getInstance()->getUser()->getDetails().at(ContactInfo::Info_face).c_str()))) + 
 			".png\"></img>";
 			
-	if(EvaMain::user->hasUserHead() && EvaMain::uhManager){
-		QString uhFileName = EvaMain::uhManager->getFileName(EvaMain::user->getQQ());
+	if(EvaMain::getInstance()->getUser()->hasUserHead() && EvaMain::getInstance()->getUHManager()){
+		QString uhFileName = EvaMain::getInstance()->getUHManager()->getFileName(EvaMain::getInstance()->getUser()->getQQ());
 		if(!uhFileName.isEmpty())
 			facePath = "<img src=\"" + uhFileName + "\"></img>";
 	}
 	
 	int suns, moons, stars;
-	EvaUtil::calcSuns(EvaMain::user->getLevel(), &suns, &moons, &stars);
+	EvaUtil::calcSuns(EvaMain::getInstance()->getUser()->getLevel(), &suns, &moons, &stars);
 	QString strSun =  "<img src=\"" + EvaMain::images->getIconFullPath("TIME_SUN") + "\"></img>";
 	QString strMoon = "<img src=\"" + EvaMain::images->getIconFullPath("TIME_MOON") + "\"></img>";
 	QString strStar = "<img src=\"" + EvaMain::images->getIconFullPath("TIME_STAR") + "\"></img>";
@@ -413,15 +414,15 @@ QString EvaMainWindow::myInfoTip( )
 	for(int i=0; i<stars; i++){
 		level += strStar;
 	}
-	int seconds = EvaMain::user->getOnlineTime();
+	int seconds = EvaMain::getInstance()->getUser()->getOnlineTime();
 	tip += "<table width = 260><tr><td width=60 align = center valign = middle>" + facePath + 
 		"</td><td align = left valign = middle><b><font color = blue>"+
-		i18n("QQ") +": </font></b>"+ QString::number(EvaMain::user->getQQ()) +"<br><b><font color = blue>"+
+		i18n("QQ") +": </font></b>"+ QString::number(EvaMain::getInstance()->getUser()->getQQ()) +"<br><b><font color = blue>"+
 		i18n("Nickname:") + " </font></b>"+htmlName +"<br>" + signature + "<br><b><font color = blue>"+ 
-		i18n("Level") +": </font></b>"+ level + "  (" + QString::number(EvaMain::user->getLevel()) +")<br><b><font color = blue>"+
+		i18n("Level") +": </font></b>"+ level + "  (" + QString::number(EvaMain::getInstance()->getUser()->getLevel()) +")<br><b><font color = blue>"+
 		i18n("Online Time") +": </font></b>"+ QString::number(seconds/3600)+
 			i18n(" Hours ")+QString::number((seconds%3600)/60)+i18n(" min ")+"<br><b><font color = blue>";
-	//	i18n("Level Up") +": </font></b>"+ QString::number(EvaMain::user->getHoursToLevelUp())+
+	//	i18n("Level Up") +": </font></b>"+ QString::number(EvaMain::getInstance()->getUser()->getHoursToLevelUp())+
 //							" Hours<br><b><font color = blue>" + "</td></tr></table>"; 
 	tip += "</qt>";
 	return tip;

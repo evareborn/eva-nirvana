@@ -20,8 +20,9 @@
 #include "createsmileywindow.h"
 #include "evausersetting.h"
 #include "evauser.h"
-#include "../evamain.h"
+#include "../evaguimain.h"
 #include "evaqtutil.h"
+#include "defines.h"
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -75,7 +76,7 @@ void CreateSmileyWindow::init( )
 		leTip->setText(file.left( file.findRev(".") ) );
 	}
 
-	QString dir = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	m_Config = new CustomFaceConfig(dir);
 
 	if(m_Config->loadXML()){
@@ -127,7 +128,7 @@ void CreateSmileyWindow::slotSelectImagesClicked( )
 void CreateSmileyWindow::slotOKClicked( )
 {
 	bool ok = false;
-	QString destDir = EvaMain::user->getSetting()->getCustomSmileyDir();
+	QString destDir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir();
 	if(cbbGroup->currentItem()>0)
 		destDir += ( "/" + cbbGroup->currentText() );
 	if(!m_FileName.isEmpty()){
@@ -211,7 +212,7 @@ RmSmileyGroupDialog::RmSmileyGroupDialog(  int indexOfRm, CustomFaceConfig *conf
 	rbtnRmMv->setChecked( false );
 
 	// setup combo box
-	QString dir = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	m_Config = new CustomFaceConfig(dir);
 
 	if(m_Config->loadXML()){
@@ -345,7 +346,7 @@ void CustomSmileyManager::init( )
 	d->m_OldName = "";
 
 	if(m_Config) delete m_Config;
-	QString dir = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	m_Config = new CustomFaceConfig(dir);
 	m_Config->loadXML();
 	// group list first
@@ -409,7 +410,7 @@ void CustomSmileyManager::loadSmileys( int groupIndex )
 			tblFaceList->removeRow(row);
 	}
 	tblFaceList->setNumRows(0);
-	QString dir = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 
 	if(groupIndex>0)
 		dir += (m_Config->groupName( groupIndex) + "/");
@@ -467,7 +468,7 @@ void CustomSmileyManager::slotAddGroupClicked( )
 {
 	QString name = QString(i18n("Group%1")).arg(m_Config->numGroups());
 
-	QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString path = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	QDir dir(path + name);
 	if(!dir.exists()){ // if the dest dir doesn't exist,
 		if(dir.mkdir( path + name )) // create the dir
@@ -527,7 +528,7 @@ void CustomSmileyManager::slotRemoveGroupClicked( )
 		int index = m_Config->groupIndex( item->text( 0 ) );
 		if(index <= -1) return;
 
-		QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+		QString path = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 		QDir dir( path + item->text(0) );
 		FaceList list = m_Config->groupMembers( index);
 		int result = -2;
@@ -596,7 +597,7 @@ void CustomSmileyManager::slotGroupRenamed( Q3ListViewItem *item, int /*col*/, c
 									.arg( d->m_OldName).arg( text),
 								i18n( "Rename Group" ) );
 	} else{
-		QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+		QString path = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 		QDir dir(path + d->m_OldName);
 		if(dir.exists()){
 			if(!dir.rename(path + d->m_OldName, path + text)){
@@ -645,7 +646,7 @@ void CustomSmileyManager::slotFaceSelectionChanged( )
 			int gId = m_Config->groupIndex( item->text( 0 ) );
 			if(gId < 0) return;
 			CustomFace face = m_Config->getFace( gId, first);
-			QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+			QString path = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 			if(gId > 0 )
 				path += (item->text(0) + "/");
 			QString ext = face.org().right(3);
@@ -721,7 +722,7 @@ void CustomSmileyManager::slotAddCustomSmileyReady( bool ok)
 
 bool CustomSmileyManager::removeSmileyFile( const CustomFace & face )
 {
-	QString path = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+	QString path = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	if(face.group() > 0){
 		path += ( m_Config->groupName( face.group()) + "/");
 	}
@@ -863,7 +864,7 @@ void CustomSmileyManager::slotMoveSmileyTo( int Id )
 		QString destGName = m_Config->groupName( Id); // dest group name
 		if( (gId < 0) || (Id < 0) || (gId == Id) ) return;
 
-		QString dir = EvaMain::user->getSetting()->getCustomSmileyDir() + "/";
+		QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
 		QString src = dir, dest = dir;
 		if(gId != 0) src += (srcGName + "/");
 		if(Id != 0 ) dest += (destGName + "/");

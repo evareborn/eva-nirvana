@@ -19,13 +19,14 @@
  ***************************************************************************/
  
 #include "evaqunchatwindow.h"
+#include "defines.h"
 
 
 #include "customfaceselector.h"
 #include "evafontselecter.h"
 
 #include "evaresource.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evatextedit.h"
@@ -140,7 +141,7 @@ void EvaQunChatWindow::graphicChanged( )
 	if(!images) return;
 	QStringList imageDirList;
 	imageDirList.append(images->getSmileyPath());
-	imageDirList.append(EvaMain::user->getSetting()->getPictureCacheDir());
+	imageDirList.append(EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir());
 	teInput->mimeSourceFactory()->setFilePath(imageDirList);
 
 	
@@ -163,14 +164,14 @@ void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int sen
 	if(senderQQ == myQQ) return;
 	QString nick = getSenderName(senderQQ) + " (" + QString::number(senderQQ) + ")";
 	EvaHtmlParser parser;
-	QString cachesPath = EvaMain::user->getSetting()->getPictureCacheDir();
+	QString cachesPath = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir();
 	parser.setAbsImagePath(images->getSmileyPath(), cachesPath);
 	std::list<CustomizedPic> picList = parser.convertToHtml(message, true, true);
 	if(picList.size()){
 		EvaAskForCustomizedPicEvent *event = new EvaAskForCustomizedPicEvent();
 		event->setPicList(picList);
 		event->setQunID(qunID);
-		QApplication::postEvent((QObject *)EvaMain::picManager, event);
+		QApplication::postEvent((QObject *)EvaMain::getInstance()->getPicManager(), event);
 	}
 	chatDisplay->append(nick, time, Qt::blue, true, QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue), size, u, i, b, message);
 	if( tbEnableSound->isOn())
@@ -235,15 +236,15 @@ void EvaQunChatWindow::slotDisplayMembers()
 		//kdDebug() << "Qun member:"<< id << endl;
 		QPixmap *pixOn = images->getFace(images->getFaceFileIndex(faceID), true);
 		QPixmap *pixOff = images->getFace(images->getFaceFileIndex(faceID), false);
-		if(iter->getQQ() == EvaMain::user->getQQ()){
-			if(EvaMain::user->hasUserHead() && EvaMain::uhManager){
+		if(iter->getQQ() == EvaMain::getInstance()->getUser()->getQQ()){
+			if(EvaMain::getInstance()->getUser()->hasUserHead() && EvaMain::getInstance()->getUHManager()){
 				QPixmap *uhPic = images->getUserHeadPixmap(iter->getQQ());
 				QPixmap *uhPicOff = images->getUserHeadPixmap(iter->getQQ(), true);
 				if(uhPic) pixOn = uhPic;
 				if(uhPicOff) pixOff = uhPicOff;
 			}
 		}
-		const QQFriend *frd = EvaMain::user->getFriendList().getFriend(id);
+		const QQFriend *frd = EvaMain::getInstance()->getUser()->getFriendList().getFriend(id);
 		if(frd && frd->hasUserHead()){
 			QPixmap *uhPic = images->getUserHeadPixmap(frd->getQQ());
 			QPixmap *uhPicOff = images->getUserHeadPixmap(frd->getQQ(), true);
@@ -274,10 +275,10 @@ void EvaQunChatWindow::slotUpdateOnlineMembers()
 	std::list<FriendItem> members = mQun->getMembers();
 	for(iter=members.begin(); iter!=members.end(); ++iter){
 		if(iter->isOnline()){
-			if(iter->getQQ() != EvaMain::user->getQQ()){
+			if(iter->getQQ() != EvaMain::getInstance()->getUser()->getQQ()){
 				onlineList.push_back(iter->getQQ());
 			}else{
-				if(EvaMain::user->getStatus() == EvaUser::Eva_Online || EvaMain::user->getStatus() == EvaUser::Eva_Leave)
+				if(EvaMain::getInstance()->getUser()->getStatus() == EvaUser::Eva_Online || EvaMain::getInstance()->getUser()->getStatus() == EvaUser::Eva_Leave)
 					 onlineList.push_back(iter->getQQ());
 			}	
 		}	
@@ -479,9 +480,9 @@ void EvaQunChatWindow::slotHistoryClick( )
 			qName = codec->toUnicode(info.getName().c_str());
 		}
 
-		viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::user->getSetting(), true);
+		viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::getInstance()->getUser()->getSetting(), true);
 
-		unsigned short faceId = atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str());
+		unsigned short faceId = atoi(EvaMain::getInstance()->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
 		QPixmap *face = EvaMain::images->getFaceByID(faceId);
 		viewer->setIcon(*face);
 
@@ -532,7 +533,7 @@ void EvaQunChatWindow::slotSend( )
 		sendingImageMsg = msg;
 		QString toShow = msg;
 		parser.setAbsImagePath(images->getSmileyPath());
-		parser.parseToAbsPath(toShow, EvaMain::user->getSetting()->getPictureCacheDir());
+		parser.parseToAbsPath(toShow, EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir());
 		QString name = getSenderName( myQQ);
 		chatDisplay->append( name, sendtime, Qt::darkCyan, true, fontColor, (char)fontSize, 
 					tbU->isOn(), tbI->isOn(), tbB->isOn(), toShow);
@@ -542,7 +543,7 @@ void EvaQunChatWindow::slotSend( )
 		EvaSendCustomizedPicEvent *event = new EvaSendCustomizedPicEvent();
 		event->setPicList(getSendFiles(outPicList));
 		event->setQunID(mQun->getQunID());
-		QApplication::postEvent((QObject *)EvaMain::picManager, event);
+		QApplication::postEvent((QObject *)EvaMain::getInstance()->getPicManager(), event);
 
 		pbSend->setEnabled(false);
 		teInput->setEnabled(false);
@@ -590,7 +591,7 @@ void EvaQunChatWindow::slotFontChanged( QColor color, int size)
 {
 	mQun->setChatFontSize(size);
 	mQun->setChatFontColor( color.rgb());
-	EvaMain::user->saveQunList();
+	EvaMain::getInstance()->getUser()->saveQunList();
 }
 
 void EvaQunChatWindow::setEnterSend( )
@@ -668,7 +669,7 @@ void EvaQunChatWindow::hideEvent( QHideEvent * e )
 void EvaQunChatWindow::slotRequestQunMembers( )
 {	
 	//GetContactManager()->fetchQunDetails(mQun->getQunID());
-    EvaMain::g_contactManager->fetchQunMembersInfo(mQun->getQunID());
+    EvaMain::getInstance()->getContactManager()->fetchQunMembersInfo(mQun->getQunID());
 	//emit requestQunMembers(mQun->getQunID());
 }
 
@@ -681,7 +682,7 @@ void EvaQunChatWindow::slotPictureReady( const QString filename , const QString 
 void EvaQunChatWindow::slotImageFileClick( )
 {
 //X 	if(!teInput->isEnabled()) return;
-//X 	QString destDir = EvaMain::user->getSetting()->getPictureCacheDir();
+//X 	QString destDir = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir();
 //X 	QString fileName = KFileDialog::getOpenFileName(destDir,
 //X 			"*.png *.bmp *.jpg *.jpeg *.gif |" + i18n(" all images (*.png *.bmp *.jpg *.jpeg *.gif)"), this, 
 //X 			i18n("select an image file"));
@@ -699,7 +700,7 @@ const std::list<OutCustomizedPic> EvaQunChatWindow::getSendFiles(const std::list
 	
 	std::list<QString>::iterator iter;
 	for(iter=outPicList.begin(); iter!=outPicList.end(); ++iter){
-		QString file = EvaMain::user->getSetting()->getPictureCacheDir() + "/" + QString(*iter);
+		QString file = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + QString(*iter);
 		QFileInfo info(file);
 		if(!info.exists()) continue;
 		int len = info.size();
@@ -762,7 +763,7 @@ void EvaQunChatWindow::slotScreenShotClick( )
 void EvaQunChatWindow::slotRegionGrabbed( const QPixmap & pix)
 {
 	if ( !pix.isNull() ){
-		QString dir = EvaMain::user->getSetting()->getPictureCacheDir();
+		QString dir = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir();
 		
 		//QImage img = pix.convertToImage();
 		QString file = QUuid::createUuid().toString().upper() + ".JPG";
@@ -922,7 +923,7 @@ void EvaQunChatWindow::slotCustomBtnClick( )
 
 void EvaQunChatWindow::slotRequestChat( const unsigned int id )
 {
-	QQFriend *frd = EvaMain::user->getFriendList().getFriend(id);
+	QQFriend *frd = EvaMain::getInstance()->getUser()->getFriendList().getFriend(id);
 	if(frd)
 		EvaMain::g_ChatWindowManager->openChatWindow(frd);
 }

@@ -1,6 +1,7 @@
 #include <q3popupmenu.h>
 
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include "api/evaresource.h"
 #include "api/evahtmlparser.h"
 #include "ui/simplechatview.h"

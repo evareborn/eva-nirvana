@@ -60,7 +60,6 @@
 
 
 #include <qhostaddress.h>
-#include <q3cstring.h>
 #include <QObject>
 #include <qmap.h>
 

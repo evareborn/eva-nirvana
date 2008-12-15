@@ -19,11 +19,12 @@
  ***************************************************************************/
 
 #include "customface.h"
+#include "defines.h"
 
 #include <qfile.h>
-#include <q3textstream.h>
 #include <qtextcodec.h>
-#include "evamain.h"
+#include <Q3TextStream>
+#include "evaguimain.h"
 
 //X #include <klocale.h>
 

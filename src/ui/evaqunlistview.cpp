@@ -18,7 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/ 
 #include "evaqunlistview.h"
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include "evaresource.h"
 #include "evaqtutil.h"
 //#include "evalistview.h"

@@ -21,7 +21,6 @@
 #define EVASERVERS_H
 
 #include <QObject>
-#include <q3valuelist.h>
 #include <qhostaddress.h>
 
 

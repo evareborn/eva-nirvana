@@ -1,7 +1,7 @@
 TEMPLATE = app
 TARGET = eva
 QT += webkit qt3support xml network
-CONFIG += qt release
+CONFIG += qt debug
 DEPENDPATH += api \
  libeva \
  ui \
@@ -22,7 +22,7 @@ HEADERS += evaaddingmanager.h \
  evacontactmanager.h \
  evaidt.h \
  evaloginmanager.h \
- evamain.h \
+ evaguimain.h \
  evasysmsgmanager.h \
  evasystemtray.h \
  api/customface.h \
@@ -70,6 +70,7 @@ HEADERS += evaaddingmanager.h \
  libeva/evaweather.h \
  libeva/libeva.h \
  libeva/md5.h \
+ ui/defines.h \
  ui/createsmileyui.h \
  ui/createsmileywindow.h \
  ui/customfacemanagerui.h \
@@ -144,7 +145,7 @@ SOURCES += evaaddingmanager.cpp \
  evacontactmanager.cpp \
  evaidt.cpp \
  evaloginmanager.cpp \
- evamain.cpp \
+ evaguimain.cpp \
  evasysmsgmanager.cpp \
  evasystemtray.cpp \
  main.cpp \

@@ -19,7 +19,8 @@
  ***************************************************************************/
 
 
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include <qapplication.h>
 //X #include <kaboutdata.h>
 //X #include <kcmdlineargs.h>

@@ -2,13 +2,15 @@
 
 #include "evahtmlparser.h"
 #include "evaresource.h"
-#include "evamain.h"
+#include "evaguimain.h"
+#include "defines.h"
 #include <qstringlist.h>
 #include <qtimer.h>
 #include <qclipboard.h>
 #include <qfileinfo.h>
 #include <qapplication.h>
 #include <QWebFrame>
+#include <QMenu>
 
 #define MIN_FONT_SIZE   8
 #define MAX_FONT_SIZE   20

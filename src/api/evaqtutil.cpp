@@ -22,12 +22,12 @@
 #include "evautil.h"
 #include "evausersetting.h"
 #include "evamemo.h"
-#include <q3textstream.h>
 #include <qimage.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <QApplication>
+#include <Q3TextStream>
 //Added by qt3to4:
 #include <QPixmap>
 #include <cstring>

@@ -22,6 +22,7 @@
 #include "evasetting.h"
 #include "evautil.h"
 #include "qmdcodec.h"
+#include "defines.h"
 //Added by qt3to4:
 #include <Q3CString>
 
@@ -36,7 +37,7 @@
 #include <qlabel.h>
 #include <qhostaddress.h>
  
-#include "evamain.h"
+#include "evaguimain.h"
 
 //X #include <klocale.h>
 

@@ -28,8 +28,6 @@
 #include <QCustomEvent>
 #include <inttypes.h>
 #include <qhostaddress.h>
-#include <q3valuelist.h>
-#include <q3popupmenu.h>
 //#include <dcopobject.h>
 
 //X #include "config.h"
@@ -37,12 +35,6 @@
 #include "evaidt.h"
 //#include "evadcopactions.h"
 
-// for portability.
-//
-#ifndef i18n
-# define i18n(x) (QString( x ))
-# define I18N_NOOP(x) (x)
-#endif
  
 // FIXME: wanna integrate with kwallet? why not then?
 //#include <kwallet.h>
@@ -100,9 +92,6 @@ public:
 	EvaMain();
 	~EvaMain();
 
-	// store user information
-	static EvaUser *user;
-
 	// store some global system setting such as paths
 	static EvaGlobal *global;
 
@@ -112,28 +101,25 @@ public:
 	// ??
 	static EvaHelper *helper;	
 
-	// class to connect to QQ server
-	static EvaConnecter *connecter;
-
-	// ??
-	static EvaPicManager *picManager;
-
-	// user head pictures manager
-	static EvaUHManager *uhManager;
-
-	// adding frioend manager
-	static EvaAddingManager *g_AddingManager;
-
 	// chat window, second important window in this game
 	static EvaChatWindowManager *g_ChatWindowManager;
 
 	// the main guy, with your friend list in
 	static EvaMainWindow *g_mainWin;
  
-        static EvaLoginManager *g_loginManager;
- 
-        static EvaContactManager *g_contactManager;
+	// QString path, for encoding converting
+	static QTextCodec *codec;
 
+        static EvaMain* g_eva;
+
+        static EvaMain* getInstance() { return g_eva; }
+        EvaUser* getUser() { return user; }
+        EvaUHManager* getUHManager() { return uhManager; }
+        EvaLoginManager* getLoginManager() { return m_loginManager; }
+        EvaConnecter* getConnecter() { return connecter; }
+        EvaContactManager* getContactManager() { return m_contactManager; }
+        EvaAddingManager* getAddingManager() { return m_addingManager; }
+        EvaPicManager* getPicManager() { return picManager; }
 	// transferring files manager
 	EvaFileManager *m_FileManager;
 	
@@ -164,11 +150,25 @@ private:
 	// initialize user customized leaving messages
 	void initUserLeaveMenu();
 
-	// QString path, for encoding converting
-	QTextCodec *codec;
-
 	// every timer interval to get online friends' status
 	QTimer *onlineFriendTimer;
+
+	// store user information
+	EvaUser *user;
+
+	// user head pictures manager
+	EvaUHManager *uhManager;
+
+	// class to connect to QQ server
+	EvaConnecter *connecter;
+
+	// adding frioend manager
+	EvaAddingManager *m_addingManager;
+
+        EvaContactManager *m_contactManager;
+
+	// ??
+	EvaPicManager *picManager;
 
 	// packetize QQ messages
 	EvaPacketManager *packetManager;
@@ -176,6 +176,7 @@ private:
 	// system notification handler
 	EvaSysMsgManager *m_SysMsgManager;
 
+        EvaLoginManager *m_loginManager;
 	// detecting idle time
 	IdleTimeDetector *idt;
 

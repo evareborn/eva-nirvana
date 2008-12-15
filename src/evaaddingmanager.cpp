@@ -28,7 +28,6 @@
 #include <qmessagebox.h>
 
 #include <qrect.h>
-#include <q3url.h>
 #include <qtextcodec.h>
 #include <qpixmap.h>
 
@@ -37,7 +36,7 @@
 //X #include <kdebug.h>
 //X #include <kapp.h>
 //X 
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evauser.h"
 #include "evaresource.h"
 #include "evasetting.h"
@@ -346,7 +345,7 @@ void EvaAddingManager::authInfoReady( )
 	printf("we will try\n");
 	if(m_IsGraphic){
 		printf("update graphic!!!!\n");
-		QString graphic = EvaMain::user->getSetting()->getPictureCacheDir() + "/" + AUTH_GRAPHIC_FILE;
+		QString graphic = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + AUTH_GRAPHIC_FILE;
 		QPixmap pix(graphic);
 		if(m_IsAddingQun)
 			m_AddingQunDialog->updateGraphic(pix);
@@ -399,9 +398,9 @@ void EvaAddingManager::requestGraphic( )
 {
 	m_IsGraphicVerified = false;
 
-	QString path = EvaMain::user->getSetting()->getPictureCacheDir();
+	QString path = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir();
 	if(path == "") return;
-	EvaUser *user = EvaMain::user;
+	EvaUser *user = EvaMain::getInstance()->getUser();
 	if(!user) return;
 	
 	m_GraphicFile.setName(path +"/" + AUTH_GRAPHIC_FILE );
@@ -540,8 +539,8 @@ void EvaAddingManager::authAddEx( )
 	}
 	// you do want to add the buddy, so make sure she/he is
 	// not in the rejectforever list
-	EvaMain::user->getSetting()->removeFromRejectForever(m_ID);
-	EvaMain::user->getSetting()->saveSettings();
+	EvaMain::getInstance()->getUser()->getSetting()->removeFromRejectForever(m_ID);
+	EvaMain::getInstance()->getUser()->getSetting()->saveSettings();
 
 	m_PacketManager->doAddBuddyAuthEx(m_ID, auth, m_AddingDialog->cbbGroups->currentItem(),
 				(const unsigned char *)(m_AuthInfo.data()), m_AuthInfo.size(),
@@ -561,12 +560,12 @@ void EvaAddingManager::slotAddFriendAuthExReply( const unsigned int id, const un
 			QQFriend frd(m_ID, m_Face);
 			frd.setNick( std::string(codec->fromUnicode(m_Nick).data()));
 			frd.setGroupIndex( m_AddingDialog->cbbGroups->currentItem());
-			EvaMain::user->getFriendList().addFriend(frd);
+			EvaMain::getInstance()->getUser()->getFriendList().addFriend(frd);
 			emit buddyAdded(m_ID, m_Nick, m_Face, m_AddingDialog->cbbGroups->currentItem());
 		} 
 		if( m_AuthType == QQ_AUTH_NEED_AUTH){
 			printf("save buddy to the cache file\n");
-			EvaMain::user->getSetting()->saveToBeAddedBuddy(
+			EvaMain::getInstance()->getUser()->getSetting()->saveToBeAddedBuddy(
 					BuddyInfoCacheItem(m_ID, m_Nick, m_Face, m_AddingDialog->cbbGroups->currentItem()));
 		}
 	}

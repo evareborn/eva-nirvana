@@ -23,7 +23,6 @@
 
 #include <QObject>
 #include <qthread.h>
-#include <q3valuelist.h>
 #include <qhostaddress.h>
 #include <qdatetime.h>
 #include <qmap.h>

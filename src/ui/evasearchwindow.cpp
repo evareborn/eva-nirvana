@@ -22,6 +22,7 @@
 
 #include "evasearchwindow.h"
 #include "evaresource.h"
+#include "defines.h"
 #include <stdlib.h>
 #include <qlabel.h>
 #include <q3widgetstack.h>
@@ -49,7 +50,7 @@
 //X #include <kstandarddirs.h>
 //X #include <kapp.h>
 
-#include "evamain.h"
+#include "evaguimain.h"
 #include "../evaaddingmanager.h"
 #include "evaqunlist.h"
 #include "qundetailswindow.h"
@@ -380,7 +381,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 				return;
 			}
 
-			EvaMain::g_AddingManager->slotAddBuddy(m_SelectedBasicUser.getQQ(),
+			EvaMain::getInstance()->getAddingManager()->slotAddBuddy(m_SelectedBasicUser.getQQ(),
 								codec->toUnicode(m_SelectedBasicUser.getNick().c_str()),
 								m_SelectedBasicUser.getFace());
 			close();
@@ -405,7 +406,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 				return;
 			}
 
-			EvaMain::g_AddingManager->slotAddBuddy(m_SelectedAdvancedUser.getQQ(),
+			EvaMain::getInstance()->getAddingManager()->slotAddBuddy(m_SelectedAdvancedUser.getQQ(),
 								codec->toUnicode(m_SelectedAdvancedUser.getNick().c_str()),
 								m_SelectedAdvancedUser.getFace());
 			close();
@@ -446,7 +447,7 @@ void EvaSearchWindow::slotPbSearchClicked()
 				return;
 			}
 			//emit requestJoinQun(m_SelectedQun);
-			EvaMain::g_AddingManager->slotAddQun(m_SelectedQun);
+			EvaMain::getInstance()->getAddingManager()->slotAddQun(m_SelectedQun);
 			close();
 		}
 		break;

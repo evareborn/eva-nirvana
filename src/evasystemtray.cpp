@@ -21,9 +21,10 @@
 
 #include "evaresource.h"
 #include "evauhmanager.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evamainwindow.h"
 #include "evahtmlparser.h"
+#include "defines.h"
 //X #include <kpopupmenu.h>
 #include <qimage.h>
 #include <qpixmap.h>
@@ -93,8 +94,8 @@ void EvaSystemTray::changeToolTip(const unsigned int id, const QString &nick, co
 {
 	if(!images) return;
 	QString picName = "";
-	if(EvaMain::uhManager){
-		picName = EvaMain::uhManager->getFileName(id);
+	if(EvaMain::getInstance()->getUHManager()){
+		picName = EvaMain::getInstance()->getUHManager()->getFileName(id);
 	}
 	if(picName.isEmpty()){
 		picName = images->getFacePath() +

@@ -19,7 +19,7 @@
  ***************************************************************************/ 
 
 #include "evaloginveriwindow.h"
-#include "evamain.h"
+#include "evaguimain.h"
 #include "evauser.h"
 
 #include <qlabel.h>
@@ -41,7 +41,7 @@ EvaLoginVeriWindow::EvaLoginVeriWindow(QWidget *p)
 
 void EvaLoginVeriWindow::slotImageReady( )
 {
-	GraphicVerifyCode code = EvaMain::user->getLoginVerifyInfo();
+	GraphicVerifyCode code = EvaMain::getInstance()->getUser()->getLoginVerifyInfo();
 	if(!code.m_Data || !code.m_DataLen) return;
 	QPixmap pix;
 	pix.loadFromData(code.m_Data, code.m_DataLen);
@@ -52,7 +52,7 @@ void EvaLoginVeriWindow::slotImageReady( )
 
 void EvaLoginVeriWindow::slotBtnChangeImageClicked()
 {
-	GraphicVerifyCode code = EvaMain::user->getNextLoginVerifyInfo();
+	GraphicVerifyCode code = EvaMain::getInstance()->getUser()->getNextLoginVerifyInfo();
 	if( code.m_SessionTokenLen == 0 || code.m_DataLen == 0){
 		emit changeImage();
 	} else
