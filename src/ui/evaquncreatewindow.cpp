@@ -20,6 +20,7 @@
 
 #include "evaquncreatewindow.h"
 #include "defines.h"
+#include "evasession.h"
 
 #include <stdlib.h>
 #include <qlineedit.h>
@@ -173,9 +174,9 @@ void EvaQunCreateWindow::slotLoadMembers( )
 		}
 	}
 	
-	QString nick = codec->toUnicode(EvaMain::getInstance()->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
-	int face = atoi(EvaMain::getInstance()->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
-	int id = EvaMain::getInstance()->getUser()->getQQ();
+	QString nick = codec->toUnicode(EvaMain::session->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
+	int face = atoi(EvaMain::session->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
+	int id = EvaMain::session->getUser()->getQQ();
 	
 	tblMembers->setNumRows(1);
 		
@@ -198,7 +199,7 @@ void EvaQunCreateWindow::slotTableClicked( int row, int /*col*/, int /*button*/,
 	bool ok;
 	int id = num.toInt(&ok);
 	
-	int myID = EvaMain::getInstance()->getUser()->getQQ();
+	int myID = EvaMain::session->getUser()->getQQ();
 	if(ok){
 		if(myID == id)
 			pbDelMembers->setEnabled(false);
@@ -230,7 +231,7 @@ void EvaQunCreateWindow::slotDelMembersClicked( )
 	unsigned int id = txt.toUInt(&ok);
 	if(!ok) return;
 	
-	if(id == EvaMain::getInstance()->getUser()->getQQ()) return;
+	if(id == EvaMain::session->getUser()->getQQ()) return;
 	
 	tblMembers->removeRow(row);
 	tblMembers->selectRow(0);
@@ -264,7 +265,7 @@ void EvaQunCreateWindow::slotPickerMemberClicked( const unsigned int id, const b
 		row = tblMembers->numRows(); // note: the index is start from 0
 		tblMembers->setNumRows(tblMembers->numRows() + 1);
 		
-		const QQFriend * frd = (EvaMain::getInstance()->getUser()->getFriendList()).getFriend(id);
+		const QQFriend * frd = (EvaMain::session->getUser()->getFriendList()).getFriend(id);
 		
 		face = frd->getFace();
 		nick = codec->toUnicode(frd->getNick().c_str());

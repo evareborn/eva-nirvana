@@ -52,7 +52,7 @@ EvaUser::EvaUser(const unsigned int id, const std::string &password)
 	mSignature = "";
 	mSignatureModifyTime = 0;
 
-	status = Eva_Offline;
+//X 	status = Eva_Offline;
 	groupNames.clear();
 	setting = new EvaUserSetting(id);
 	setting->loadSettings();
@@ -77,7 +77,7 @@ EvaUser::EvaUser(const unsigned int id, const char *md5Password)
 	mSignature = "";
 	mSignatureModifyTime = 0;
 	
-	status = Eva_Offline;
+//X 	status = Eva_Offline;
 	groupNames.clear();
 
 	setting = new EvaUserSetting(id);
@@ -89,29 +89,6 @@ EvaUser::~EvaUser()
 	delete md5Password;
 	delete setting;
 }
-
-char EvaUser::getStatusCode(const UserStatus status) 
-{
-	char statusCode;
-	switch(status){
-	case Eva_Online:
-		statusCode = QQ_FRIEND_STATUS_ONLINE;
-		break;
-	case Eva_Offline:
-		statusCode = QQ_FRIEND_STATUS_OFFLINE;
-		break;
-	case Eva_Invisible:
-		statusCode = QQ_FRIEND_STATUS_INVISIBLE;
-		break;
-	case Eva_Leave:
-		statusCode = QQ_FRIEND_STATUS_LEAVE;
-		break;
-	default:
-		statusCode = QQ_FRIEND_STATUS_OFFLINE;
-	}
-	return statusCode;
-}
-
 bool EvaUser::newGroup( const std::string & name )
 {
 	groupNames.push_back(name);
@@ -189,7 +166,7 @@ const std::string EvaUser::groupNameAtIndex( const int index )
 
 bool EvaUser::loadGroupedBuddyList()
 {
-	if(setting->loadBuddyList()){
+	if(setting->loadBuddyList(this)){
 		isBuddyListLoaded = true;
 	}else{
 		isBuddyListLoaded = false;
@@ -224,7 +201,7 @@ void EvaUser::customEvent( QCustomEvent * e )
 
 bool EvaUser::loadQunList( )
 {
-	if(setting->loadQunList()){
+	if(setting->loadQunList(this)){
 		isQunListLoaded = true;
 	}else{
 		isQunListLoaded = false;
@@ -238,35 +215,35 @@ bool EvaUser::saveQunList( )
 }
 
 
-void EvaUser::addLoginVerifyInfo( const GraphicVerifyCode & info )
-{
-	m_CodeList.push_back(info);
-}
-
-GraphicVerifyCode EvaUser::getLoginVerifyInfo( )
-{
-	GraphicVerifyCode code;
-	if(m_CodeList.empty()) return code;
-	return m_CodeList.front();
-}
-
-
-GraphicVerifyCode EvaUser::getNextLoginVerifyInfo( )
-{
-	GraphicVerifyCode code;
-	if(m_CodeList.empty()) return code;
-	code = m_CodeList.front();
-	m_CodeList.pop_front();
-	return code;
-}
-
-
-void EvaUser::clearAllVerifyCodes( )
-{
-	if(m_CodeList.size())
-		m_CodeList.clear();
-}
-
+//X void EvaUser::addLoginVerifyInfo( const GraphicVerifyCode & info )
+//X {
+//X 	m_CodeList.push_back(info);
+//X }
+//X 
+//X GraphicVerifyCode EvaUser::getLoginVerifyInfo( )
+//X {
+//X 	GraphicVerifyCode code;
+//X 	if(m_CodeList.empty()) return code;
+//X 	return m_CodeList.front();
+//X }
+//X 
+//X 
+//X GraphicVerifyCode EvaUser::getNextLoginVerifyInfo( )
+//X {
+//X 	GraphicVerifyCode code;
+//X 	if(m_CodeList.empty()) return code;
+//X 	code = m_CodeList.front();
+//X 	m_CodeList.pop_front();
+//X 	return code;
+//X }
+//X 
+//X 
+//X void EvaUser::clearAllVerifyCodes( )
+//X {
+//X 	if(m_CodeList.size())
+//X 		m_CodeList.clear();
+//X }
+//X 
 //X KConfig *EvaUser::config(const QString &group)
 //X {
 //X 	return setting->config(group);

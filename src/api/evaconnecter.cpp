@@ -17,8 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
- 
+
+#include "evaguimain.h"
 #include "evaconnecter.h"
+#include "evaresource.h"
+#include "evanetwork.h"
+#include "evaservers.h"
 #include "evaqtutil.h"
 #include "evahtmlparser.h"
 #include "evaimsend.h"
@@ -39,28 +43,27 @@
 #define POOL_CHECK_INTERVAL  2000    /// every 2 second check two pools
 
 		
-EvaConnecter::EvaConnecter(EvaNetwork *network)
+EvaConnecter::EvaConnecter(const EvaNetworkPolicy& policy)
+    : policy( policy ), network( NULL )
 {
-	memset(buffer, 0, 65535);
-	packetLength = 0;
-	bufLength = 0;
-	connecter = network;
-	connectionReady = false;
-	isClientSetup = false;
-	QObject::connect(connecter, SIGNAL(isReady()), this, SLOT(isReadySlot()));
-	QObject::connect(connecter, SIGNAL(dataComming(int)), this, SLOT(dataCommingSlot(int)));
-	QObject::connect(connecter, SIGNAL(exceptionEvent(int)), this, SLOT(slotNetworkException(int)));
-	
-//X         outPool.setAutoDelete(true);
-//X         inPool.setAutoDelete(false);
-	
-	timer = new QTimer(this);
-	QObject::connect(timer, SIGNAL(timeout()), this, SLOT(packetMonitor()));
+
+    fetchQQServer();
+
+    memset(buffer, 0, 65535);
+    packetLength = 0;
+    bufLength = 0;
+    connectionReady = false;
+    isClientSetup = false;
+
+    timer = new QTimer(this);
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(packetMonitor()));
+
 }
 
 EvaConnecter::~EvaConnecter()
 {
-	delete connecter;
+    printf( "EvaConnecter:: free!!!!!\n" );
+	delete network;
 	if(timer->isActive())
 		timer->stop();
 	delete timer;
@@ -77,6 +80,44 @@ EvaConnecter::~EvaConnecter()
 
 }
 
+void EvaConnecter::fetchQQServer()
+{
+	EvaServers *server = EvaMain::global->getEvaServers();
+//X         slotGotServer( server->getDefaultAddress( ) );
+//X 	QObject::disconnect(server, 0, 0, 0);
+	QObject::connect(server, SIGNAL(isReady(QHostAddress)), this, SLOT(slotGotServer(QHostAddress)));
+	server->fetchAddress(policy.getConnectionType() == CONN_UDP ? true: false);
+}
+
+void EvaConnecter::slotGotServer(QHostAddress addr)
+{
+    printf( "server ip: %s\n", addr.toString().latin1() );
+    printf( "type: %d\n", policy.getConnectionType( ) );
+    if ( network ) return;
+    EvaMain::global->getEvaServers()->stopDns();
+
+    switch(policy.getConnectionType()){
+        case CONN_UDP:
+            network = new EvaNetwork(addr, 8000, policy);
+            break;
+        case CONN_TCP:
+            network = new EvaNetwork(addr, 80, policy);
+            break;
+        case HTTP_Proxy:
+            network = new EvaNetwork(addr, 443, policy);
+    }
+
+    printf( "connected to server: %s:%d\n", network->getHostAddress().toString().latin1(), network->getHostPort() );
+    QObject::connect(network, SIGNAL(isReady()), this, SLOT(isReadySlot()));
+    QObject::connect(network, SIGNAL(dataComming(int)), this, SLOT(dataCommingSlot(int)));
+    QObject::connect(network, SIGNAL(exceptionEvent(int)), this, SLOT(slotNetworkException(int)));
+
+    emit isNetworkReady();
+
+    //X         outPool.setAutoDelete(true);
+    //X         inPool.setAutoDelete(false);
+
+}
 void EvaConnecter::append(OutPacket *out)
 {
 	sendOut(out);   // force to send
@@ -101,27 +142,34 @@ InPacket *EvaConnecter::getInPacket()
 
 void EvaConnecter::redirectTo(const int ip, const short port)
 {
-	m_IsDetecting = true;  // set the detecting flag
-	inPool.clear();
-	outPool.clear();
-	if(connecter->connectionType()!= EvaNetwork::HTTP_Proxy){
-		connectionReady = false;
-		connecter->setServer(QHostAddress(ip), port==-1?connecter->getHostPort():port);
-	}else{
-		connecter->setServer(connecter->getHostAddress(), connecter->getHostPort());
-		connecter->setDestinationServer(QHostAddress(ip).toString(), 443); // always 443 for http proxy
-	      }
+    if ( ! network ) {
+        return;
+    }
+    m_IsDetecting = true;  // set the detecting flag
+    inPool.clear();
+    outPool.clear();
+    if(policy.getConnectionType()!= HTTP_Proxy){
+        connectionReady = false;
+        network->setServer(QHostAddress(ip), port==-1?network->getHostPort():port);
+    }else{
+        //X 		network->setServer(network->getHostAddress(), network->getHostPort());
+        network->redirectTo(QHostAddress(ip).toString(), 443); // always 443 for http proxy
+    }
 
-//X 	kdDebug() << "[EvaConnecter->redirectTo] "<< QHostAddress(ip).toString() << " : " << (port==-1?connecter->getHostPort():port) <<endl;
-	connect();
+    //X 	kdDebug() << "[EvaConnecter->redirectTo] "<< QHostAddress(ip).toString() << " : " << (port==-1?network->getHostPort():port) <<endl;
+    connect();
+    printf( "redirected to server: %s:%d\n", network->getHostAddress().toString().latin1(), network->getHostPort() );
 }
 
 void EvaConnecter::connect()
 {
-	memset(buffer, 0, 65535);
-	packetLength = 0;
-	bufLength = 0;
-	connecter->connect();
+    if ( !network ) {
+        return;
+    }
+    memset(buffer, 0, 65535);
+    packetLength = 0;
+    bufLength = 0;
+    network->connect();
 }
 
 void EvaConnecter::stop()
@@ -154,7 +202,7 @@ void EvaConnecter::sendOut( OutPacket *out)
 	int len;
 	
 	out->fill(buf, &len);
-	connecter->write((char *)buf, len);
+	network->write((char *)buf, len);
 	free(buf);
 	if(!timer->isActive())
 		timer->start(POOL_CHECK_INTERVAL, false);
@@ -189,13 +237,14 @@ void EvaConnecter::removeOutRequests(const short cmd)
 
 void EvaConnecter::isReadySlot()
 {
-	connectionReady = true;
+    printf( "ready server: %s:%d\n", network->getHostAddress().toString().latin1(), network->getHostPort() );
+    connectionReady = true;
 
-	if(m_IsDetecting)
-		startDetecting();
-	else{
-		emit isReady();
-	}
+    if(m_IsDetecting)
+        startDetecting();
+    else{
+        emit isReady();
+    }
 }
 
 void EvaConnecter::startDetecting( )
@@ -216,14 +265,14 @@ void EvaConnecter::processDetectReply( InPacket * in )
 	if(packet->isServerReady()){
 		m_IsDetecting = false;
         	removePacket(packet->hashCode());
-//X 		kdDebug() << "[EvaConnecter] server " << connecter->getHostAddress().toString() << " is ready." << endl;
+//X 		kdDebug() << "[EvaConnecter] server " << network->getHostAddress().toString() << " is ready." << endl;
 		delete packet;
 		emit isReady();
 		return;
 	}else if(packet->needRedirect()){
         		removePacket(packet->hashCode());
 			ServerDetectorPacket::nextStep();
-			ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
+			ServerDetectorPacket::setFromIP(network->getHostAddress().toIPv4Address());
 			redirectTo( packet->getRedirectIP(), -1);
 		}else{
 //X 			kdDebug() << "[EvaConnecter] unkown server detect reply ( reply code: " << packet->getReplyCode() << ")" << endl;
@@ -236,11 +285,11 @@ void EvaConnecter::processDetectReply( InPacket * in )
 void EvaConnecter::dataCommingSlot(int len)
 {
 	char *rawData = new char[len+1];
-	if(!connecter->read(rawData, len)){
+	if(!network->read(rawData, len)){
 		fprintf(stderr, "--Eva Connecter: Bytes read wrong!\n");
 		return;
 	}
-	if(connecter->connectionType() != EvaNetwork::UDP){
+	if(policy.getConnectionType() != CONN_UDP){
 		memcpy(buffer+bufLength, rawData, len);
 		bufLength += len;
 		delete []rawData;
@@ -351,15 +400,19 @@ void EvaConnecter::slotClientReady( )
 	}
 }
 
-const QHostAddress EvaConnecter::getSocketIp( )
+QHostAddress EvaConnecter::getSocketIp( ) const
 {
-	if(connecter) return connecter->getSocketIp();
+    /**
+     * We will reesolve this name ambigious later.
+     */
+
+	if(network) return network->getHostAddress();
 	return QHostAddress();
 }
 
-unsigned int EvaConnecter::getSocketPort( )
+short EvaConnecter::getSocketPort( ) const
 {
-	if(connecter) return connecter->getSocketPort();
+	if(network) return network->getHostPort();
 	return 0;
 }
 
@@ -374,8 +427,4 @@ void EvaConnecter::slotNetworkException( int num )
 		emit networkException(num);
 	}
 }
-
-
-
-
 

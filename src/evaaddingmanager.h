@@ -30,6 +30,7 @@ class EvaPacketManager;
 class EvaAddingWindow;
 class EvaAddingQunWindow;
 class EvaHttp;
+class EvaSession;
 
 /**
   This class is in charge of adding friends, all related messages will be processed within 
@@ -41,7 +42,7 @@ class EvaAddingManager : public QObject
 {
 	Q_OBJECT
 public:
-	EvaAddingManager( );
+	EvaAddingManager( EvaSession* session );
 	virtual ~EvaAddingManager();
 
 	void setPacketManager(EvaPacketManager *packetManager);
@@ -54,6 +55,7 @@ signals:
 	void addAuthActionReply(const unsigned int id, const unsigned char auth, const bool ok);
 	void joinQunAuthReply(const unsigned int id, const unsigned char reply);
 private:
+        EvaSession* session; 
 	EvaPacketManager *m_PacketManager;
 	EvaAddingWindow *m_AddingDialog;
 	EvaAddingQunWindow *m_AddingQunDialog;

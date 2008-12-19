@@ -102,12 +102,12 @@ void EvaSysMsgManager::slotReceivedSysMessage(const unsigned char type, const un
 					const QString &msg, const bool allowReverse,
 					const unsigned char *code, const unsigned int codeLen)
 {
-	if(myID != EvaMain::getInstance()->getUser()->getQQ()){
+	if(myID != EvaMain::session->getQQ()){
 //X 		kdDebug() << "[EvaSysMsgManager] you shouldn't receive this! This sys message is for QQ(" << myID << ") only!" << endl;
 		return;
 	}
 
-	EvaMain::getInstance()->getUser()->getSetting()->saveSysMessage( SYSTEM_MESSAGE_NORMAL, type,
+	EvaMain::session->getUser()->getSetting()->saveSysMessage( SYSTEM_MESSAGE_NORMAL, type,
 					fromID, myID, msg,
 					allowReverse?1:0);
 
@@ -118,21 +118,21 @@ void EvaSysMsgManager::slotReceivedSysMessage(const unsigned char type, const un
 	if( type == QQ_MSG_SYS_ADD_FRIEND_APPROVED ||
 		type == QQ_MSG_SYS_ADD_FRIEND_APPROVED_AND_ADD){
 		// update friend list	
-		BuddyInfoCacheItem buddy = EvaMain::getInstance()->getUser()->getSetting()->getToBeAddedBuddy(fromID);
+		BuddyInfoCacheItem buddy = EvaMain::session->getUser()->getSetting()->getToBeAddedBuddy(fromID);
 		QTextCodec *codec = QTextCodec::codecForName("GB18030");
 		QQFriend frd(buddy.id, buddy.face);
 		frd.setNick( std::string(codec->fromUnicode(buddy.nick).data()));
 		frd.setGroupIndex( buddy.group);
-		EvaMain::getInstance()->getUser()->getFriendList().addFriend(frd);
+		EvaMain::session->getUser()->getFriendList().addFriend(frd);
 		emit buddyAdded(buddy.id, buddy.nick, buddy.face, buddy.group);
 	}
 
 	if( type == QQ_MSG_SYS_BROADCAST && 
-		!EvaMain::getInstance()->getUser()->getSetting()->isShowSystemBroadcastEnabled()){
+		!EvaMain::session->getUser()->getSetting()->isShowSystemBroadcastEnabled()){
 		return;
 	}
 
-	if(EvaMain::getInstance()->getUser()->getSetting()->isSoundEnabled())
+	if(EvaMain::session->getUser()->getSetting()->isSoundEnabled())
 		EvaMain::global->getSoundResource()->playSysMessage();
 
 	emit sysMessage();
@@ -154,7 +154,7 @@ void EvaSysMsgManager::slotReceivedVerifyAddingMessageReply(const unsigned int i
 
 void EvaSysMsgManager::showSysMessage( )
 {
-	EvaUserSetting::sysMessage m = EvaMain::getInstance()->getUser()->getSetting()->getLastSysMessage();
+	EvaUserSetting::sysMessage m = EvaMain::session->getUser()->getSetting()->getLastSysMessage();
 	if(m.type == 0 && m.from == 0) return;
 	showSysMessage( m.messageType, m.type, m.from, m.to, m.message, m.internalQunID, m.commander,
 			m.code, m.codeLen, m.token, m.tokenLen);
@@ -171,7 +171,7 @@ void EvaSysMsgManager::showSysMessage( const unsigned short msgType, const unsig
 	if(msgType == SYSTEM_MESSAGE_NORMAL){
 		switch(type){
 			case Q_MSG_SYS_EVA_QQ_NEWS:{
-				if(EvaMain::getInstance()->getUser()->getSetting()->isShowSystemNewsEnabled()){
+				if(EvaMain::session->getUser()->getSetting()->isShowSystemNewsEnabled()){
 					EvaSysBroadcastWindow *win = new EvaSysBroadcastWindow();
 					QString brief = QString::fromUtf8( (const char*)(code), codeLen);
 					QString url = QString::fromUtf8( (const char*)(token), tokenLen);
@@ -182,7 +182,7 @@ void EvaSysMsgManager::showSysMessage( const unsigned short msgType, const unsig
 				}
 				break;
 			case QQ_MSG_SYS_BROADCAST:{
-				if(EvaMain::getInstance()->getUser()->getSetting()->isShowSystemBroadcastEnabled()){
+				if(EvaMain::session->getUser()->getSetting()->isShowSystemBroadcastEnabled()){
 					EvaSysBroadcastWindow *win = new EvaSysBroadcastWindow();
 					win->setMessage( message);
 					//win->move(scr.center() - win->rect().center());
@@ -227,52 +227,52 @@ void EvaSysMsgManager::slotQunSysMessage( const unsigned int id, const unsigned 
 					const QString & msg, const unsigned char * code, const unsigned short codeLen,
 					const unsigned char *token, const unsigned short tokenLen )
 {
-	EvaMain::getInstance()->getUser()->getSetting()->saveSysMessage( imType, qunType, sender, ext,
+	EvaMain::session->getUser()->getSetting()->saveSysMessage( imType, qunType, sender, ext,
 					msg , id, commander, code, codeLen, token, tokenLen);
 	switch(imType){
 		case QQ_RECV_IM_ADDED_TO_QUN:
-			if(sender == EvaMain::getInstance()->getUser()->getQQ()){
-				EvaMain::getInstance()->getUser()->getQunList()->add(Qun(id));
-				EvaMain::getInstance()->getUser()->saveQunList();
+			if(sender == EvaMain::session->getUser()->getQQ()){
+				EvaMain::session->getUser()->getQunList()->add(Qun(id));
+				EvaMain::session->getUser()->saveQunList();
 				emit qunListChanged();
 				emit sysMessage();
 			} else {
 				EvaMain::g_ChatWindowManager->slotQunJoinEvent(id, imType,sender, commander);
 			}
 			//m_PacketManager->doRequestQunInfo( id);
-			g_eva->getContactManager()->fetchQunDetails(id);
+			EvaMain::session->getContactManager()->fetchQunDetails(id);
 			break;
 		case QQ_RECV_IM_CREATE_QUN:
 		case QQ_RECV_IM_APPROVE_JOIN_QUN:
-			EvaMain::getInstance()->getUser()->getQunList()->add(Qun(id));
-			EvaMain::getInstance()->getUser()->saveQunList();
+			EvaMain::session->getUser()->getQunList()->add(Qun(id));
+			EvaMain::session->getUser()->saveQunList();
 			emit qunListChanged();
 			emit sysMessage();
 			//m_PacketManager->doRequestQunInfo( id);
-			g_eva->getContactManager()->fetchQunDetails(id);
+			EvaMain::session->getContactManager()->fetchQunDetails(id);
 			break;
 		case QQ_RECV_IM_DELETED_FROM_QUN:
-			if( sender == EvaMain::getInstance()->getUser()->getQQ()) {
-				EvaMain::getInstance()->getUser()->getQunList()->remove(id);
-				EvaMain::getInstance()->getUser()->saveQunList();
+			if( sender == EvaMain::session->getUser()->getQQ()) {
+				EvaMain::session->getUser()->getQunList()->remove(id);
+				EvaMain::session->getUser()->saveQunList();
 				emit qunListChanged();
 				emit sysMessage();
 			}else {
-				Qun *qun = EvaMain::getInstance()->getUser()->getQunList()->getQun(id);
+				Qun *qun = EvaMain::session->getUser()->getQunList()->getQun(id);
 				if(qun){
-					if(qun->getDetails().getCreator() == EvaMain::getInstance()->getUser()->getQQ() ||
-						 qun->isAdmin( EvaMain::getInstance()->getUser()->getQQ())) {// if you are admin, should notify you
+					if(qun->getDetails().getCreator() == EvaMain::session->getUser()->getQQ() ||
+						 qun->isAdmin( EvaMain::session->getUser()->getQQ())) {// if you are admin, should notify you
 						emit sysMessage();
 					}
 					EvaMain::g_ChatWindowManager->slotQunJoinEvent(id, imType,sender, 0);
 				}
 				//m_PacketManager->doRequestQunInfo( id);
-				g_eva->getContactManager()->fetchQunDetails(id);
+				EvaMain::session->getContactManager()->fetchQunDetails(id);
 			}
 			break;
 		case QQ_RECV_IM_SET_QUN_ADMIN:
 			//m_PacketManager->doRequestQunInfo( id);
-			g_eva->getContactManager()->fetchQunDetails(id);
+			EvaMain::session->getContactManager()->fetchQunDetails(id);
 			emit sysMessage();
 			break;
 		case QQ_RECV_IM_REQUEST_JOIN_QUN:
@@ -285,12 +285,12 @@ void EvaSysMsgManager::slotQunSysMessage( const unsigned int id, const unsigned 
 
 void EvaSysMsgManager::slotReceivedQQNews( const QString & title, const QString & brief, const QString & url )
 {
-	EvaMain::getInstance()->getUser()->getSetting()->saveSysMessage(SYSTEM_MESSAGE_NORMAL, Q_MSG_SYS_EVA_QQ_NEWS,
+	EvaMain::session->getUser()->getSetting()->saveSysMessage(SYSTEM_MESSAGE_NORMAL, Q_MSG_SYS_EVA_QQ_NEWS,
 					0, 0, title, 0, 0,
 					(unsigned char *)(brief.utf8().data()), brief.utf8().size(),
 					(unsigned char *)(url.utf8().data()), url.utf8().size());
 
-	if( EvaMain::getInstance()->getUser()->getSetting()->isShowSystemNewsEnabled()){
+	if( EvaMain::session->getUser()->getSetting()->isShowSystemNewsEnabled()){
 		EvaSysBroadcastWindow *win = new EvaSysBroadcastWindow();
 		win->setNews(title, brief, url);
 

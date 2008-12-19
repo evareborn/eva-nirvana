@@ -25,6 +25,9 @@
 //Added by qt3to4:
 #include <QPixmap>
 #include <Q3CString>
+ 
+#include "evanetworkpolicy.h"
+
 class QPixmap;
 class EvaSetting;
 
@@ -35,7 +38,6 @@ class EvaLoginWindow : public LoginUIBase
 public:
 	EvaLoginWindow(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
 	~EvaLoginWindow();
-	enum Type{UDP, TCP, HTTP_Proxy};
 	void setLogo(const QPixmap *);
 	void setEvaSetting(EvaSetting *setting);
 	 int getQQ() const;
@@ -43,14 +45,15 @@ public:
 	const char * getMd5Password() const;
 	 bool isHiddenLoginMode() const;
 	 bool isRememberChecked() const;
+ 
+        EvaNetworkPolicy getNetworkPolicy() const;
 	
-	 Type getConnectionType() const;
-	 QString getProxyIP() const;
-	 int getProxyPort() const;
-	 QString getProxyUserName() const;
-	 QString getProxyPassword() const;
-	
-	 Q3CString getProxyParam();
+//X 	 QString getProxyIP() const;
+//X 	 int getProxyPort() const;
+//X 	 QString getProxyUserName() const;
+//X 	 QString getProxyPassword() const;
+//X 	
+//X 	 Q3CString getProxyParam();
 public slots:
 	virtual void cancelClickSlot();
 	virtual void loginClickSlot();
@@ -66,15 +69,16 @@ protected slots:
 	void slotProxyUserChanged(const QString &);
 	void slotProxyPasswordChanged(const QString &);
 private:
+        ConnectionType getConnectionType() const;
+
 	int qqNum;
+        int port;
 	char md5Pwd[16];
-	int port;
-	Q3CString proxyParam;
-	
 	bool pwdChanged;
 	bool proxyPwdChanged;
 	QString proxyUsername;
 	QString proxyPassword;
+        Q3CString proxyParam;
 	int currentIndex;
 	EvaSetting *setting;
 	void iniRecords();

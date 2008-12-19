@@ -24,6 +24,7 @@
 #include "evaguimain.h"
 #include "evauser.h"
 #include "evaqtutil.h"
+#include "evasession.h"
 
 #include <stdlib.h>
 #include <qdir.h>
@@ -274,7 +275,7 @@ void EvaImageResource::requestQQShow(const unsigned int id)
 	if(isDownloadingQQShow) return;	
 	QString path = getQQShowPath();
 	if(path == "") return;
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	if(!user) return;
 	
 	qqshowFile.setName(path +"/"+ QString::number(id) + ".gif" );

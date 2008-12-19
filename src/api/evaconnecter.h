@@ -32,7 +32,7 @@ class InPacket;
 class EvaConnecter : public QObject {
 	Q_OBJECT
 public:
-	EvaConnecter(EvaNetwork *network);
+	EvaConnecter(const EvaNetworkPolicy& policy);
 	~EvaConnecter();
 	
 	void append(OutPacket *out);
@@ -44,16 +44,17 @@ public:
         void stop();
 	bool isConnectionReady() const { return connectionReady; }
 	
-        EvaNetwork::Type getConnectionType() const { return connecter->connectionType(); }
-	const QHostAddress getSocketIp();
-	unsigned int getSocketPort();
-	const QHostAddress &getHostAddress() const { return connecter->getHostAddress();}  // if it's Http Proxy, return the proxy's address
-	short getHostPort() const { return connecter->getHostPort(); }
+        ConnectionType getConnectionType() const { return policy.getConnectionType(); }
+	QHostAddress getSocketIp() const;
+	short getSocketPort() const;
+	QHostAddress getHostAddress() const { return network->getHostAddress();}  // if it's Http Proxy, return the proxy's address
+	short getHostPort() const { return network->getHostPort(); }
 public slots:
 	void slotClientReady();
 
 signals:
 	void isReady();
+        void isNetworkReady();
 	void networkException(int);
 	void packetException(int);
 	void sendMessage(unsigned int, bool);
@@ -68,7 +69,8 @@ private:
 	QList<OutPacket*> outPool;
 	QTimer *timer;
 	bool isConnected;
-	EvaNetwork *connecter;
+        EvaNetworkPolicy policy;
+	EvaNetwork *network;
 	
 	unsigned char buffer[65535];
 	unsigned short packetLength;
@@ -79,6 +81,8 @@ private:
 	void removeOutRequests(const short cmd);
 	void startDetecting();
 	void processDetectReply(InPacket *in);
+
+	void fetchQQServer();
 private slots:
 	void isReadySlot();
 	void processPacket(char *data, int len);
@@ -86,6 +90,7 @@ private slots:
 	void packetMonitor();
 	void clearAllPools();
 	void slotNetworkException(int num);
+        void slotGotServer( QHostAddress );
 };
 
 #endif

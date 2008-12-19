@@ -24,10 +24,11 @@
 #include <QObject>
 #include <qhostaddress.h>
 
+class EvaConnecter;
 class EvaPacketManager;
 class ContactInfo;
 class EvaLoginVeriWindow;
-class EvaMain;
+class EvaSession;
 
 /**
  * \class EvaLoginManager
@@ -56,16 +57,17 @@ class EvaLoginManager : public QObject
 {
 	Q_OBJECT
 public:
-	EvaLoginManager(EvaMain* evaapp);
+	EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaPacketManager* packetManager);
 	void setPacketManager(EvaPacketManager *pm);
 
-	void login(QHostAddress &server);
+	void login();
 	void logout();
 	inline void setLoggedOut();
 	inline bool isLoggedIn();
 private:
-	EvaPacketManager *m_packetManager;
-        EvaMain* g_eva;
+        EvaSession* session;
+        EvaConnecter* connecter;
+	EvaPacketManager *packetManager;
 
 	enum LoginStatus{
 		EStart,

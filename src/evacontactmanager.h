@@ -44,7 +44,7 @@ enum Status{
 	ESCM_ALLLEVELS,       //!< when \c fetchAllLevel was called
 };
 
-class EvaMain;
+class EvaSession;
 class EvaPacketManager;
 class GetFriendListReplyPacket;
 class GroupNameOpReplyPacket;
@@ -64,7 +64,7 @@ class EvaGetLevelReplyPacket;
 class EvaContactManager// : public QObject
 {
 public:
-	EvaContactManager( EvaMain* evaapp );
+	EvaContactManager( EvaSession* session, EvaPacketManager* packetManager );
 	virtual ~EvaContactManager();
 	
 	void setPacketManager(EvaPacketManager *pm);
@@ -107,9 +107,9 @@ public:
 private:
 	bool m_downloadAll;
 	bool m_contactsReady;
-        EvaMain* g_eva;
+        EvaSession* session;
 	Status m_status;
-	EvaPacketManager *m_packetManager;
+	EvaPacketManager *packetManager;
 	
 	FriendList m_Contacts; //!< used for downloading contact list
 	

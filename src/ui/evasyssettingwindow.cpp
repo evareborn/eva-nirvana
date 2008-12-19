@@ -25,7 +25,8 @@
 #include "evaresource.h"
 #include "evausersetting.h"
 
-#include "../evaguimain.h"
+#include "evaguimain.h"
+#include "evasession.h"
 #include "evapacket.h"
 #include "evauser.h"
 #include "evautil.h"
@@ -708,8 +709,8 @@ bool EvaSysSettingWindow::UpdateData(bool toShow)
 	
 	int level = 0;
 	QString signature = "";
-	level = EvaMain::getInstance()->getUser()->getLevel();
-	signature = QTextCodec::codecForName("GB18030")->toUnicode(EvaMain::getInstance()->getUser()->getSignature().c_str());
+	level = EvaMain::session->getUser()->getLevel();
+	signature = QTextCodec::codecForName("GB18030")->toUnicode(EvaMain::session->getUser()->getSignature().c_str());
 	
 	int suns, moons, stars;
 	EvaUtil::calcSuns(level, &suns, &moons, &stars);
@@ -932,7 +933,7 @@ void EvaSysSettingWindow::slotLinkClicked( const QString & url)
 
 void EvaSysSettingWindow::slotShopClicked( )
 {
-	QString url = "http://jump.qq.com/clienturl_simp_17?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://jump.qq.com/clienturl_simp_17?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+="&clientkey=";
 	url+=getClientKeyString();
 	slotLinkClicked(url);
@@ -940,7 +941,7 @@ void EvaSysSettingWindow::slotShopClicked( )
 
 void EvaSysSettingWindow::slotAlbumClicked( )
 {
-	QString url = "http://ptlogin.qq.com/qqshowalbum?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://ptlogin.qq.com/qqshowalbum?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+="&clientkey=";
 	url+=getClientKeyString();
 	slotLinkClicked(url);
@@ -948,7 +949,7 @@ void EvaSysSettingWindow::slotAlbumClicked( )
 
 void EvaSysSettingWindow::slotHomeClicked( )
 {
-	QString url = "http://jump.qq.com/clienturl_42?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://jump.qq.com/clienturl_42?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+="&clientkey=";
 	url+=getClientKeyString();
 	slotLinkClicked(url);
@@ -1058,18 +1059,18 @@ void EvaSysSettingWindow::slotUpdateAuthSettingResult( const unsigned char auth,
 
 void EvaSysSettingWindow::slotChangePasswordClicked( )
 {
-	QString url = "http://jump.qq.com/clienturl_173?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://jump.qq.com/clienturl_173?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+= "&clientkey=";
 	url+= getClientKeyString();
 	url+= "&ADUIN=";
-	url+= QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	url+= QString::number(EvaMain::session->getUser()->getQQ());
 	url+= "&ADSESSION=1171468766&ADTAG=CLIENT.QQ.1595_Setting_PasswordTab.0";
 	slotLinkClicked(url);
 }
 
 void EvaSysSettingWindow::slotProtectPasswordClicked( )
 {
-	QString url = "http://service.qq.com/psw/psw_id_index.htm?ADUIN=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://service.qq.com/psw/psw_id_index.htm?ADUIN=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+= "&ADSESSION=1171468766&ADTAG=CLIENT.QQ.1595_Setting_PasswordTab.0";
 	slotLinkClicked(url);
 }

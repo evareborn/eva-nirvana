@@ -19,6 +19,7 @@
  ***************************************************************************/  
 
 #include "evaaddingwindow.h"
+#include "evasession.h"
 #include "defines.h"
 
 #include <qlabel.h>
@@ -74,7 +75,7 @@ void EvaAddingWindow::initBuddy( )
 	tbtnFace->setIconSet(faceIcon);
 
 	// load users groups
-	std::list<std::string> names = EvaMain::getInstance()->getUser()->getGroupNames();
+	std::list<std::string> names = EvaMain::session->getUser()->getGroupNames();
 	std::list<std::string>::iterator iter;
 	QTextCodec *codec = QTextCodec::codecForName( "GB18030");
 	cbbGroups->clear();

@@ -28,6 +28,7 @@
 
 #include "evaresource.h"
 #include "../evaguimain.h"
+#include "evasession.h"
 #include "evapacket.h"
 #include "evauser.h"
 #include "evautil.h"
@@ -89,7 +90,7 @@ EvaDetailsWindow::EvaDetailsWindow(  QStringList &user, QWidget* parent, const c
 	bool ok;
 	id = details[0].toUInt(&ok, 10);
 	if(!ok) return;
-	frd = (EvaMain::getInstance()->getUser()->getFriendList()).getFriend(id); //get the user qq of this details window
+	frd = (EvaMain::session->getUser()->getFriendList()).getFriend(id); //get the user qq of this details window
 	
 	setCaption( i18n( "View User Info") );//set the title of this dialog
 
@@ -177,9 +178,9 @@ bool EvaDetailsWindow::UpdateData(const bool toShow)
 	
 	int level = 0;
 	QString signature = "";
-	if(id == EvaMain::getInstance()->getUser()->getQQ() ){
-		level = EvaMain::getInstance()->getUser()->getLevel();
-		signature = codec->toUnicode(EvaMain::getInstance()->getUser()->getSignature().c_str());
+	if(id == EvaMain::session->getUser()->getQQ() ){
+		level = EvaMain::session->getUser()->getLevel();
+		signature = codec->toUnicode(EvaMain::session->getUser()->getSignature().c_str());
 	}else{
 		if(frd){
 			level = frd->getLevel();
@@ -294,7 +295,7 @@ void EvaDetailsWindow::slotLinkClicked( const QString & url )
 
 void EvaDetailsWindow::slotShopClicked( )
 {
-	QString url = "http://jump.qq.com/clienturl_simp_17?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://jump.qq.com/clienturl_simp_17?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+="&clientkey=";
 	url+=getClientKeyString();
 	slotLinkClicked(url);
@@ -302,7 +303,7 @@ void EvaDetailsWindow::slotShopClicked( )
 
 void EvaDetailsWindow::slotAlbumClicked( )
 {
-	QString url = "http://ptlogin.qq.com/qqshowalbum?clientuin=" + QString::number(EvaMain::getInstance()->getUser()->getQQ());
+	QString url = "http://ptlogin.qq.com/qqshowalbum?clientuin=" + QString::number(EvaMain::session->getUser()->getQQ());
 	url+="&clientkey=";
 	url+=getClientKeyString();
 	slotLinkClicked(url);

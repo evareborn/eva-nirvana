@@ -40,21 +40,22 @@
 #include <QByteArray>
 
 #define QUEUE_INTERVAL 10000
-EvaPicManager::EvaPicManager(EvaUser *u, bool useProxy)
+
+EvaPicManager::EvaPicManager(EvaUser *user, const EvaNetworkPolicy& policy)
 {
-	user = u;
-	usingProxy = useProxy;
-	isBusy = false;
-	connecter = NULL;
-	currentIndex = 0;
-	codec = QTextCodec::codecForName("GB18030");
-	EvaPicPacket::setQQ(user->getQQ());
-	bufLength = 0;
-	currentFile.buf = NULL;
-	expectedSequence = 0;
-	isSend = false;
-	isAppending = false;
-	isRemoving = false;
+    this->user = user;
+    this->policy = policy;
+    isBusy = false;
+    connecter = NULL;
+    currentIndex = 0;
+    codec = QTextCodec::codecForName("GB18030");
+    EvaPicPacket::setQQ(user->getQQ());
+    bufLength = 0;
+    currentFile.buf = NULL;
+    expectedSequence = 0;
+    isSend = false;
+    isAppending = false;
+    isRemoving = false;
 	
 //X 	outPool.setAutoDelete(true);
 	
@@ -70,11 +71,9 @@ EvaPicManager::~EvaPicManager()
 	clearManager();
 }
 
-void EvaPicManager::setProxyServer( const QString ip, const short port, QByteArray proxyParam )
+void EvaPicManager::setNetworkPolicy( const EvaNetworkPolicy& policy )
 {
-	proxyIP = ip;
-	proxyPort = port;
-	proxyAuthParam = proxyParam;
+    this->policy = policy;
 }
 
 void EvaPicManager::customEvent( QCustomEvent * e )
@@ -142,12 +141,14 @@ void EvaPicManager::initConnection(const int ip, const short port)
 	if(connecter){
 		delete connecter;
 	}
-	if(usingProxy){
-		connecter = new EvaNetwork(QHostAddress(proxyIP), proxyPort, EvaNetwork::HTTP_Proxy);
-		connecter->setDestinationServer(host.toString(), port);
-		connecter->setAuthParameter(proxyAuthParam);
-	}else
-		connecter = new EvaNetwork(host, port, EvaNetwork::TCP);
+
+        /**
+         * PictureManager always use tcp connections.
+         */
+
+        EvaNetworkPolicy connPolicy( policy );
+        connPolicy.setConnectionType( CONN_TCP );
+        connecter = new EvaNetwork(host, port, connPolicy);
 
 	QObject::connect(connecter, SIGNAL(isReady()), SLOT(slotReady()));
 	QObject::connect(connecter, SIGNAL(dataComming(int)), SLOT(slotDataComming(int)));

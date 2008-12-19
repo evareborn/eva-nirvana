@@ -126,7 +126,7 @@ public:
 				Proxy_Need_Auth, Proxy_Read_Error, Proxy_Error};
 	EvaHttpProxy(const QHostAddress &proxyHost, const short proxyPort, const QString username = QString::null, 
 								const QString password = QString::null);
-	void setDestinationServer(const QString &server, const int port); // server could be IP or URL
+	void setDestinationServer(const QString &server, short port); // server could be IP or URL
 	const QString &getDestinationServer() const { return destinationAddress; }
 	void setAuthParameter(const QString &username, const QString &password);
 	const QByteArray &getBase64AuthParam() const { return base64AuthParam;}

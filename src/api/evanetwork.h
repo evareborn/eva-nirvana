@@ -25,6 +25,7 @@
 #include <qhostaddress.h>
 //Added by qt3to4:
 #include <QByteArray>
+#include "evanetworkpolicy.h"
 
 class EvaSocket;
 class EvaHttpProxy;
@@ -32,20 +33,18 @@ class EvaHttpProxy;
 class EvaNetwork : public QObject{
 	Q_OBJECT
 public:
-	enum Type { UDP, TCP, HTTP_Proxy};
 	enum Event { Init, Connecting, Ready, Failed, None, BytesReadWrong, 
 			Proxy_None, Proxy_TCP_Ready, Proxy_Connecting, Proxy_Ready, 
 				Proxy_Need_Auth, Proxy_Read_Error, Proxy_Error  };
-	EvaNetwork(const QHostAddress &host, const short port, const Type type = UDP);
+
+	EvaNetwork(const QHostAddress &host, short port, const EvaNetworkPolicy& policy);
 	~EvaNetwork();
 	
 	void setServer(const QHostAddress &address, const short port);
-	const QHostAddress &getHostAddress() const;  // if it's Http Proxy, return the proxy's address
+	QHostAddress getHostAddress() const;  // if it's Http Proxy, return the proxy's address
 	short getHostPort() const;
 	
-	void setDestinationServer(const QString &server, const short port); // for Http Proxy only;
-        void setAuthParameter(const QString &username, const QString &password);
-	void setAuthParameter(const QByteArray &param);
+	void redirectTo(const QString &server, const short port); // for Http Proxy only;
 	void newURLRequest();
 	void connect();
 	
@@ -54,17 +53,20 @@ public:
 	void setWriteNotifierEnabled(bool enabled);
 
 	void close();
-	Type connectionType() { return type; }
-	const QHostAddress getSocketIp();
-	unsigned int getSocketPort();
+	ConnectionType getConnectionType() const; 
+	QHostAddress getSocketIp() const;
+	short getSocketPort() const;
 signals:
 	void isReady();
 	void dataComming(int);
 	void exceptionEvent(int); // all in enum type Event;
 	void writeReady();
 private:
+//X         void setAuthParameter(const QString &username, const QString &password);
+//X 	void setAuthParameter(const QByteArray &param);
+
 	EvaSocket *socket;
-	Type type;
+	EvaNetworkPolicy policy;
 private slots:
 	void processProxyEvent(int);
 };

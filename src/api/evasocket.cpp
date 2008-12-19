@@ -355,7 +355,7 @@ EvaHttpProxy::EvaHttpProxy(const QHostAddress &proxyHost, const short proxyPort,
 	QObject::connect(this, SIGNAL(exceptionEvent(int)), SIGNAL(socketException(int)));
 }
 
-void EvaHttpProxy::setDestinationServer(const QString &server, const int port) // server could be IP or URL
+void EvaHttpProxy::setDestinationServer(const QString &server, short port) // server could be IP or URL
 {
 	destinationAddress = server + ':' + QString::number(port);// qq http proxy server port: 443
 	status = Proxy_None;

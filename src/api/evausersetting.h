@@ -131,12 +131,12 @@ public:
 	
 	// save Qun information method	
 	 bool saveQunList(QObject *receiver, QunList &list);
-	 bool loadQunList(/*QObject *receiver*/);
+	 bool loadQunList(QObject *receiver);
 	
 	// the group names include user creating ones and the first one "buddy list"
 	 bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
 				unsigned short extraInfo, std::string sig, unsigned int sigTime);
-	 bool loadBuddyList(/*QObject * receiver*/);
+	 bool loadBuddyList(QObject * receiver);
 	
 	 bool saveMessage(const int buddy, const int sender, QString sNick, 
 			const int receiver, QString rNick,

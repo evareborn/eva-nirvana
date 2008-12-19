@@ -19,6 +19,7 @@
  ***************************************************************************/
  
 #include "evaqunmemberpicker.h"
+#include "evasession.h"
  
 #include <q3listview.h>
 #include <qimage.h>
@@ -58,7 +59,7 @@ void EvaQunMemberPicker::updateBuddyListView()
 	lvBuddyList->clear();
 	
 	QTextCodec *codec = QTextCodec::codecForName("GB18030");
-	std::list<std::string> names = EvaMain::getInstance()->getUser()->getGroupNames();
+	std::list<std::string> names = EvaMain::session->getUser()->getGroupNames();
 	std::list<std::string>::iterator groupIter;
 	int i=0;
 	for(groupIter = names.begin(); groupIter!= names.end(); ++groupIter){
@@ -71,7 +72,7 @@ void EvaQunMemberPicker::updateBuddyListView()
 	//QunInfo info = mQun->getDetails();
 	
 	std::map<unsigned int, QQFriend>::iterator iter;
-	std::map<unsigned int, QQFriend> list = (EvaMain::getInstance()->getUser()->getFriendList()).getAllFriendsMap();
+	std::map<unsigned int, QQFriend> list = (EvaMain::session->getUser()->getFriendList()).getAllFriendsMap();
 	for(iter = list.begin(); iter != list.end(); ++iter){
 	
 		int id = iter->second.getQQ();

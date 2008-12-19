@@ -143,7 +143,7 @@ EvaAgentThread::EvaAgentThread(QObject *receiver, const unsigned int id, const Q
 			Q3ValueList<unsigned int> sizeList, const bool isSender)
 	: EvaFileThread(receiver, id, dirList, filenameList, sizeList, isSender),
 	m_State(ENone), m_Token(NULL), m_TokenLength(0),  m_ServerPort(RELAY_SERVER_PORT),
-	m_BufferLength(0), m_PacketLength(0), m_UsingProxy(false)
+	m_BufferLength(0), m_PacketLength(0)
 {
 }
 
@@ -174,12 +174,9 @@ void EvaAgentThread::setServerAddress(const unsigned int ip, const unsigned shor
 	m_ServerPort = port;
 }
 
-void EvaAgentThread::setProxySettings(const QHostAddress addr, const short port, const Q3CString &param)
+void EvaAgentThread::setNetworkPolicy(const EvaNetworkPolicy& policy)
 {
-	m_ProxyServer = addr;
-	m_ProxyPort = port;
-	m_ProxyAuthParam = param;
-	m_UsingProxy = true;
+    this->policy = policy;
 }
 
 void EvaAgentThread::doCreateConnection()
@@ -188,12 +185,8 @@ void EvaAgentThread::doCreateConnection()
 		m_Connecter->close();
 		delete m_Connecter;
 	}
-	if(m_UsingProxy){
-		m_Connecter = new EvaNetwork(m_ProxyServer, m_ProxyPort, EvaNetwork::HTTP_Proxy);
-		m_Connecter->setDestinationServer(m_HostAddresses.first().toString(), m_ServerPort);
-		m_Connecter->setAuthParameter(m_ProxyAuthParam);
-	}else
-		m_Connecter = new EvaNetwork(m_HostAddresses.first(), m_ServerPort, EvaNetwork::TCP);
+
+        m_Connecter = new EvaNetwork(m_HostAddresses.first(), m_ServerPort, policy);
 
 	QObject::connect(m_Connecter, SIGNAL(isReady()), SLOT(slotNetworkReady()));
 	QObject::connect(m_Connecter, SIGNAL(dataComming(int)), SLOT(slotDataComming(int)));
@@ -245,7 +238,7 @@ void EvaAgentThread::slotNetworkReady()
 
 void EvaAgentThread::slotDataComming(int len)
 {
-	if(m_Connecter->connectionType() != EvaNetwork::UDP){
+	if(m_Connecter->getConnectionType() != CONN_UDP){
 		char *rawData = new char[len+1];
 		if(!m_Connecter->read(rawData, len)){
 			fprintf(stderr, "EvaAgentThread::slotDataComming -- Bytes read wrong, ignore!\n");
@@ -1018,7 +1011,7 @@ void EvaUDPThread::doCreateConnection()
 		m_Connecter->close();
 		delete m_Connecter;
 	}
-	m_Connecter = new EvaNetwork(m_HostAddresses.first(), m_ServerPort, EvaNetwork::UDP);
+	m_Connecter = new EvaNetwork(m_HostAddresses.first(), m_ServerPort, EvaNetworkPolicy( CONN_UDP ));
 
 	QObject::connect(m_Connecter, SIGNAL(isReady()), SLOT(slotNetworkReady()));
 	QObject::connect(m_Connecter, SIGNAL(dataComming(int)), SLOT(slotDataComming(int)));

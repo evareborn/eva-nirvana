@@ -21,7 +21,8 @@
 #define EVASERVERS_H
 
 #include <QObject>
-#include <qhostaddress.h>
+#include <QHostInfo>
+#include <QHostAddress>
 
 
 
@@ -48,6 +49,9 @@ public:
 	*/
 	void stopDns();
 	void resetDefaultIP() { m_bIsFirst = true; }
+        QHostAddress getDefaultAddress();
+public slots:
+	void getResultsSlot( QHostInfo );
 signals:
 	/** emitted when IP is resovled or the default IP if timeout occurred */
 	void isReady(QHostAddress ip);
@@ -76,7 +80,6 @@ private:
 	/** emit the default server IP for the specific type, UDP or TCP*/
 	void defaultAddress();
 private slots:
-	void getResultsSlot();
 	void slotTimeout();
 };
 

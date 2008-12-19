@@ -26,10 +26,11 @@
 #include <QByteArray>
 #include <QCustomEvent>
 #include "evahtmlparser.h"
+#include "evanetworkpolicy.h"
 
 class QCustomEvent;
-class EvaUser;
 class EvaNetwork;
+class EvaUser;
 class EvaPicOutPacket;
 class EvaPicInPacket;
 class QTextCodec;
@@ -38,10 +39,10 @@ class QTimer;
 class EvaPicManager : public QObject {
 	Q_OBJECT
 public:
-	EvaPicManager(EvaUser *u, bool useProxy = false);
+	EvaPicManager(EvaUser *user, const EvaNetworkPolicy& policy);
 	virtual ~EvaPicManager();
 	
-	void setProxyServer(const QString ip = "", const short port = 0, QByteArray proxyParam = "");
+	void setNetworkPolicy(const EvaNetworkPolicy& policy);
 	void append(EvaPicOutPacket *packet);
 	void stop();
 signals:
@@ -61,10 +62,7 @@ private:
 	
 	EvaUser *user;
 	EvaNetwork *connecter;
-	QString proxyIP;
-	short proxyPort;
-	bool usingProxy;
-	QByteArray proxyAuthParam;
+        EvaNetworkPolicy policy;
 	int sendCount;
 	
 	QTextCodec *codec;

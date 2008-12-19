@@ -270,7 +270,7 @@ public:
 	void setFileAgentKey(const unsigned char *key);
 
 	void setServerAddress(const unsigned int ip, const unsigned short port);
-	void setProxySettings(const QHostAddress addr, const short port, const Q3CString &param);
+	void setNetworkPolicy(const EvaNetworkPolicy& policy);
 
 protected:
 	enum AgentState { ENone, EDnsQuery, EDnsReady, ENetworkReady, ECreatingReady,
@@ -294,10 +294,7 @@ private:
 	unsigned int m_BufferLength;
 	unsigned short m_PacketLength;
 
-	bool m_UsingProxy;
-	QHostAddress m_ProxyServer;
-	short m_ProxyPort;
-	Q3CString m_ProxyAuthParam;
+        EvaNetworkPolicy policy;
 
 
 private slots:

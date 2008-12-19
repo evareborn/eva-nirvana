@@ -25,6 +25,9 @@ HEADERS += evaaddingmanager.h \
  evaguimain.h \
  evasysmsgmanager.h \
  evasystemtray.h \
+ api/evasession.h \
+ api/evanetworkpolicy.h \
+ api/evagraphicverifycode.h \
  api/customface.h \
  api/evaapi.h \
  api/evaconnecter.h \
@@ -149,6 +152,8 @@ SOURCES += evaaddingmanager.cpp \
  evasysmsgmanager.cpp \
  evasystemtray.cpp \
  main.cpp \
+ api/evasession.cpp \
+ api/evanetworkpolicy.cpp \
  api/customface.cpp \
  api/evaconnecter.cpp \
  api/evahtmlparser.cpp \

@@ -21,7 +21,7 @@
 #define EVAPACKETMANAGER_H
 
 #include "libeva.h"
-#include "evauser.h"
+#include "evasession.h"
 #include <map>
 #include <list>
 #include <QObject>
@@ -36,6 +36,7 @@ class EvaMain;
 class QTextCodec;
 class EvaLoginManager;
 class EvaContactManager;
+class EvaSession;
 
 typedef struct {
 	short total;                       //used to show missing part
@@ -45,10 +46,10 @@ typedef struct {
 class EvaPacketManager : public QObject {
 	Q_OBJECT
 public:
-	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaMain* evaapp);
+	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaSession* session);
 	~EvaPacketManager();
 	
-	EvaUser *getUser() { return user; }
+//X 	EvaUser *getUser() { return user; }
 	EvaConnecter *getConnecter() { return connecter; }
 	
 	QStringList convertDetails(const ContactInfo &info);
@@ -62,7 +63,7 @@ public slots:
 	void doGetUserInfo(const unsigned int id);
 	void doModifyDetails(QStringList info, QString oldPwd = QString::null, QString newPwd = QString::null);
 	
-	void doChangeStatus(EvaUser::UserStatus newStatus);
+	void doChangeStatus(UserStatus newStatus);
 	void doRequestFileAgentKey();
 	void doGetOnlineFriends();
 	void doGetAllFriends();
@@ -164,6 +165,10 @@ public slots:
 	//new methods used with evacontactmanager
 	void doGetContacts(int pos = QQ_FRIEND_LIST_POSITION_START);
 signals:
+        /**
+         * These erros should be merged.
+         */
+
 	void networkException(int);
 	void packetException(int);
 	void serverBusy();
@@ -173,6 +178,7 @@ signals:
 	void offlineReady();
 	void invisibleReady();
 	void leaveReady();
+
 	void kickedOut(const QString);
 	
 	void friendStatusChanged(unsigned int id);
@@ -285,8 +291,8 @@ signals:
 	void receivedQQNews(const QString &title, const QString &brief, const QString &url);
 private:
 
-        EvaMain* g_eva;
 	QTextCodec *codec;
+	EvaSession *session;
 	EvaUser *user;
 	EvaConnecter *connecter;
 	QTimer *timer; // keep online and get online friends

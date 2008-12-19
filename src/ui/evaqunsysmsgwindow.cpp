@@ -99,8 +99,8 @@ void EvaQunSysMsgWindow::slotOkClicked()
 	}
 	if( rbtnReject->isChecked()){
 		if( chbRejectForever->isChecked()){
-			EvaMain::getInstance()->getUser()->getSetting()->addToQunRejectForever(m_QunID, m_Sender);
-			EvaMain::getInstance()->getUser()->getSetting()->saveSettings();
+			EvaMain::session->getUser()->getSetting()->addToQunRejectForever(m_QunID, m_Sender);
+			EvaMain::session->getUser()->getSetting()->saveSettings();
 		}
 		m_PacketManager->doRejectQun(m_Sender, m_QunID, leMessage->text(), (const unsigned char *)(m_Token.data()), m_Token.size());
 	}
@@ -132,7 +132,7 @@ void EvaQunSysMsgWindow::setMessage(const unsigned short msgType, const unsigned
 		break;       
 	case QQ_RECV_IM_DELETED_FROM_QUN:
 		tbQun->setText(QString::number(m_QunExtID));
-		if(m_Sender == EvaMain::getInstance()->getUser()->getQQ()){
+		if(m_Sender == EvaMain::session->getUser()->getQQ()){
 			tbQQ->setHidden(true);
 			lblAction->setText(i18n("You have been removed from Qun"));
 		} else{
@@ -158,7 +158,7 @@ void EvaQunSysMsgWindow::setMessage(const unsigned short msgType, const unsigned
 		lblAction->setText(i18n("has rejected your request to be a member of Qun"));
 		break;
 	case QQ_RECV_IM_SET_QUN_ADMIN:
-		if(m_Sender == EvaMain::getInstance()->getUser()->getQQ()){
+		if(m_Sender == EvaMain::session->getUser()->getQQ()){
 			tbQQ->setHidden(true);
 			tbQun->setText(QString::number(m_QunExtID));
 			if(m_Commander == 0x01)
@@ -197,6 +197,6 @@ void EvaQunSysMsgWindow::slotJoinQunAuthReply( const unsigned int id, const unsi
 	if(reply!=0x00){
 //X 		kdDebug() << "[EvaQunSysMsgWindow] operation failed" << endl;
 	}
-        EvaMain::getInstance()->getContactManager()->fetchQunDetails( id);
+        EvaMain::session->getContactManager()->fetchQunDetails( id);
 	close();
 }

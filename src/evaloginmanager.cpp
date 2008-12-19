@@ -24,6 +24,7 @@
 #include <qhostaddress.h>
 #include <assert.h>
 #include "evaguimain.h"
+#include "evasession.h"
 #include "evasetting.h"
 #include "evaconnecter.h"
 #include "evaapi.h"
@@ -40,9 +41,10 @@
 //X 	return &manager;
 //X }
 
-EvaLoginManager::EvaLoginManager(EvaMain* evaapp )
-	: m_packetManager(NULL)
-        , g_eva( evaapp )  
+EvaLoginManager::EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaPacketManager* packetManager )
+        : session( session )  
+        , connecter( connecter )
+	, packetManager(packetManager)
 	, m_isLoggedIn(false)
 	, m_veriWin(NULL)
 {
@@ -55,7 +57,7 @@ void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
 	e->m_desc = msg;
 	
 //X 	QApplication::postEvent(g_eva, e);
-	QApplication::sendEvent(g_eva, e);
+	QApplication::sendEvent(EvaMain::getInstance(), e);
  
         if ( QApplication::hasPendingEvents() ) {
             printf( "has pending events!\n" );
@@ -67,20 +69,20 @@ void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
 void EvaLoginManager::setPacketManager( EvaPacketManager * pm )
 {
 	assert(pm);
-	m_packetManager = pm;
+	packetManager = pm;
 	
 	QObject::disconnect(m_veriWin, 0, 0, 0);
 	if(m_veriWin) delete m_veriWin;
 	m_veriWin = new EvaLoginVeriWindow();
-	QObject::connect(m_veriWin, SIGNAL(changeImage()), m_packetManager, SLOT(doRequestLoginTokenEx()));
+	QObject::connect(m_veriWin, SIGNAL(changeImage()), packetManager, SLOT(doRequestLoginTokenEx()));
 	QObject::connect(m_veriWin, SIGNAL(sendVerifyCode(const QString &)), 
-									 m_packetManager, SLOT(doRequestLoginTokenEx( const QString &) ) );
+									 packetManager, SLOT(doRequestLoginTokenEx( const QString &) ) );
 
-// 	QObject::disconnect(m_packetManager, SIGNAL(loginNeedVerification()), 
+// 	QObject::disconnect(packetManager, SIGNAL(loginNeedVerification()), 
 // 											this, 				SLOT(slotLoginVerification()));
-// 	QObject::connect(m_packetManager, 	SIGNAL(loginNeedVerification()), 
+// 	QObject::connect(packetManager, 	SIGNAL(loginNeedVerification()), 
 // 									 win, 					SLOT(slotImageReady()));
-// 	QObject::connect(m_packetManager, 	SIGNAL(loginVerifyPassed()), 
+// 	QObject::connect(packetManager, 	SIGNAL(loginVerifyPassed()), 
 // 									 win, 					SLOT(slotVerifyPassed())); 
 }
 
@@ -90,32 +92,33 @@ void EvaLoginManager::serverBusy( )
 	notifyEvent(E_Err);	
 }
 
-void EvaLoginManager::login( QHostAddress &server)
+void EvaLoginManager::login()
 {
-	assert(m_packetManager);
-	m_isLoggedIn = false;
-	
-//X 	kdDebug() << "[EvaLoginManager] login starting" << endl;
-	//EvaSetting *s = EvaMain::global->getEvaSetting();	
-	ServerDetectorPacket::setStep(0);
-	ServerDetectorPacket::setFromIP(0);
-	
-	m_packetManager->redirectTo(server.toIPv4Address(), -1);
-	m_status = EStart;
+    QHostAddress server = connecter->getSocketIp();
+    assert(packetManager);
+    m_isLoggedIn = false;
+
+    //X 	kdDebug() << "[EvaLoginManager] login starting" << endl;
+    //EvaSetting *s = EvaMain::global->getEvaSetting();	
+    ServerDetectorPacket::setStep(0);
+    ServerDetectorPacket::setFromIP(0);
+
+    packetManager->redirectTo(server.toIPv4Address(), -1);
+    m_status = EStart;
 }
 
 void EvaLoginManager::loginVerification( )
 {
 //	EvaLoginVeriWindow *win = new EvaLoginVeriWindow();
-// 	QObject::connect(win, SIGNAL(changeImage()), m_packetManager, SLOT(doRequestLoginTokenEx()));
+// 	QObject::connect(win, SIGNAL(changeImage()), packetManager, SLOT(doRequestLoginTokenEx()));
 // 	QObject::connect(win, SIGNAL(sendVerifyCode(const QString &)), 
-// 					 m_packetManager, SLOT(doRequestLoginTokenEx( const QString &) ) );
+// 					 packetManager, SLOT(doRequestLoginTokenEx( const QString &) ) );
 // 
-// 	QObject::disconnect(m_packetManager, SIGNAL(loginNeedVerification()), 
+// 	QObject::disconnect(packetManager, SIGNAL(loginNeedVerification()), 
 // 						this, 				SLOT(slotLoginVerification()));
-// 	QObject::connect(m_packetManager, 	SIGNAL(loginNeedVerification()), 
+// 	QObject::connect(packetManager, 	SIGNAL(loginNeedVerification()), 
 // 					 win, 					SLOT(slotImageReady()));
-// 	QObject::connect(m_packetManager, 	SIGNAL(loginVerifyPassed()), 
+// 	QObject::connect(packetManager, 	SIGNAL(loginVerifyPassed()), 
 // 					 win, 					SLOT(slotVerifyPassed())); 
 	if(!m_veriWin) return;
 	
@@ -134,7 +137,7 @@ void EvaLoginManager::verifyPassed( )
 	m_status = ELoginToken;
 	if(m_veriWin) m_veriWin->slotVerifyPassed();
 	
-	m_packetManager->doLogin();
+	packetManager->doLogin();
 }
 
 void EvaLoginManager::loginOK( )
@@ -143,9 +146,9 @@ void EvaLoginManager::loginOK( )
 	m_status = ELogin;
 	notifyEvent(E_LoggedIn);
 	//We don't care about the reply of this command	
-	m_packetManager->doChangeStatus(EvaMain::getInstance()->getUser()->getStatus());
+	packetManager->doChangeStatus(session->getStatus());
 
-	m_packetManager->doGetUserInfo(EvaMain::getInstance()->getUser()->getQQ());
+	packetManager->doGetUserInfo(session->getQQ());
 
 }
 
@@ -164,15 +167,15 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 	
 	m_status = EStart;
 	notifyEvent(E_SvrRedirect);
-	m_packetManager->redirectTo( ip, port);
+	packetManager->redirectTo( ip, port);
 	
 }
 
 void EvaLoginManager::fileAgentInfoReady( )
 {
 	printf( "[EvaLoginManager] file agent info ready\n" );
-	if(g_eva && g_eva->m_FileManager){
-		g_eva->m_FileManager->setMyBasicInfo(Packet::getFileAgentKey(),
+	if(session->getFileManager()){
+		session->getFileManager()->setMyBasicInfo(Packet::getFileAgentKey(),
 						 Packet::getFileAgentToken(), 
 						Packet::getFileAgentTokenLength());
 		m_status = EFileAgentKey;
@@ -185,10 +188,10 @@ void EvaLoginManager::fileAgentInfoReady( )
 void EvaLoginManager::myInfoReady( const ContactInfo info)
 {
 	m_status = EUserInfo;
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = session->getUser();
 	if(user)
 		user->setDetails(info);
 	notifyEvent(E_MyInfo);
-	m_packetManager->doRequestFileAgentKey();
+	packetManager->doRequestFileAgentKey();
 }
 

@@ -131,7 +131,7 @@ void EvaAddingNoticeWindow::processSettings()
 {
 	printf("m_Type: %d\n", m_Type);
 	QString title;
-	BuddyInfoCacheItem buddy = EvaMain::getInstance()->getUser()->getSetting()->removeToBeAddedBuddy(m_ID);
+	BuddyInfoCacheItem buddy = EvaMain::session->getUser()->getSetting()->removeToBeAddedBuddy(m_ID);
 	printf("cached: id: %d, nick: %s, face: %d, group:%d\n", buddy.id, buddy.nick.local8Bit().data(), buddy.face, buddy.group);
 	m_Nick = buddy.nick;
 	m_Face = buddy.face;
@@ -155,7 +155,7 @@ void EvaAddingNoticeWindow::processSettings()
 		case QQ_MSG_SYS_ADD_FRIEND_REQUEST_EX:{
 			title = QString(i18n("%1 wants to add you onto her/his contact list")).arg(nick);
 			btngrpActions->setHidden(false);
-			if(!m_AllowReverse || EvaMain::getInstance()->getUser()->getFriendList().hasFriend(m_ID)){
+			if(!m_AllowReverse || EvaMain::session->getUser()->getFriendList().hasFriend(m_ID)){
 				rbtnAcceptAdd->setEnabled( false );
 				rbtnAcceptAdd->setHidden( true );
 			}
@@ -170,7 +170,7 @@ void EvaAddingNoticeWindow::processSettings()
 		case QQ_MSG_SYS_ADDED_BY_CORRECT_ANSWER:
 		case QQ_MSG_SYS_BEING_ADDED_EX:{
 			title = QString(i18n("%1 has added you onto her/his contact list")).arg(nick);
-			if(!EvaMain::getInstance()->getUser()->getFriendList().hasFriend(m_ID))
+			if(!EvaMain::session->getUser()->getFriendList().hasFriend(m_ID))
 				btnOk->setText( i18n("&Add to my list") );
 			}
 			break;
@@ -219,7 +219,7 @@ void EvaAddingNoticeWindow::slotOkClicked( )
 			break;
 		case QQ_MSG_SYS_BEING_ADDED_EX:
 			/// should emit adding signal
-			if(!EvaMain::getInstance()->getUser()->getFriendList().hasFriend(m_ID))
+			if(!EvaMain::session->getUser()->getFriendList().hasFriend(m_ID))
 				emit requestAddBuddy(m_ID, m_Nick, m_Face);
 		case QQ_MSG_SYS_ADD_FRIEND_APPROVED:
 		case QQ_MSG_SYS_ADD_FRIEND_REJECTED:
@@ -263,8 +263,8 @@ void EvaAddingNoticeWindow::slotAddAuthActionReply( const unsigned int id, const
 			EvaMain::getInstance()->getAddingManager()->slotAddBuddy(id, m_Nick, m_Face);
 		}
 		if(auth == ADDING_AUTH_TYPE_REJECT && chbRejectForever->isChecked()){
-			EvaMain::getInstance()->getUser()->getSetting()->addToRejectForever(m_ID);
-			EvaMain::getInstance()->getUser()->getSetting()->saveSettings();
+			EvaMain::session->getUser()->getSetting()->addToRejectForever(m_ID);
+			EvaMain::session->getUser()->getSetting()->saveSettings();
 		}
 		close();
 	}else{

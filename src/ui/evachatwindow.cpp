@@ -24,6 +24,7 @@
 
 #include "evaresource.h"
 #include "evaguimain.h"
+#include "evasession.h"
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evafriendlist.h"
@@ -123,7 +124,7 @@ void EvaChatWindow::graphicChanged()
 {
 	QStringList imageDirList;
 	imageDirList.append(images->getSmileyPath());
-	imageDirList.append(EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir());
+	imageDirList.append(EvaMain::session->getUser()->getSetting()->getPictureCacheDir());
 	kteInput->mimeSourceFactory()->setFilePath(imageDirList);
 
 	
@@ -473,7 +474,7 @@ void EvaChatWindow::slotHistoryClick()
 	{
 		QString nick = codec->toUnicode(buddy->getNick().c_str());
 
-		viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::getInstance()->getUser()->getSetting());
+		viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::session->getUser()->getSetting());
 
 		unsigned short faceId = buddy->getFace();
 		QPixmap *face = EvaMain::images->getFaceByID(faceId);
@@ -517,7 +518,7 @@ void EvaChatWindow::slotSend()
 	if(!kteInput->isEnabled()) return;
 	QString msg = kteInput->text();
 	EvaHtmlParser parser;
-	parser.setAbsImagePath(images->getSmileyPath(), EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir());
+	parser.setAbsImagePath(images->getSmileyPath(), EvaMain::session->getUser()->getSetting()->getPictureCacheDir());
 
 	sendtime = QDateTime::currentDateTime(Qt::LocalTime);
 
@@ -542,7 +543,7 @@ void EvaChatWindow::slotSend()
 	int chatSize =  buddy->getChatFontSize();
 	if(numFiles){
 		QString strToShow = msg;
-		parser.parseToAbsPath(strToShow, EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir());
+		parser.parseToAbsPath(strToShow, EvaMain::session->getUser()->getSetting()->getPictureCacheDir());
 		chatDisplay->append( myName, sendtime, Qt::darkCyan, true, chatColor, (char)chatSize, 
 					tbU->isOn(), tbI->isOn(), tbB->isOn(), strToShow);
 		showMessages();
@@ -565,7 +566,7 @@ void EvaChatWindow::slotSend()
 		unsigned int session = buddy->getNextSequence();
 		for(int i=0; i<numFiles; i++){
 			QString name = sendFileNameBase + QString::number(i) + ".jpg";
-			QString fullname = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + name;
+			QString fullname = EvaMain::session->getUser()->getSetting()->getPictureCacheDir() + "/" + name;
 					
 			QFileInfo info(fullname);
 			nameList.append(fullname);
@@ -611,7 +612,7 @@ void EvaChatWindow::slotFontChanged(QColor color, int size)
 	printf("setting color: %s size: %d\n", color.name().ascii(), size);
 	//QColor c=color;
 	//QString s=c.name();
-	EvaMain::getInstance()->getUser()->saveGroupedBuddyList();
+	EvaMain::session->getUser()->saveGroupedBuddyList();
 }
 
 void EvaChatWindow::setEnterSend()
@@ -672,14 +673,14 @@ void EvaChatWindow::slotReceivedFileRequest( const unsigned int session, const Q
 					const int size, const unsigned char transferType )
 {	
 	if(transferType == QQ_TRANSFER_IMAGE){
-		switch(EvaMain::getInstance()->getUser()->getStatus()){
-		case EvaUser::Eva_Online:
-		case EvaUser::Eva_Leave:
+		switch(EvaMain::session->getStatus()){
+		case Eva_Online:
+		case Eva_Leave:
 			m_NumImages++;
 			emit fileTransferAccept(buddy->getQQ(), session, "", QQ_TRANSFER_IMAGE);
 			break;
-		case EvaUser::Eva_Offline: // impossible
-		case EvaUser::Eva_Invisible:
+		case Eva_Offline: // impossible
+		case Eva_Invisible:
 			printf("EvaChatWindow::slotReceivedFileRequest --id:%d, seq: %d\n", buddy->getQQ(), buddy->getSequence());
 			if(buddy->getSequence()){
 				m_NumImages++;
@@ -927,7 +928,7 @@ void EvaChatWindow::slotAddImageClick( )
 //X // 		}
 //X 		//QString destFile = m_ImageFileName + QString::number(m_NumImages) + ".jpg";
 //X 		QString destFile = QUuid::createUuid().toString().upper() + ".jpg";
-//X 		QString destFullName = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + destFile ;
+//X 		QString destFullName = EvaMain::session->getUser()->getSetting()->getPictureCacheDir() + "/" + destFile ;
 //X 		QPixmap pix(srcFullName);
 //X 		pix.save(destFullName, "JPEG", 100);
 //X 		slotAddImageToInputEdit(destFile);
@@ -974,7 +975,7 @@ void EvaChatWindow::slotRegionGrabbed( const QPixmap & pix )
 		
 		//QString destFile = m_ImageFileName + QString::number(m_NumImages) + ".jpg";
 		QString destFile = QUuid::createUuid().toString().upper() + ".jpg";
-		QString destFullName = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + destFile ;
+		QString destFullName = EvaMain::session->getUser()->getSetting()->getPictureCacheDir() + "/" + destFile ;
 		pix.save(destFullName, "JPEG", 100);
 		slotAddImageToInputEdit(destFile);
 		//m_NumImages++;

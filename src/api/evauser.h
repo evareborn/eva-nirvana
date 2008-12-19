@@ -33,52 +33,6 @@
 #include <list>
 
 // used in the reply of login token ex requests
-class GraphicVerifyCode {
-public:
-	GraphicVerifyCode() :
-		m_SessionTokenLen ( 0),
-		m_SessionToken (NULL),
-		m_DataLen  (0),
-		m_Data (NULL)
-	{
-	};
-	GraphicVerifyCode(const GraphicVerifyCode &rhs)  :
-		m_SessionTokenLen ( 0),
-		m_SessionToken (NULL),
-		m_DataLen  (0),
-		m_Data (NULL)
-	{
-		*this = rhs; 
-	}
-	~GraphicVerifyCode(){
-		if(m_SessionToken) delete [] m_SessionToken;
-		if(m_Data) delete [] m_Data;
-	}
-	GraphicVerifyCode &operator=(const GraphicVerifyCode &rhs){
-		setSessionToken(rhs.m_SessionToken, rhs.m_SessionTokenLen);
-		setData(rhs.m_Data, rhs.m_DataLen);
-		return *this;
-	}
-	void setSessionToken(const unsigned char *token, const unsigned short len){
-		if(m_SessionToken) delete []m_SessionToken;
-		m_SessionToken = new unsigned char [len];
-		memcpy(m_SessionToken, token, len);
-		m_SessionTokenLen = len;
-	};
-
-	void setData(const unsigned char *data, const unsigned short len){
-		if(m_Data) delete []m_Data;
-		m_Data = new unsigned char [len];
-		memcpy(m_Data, data, len);
-		m_DataLen = len;
-	};
-
-	unsigned short m_SessionTokenLen;
-	unsigned char *m_SessionToken;
-	unsigned short m_DataLen;
-	unsigned char *m_Data;
-};
-
 class EvaUserSetting;
 class CustomEvent;
 //X class KConfig;
@@ -86,9 +40,6 @@ class CustomEvent;
 class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
 {
     Q_OBJECT
-    public:
-        enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
-
     public:
         EvaUser(const unsigned int id, const std::string &password);
         EvaUser(const unsigned int id, const char *md5Password);
@@ -168,31 +119,13 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
          * Session related methods
          */
 
-        void setStatus(const UserStatus status) { this->status = status; }
-        UserStatus getStatus() const { return status; }
-        static char getStatusCode(const UserStatus status) ;
-
-        void setLoginWanIp(const unsigned int ip) { m_LoginIp = ip; }
-        void setLoginWanPort(const unsigned short port) { m_LoginPort = port; }
-        void setLoginLanIp(const unsigned int ip) { m_LanIp = ip; }
-        void setLoginLanPort(const unsigned short port) { m_LanPort = port; }
-        void setLastLoginIp(const unsigned int ip) { m_LastLoginIp = ip; }
-        void setLastLoginTime(const unsigned int time) { m_LastLoginTime = time; }
-
-        unsigned int getLoginWanIp() const { return m_LoginIp; }
-        unsigned short getLoginWanPort() const { return m_LoginPort; }
-        unsigned int getLoginLanIp() const { return m_LanIp; }
-        unsigned short getLoginLanPort() const { return m_LanPort; }
-        unsigned int getLastLoginIp() const { return m_LastLoginIp; }
-        unsigned int getLastLoginTime() const { return m_LastLoginTime; }
-
-        bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
-        void addLoginVerifyInfo(const GraphicVerifyCode &info);
-        GraphicVerifyCode getLoginVerifyInfo();
-        GraphicVerifyCode getNextLoginVerifyInfo();
-        int getNumVerifyCodes() const { return m_CodeList.size(); }
-        void clearAllVerifyCodes();
-
+//X         bool loginNeedVerify() const { return (m_CodeList.size() != 0); }
+//X         void addLoginVerifyInfo(const GraphicVerifyCode &info);
+//X         GraphicVerifyCode getLoginVerifyInfo();
+//X         GraphicVerifyCode getNextLoginVerifyInfo();
+//X         int getNumVerifyCodes() const { return m_CodeList.size(); }
+//X         void clearAllVerifyCodes();
+//X 
         // DCOP calls
         //X 	int numFriends();
         //X 	QStringList friends();
@@ -227,7 +160,6 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
     private:
         unsigned int qqNum;
         char *md5Password;
-        UserStatus status;
         ContactInfo details;
         FriendList myFriends;
         std::list<std::string> groupNames;
@@ -254,15 +186,6 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
         static const int anonymousIndex = 0xfffe;
         static const int blackIndex = 0xffff;
 
-        unsigned int m_LoginIp;
-        unsigned short m_LoginPort;
-        unsigned int m_LastLoginIp;
-        unsigned int m_LastLoginTime;
-
-        unsigned int m_LanIp;
-        unsigned short m_LanPort;
-
-        std::list<GraphicVerifyCode> m_CodeList;
 
         friend class EvaUserSetting;
 };

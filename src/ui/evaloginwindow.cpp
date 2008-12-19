@@ -100,40 +100,48 @@ const char * EvaLoginWindow::getMd5Password() const
 	return md5Pwd;
 }
 
-EvaLoginWindow::Type EvaLoginWindow::getConnectionType() const
+ConnectionType EvaLoginWindow::getConnectionType() const
 {
 	int index = cbbLoginType->currentItem();
-	if(index == 1) return UDP;
-	if(index == 2) return TCP;
+	if(index == 1) return CONN_UDP;
+	if(index == 2) return CONN_TCP;
 	if(index == 3) return HTTP_Proxy;
-	return UDP;
+	return CONN_UDP;
 }
 
-QString EvaLoginWindow::getProxyIP() const
+EvaNetworkPolicy EvaLoginWindow::getNetworkPolicy() const
 {
-	return leIP->text();
+    EvaNetworkPolicy policy( getConnectionType(), leIP->text(), port );
+    policy.setProxyUsername( leUserName->text() );
+    policy.setProxyPassword( lePassword->text() );
+    policy.setProxyParam( proxyParam );
+    return policy;
 }
-
-int EvaLoginWindow::getProxyPort() const
-{
-	return port;
-}
-
-QString EvaLoginWindow::getProxyUserName() const
-{
-	return leUserName->text();
-}
-
-QString EvaLoginWindow::getProxyPassword() const
-{
-	return lePassword->text();
-}
-
-Q3CString EvaLoginWindow::getProxyParam()
-{
-	return proxyParam;
-}
-
+//X QString EvaLoginWindow::getProxyIP() const
+//X {
+//X 	return leIP->text();
+//X }
+//X 
+//X int EvaLoginWindow::getProxyPort() const
+//X {
+//X 	return port;
+//X }
+//X 
+//X QString EvaLoginWindow::getProxyUserName() const
+//X {
+//X 	return leUserName->text();
+//X }
+//X 
+//X QString EvaLoginWindow::getProxyPassword() const
+//X {
+//X 	return lePassword->text();
+//X }
+//X 
+//X Q3CString EvaLoginWindow::getProxyParam()
+//X {
+//X 	return proxyParam;
+//X }
+//X 
 void EvaLoginWindow::cancelClickSlot()
 {
 	emit doCancel();

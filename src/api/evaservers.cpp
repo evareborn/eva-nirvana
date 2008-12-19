@@ -107,9 +107,16 @@ void EvaServers::fetchAddress( bool isUdp )
 	}
 	
 	// the address should be a URL now, so we try to get the IP
-	Q3Dns * dns =  new Q3Dns(addr.addr, Q3Dns::A);
-	QObject::connect(dns, SIGNAL(resultsReady()), this, SLOT(getResultsSlot()));
+//X 	Q3Dns * dns =  new Q3Dns(addr.addr, Q3Dns::A);
+//X 	QObject::connect(dns, SIGNAL(resultsReady()), this, SLOT(getResultsSlot()));
 
+        printf( "looking for %s\n", addr.addr.latin1() );
+        QHostInfo::lookupHost( addr.addr, this, SLOT( getResultsSlot( QHostInfo ) ) );
+ 
+//X         QHostInfo info = QHostInfo::fromName( addr.addr );
+//X         if ( info.addresses().size() ) {
+//X             emit isReady( info.addresses()[ 0 ] );
+//X         }
 
 	m_Timeout = new QTimer(this, "dns timer");
 	QObject::connect(m_Timeout, SIGNAL(timeout()), SLOT(slotTimeout()));
@@ -178,23 +185,28 @@ void EvaServers::defaultAddress()
         emit isReady(QHostAddress("219.133.60.28")); //218.17.209.20
     }    
 }
-
-void EvaServers::getResultsSlot( )
+ 
+QHostAddress EvaServers::getDefaultAddress()
 {
-	Q3Dns *dns = (Q3Dns *)(QObject::sender());
-	if(dns == 0 ){
-        	defaultAddress();
-        	return;
-	}
-	QList<QHostAddress> list = dns->addresses();
-	if(list.count() == 0 ){
-		defaultAddress();
-		return;
-	}
-	
-	QHostAddress addr = list[0];
-//X 	kdDebug() << "[DNS reply] " << dns->label() << " ---> " << addr.toString() << endl;
-	emit isReady(addr);
+    if(fetchType == TCP){
+        return QHostAddress("218.17.209.23");
+    }else{
+        return QHostAddress("219.133.60.20"); //218.17.209.20
+    }    
+
+}
+
+void EvaServers::getResultsSlot( QHostInfo info )
+{
+    QList<QHostAddress> list = info.addresses();
+    if(list.count() == 0 ){
+        defaultAddress();
+        return;
+    }
+
+    QHostAddress addr = list[0];
+    //X 	kdDebug() << "[DNS reply] " << dns->label() << " ---> " << addr.toString() << endl;
+    emit isReady(addr);
 }
 
 void EvaServers::stopDns( )
@@ -204,6 +216,7 @@ void EvaServers::stopDns( )
 
 void EvaServers::slotTimeout( )
 {
+    printf( "NS lookup timeouted!" );
 	if(m_StopDns) return;
 //X 	kdDebug() << "[DNS timeout] Tencent Server DNS resovling timeout, use default IP instead.";
 	defaultAddress();

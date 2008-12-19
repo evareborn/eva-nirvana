@@ -20,6 +20,8 @@
 
 
 #include "evaguimain.h"
+ 
+#include "evasession.h"
 
 #include "evautil.h"
 
@@ -31,7 +33,6 @@
 #include "evasystemtray.h"
 #include "evaaddingmanager.h"
 #include "evasysmsgmanager.h"
-#include "evaloginmanager.h"
 #include "evacontactmanager.h"
 //X #include "evascriptmanager.h"
 
@@ -80,6 +81,7 @@
 		
 		
 //X EvaUser *EvaMain::user = NULL;
+EvaSession* EvaMain::session = NULL;
 EvaGlobal *EvaMain::global = NULL;
 EvaImageResource *EvaMain::images = NULL;
 EvaHelper *EvaMain::helper = NULL;
@@ -91,18 +93,13 @@ EvaChatWindowManager *EvaMain::g_ChatWindowManager = NULL;
 EvaMainWindow *EvaMain::g_mainWin = NULL;
 QTextCodec* EvaMain::codec = QTextCodec::codecForName("GB18030");
 EvaMain* EvaMain::g_eva = NULL;
-//X EvaLoginManager* EvaMain::g_loginManager = NULL;
 //X EvaContactManager* m_contactManager = NULL;
  
 EvaMain::EvaMain() :
 //X 	DCOPObject("Actions"),
-	m_FileManager(NULL),
-        user( NULL ),
         uhManager( NULL ),
         picManager( NULL ),
-	packetManager(NULL),
 	m_SysMsgManager(NULL),
-        m_loginManager( NULL ),
 	numOfLostKeepAlivePackets(0),
 	sysMenu(NULL),
 	statusMenu(NULL),
@@ -119,8 +116,6 @@ EvaMain::EvaMain() :
 	inIdleStatus = false;
 	EvaUtil::initMap();
 	onlineFriendTimer = new QTimer();
-        m_loginManager = new EvaLoginManager( this );
-        m_contactManager = new EvaContactManager( this );
 //X 	codec = QTextCodec::codecForName("GB18030");
         if ( !initSettings() )
             return; // load image first
@@ -154,20 +149,15 @@ EvaMain::~EvaMain()
 		delete picManager;
 		picManager = 0;
 	}
-	if(m_addingManager){
-		delete m_addingManager;
-		m_addingManager = 0;
-	}
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
-	if(m_loginManager->isLoggedIn() || packetManager)
-		packetManager->doLogout();
+	if(session->isLoggedIn())
+		session->logout();
 
 //X 	GetScriptManager()->releaseScripts();
 	
 	delete loginWin;
 	delete g_mainWin;
-	delete packetManager;
 
 	if(m_SysMsgManager){
 		delete m_SysMsgManager;
@@ -177,17 +167,13 @@ EvaMain::~EvaMain()
 	if(helper->running())
 		helper->terminate();
 	delete helper;
-	if(m_FileManager){
-		m_FileManager->stopAll();
-		delete m_FileManager;
-	}
 	if(idt) delete idt;
 
-	if(user){
-//X 		user->getSetting()->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
-//X 		user->getSetting()->saveSettings();
-		delete user;
-		user = 0;
+	if(session){
+//X 		settings->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
+//X 		settings->saveSettings();
+		delete session;
+		session = 0;
 	}
 }
 
@@ -301,25 +287,22 @@ bool EvaMain::initSettings()
 	sysSetting = global->getEvaSetting();
 	QObject::connect(images, SIGNAL(qqShowReady(const unsigned int)), SLOT(slotQQShowReady(const unsigned int)));
 	
-	// setup adding manager
-	m_addingManager = new EvaAddingManager();	
-
 	m_SysMsgManager = new EvaSysMsgManager(this);
 	//_wallet = 0;
         return true;
 }
-/*
-void EvaMain::slotLoadGroupedBuddiesReady()
-{
-	if(loggedIn) return;
-	g_mainWin->updateBuddy(user->getQQ());
-	g_ChatWindowManager->setMyName(nick, user->getQQ());
 
-	g_mainWin->clearList();
-	g_mainWin->updateContacts();
-	
-	tray->changeToolTip(user->getQQ(), nick, faceId);
-}*/
+//X void EvaMain::slotLoadGroupedBuddiesReady()
+//X {
+//X 	if(loggedIn) return;
+//X 	g_mainWin->updateBuddy(session->getQQ());
+//X 	g_ChatWindowManager->setMyName(nick, session->getQQ());
+//X 
+//X 	g_mainWin->clearList();
+//X 	g_mainWin->updateContacts();
+//X 	
+//X 	tray->changeToolTip(session->getQQ(), nick, faceId);
+//X }
 
 void EvaMain::slotLoadQunListReady()
 {
@@ -356,25 +339,22 @@ void EvaMain::doQuit()
 		delete picManager;
 		picManager = 0;
 	}
-	if(m_addingManager){
-		delete m_addingManager;
-		m_addingManager = 0;
-	}
+
 	if(m_SysMsgManager)
 		delete m_SysMsgManager;
 
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
 
-	if(m_loginManager->isLoggedIn() || packetManager)
-		packetManager->doLogout();
+	if(session->isLoggedIn())
+		session->logout();
 
 	
-	if(user){
-		user->getSetting()->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
-		user->getSetting()->saveSettings();
-		delete user;
-		user = 0;
+	if(session){
+//X 		settings->setWinGeometry(g_mainWin->getPosition(), g_mainWin->getSize());
+//X 		settings->saveSettings();
+		delete session;
+		session = 0;
 	}
  
         if ( helper ) {
@@ -440,7 +420,7 @@ void EvaMain::initUserLeaveMenu()
 {
 	if(!statusMenu) return;
 	std::list<QString>::iterator iter;
-	std::list<QString> autoList = user->getSetting()->getAutoReplyList();
+	std::list<QString> autoList = settings->getAutoReplyList();
 	//if(!autoList.size()) return;
 	
 	statusMenu->removeItemAt(2);
@@ -452,7 +432,7 @@ void EvaMain::initUserLeaveMenu()
 	for(iter=autoList.begin(); iter!=autoList.end(); ++iter){
 		autoMenu->insertItem(*iter, id++);
 	}
-	autoMenu->setItemChecked(user->getSetting()->getAutoReplySelectedIndex()+1, true);
+	autoMenu->setItemChecked(settings->getAutoReplySelectedIndex()+1, true);
 	statusMenu->insertItem(QIcon(*(images->getIcon("LEAVE"))), i18n("Leave"), autoMenu, -1, 2);
 	
 	QObject::connect(autoMenu, SIGNAL(activated(int)), this,  SLOT(slotAutoReplyMenuActivated(int)));
@@ -461,17 +441,17 @@ void EvaMain::initUserLeaveMenu()
 void EvaMain::slotAutoReplyMenuActivated(int id)
 {
 	if(id==0)
-		user->getSetting()->setAutoReplyEnabled(false);
+		settings->setAutoReplyEnabled(false);
 	else
-		user->getSetting()->setAutoReplyEnabled(true);
-	user->getSetting()->setAutoReplySelectedIndex(id - 1);
-	for(uint i=0; i <= user->getSetting()->getAutoReplyList().size(); i++){
+		settings->setAutoReplyEnabled(true);
+	settings->setAutoReplySelectedIndex(id - 1);
+	for(uint i=0; i <= settings->getAutoReplyList().size(); i++){
 		if((int)i==id)
 			autoMenu->setItemChecked(i, true);
 		else
 			autoMenu->setItemChecked(i, false);
 	}
-	if(user->getStatus() != EvaUser::Eva_Leave)
+	if(session->getStatus() != Eva_Leave)
 		slotDoLeave();
 }
 
@@ -509,17 +489,11 @@ void EvaMain::doSlotConnection()
 	QObject::connect(tray, SIGNAL(requestSystemMessage()), m_SysMsgManager, SLOT(showSysMessage()));
 	QObject::connect(g_mainWin, SIGNAL(requestModifyMemo(const unsigned int)), this, SLOT(slotModifyMemo(const unsigned int)));
 
-	QObject::connect(m_addingManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
-	QObject::connect(m_addingManager, SIGNAL(buddyAdded(const unsigned int, const QString, const unsigned short, const int)),
-					SLOT(slotBuddyAdded(const unsigned int, const QString, const unsigned short, const int)));
-
 	QObject::connect(m_SysMsgManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
 	QObject::connect(m_SysMsgManager, SIGNAL(requestQunDetails(const unsigned int)), SLOT(slotRequestQunDetails( const unsigned int)));
 	QObject::connect(m_SysMsgManager, SIGNAL(buddyAdded(const unsigned int, const QString, const unsigned short, const int)),
 					SLOT(slotBuddyAdded(const unsigned int, const QString, const unsigned short, const int)));
 //X 	QObject::connect(m_SysMsgManager, SIGNAL(sysMessage()), tray, SLOT(newSysMessage()));
-	QObject::connect(m_SysMsgManager, SIGNAL(requestAddBuddy(const unsigned int, const QString, const unsigned short)),
-			m_addingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)));
 	QObject::connect(m_SysMsgManager, SIGNAL(qunListChanged()), SLOT(slotLoadQunListReady()));
 
 	QObject::connect(idt, SIGNAL(idleTimeUp()), this, SLOT(slotIdleTimeUp()));
@@ -530,7 +504,7 @@ void EvaMain::slotGetOnlineStatus()
 {
 //	printf("slotGetOnlineStatus() called!\n");
 	std::map<unsigned int, QQFriend>::iterator iter;
-	std::map<unsigned int, QQFriend> list = (user->getFriendList()).getAllFriendsMap();
+	std::map<unsigned int, QQFriend> list = (session->getUser()->getFriendList()).getAllFriendsMap();
 	for(iter = list.begin(); iter != list.end(); ++iter){
 		switch(iter->second.getStatus()){
 		case QQ_FRIEND_STATUS_ONLINE:
@@ -558,23 +532,24 @@ void EvaMain::slotDoLoginClick()
 	numLoginRetry = 0;
 	isClientSet = false;
 	g_mainWin->showInfoFrame(true);
-	slotFetchQQServer();
+        slotSetupEvaClient();
 }
 
 void EvaMain::slotFetchQQServer()
 {
-	EvaServers *server = global->getEvaServers();
-	QObject::disconnect(server, 0, 0, 0);
-	QObject::connect(server, SIGNAL(isReady(QHostAddress)), SLOT(slotGotServer(QHostAddress)));
-	server->fetchAddress(loginWin->getConnectionType() == EvaLoginWindow::UDP ? true: false);
+//X 	EvaServers *server = global->getEvaServers();
+//X 	QObject::disconnect(server, 0, 0, 0);
+//X 	QObject::connect(server, SIGNAL(isReady(QHostAddress)), SLOT(slotGotServer(QHostAddress)));
+//X         EvaNetworkPolicy policy = loginWin->getNetworkPolicy();
+//X 	server->fetchAddress(policy.getConnectionType() == CONN_UDP ? true: false);
 }
 
 void EvaMain::slotGotServer(QHostAddress addr)
 {
-	//printf("Got server :%s\n", addr.toString().ascii());
-	global->getEvaServers()->stopDns();
-	QQServer = addr;
-	slotDoLogin();
+	printf("Got server :%s\n", addr.toString().ascii());
+//X 	global->getEvaServers()->stopDns();
+//X 	QQServer = addr;
+//X 	slotDoLogin();
 }
 
 void EvaMain::slotServerBusy()
@@ -587,55 +562,64 @@ void EvaMain::slotServerBusy()
 
 void EvaMain::slotSetupUser()
 {
-	if(user){
-		QObject::disconnect(user, 0, 0, 0);
+	if(session){
+		QObject::disconnect(session, 0, 0, 0);
 	}
+        EvaNetworkPolicy policy = loginWin->getNetworkPolicy();
+
 	//printf("EvaMain::slotSetupEvaClient\n");
-	user = new EvaUser(loginWin->getQQ(),loginWin->getMd5Password());
+	session = new EvaSession(loginWin->getQQ(),loginWin->getMd5Password(), policy);
+        settings = session->getUser()->getSetting();
 	
-	//QObject::connect(user, SIGNAL(loadGroupedBuddiesReady()), SLOT(slotLoadGroupedBuddiesReady()));
-	//QObject::connect(user, SIGNAL(loadQunListReady()), SLOT(slotLoadQunListReady()));
-	//QObject::connect(user->loginManager(), SIGNAL(processReady()), SLOT(slotLoginProcessReady()));
-	QString qname, aname, bname;
-	qname = i18n("Qun List");
-	aname = i18n("Anonymous");
-	bname = i18n("Black List");
-	user->setQunGroupName(codec->fromUnicode(qname).data());
-	user->setAnonymousGroupName(codec->fromUnicode(aname).data());
-	user->setBlackGroupName(codec->fromUnicode(bname).data());
-	user->getSetting()->loadSettings();
-	images->setThemePath(user->getSetting()->getThemeDir());
-	global->getSoundResource()->setSoundDir(user->getSetting()->getSoundDir());
+        // setup adding manager
+        addingManager = new EvaAddingManager( session );	
+        EvaConnecter* connecter = session->getConnecter();
+//X 	QObject::connect(user, SIGNAL(loadGroupedBuddiesReady()), SLOT(slotLoadGroupedBuddiesReady()));
+        QObject::connect( connecter, SIGNAL( isNetworkReady() ), SLOT( slotDoLogin() ) );
+	QObject::connect(session->getUser(), SIGNAL(loadQunListReady()), SLOT(slotLoadQunListReady()));
+	QObject::connect(addingManager, SIGNAL(requestDetails(const unsigned int)), SLOT(slotRequestDetails(const unsigned int)));
+	QObject::connect(addingManager, SIGNAL(buddyAdded(const unsigned int, const QString, const unsigned short, const int)),
+					SLOT(slotBuddyAdded(const unsigned int, const QString, const unsigned short, const int)));
+	QObject::connect(m_SysMsgManager, SIGNAL(requestAddBuddy(const unsigned int, const QString, const unsigned short)),
+			addingManager, SLOT(slotAddBuddy(const unsigned int, const QString, const unsigned short)));
+
+//X 	QString qname, aname, bname;
+//X 	qname = i18n("Qun List");
+//X 	aname = i18n("Anonymous");
+//X 	bname = i18n("Black List");
+//X 	session->getUser()->setQunGroupName(codec->fromUnicode(qname).data());
+//X 	session->getUser()->setAnonymousGroupName(codec->fromUnicode(aname).data());
+//X 	session->getUser()->setBlackGroupName(codec->fromUnicode(bname).data());
+//X 	settings->loadSettings();
+	images->setThemePath(settings->getThemeDir());
+	global->getSoundResource()->setSoundDir(settings->getSoundDir());
 	// when we set faee size, the face images will be reloaded as well
-	global->setFaceSize(QSize(user->getSetting()->getFaceSize()));
+	global->setFaceSize(QSize(settings->getFaceSize()));
 	
 	slotUpdateShortcut();
 
 	if(loginWin->isHiddenLoginMode())
-		user->setStatus(EvaUser::Eva_Invisible);
+		session->setStatus(Eva_Invisible);
 	else
-		user->setStatus(EvaUser::Eva_Online);
+		session->setStatus(Eva_Online);
 	
 	//QString name = i18n("Buddy");
-	user->newGroup(codec->fromUnicode(i18n("Buddy List")).data()); // we must do this if cannot load from disk
+	session->getUser()->newGroup(codec->fromUnicode(i18n("Buddy List")).data()); // we must do this if cannot load from disk
 	
 	// save the tryin-to-login user's parameters anyway
-	QHostAddress addr(loginWin->getProxyIP());
+	QHostAddress addr(policy.getProxyIP());
 	sysSetting->saveSetting(loginWin->getQQ(), loginWin->getMd5Password(),
 							loginWin->isRememberChecked(), loginWin->isHiddenLoginMode(),  
-							(int)loginWin->getConnectionType(),
-							addr.toIPv4Address(), loginWin->getProxyPort(), loginWin->getProxyUserName(),
-							loginWin->getProxyParam());
+							(int)policy.getConnectionType(),
+							addr.toIPv4Address(), policy.getProxyPort(), policy.getProxyUsername(),
+							policy.getProxyParam());
 
 }
 
 ///NOTE: must call slotSetupUser before calling this method
 void EvaMain::slotSetupNetwork( )
 {
-	if(m_loginManager->isLoggedIn()) slotDoLogout();
-	if(packetManager) {
-		delete packetManager;
-	}
+	if(session->isLoggedIn()) slotDoLogout();
 
 	if(picManager)
 		delete picManager;
@@ -645,47 +629,23 @@ void EvaMain::slotSetupNetwork( )
 		uhManager->wait();
 		delete uhManager;
 	}
-	uhManager = new EvaUHManager(this, user->getSetting()->getUserHeadDir());
+	uhManager = new EvaUHManager(this, settings->getUserHeadDir());
 	uhManager->initiate(global->getFaceSize());// load user head pictures
+
 	if(images){
 		images->setUserHeadImage(uhManager->getOnList(), uhManager->getOffList());
 	}
 
-	if(m_FileManager){
-		m_FileManager->stopAll();
-		delete m_FileManager;
-	}
-	m_FileManager = new EvaFileManager(user->getQQ(), this);
-	EvaNetwork *network = NULL;
-	switch(loginWin->getConnectionType()){
-	case EvaLoginWindow::UDP:
-		network = new EvaNetwork(QQServer, 8000, EvaNetwork::UDP);
-		picManager = new EvaPicManager(user);
-		break;
-	case EvaLoginWindow::TCP:
-		network = new EvaNetwork(QQServer, 80, EvaNetwork::TCP);
-		printf("connecting to \"%s\"\n", QQServer.toString().ascii());
-		picManager = new EvaPicManager(user);
-		break;
-	case EvaLoginWindow::HTTP_Proxy:
-		network = new EvaNetwork(QHostAddress(loginWin->getProxyIP()), loginWin->getProxyPort(), EvaNetwork::HTTP_Proxy);
-		network->setDestinationServer(QQServer.toString(), 443);
-		network->setAuthParameter(loginWin->getProxyParam());
-		
-		picManager = new EvaPicManager(user, true);
-		picManager->setProxyServer(loginWin->getProxyIP(), loginWin->getProxyPort(), loginWin->getProxyParam());
+        EvaFileManager* fileManager = session->getFileManager();
+        EvaNetworkPolicy policy = loginWin->getNetworkPolicy();
+        picManager = new EvaPicManager(session->getUser(), policy);
+        fileManager->setNetworkPolicy(policy);
+	EvaPacketManager* packetManager = session->getPacketManager();
 
-		m_FileManager->setMyProxyInfo(QHostAddress(loginWin->getProxyIP()), loginWin->getProxyPort(), loginWin->getProxyParam());
-		break;
-	}
-
-	connecter = new EvaConnecter(network);
-	packetManager = new EvaPacketManager(user, connecter, this);
-
-	// connect signals of m_FileManager
-	QObject::connect(m_FileManager, SIGNAL(notifyTransferStatus(const unsigned int, const unsigned int, const unsigned int, const unsigned int, const int )), 
+	// connect signals of fileManager
+	QObject::connect(fileManager, SIGNAL(notifyTransferStatus(const unsigned int, const unsigned int, const unsigned int, const unsigned int, const int )), 
 					SLOT(slotNotifyTransferStatus(const unsigned int, const unsigned int, const unsigned int, const unsigned int, const int )));
-	QObject::connect(m_FileManager, SIGNAL(notifyAddressRequest(const unsigned int, const unsigned int, const unsigned int, 
+	QObject::connect(fileManager, SIGNAL(notifyAddressRequest(const unsigned int, const unsigned int, const unsigned int, 
 							const unsigned int, const unsigned short,  const unsigned int, const unsigned short)), 
 					SLOT(slotNotifyAddressRequest(const unsigned int, const unsigned int, const unsigned int, 
 							const unsigned int, const unsigned short,  const unsigned int, const unsigned short)));
@@ -798,16 +758,14 @@ void EvaMain::slotSetupNetwork( )
 								const unsigned int , const unsigned short ,
 								const unsigned int , const unsigned short ,
 								const unsigned int )));
-	QObject::connect(m_FileManager, SIGNAL(notifyAgentRequest(const unsigned int, const unsigned int, const unsigned int, 
+	QObject::connect(fileManager, SIGNAL(notifyAgentRequest(const unsigned int, const unsigned int, const unsigned int, 
 							const unsigned int, const unsigned short, const unsigned char)),
 			  packetManager, SLOT(doNotifyAgentTransfer(const unsigned int, const unsigned int, const unsigned int,
 							const unsigned int, const unsigned short, const unsigned char)));
 
 	// let Adding Manager know connection changed
-	m_addingManager->setPacketManager( packetManager);
+	addingManager->setPacketManager( packetManager);
 	m_SysMsgManager->setPacketManager( packetManager);
-	m_loginManager->setPacketManager( packetManager);
-	m_contactManager->setPacketManager( packetManager);
 }
 
 /**
@@ -817,12 +775,13 @@ void EvaMain::slotSetupNetwork( )
 ///NOTE: must call slotSetupNetwork before calling this method
 void EvaMain::slotSetupWindowManager()
 {
-
+    EvaFileManager* fileManager = session->getFileManager();
 	if(g_ChatWindowManager) delete g_ChatWindowManager;
 
 	// if user nickname does not exist, default "EVA" will be used	
-	QString nick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
-	g_ChatWindowManager = new EvaChatWindowManager(images, user->getSetting(), nick, user->getQQ());
+	QString nick = codec->toUnicode(session->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
+	g_ChatWindowManager = new EvaChatWindowManager(images, settings, nick, session->getQQ());
+	EvaPacketManager* packetManager = session->getPacketManager();
 
 	QObject::connect(packetManager, SIGNAL(txtMessage(unsigned int, bool, QString, QDateTime, const char, 
 			const bool, const bool, const bool, const char , const char, const char)), g_ChatWindowManager, 
@@ -830,7 +789,7 @@ void EvaMain::slotSetupWindowManager()
 			const char , const char, const char)));
 
 	QObject::connect(packetManager, SIGNAL(sentMessageResult(unsigned int, bool)), g_ChatWindowManager, SLOT(slotSendResult(unsigned int, bool)));
-	QObject::connect(connecter, SIGNAL(sendMessage( unsigned int, bool)), g_ChatWindowManager, SLOT(slotSendResult(unsigned int, bool)));
+	QObject::connect(session->getConnecter(), SIGNAL(sendMessage( unsigned int, bool)), g_ChatWindowManager, SLOT(slotSendResult(unsigned int, bool)));
 
 	QObject::connect(packetManager, SIGNAL(qunRequestUpdateDisplay()), g_ChatWindowManager, SLOT(slotQunListUpdated()) );
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestQunCard(const unsigned int, const unsigned int)),
@@ -872,7 +831,7 @@ void EvaMain::slotSetupWindowManager()
 								const short,
 								const unsigned int,
 								const unsigned int)) );
-	QObject::connect(connecter, SIGNAL(sendQunMessage(unsigned int, bool, QString)),
+	QObject::connect(session->getConnecter(), SIGNAL(sendQunMessage(unsigned int, bool, QString)),
 			g_ChatWindowManager, SLOT(slotQunSendResult(unsigned int, bool, QString)));
 	QObject::connect(g_ChatWindowManager, SIGNAL(requestQunDetails(const unsigned int)), this, SLOT(slotRequestQunDetails(const unsigned int)));
 	QObject::connect(g_ChatWindowManager, SIGNAL(sendQunMessage(const unsigned int, QString &, const char , 
@@ -894,16 +853,16 @@ void EvaMain::slotSetupWindowManager()
 	QObject::connect(picManager, SIGNAL(sendErrorMessage(const unsigned int, const QString)), g_ChatWindowManager, 
 			SLOT(slotSendImageError(const unsigned int, const QString)));
 
-	QObject::connect(m_FileManager, SIGNAL(notifyTransferSessionChanged(const unsigned int, const unsigned int, const unsigned int)), g_ChatWindowManager, 
+	QObject::connect(fileManager, SIGNAL(notifyTransferSessionChanged(const unsigned int, const unsigned int, const unsigned int)), g_ChatWindowManager, 
 			SLOT(slotChangeFileSessionTo(const unsigned int, const unsigned int, const unsigned int)));
-	QObject::connect(m_FileManager, SIGNAL(notifyTransferNormalInfo(const unsigned int, const unsigned int,
+	QObject::connect(fileManager, SIGNAL(notifyTransferNormalInfo(const unsigned int, const unsigned int,
 						EvaFileStatus, const QString, const QString,
 						const unsigned int, const unsigned char)),
 			g_ChatWindowManager, SLOT(slotFileNotifyNormalInfo(const unsigned int, const unsigned int,
 						EvaFileStatus, const QString, const QString,
 						const unsigned int, const unsigned char)));
 	QObject::connect(g_ChatWindowManager, SIGNAL(fileTransferResume(const unsigned int, const unsigned int, const bool)),
-			m_FileManager, SLOT(slotFileTransferResume(const unsigned int, const unsigned int, const bool)));
+			fileManager, SLOT(slotFileTransferResume(const unsigned int, const unsigned int, const bool)));
 }
 
 void EvaMain::slotSetupEvaClient()
@@ -918,26 +877,26 @@ void EvaMain::slotSetupEvaClient()
 	slotSetupNetwork();
 	slotSetupWindowManager();
 
-	user->loadGroupedBuddyList();
-	user->loadQunList();
+	session->getUser()->loadGroupedBuddyList();
+	session->getUser()->loadQunList();
 	tray->show();
 
 	g_mainWin->updateMyInfo();
 	g_mainWin->showInfoFrame(true);
-	g_mainWin->resize(user->getSetting()->getWinSize());
-	g_mainWin->move(user->getSetting()->getWinPoint());
+	g_mainWin->resize(settings->getWinSize());
+	g_mainWin->move(settings->getWinPoint());
 	isClientSet = true;
 }
 
 void EvaMain::slotDoLogin()
 {
-	if(!isClientSet)
-		slotSetupEvaClient();
+//X 	if(!isClientSet)
+//X 		slotSetupEvaClient();
 	tray->setLoginWaiting();
 	//ServerDetectorPacket::setStep(0);
 	//ServerDetectorPacket::setFromIP(0);
 	//connecter->redirectTo(QQServer.toIPv4Address(), -1);
-	m_loginManager->login(QQServer);
+	session->login();
 }
 
 void EvaMain::slotDoCancel()
@@ -958,38 +917,38 @@ void EvaMain::slotDoCancel()
 
 // void EvaMain::slotConnectReady( )
 // {
-// 	kdDebug() << "[QQ: " << user->getQQ() << "] start logging in server \"" << connecter->getHostAddress().toString()  << "\" ..." << endl;
+// 	kdDebug() << "[QQ: " << session->getQQ() << "] start logging in server \"" << connecter->getHostAddress().toString()  << "\" ..." << endl;
 // 	packetManager->doLogin();
 // }
 
 void EvaMain::loginOK( )
 {
 	initUserLeaveMenu();
-	switch(user->getStatus()){
-	case EvaUser::Eva_Online:
+	switch(session->getStatus()){
+	case Eva_Online:
 		g_mainWin->online();
 		tray->setOnline();
 		break;
-	case EvaUser::Eva_Offline:
+	case Eva_Offline:
 		g_mainWin->offline();
 		tray->setOffline();
 		break;
-	case EvaUser::Eva_Leave:
+	case Eva_Leave:
 		g_mainWin->leave();
 		tray->setLeave();
 		break;
-	case EvaUser::Eva_Invisible:
+	case Eva_Invisible:
 		g_mainWin->invisible();
 		tray->setInvisible();
 	}
 
-	//packetManager->doGetUserInfo(user->getQQ());
+	//packetManager->doGetUserInfo(session->getQQ());
 	
 	//loggedIn = true;
 	//QTimer::singleShot(5000,this, SLOT(slotGetOnlineStatus()));
 
-	idt->setMaxIdle(user->getSetting()->getIdleMaxTime());
-	printf("idt created %d minutes\n", user->getSetting()->getIdleMaxTime());
+	idt->setMaxIdle(settings->getIdleMaxTime());
+	printf("idt created %d minutes\n", settings->getIdleMaxTime());
 	idt->toggleOverAllIdleDetection(TRUE);
 	idt->startIdleDetection();
 }
@@ -999,35 +958,33 @@ void EvaMain::slotOfflineReady()
 	g_mainWin->offline();
 	tray->setOffline();
 	//loggedIn = false;
-	m_loginManager->setLoggedOut();
-	//user->loginManager()->reset();
-	//user->loginManager()->finishedCommand(QQ_CMD_REQUEST_LOGIN_TOKEN);
+	session->logout();
 	picManager->stop();
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
 	
-//X 	GetScriptManager()->notifyStatusChange(user->getQQ());
+//X 	GetScriptManager()->notifyStatusChange(session->getQQ());
 }
 
 void EvaMain::slotOnlineReady( )
 {
 	g_mainWin->online();
 	tray->setOnline();
-//X 	GetScriptManager()->notifyStatusChange(user->getQQ());
+//X 	GetScriptManager()->notifyStatusChange(session->getQQ());
 }
 
 void EvaMain::slotInvisibleReady( )
 {
 	g_mainWin->invisible();
 	tray->setInvisible();
-//X 	GetScriptManager()->notifyStatusChange(user->getQQ());
+//X 	GetScriptManager()->notifyStatusChange(session->getQQ());
 }
 
 void EvaMain::slotLeaveReady( )
 {
 	g_mainWin->leave();
 	tray->setLeave();
-//X 	GetScriptManager()->notifyStatusChange(user->getQQ());
+//X 	GetScriptManager()->notifyStatusChange(session->getQQ());
 }
 
 void EvaMain::slotNetworkException( int/* exp*/)
@@ -1037,12 +994,10 @@ void EvaMain::slotNetworkException( int/* exp*/)
 	numOfLostKeepAlivePackets++; 
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
-	packetManager->doLogout();
+	session->logout();
 	picManager->stop();
 	//loggedIn = false;
-	m_loginManager->setLoggedOut();
 	
-	//user->loginManager()->reset();
 	QMessageBox::information(0, i18n("Network error occurred, check your network then try Eva later please."),
 				i18n("Network"));
 }
@@ -1060,29 +1015,26 @@ void EvaMain::slotPacketException( int cmd)
 			numOfLostKeepAlivePackets++; 
 			
 	}
-	if(!m_loginManager->isLoggedIn() && ( cmd == QQ_CMD_LOGIN || cmd == QQ_CMD_REQUEST_LOGIN_TOKEN )){
+	if(!session->isLoggedIn() && ( cmd == QQ_CMD_LOGIN || cmd == QQ_CMD_REQUEST_LOGIN_TOKEN )){
 		g_mainWin->offline();
 		tray->setOffline();
-		packetManager->doLogout();
+		session->logout();
 		
 		if(onlineFriendTimer->isActive())
 			onlineFriendTimer->stop();
-		//loggedIn = false;
-		m_loginManager->setLoggedOut();
 		QMessageBox::information(0, i18n("Cannot login, try later please."), i18n("Eva Login"));
 	}
 	
 	if(numOfLostKeepAlivePackets>=2){
 		g_mainWin->offline();
 		tray->setOffline();
-		packetManager->doLogout();
+		session->logout();
 		picManager->stop();
 		numOfLostKeepAlivePackets = 0;
 		if(onlineFriendTimer->isActive())
 			onlineFriendTimer->stop();
-		//user->loginManager()->reset();
 		//loggedIn = false;
-		m_loginManager->setLoggedOut();
+		session->logout();
 		QMessageBox::information(0, i18n("Lost connection with server, try later please."), i18n("Eva Connection"));
 	}
 }
@@ -1092,7 +1044,7 @@ void EvaMain::slotPacketException( int cmd)
 // 	g_mainWin->offline();
 // 	tray->setOffline();
 // 	loggedIn = false;
-// 	user->setStatus(EvaUser::Eva_Offline);
+// 	session->setStatus(EvaSession::Eva_Offline);
 // 	numOfLostKeepAlivePackets = 0;
 // 	//QMessageBox::information(g_mainWin, msg, i18n("Eva Login"));
 // 	slotDoChangeUser();
@@ -1103,8 +1055,7 @@ void EvaMain::slotKickedOut(const QString msg)
 	g_mainWin->offline();
 	tray->setOffline();
 	//loggedIn = false;
-	m_loginManager->setLoggedOut();
-	user->setStatus(EvaUser::Eva_Offline);
+	session->logout();
 	numOfLostKeepAlivePackets = 0;
 	QMessageBox::critical(g_mainWin, msg, i18n("Eva Login"));
 }
@@ -1112,31 +1063,30 @@ void EvaMain::slotKickedOut(const QString msg)
 // void EvaMain::slotFriendListReady( )
 // {
 // 	if(!user->isBuddiesLoaded()){
-// 		user->saveGroupedBuddyList();
-// 		user->setBuddyLoadedEnabled(true);
+// 		session->getUser()->saveGroupedBuddyList();
+// 		session->getUser()->setBuddyLoadedEnabled(true);
 // 		if(!m_IsShowingGroups) slotDoDownloadGroups();
 // 	}
 // 
-// 	//user->loginManager()->finishedCommand(QQ_CMD_GET_FRIEND_LIST);
 // 	if(!onlineFriendTimer->isActive())
 // 		onlineFriendTimer->start(60000, false);
 // }
 
 void EvaMain::slotFriendStatusChanged( unsigned int id )
 {
-	const QQFriend *frd = (user->getFriendList()).getFriend(id);
+	const QQFriend *frd = (session->getUser()->getFriendList()).getFriend(id);
 	if(frd){
 		printf("IP is %d\n", frd->getIP());
 		switch(frd->getStatus()){
 		case QQ_FRIEND_STATUS_ONLINE:
 			g_mainWin->changeToOnline(id);
-			if(user->getSetting()->isShowBudyOnlineNotifyEnabled()){
+			if(settings->isShowBudyOnlineNotifyEnabled()){
 //X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am online." ) );
 //X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
 //X 									id, frd->getFace(), i18n("I am online."));
 //X 				QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
 //X 				tip->show();
-				if(user->getSetting()->isSoundEnabled())
+				if(settings->isSoundEnabled())
 					global->getSoundResource()->playOnlineSound();
 			}
 			break;
@@ -1145,7 +1095,7 @@ void EvaMain::slotFriendStatusChanged( unsigned int id )
 			break;
 		case QQ_FRIEND_STATUS_LEAVE:
 			g_mainWin->changeToLeave(id);
-			if(user->getSetting()->isShowBudyOnlineNotifyEnabled()){
+			if(settings->isShowBudyOnlineNotifyEnabled()){
 //X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am busy ..." ) );
 //X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
 //X 									id, frd->getFace(), i18n("I am busy ..."));
@@ -1168,21 +1118,22 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 			const bool, const bool, const bool, 
 			const char, const char, const char)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	QString reply="";
-	if(sender != user->getQQ() &&
-	   user->getStatus() == EvaUser::Eva_Leave && 
-	   user->getSetting()->isAutoReplyEnabled()){
-		reply = user->getSetting()->getSelectedAutoReply();
+	if(sender != session->getQQ() &&
+	   session->getStatus() == Eva_Leave && 
+	   settings->isAutoReplyEnabled()){
+		reply = settings->getSelectedAutoReply();
 		packetManager->doSendMessage(sender, false, reply, 9, false, false, false, 0,0,0);
 	}
 	if(!(g_ChatWindowManager && g_ChatWindowManager->isChatWindowExisted(sender))){	
 		g_mainWin->newMessage(sender);
-		const QQFriend *frd = (user->getFriendList()).getFriend(sender);
+		const QQFriend *frd = (session->getUser()->getFriendList()).getFriend(sender);
 		short faceId = 0x0000;
 		if(frd)
 			faceId = frd->getFace();
 		tray->newTxtMessage(sender, codec->toUnicode( frd->getNick().c_str() ), message);
-		if(user->getSetting()->isShowMessageTipEnabled()){
+		if(settings->isShowMessageTipEnabled()){
 //X                         tray->showMessageTip( sender, codec->toUnicode(frd->getNick().c_str() ), message  );
 //X 			EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), sender, faceId, message);
 //X 			QObject::connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
@@ -1192,7 +1143,7 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 	if( g_ChatWindowManager && g_ChatWindowManager->isChatWindowExisted(sender)){
 		g_mainWin->addBuddyToRecentList( sender, true);
 	}
-	if(user->getSetting()->isSoundEnabled() && !(g_ChatWindowManager && g_ChatWindowManager->isChatWindowExisted(sender)) )
+	if(settings->isSoundEnabled() && !(g_ChatWindowManager && g_ChatWindowManager->isChatWindowExisted(sender)) )
 		global->getSoundResource()->playNewMessage();
 }
 
@@ -1207,8 +1158,8 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 // 	g_mainWin->updateQuns();
 // 	g_mainWin->updateRecentContacts();
 // 	if(!user->isBuddiesLoaded()){
-// 		user->saveGroupedBuddyList();
-// 		user->setBuddyLoadedEnabled(true);
+// 		session->getUser()->saveGroupedBuddyList();
+// 		session->getUser()->setBuddyLoadedEnabled(true);
 // 	}
 // 	std::list<int>msgs = g_ChatWindowManager->getMessages();
 // 	std::list<int>::iterator itr;
@@ -1219,59 +1170,59 @@ void EvaMain::slotTxtMessage(unsigned int sender, bool, QString message, QDateTi
 
 void EvaMain::slotDoOnline()
 {
-	if(user->getStatus() == EvaUser::Eva_Offline){
-		user->setStatus(EvaUser::Eva_Online);
-		//user->loginManager()->finishedCommand(QQ_CMD_GET_FRIEND_LIST);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	if(session->getStatus() == Eva_Offline){
+		session->setStatus(Eva_Online);
 		slotDoLogin();
 	}else
-		packetManager->doChangeStatus(EvaUser::Eva_Online);
+		packetManager->doChangeStatus(Eva_Online);
 }
 
 void EvaMain::slotDoOffline()
 {
-	packetManager->doChangeStatus(EvaUser::Eva_Offline);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	packetManager->doChangeStatus(Eva_Offline);
 }
 
 void EvaMain::slotDoLeave()
 {
-	if(user->getStatus() == EvaUser::Eva_Offline){
-		user->setStatus(EvaUser::Eva_Leave);
-		//user->loginManager()->finishedCommand(QQ_CMD_GET_FRIEND_LIST);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	if(session->getStatus() == Eva_Offline){
+		session->setStatus(Eva_Leave);
 		slotDoLogin();
 	}else
-		packetManager->doChangeStatus(EvaUser::Eva_Leave);
+		packetManager->doChangeStatus(Eva_Leave);
 }
 
 void EvaMain::slotDoInvisible()
 {
-	if(user->getStatus() == EvaUser::Eva_Offline){
-		user->setStatus(EvaUser::Eva_Invisible);
-		//user->loginManager()->finishedCommand(QQ_CMD_GET_FRIEND_LIST);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	if(session->getStatus() == Eva_Offline){
+		session->setStatus(Eva_Invisible);
 		slotDoLogin();
 	}else
-		packetManager->doChangeStatus(EvaUser::Eva_Invisible);
+		packetManager->doChangeStatus(Eva_Invisible);
 }
 
 void EvaMain::slotDoLogout()
 {
-	//user->loginManager()->reset();
-//X 	user->getSetting()->setWinGeometry(g_mainWin->pos(), g_mainWin->size());
-//X 	user->getSetting()->saveSettings();
+	settings->setWinGeometry(g_mainWin->pos(), g_mainWin->size());
+	settings->saveSettings();
 	if(onlineFriendTimer->isActive())
 		onlineFriendTimer->stop();
-	packetManager->doLogout();
-	//loggedIn = false;
-	m_loginManager->setLoggedOut();
+	session->logout();
 }
 
 void EvaMain::slotDoDownloadGroups()
 {
-	user->setBuddyLoadedEnabled(false);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	session->getUser()->setBuddyLoadedEnabled(false);
 	packetManager->doGetGroups();
 }
 
 void EvaMain::slotDoUploadGroups()
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	packetManager->doUploadGroups();
 }
 
@@ -1285,8 +1236,8 @@ void EvaMain::slotFriendGroupsUploadReady(bool ok)
 
 void EvaMain::slotDoDownloadBuddies()
 {
-	user->setBuddyLoadedEnabled(false);
-	//user->loginManager()->clearCommandFlag(QQ_CMD_GET_FRIEND_LIST);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	session->getUser()->setBuddyLoadedEnabled(false);
 	packetManager->doGetAllFriends();
 }
 
@@ -1302,38 +1253,39 @@ void EvaMain::slotDoChangeUser()
 
 void EvaMain::slotGroupDeleted( const int index)
 {
-	user->removeGroupName(index);
-	user->saveGroupedBuddyList();
+	session->getUser()->removeGroupName(index);
+	session->getUser()->saveGroupedBuddyList();
 }
 
 // void EvaMain::slotGroupAdded( QString gn, int index)
 // {
 // 	std::string name = (codec->fromUnicode(gn)).data();
 // 	user->newGroup(name);
-// 	int newIndex = user->getGroupIndexOf(name);
+// 	int newIndex = session->getUser()->getGroupIndexOf(name);
 // 	g_mainWin->listView->findGroup(index)->setGroupIndex(newIndex);
-// 	user->saveGroupedBuddyList();
+// 	session->getUser()->saveGroupedBuddyList();
 // }
 
 void EvaMain::slotGroupRenamed( QString gn, int index)
 {
 	std::string name = (codec->fromUnicode(gn)).data();
-	user->updateGroupName(name, index);
-	user->saveGroupedBuddyList();
+	session->getUser()->updateGroupName(name, index);
+	session->getUser()->saveGroupedBuddyList();
 }
 
 void EvaMain::slotGroupChanged(const unsigned int id, int index)
 {
-	user->getFriendList().updateFriendGroupIndex(id, index);
-	user->saveGroupedBuddyList();
+	session->getUser()->getFriendList().updateFriendGroupIndex(id, index);
+	session->getUser()->saveGroupedBuddyList();
 }
 
 void EvaMain::slotRequestDetails(const unsigned int id)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	QStringList details;
 	details.append(QString::number(id));
 	
-	const QQFriend *frd = (user->getFriendList()).getFriend(id); 
+	const QQFriend *frd = (session->getUser()->getFriendList()).getFriend(id); 
 	if(frd){
 		std::string qq = frd->getUserInformation().at(0);
 		if(qq!="-"){
@@ -1341,7 +1293,7 @@ void EvaMain::slotRequestDetails(const unsigned int id)
 		}
 	}
 		
-	if(id == user->getQQ()){
+	if(id == session->getQQ()){
 		slotRequestSystemSettingWindow();
 		
 	}else{
@@ -1369,7 +1321,7 @@ void EvaMain::slotRequestDetails(const unsigned int id)
 
 void EvaMain::slotRequestChat(const unsigned int id)
 {
-	QQFriend *frd = user->getFriendList().getFriend(id);
+	QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	g_mainWin->gotMessage(id);
 	tray->gotTxtMessage(id);
 	g_ChatWindowManager->openChatWindow(frd);
@@ -1377,7 +1329,7 @@ void EvaMain::slotRequestChat(const unsigned int id)
 
 void EvaMain::slotRequestSendFile(const unsigned int id)
 {
-	QQFriend *frd = user->getFriendList().getFriend(id);
+	QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	g_mainWin->gotMessage(id);
 	tray->gotTxtMessage(id);
 	g_ChatWindowManager->openChatWindow(frd, true);
@@ -1385,19 +1337,20 @@ void EvaMain::slotRequestSendFile(const unsigned int id)
 
 void EvaMain::slotRequestLevel(const unsigned int id)
 {
-	if(m_loginManager->isLoggedIn())
+	EvaPacketManager* packetManager = session->getPacketManager();
+	if(session->isLoggedIn())
 		packetManager->requestFriendLevel(id);
 }
 
 void EvaMain::slotRequestHistory(const unsigned int id)
 {
-	QQFriend *frd = user->getFriendList().getFriend(id);
+	QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	QString nick = codec->toUnicode(frd->getNick().c_str());
 	
 	EvaChatWindow *win = g_ChatWindowManager->getWindow(id);
-	EvaHistoryViewer *viewer = new EvaHistoryViewer(id, nick, user->getSetting());
+	EvaHistoryViewer *viewer = new EvaHistoryViewer(id, nick, settings);
 	
-	//int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
+	//int faceId = atoi(session->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
 	unsigned short faceId = frd->getFace();
 	QPixmap *face = images->getFaceByID(faceId);
 	viewer->setIcon(*face);
@@ -1428,12 +1381,12 @@ void EvaMain::slotRequestQQShow(const unsigned int id)
 
 void EvaMain::slotRequestMyQQShow()
 {
-	slotRequestQQShow(user->getQQ());
+	slotRequestQQShow(session->getQQ());
 }
 
 void EvaMain::slotQQShowReady( const unsigned int id)
 {
-	if(id == user->getQQ())
+	if(id == session->getQQ())
 		g_ChatWindowManager->slotMyQQShowReady();
 	else
 		g_ChatWindowManager->slotBuddyQQShowReady(id);
@@ -1441,6 +1394,7 @@ void EvaMain::slotQQShowReady( const unsigned int id)
 
 void EvaMain::slotRequestSearch( )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	EvaSearchWindow *win = new EvaSearchWindow(images, packetManager->getNumOnlineUsers(), 0, "Searching");
 
 	QObject::connect(win, SIGNAL(requestUserInfo(const unsigned int)), this, SLOT(slotRequestDetails(const unsigned int)));
@@ -1496,32 +1450,32 @@ void EvaMain::slotRequestSearch( )
 
 // void EvaMain::slotSystemMeBeenAdded(unsigned int)
 // {
-// 	if(user->getSetting()->isSoundEnabled())
+// 	if(settings->isSoundEnabled())
 // 		global->getSoundResource()->playSysMessage();
 // }
 
 // void EvaMain::slotSystemAddMeRequest(unsigned int, QString)
 // {
-// 	if(user->getSetting()->isSoundEnabled())
+// 	if(settings->isSoundEnabled())
 // 		global->getSoundResource()->playSysMessage();
 // }
 
 // void EvaMain::slotSystemAddRequestApproved(unsigned int)
 // {
-// 	if(user->getSetting()->isSoundEnabled())
+// 	if(settings->isSoundEnabled())
 // 		global->getSoundResource()->playSysMessage();
 // }
 
 // void EvaMain::slotSystemAddRequestRejected(unsigned int, QString)
 // {
-// 	if(user->getSetting()->isSoundEnabled())
+// 	if(settings->isSoundEnabled())
 // 		global->getSoundResource()->playSysMessage();
 // }
 
 /*
 // void EvaMain::slotRequestSystemMessage( )
 // {
-// 	EvaUserSetting::sysMessage m = user->getSetting()->getLastSysMessage();
+// 	EvaUserSetting::sysMessage m = settings->getLastSysMessage();
 // 	if(m.type == 0 && m.from == 0) return;
 // 	slotShowSystemMessage( m.messageType, m.type, m.from, m.to, m.message, m.internalQunID);
 // }
@@ -1547,7 +1501,7 @@ void EvaMain::slotShowSystemMessage(const short msgType, const uint8_t type, con
 			win->slotAddRequestRejected(from, message);
 			break;
 		default:
-			if(user->getSetting()->isShowSystemBroadcastEnabled())
+			if(settings->isShowSystemBroadcastEnabled())
 				win->slotOtherNotification(from, message);
 		}
 		QObject::connect(win, SIGNAL(requestUserInfo(const unsigned int)), this, SLOT(slotRequestDetails(const unsigned int)));
@@ -1594,7 +1548,7 @@ void EvaMain::slotShowSystemMessage(const short msgType, const uint8_t type, con
 				packetManager, SLOT(doRejectQun(const unsigned int,const unsigned int, const QString &)));
 		QObject::connect(packetManager, SIGNAL(qunJoinAuthReply(const unsigned int)), win, SLOT(slotQunJoinAuthReply(const unsigned int)));
 	}
-	if(user->getSetting()->isShowSystemBroadcastEnabled())
+	if(settings->isShowSystemBroadcastEnabled())
 		QObject::connect(packetManager, SIGNAL(systemNotification(int, QString)), win, SLOT(slotOtherNotification(int, QString)));
 	QRect scr = KApplication::desktop()->screenGeometry();    
 	win->move(scr.center() - win->rect().center());
@@ -1604,7 +1558,7 @@ void EvaMain::slotShowSystemMessage(const short msgType, const uint8_t type, con
 
 void EvaMain::slotRequestSystemMessages( )
 {
-	EvaSysHistoryViewer *viewer = new EvaSysHistoryViewer( user->getSetting());
+	EvaSysHistoryViewer *viewer = new EvaSysHistoryViewer( settings);
 	QObject::connect(viewer, SIGNAL(historyDoubleClicked( const unsigned short,
 								const unsigned char,
 								const unsigned int,
@@ -1631,6 +1585,7 @@ void EvaMain::slotRequestSystemMessages( )
 
 void EvaMain::slotRequestDelete( const unsigned int id)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	packetManager->doDeleteBuddy(id);
 }
 
@@ -1645,11 +1600,12 @@ void EvaMain::slotDeleteBuddyReady( unsigned int id, bool ok)
 
 void EvaMain::slotRequestSystemSettingWindow( )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	QStringList details;
-	if(user->getDetails().at(0)!="-"){
-		details = packetManager->convertDetails(user->getDetails());
+	if(session->getUser()->getDetails().at(0)!="-"){
+		details = packetManager->convertDetails(session->getUser()->getDetails());
 	
-		EvaSysSettingWindow *win = new EvaSysSettingWindow(details, images, user->getSetting(), g_mainWin);
+		EvaSysSettingWindow *win = new EvaSysSettingWindow(details, images, settings, g_mainWin);
 	
 		QObject::connect(win, SIGNAL(requestUpdate(const unsigned int)), packetManager, SLOT(doGetUserInfo(const unsigned int)));
 		QObject::connect(win, SIGNAL(settingChanged()), SLOT(slotUserSettingChanged()));
@@ -1684,7 +1640,7 @@ void EvaMain::slotRequestSystemSettingWindow( )
 		QObject::connect(images, SIGNAL(qqShowReady(const unsigned int)), win, SLOT(slotBuddyQQShowReady(const unsigned int)));
 	
 	
-		packetManager->doGetUserInfo(user->getQQ());
+		packetManager->doGetUserInfo(session->getQQ());
 		QRect scr = QApplication::desktop()->screenGeometry();
 	
 		win->move(scr.center() - win->rect().center());	
@@ -1698,8 +1654,9 @@ void EvaMain::slotRequestSystemSettingWindow( )
 
 void EvaMain::slotDeleteMeFrom( const unsigned int id)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	if(deleteFromQQ != -1) return;  // make sure we only delete from one friend's list at a moment
-	const QQFriend *frd = user->getFriendList().getFriend(id);
+	const QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	if(!frd) return;
 	QString nick = codec->toUnicode(frd->getNick().c_str());
 	if(QMessageBox::question( g_mainWin, QString(i18n("put \"%1\" into Blacklist, are you sure?")).arg(nick),
@@ -1712,8 +1669,8 @@ void EvaMain::slotDeleteMeFrom( const unsigned int id)
 void EvaMain::slotDeleteMeReply( bool ok)
 {
 	if(ok){
-		g_mainWin->changeGroupTo(deleteFromQQ, user->getBlackIndex());
-		slotGroupChanged(deleteFromQQ, user->getBlackIndex());
+		g_mainWin->changeGroupTo(deleteFromQQ, session->getUser()->getBlackIndex());
+		slotGroupChanged(deleteFromQQ, session->getUser()->getBlackIndex());
 		
 		deleteFromQQ = -1;
 	}else
@@ -1734,19 +1691,19 @@ void EvaMain::slotRequestAddBuddy(const unsigned int id)
 /*
 void EvaMain::slotMyInfoReady( )
 {	
-// 	QString myNick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
+// 	QString myNick = codec->toUnicode(session->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
 // 	if(myNick.isNull()) myNick = "";
 // 	g_mainWin->setCaption(myNick + " - Eva");
-// 	int myFaceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
+// 	int myFaceId = atoi(session->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
 // 	QPixmap *face = images->getFaceByID(myFaceId);
-// 	if(user->hasUserHead()){
-// 		QPixmap *uhPic = images->getUserHeadPixmap(user->getQQ()); // color pixmap
+// 	if(session->getUser()->hasUserHead()){
+// 		QPixmap *uhPic = images->getUserHeadPixmap(session->getQQ()); // color pixmap
 // 		if(uhPic) face = uhPic;
 // 	}
 // 	g_mainWin->setIcon(*face);
-// 	g_mainWin->setMainInfo(user->getQQ(), myNick, face?face:images->getFace(0));
-	g_mainWin->updateBuddy(user->getQQ());
-	g_ChatWindowManager->setMyName(myNick, user->getQQ());
+// 	g_mainWin->setMainInfo(session->getQQ(), myNick, face?face:images->getFace(0));
+	g_mainWin->updateBuddy(session->getQQ());
+	g_ChatWindowManager->setMyName(myNick, session->getQQ());
 	
 	if(!user->isBuddiesLoaded())
 		slotDoDownloadBuddies();
@@ -1754,8 +1711,8 @@ void EvaMain::slotMyInfoReady( )
 */
 void EvaMain::slotQunInfomationReady(unsigned int id, const bool /*ok*/, QString /*errorMsg*/)
 {
-	const Qun *qun = user->getQunList()->getQun(id);
-	user->saveQunList();
+	const Qun *qun = session->getUser()->getQunList()->getQun(id);
+	session->getUser()->saveQunList();
 	if(qun){
 		g_mainWin->updateQun(id);
 	}
@@ -1763,7 +1720,8 @@ void EvaMain::slotQunInfomationReady(unsigned int id, const bool /*ok*/, QString
 
 void EvaMain::slotRequestQunDetails( const unsigned int id)
 {
-	Qun *qun = user->getQunList()->getQun(id);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	QunDetailsWindow *win;
 	if(!qun){
 		qun = new Qun(id);
@@ -1808,7 +1766,7 @@ void EvaMain::slotRequestQunDetails( const unsigned int id)
 			win, SLOT(slotModifyQunMembers(const unsigned int, const bool, QString)));
 
 	QObject::connect(win, SIGNAL(requestAddBuddy(const unsigned int , const QString, const unsigned short )),
-			m_addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
+			addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
 	
 	QObject::connect(packetManager, SIGNAL(qunMemberInfoReady(const unsigned int)), 
 			win, SLOT(slotMembersUpdated(const unsigned int)));
@@ -1823,7 +1781,8 @@ void EvaMain::slotRequestQunDetails( const unsigned int id)
 void EvaMain::slotRequestQunCardReady(const unsigned int id, const bool ok, const unsigned int qq, QString realName, const unsigned char gender, 
 					QString phone, QString email, QString memo, QString msg)
 {
-	Qun *qun = user->getQunList()->getQun(id);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	QunDetailsWindow *win = new QunDetailsWindow(qun);
 	win->slotReceivedQunCard(id, ok, qq, realName, gender, phone, email, memo, msg);
 	
@@ -1858,7 +1817,7 @@ void EvaMain::slotRequestQunCardReady(const unsigned int id, const bool ok, cons
 			win, SLOT(slotModifyQunMembers(const unsigned int, const bool, QString)));
 	
 	QObject::connect(win, SIGNAL(requestAddBuddy(const unsigned int , const QString, const unsigned short )),
-			m_addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
+			addingManager, SLOT(slotAddBuddy(const unsigned int , const QString, const unsigned short )));
 
 	QObject::connect(packetManager, SIGNAL(qunMemberInfoReady(const unsigned int)), 
 			win, SLOT(slotMembersUpdated(const unsigned int)));
@@ -1872,7 +1831,7 @@ void EvaMain::slotRequestQunCardReady(const unsigned int id, const bool ok, cons
 
 void EvaMain::slotRequestQunHistory( const unsigned int id)
 {
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	QString qName = i18n("Qun");
 	if(qun){
 		QunInfo info = qun->getDetails();
@@ -1880,9 +1839,9 @@ void EvaMain::slotRequestQunHistory( const unsigned int id)
 	}
 	
 	EvaQunChatWindow *win = g_ChatWindowManager->getQunWindow(id);
-	EvaHistoryViewer *viewer = new EvaHistoryViewer(id, qName, user->getSetting(), true);
+	EvaHistoryViewer *viewer = new EvaHistoryViewer(id, qName, settings, true);
 	
-	int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
+	int faceId = atoi(session->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
 	QPixmap *face = images->getFaceByID(faceId);
 	viewer->setIcon(*face);
 	
@@ -1906,7 +1865,7 @@ void EvaMain::slotRequestQunHistory( const unsigned int id)
 
 void EvaMain::slotRequestQunChat( const unsigned int id)
 {
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	if(!qun) return;
 	g_mainWin->gotQunMessage(id);
 	tray->gotTxtMessage(id);
@@ -1917,10 +1876,10 @@ void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ,
 				const bool /*u*/, const bool /*i*/, const bool /*b*/, const char /*blue*/, const char /*green*/, const char /*red*/)
 {
 	//note that: Qun never show tip
-	Qun *qun = user->getQunList()->getQun(qunID);
+	Qun *qun = session->getUser()->getQunList()->getQun(qunID);
         QString message = msg;
 	if(!qun) return;
-	if(senderQQ == user->getQQ()) return;
+	if(senderQQ == session->getQQ()) return;
 	if(!(g_ChatWindowManager && g_ChatWindowManager->isQunChatWindowExisted(qunID))){
 		bool needSound = false;
 		switch(qun->getMessageType()){
@@ -1942,14 +1901,14 @@ void EvaMain::slotReceivedQunMessage( unsigned int qunID, unsigned int senderQQ,
                                 }
 				needSound = true;
 		}
-		if(user->getSetting()->isSoundEnabled() && needSound)
+		if(settings->isSoundEnabled() && needSound)
 			global->getSoundResource()->playNewMessage();
 	}
 }
 
 void EvaMain::slotQunSystemMessageRequest( const unsigned int /*sender*/, QString /*message*/)
 {
-	if(user->getSetting()->isSoundEnabled())
+	if(settings->isSoundEnabled())
 		global->getSoundResource()->playSysMessage();
 }
 
@@ -1963,7 +1922,7 @@ void EvaMain::slotShotcutKeyPressed( )
 	if(!tray) return;
 	int id = tray->getSenderID();
 	
-	QQFriend *frd = user->getFriendList().getFriend(id);
+	QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	if(frd){
 		g_mainWin->gotMessage(id);
 		tray->gotTxtMessage(id);
@@ -1971,14 +1930,14 @@ void EvaMain::slotShotcutKeyPressed( )
 		return;
 	}
 	
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	if(qun){
 		g_mainWin->gotQunMessage(id);
 		tray->gotTxtMessage(id);
 		g_ChatWindowManager->openQunChatWindow(qun);
 		return;
 	}
-/*	EvaUserSetting::sysMessage m = user->getSetting()->getLastSysMessage();
+/*	EvaUserSetting::sysMessage m = settings->getLastSysMessage();
 	if(!(m.type == 0 && m.from == 0)){
 		m_SysMsgManager->showSysMessage( m.messageType, m.type, m.from, m.to, m.message, m.internalQunID);
 		return;
@@ -1993,7 +1952,7 @@ void EvaMain::slotShotcutKeyPressed( )
 void EvaMain::slotQunExitReply( const unsigned int id, const bool ok, QString msg)
 {
 	QString qunName;
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	if(!qun) qunName = QString::number(id);
 	else
 		qunName = codec->toUnicode(qun->getDetails().getName().c_str());
@@ -2009,15 +1968,16 @@ void EvaMain::slotQunExitReply( const unsigned int id, const bool ok, QString ms
 
 void EvaMain::slotDoQunExit( const unsigned int id )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	QString qunName;
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	if(!qun) qunName = QString::number(id);
 	else
 		qunName = codec->toUnicode(qun->getDetails().getName().c_str());
 	
 	QunInfo info = qun->getDetails();
 	QString msg;
-	if(info.getExtID() != 0 && info.getCreator() == user->getQQ()){
+	if(info.getExtID() != 0 && info.getCreator() == session->getQQ()){
 		msg = QString(i18n("You are the creator of Qun \"%1\", if you exit this Qun this Qun will be deleted, are you sure?")).arg(qunName);
 	}else{
 		msg = QString(i18n("Are you sure you want to exit Qun \"%1\"?")).arg(qunName);
@@ -2033,6 +1993,7 @@ void EvaMain::slotQunCreateFailed(QString msg)
 
 void EvaMain::slotQunCreate( )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	EvaQunCreateWindow *win = new EvaQunCreateWindow();
 	QObject::connect(win, SIGNAL(doQunCreate(const QString &, const unsigned short, const unsigned char, const QString &, 
 					const QString &, const std::list<unsigned int> &)), 
@@ -2046,7 +2007,7 @@ void EvaMain::slotQunCreate( )
 void EvaMain::slotFriendSignatureChanged( const unsigned int qq, const QDateTime /*time*/, const QString /*signature*/ )
 {
 	
-	const QQFriend *frd = (user->getFriendList()).getFriend(qq);
+	const QQFriend *frd = (session->getUser()->getFriendList()).getFriend(qq);
 	if(frd){
 		if(g_mainWin) g_mainWin->updateBuddy(qq);
 		QString nick = codec->toUnicode(frd->getNick().c_str());
@@ -2068,11 +2029,11 @@ void EvaMain::slotFriendSignatureChanged( const unsigned int qq, const QDateTime
 
 void EvaMain::slotUpdateQunMessageSettings( const unsigned int id, const signed char type )
 {
-	Qun *qun = user->getQunList()->getQun(id);
+	Qun *qun = session->getUser()->getQunList()->getQun(id);
 	if(!qun) return;
 	qun->setMessageType((Qun::MessageType)type);
 	printf("EvaMain::slotUpdateQunMessageSettings -- qun messageType: %d\n", 0xff&type);
-	user->saveQunList();
+	session->getUser()->saveQunList();
 }
 
 void EvaMain::slotUpdateShortcut( )
@@ -2081,14 +2042,14 @@ void EvaMain::slotUpdateShortcut( )
 //X 	accelKey  = new KGlobalAccel(this, "Eva Short Key");
 //X 	accelKey->insert("Eva Global Key", i18n("Eva Global Key"), 
 //X 			i18n("This action allows you to read your new Eva message globally."),
-//X 			user->getSetting()->getMessageShortcut(), KKey::QtWIN+Key_F12, this, SLOT(slotShotcutKeyPressed( )));
+//X 			settings->getMessageShortcut(), KKey::QtWIN+Key_F12, this, SLOT(slotShotcutKeyPressed( )));
 //X 	if(!accelKey->updateConnections())
 //X 		kdDebug() << "F12 Key registered failed!" << endl;
         /**
          * Fix this: this work went the main window get minimized! -- George Ang
          */
 //X         accelKey = new QShortcut( g_mainWin );
-//X         accelKey->setKey( user->getSetting( )->getMessageShortcut( ) );
+//X         accelKey->setKey( session->getUser()->getSetting( )->getMessageShortcut( ) );
 //X         connect( accelKey, SIGNAL( activated() ), tray, SLOT( popMessageOrMainWin() ) );
 }
 
@@ -2100,20 +2061,20 @@ void EvaMain::slotFaceSizeChanged()
 void EvaMain::slotUserSettingChanged( )
 {
 	slotUpdateShortcut();
-	user->getSetting()->setNeedRepaint(true);
+	settings->setNeedRepaint(true);
 	// set face size will reload all face images as well
-	global->setFaceSize(QSize(user->getSetting()->getFaceSize()));
-	uhManager->initiate(user->getSetting()->getFaceSize());
+	global->setFaceSize(QSize(settings->getFaceSize()));
+	uhManager->initiate(settings->getFaceSize());
 	if(images){
 		images->setUserHeadImage(uhManager->getOnList(), uhManager->getOffList());
 	}	
-	QString newSoundDir=user->getSetting()->getSoundDir();
+	QString newSoundDir=settings->getSoundDir();
 	if(!newSoundDir.isEmpty()){
 		global->getSoundResource()->setSoundDir(newSoundDir);
 	}
 	g_mainWin->repaint();
 	initUserLeaveMenu();
-	idt->setMaxIdle(user->getSetting()->getIdleMaxTime());
+	idt->setMaxIdle(settings->getIdleMaxTime());
 	idt->stopIdleDetection();
 	idt->startIdleDetection();
 				
@@ -2130,7 +2091,7 @@ void EvaMain::slotAddAnonymous(const unsigned int id, const unsigned short/* fac
 {
 	if(g_mainWin){
 // 		QString nick = QString::number(id);
-// 		g_mainWin->addBuddy(nick, (int)id, QString(""), EvaUser::getAnonymousIndex(),
+// 		g_mainWin->addBuddy(nick, (int)id, QString(""), EvaSession::getAnonymousIndex(),
 // 				images->getFaceByID(face, true), images->getFaceByID(face, false));
 		g_mainWin->addBuddy(id);
 	}
@@ -2145,10 +2106,10 @@ void EvaMain::slotExtraInfoReady( )
 		uhManager = NULL;
 	}
 	
-	uhManager = new EvaUHManager(this, user->getSetting()->getUserHeadDir());
+	uhManager = new EvaUHManager(this, settings->getUserHeadDir());
 	uhManager->initiate(global->getFaceSize());
 	
-	std::list<unsigned int> list = user->getFriendList().getUserHeadList(user->getQQ(), user->hasUserHead());
+	std::list<unsigned int> list = session->getUser()->getFriendList().getUserHeadList(session->getQQ(), session->getUser()->hasUserHead());
 	if(list.size()){
 		uhManager->setQQList(list);
 		uhManager->start();
@@ -2165,7 +2126,7 @@ void EvaMain::customEvent( QEvent * e )
 // 		QImage imgOff = event->getOffImage();
 // 		if(images){
 // 			images->addUserHeadImage(id, imgOn, imgOff);
-// 			if(id == user->getQQ()){
+// 			if(id == session->getQQ()){
 // 				slotMyInfoReady( );
 // 			}
 // 			g_mainWin->updateBuddy(id);
@@ -2181,7 +2142,7 @@ void EvaMain::customEvent( QEvent * e )
 			QImage imgOff = event->getOffImage();
 			if(images){
 				images->addUserHeadImage(id, imgOn, imgOff);
-// 				if(id == user->getQQ()){
+// 				if(id == session->getQQ()){
 // 					slotMyInfoReady( );
 // 				}
 				g_mainWin->updateBuddy(id);
@@ -2200,17 +2161,18 @@ void EvaMain::customEvent( QEvent * e )
 void EvaMain::slotUserMemoChanged(const unsigned int id ,const MemoItem &memo)
 {
 	QString memoName = memo.name.c_str();
-	user->getFriendList().setMemo(id, memo);
-	user->saveGroupedBuddyList();
+	session->getUser()->getFriendList().setMemo(id, memo);
+	session->getUser()->saveGroupedBuddyList();
 	g_mainWin->updateBuddy(id);
 }
 
 void EvaMain::slotModifyMemo(const unsigned int id )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	QStringList details;
 	details.append(QString::number(id));
 	
-	const QQFriend *frd = (user->getFriendList()).getFriend(id); 
+	const QQFriend *frd = (session->getUser()->getFriendList()).getFriend(id); 
 	if(frd){
 		std::string qq = frd->getUserInformation().at(0);
 		if(qq!="-")
@@ -2237,11 +2199,13 @@ void EvaMain::slotModifyMemo(const unsigned int id )
 	detailWin->show();
 }
 
-void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned int session,
+void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned int sessionId,
 				const QList<QString> fileNameList,
 				const QList<unsigned int> sizeList, const unsigned char transferType)
 {
-	if(user->getFriendList().hasFriend(receiver)){
+	EvaPacketManager* packetManager = session->getPacketManager();
+        EvaFileManager* fileManager = session->getFileManager();
+	if(session->getUser()->getFriendList().hasFriend(receiver)){
 		QList<QString>::const_iterator iter = fileNameList.begin();
 		if(iter == fileNameList.end()) return;
 		QString fileName = *iter;
@@ -2250,7 +2214,7 @@ void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned 
 		QString file = fileName.right(fileName.length() - fileName.findRev("/") - 1);
 		unsigned int size = sizeList.first();
 		if(packetManager)
-			packetManager->doSendFileUdpRequest(receiver, file, size, session, transferType);
+			packetManager->doSendFileUdpRequest(receiver, file, size, sessionId, transferType);
 		QList<QString> dirList;
 		QList<QString> fileList;
 		for(iter = fileNameList.begin(); iter != fileNameList.end(); ++iter){
@@ -2260,49 +2224,54 @@ void EvaMain::slotFileTransferSend( const unsigned int receiver, const unsigned 
 			fileList.append(file);
 		}
 		// create udp upload session
-		if(m_FileManager){
-			m_FileManager->newSession(receiver, session, dirList, fileList, sizeList, false, transferType);
+		if(fileManager){
+			fileManager->newSession(receiver, sessionId, dirList, fileList, sizeList, false, transferType);
 		}
 	}
 }
 
-void EvaMain::slotFileTransferAccept( const unsigned int receiver, const unsigned int session, const QString dir,
+void EvaMain::slotFileTransferAccept( const unsigned int receiver, const unsigned int sessionId, const QString dir,
 					const unsigned char transferType)
 {
-	printf("EvaMain::slotFileTransferAccept -- session: %d\tdir:%s\n", session, dir.ascii());
-	if(m_FileManager && !(dir.isEmpty()))
-		m_FileManager->saveFileTo(receiver, session, dir);
+	EvaPacketManager* packetManager = session->getPacketManager();
+        EvaFileManager* fileManager = session->getFileManager();
+	printf("EvaMain::slotFileTransferAccept -- session: %d\tdir:%s\n", sessionId, dir.ascii());
+	if(fileManager && !(dir.isEmpty()))
+		fileManager->saveFileTo(receiver, sessionId, dir);
 	if(packetManager)
-		packetManager->doAcceptFileRequest(receiver, session, user->getLoginWanIp(), transferType);
+		packetManager->doAcceptFileRequest(receiver, sessionId, session->getLoginWanIp(), transferType);
 }
 
-void EvaMain::slotFileTransferCancel( const unsigned int  receiver, const unsigned int session)
+void EvaMain::slotFileTransferCancel( const unsigned int  receiver, const unsigned int sessionId)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
+        EvaFileManager* fileManager = session->getFileManager();
 	if(packetManager){
-		unsigned char type = m_FileManager->getTransferType(receiver, session);
+		unsigned char type = fileManager->getTransferType(receiver, sessionId);
 		if(type == QQ_TRANSFER_IMAGE) return;
 		if(packetManager)
-			packetManager->doCancelFileRequest(receiver, session, 
-					m_FileManager->getTransferType(receiver, session));
+			packetManager->doCancelFileRequest(receiver, sessionId, 
+					fileManager->getTransferType(receiver, sessionId));
 	}
-	if(m_FileManager)
-		m_FileManager->stopThread(receiver, session);
+	if(fileManager)
+		fileManager->stopThread(receiver, sessionId);
 }
 
-void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned int session,
+void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned int sessionId,
 					const QString file, const int size,
 					const unsigned char transferType)
 {
-	QQFriend *frd = user->getFriendList().getFriend(id);
+    EvaFileManager* fileManager = session->getFileManager();
+	QQFriend *frd = session->getUser()->getFriendList().getFriend(id);
 	if(g_ChatWindowManager && frd){
-		if(m_FileManager){
-			printf("EvaMain::slotReceivedFileRequest: -- new session: %d\n", session);
+		if(fileManager){
+			printf("EvaMain::slotReceivedFileRequest: -- new session: %d\n", sessionId);
 			QList<QString> dirList;
 			QList<QString> fileList;
 			QList<unsigned int> sizeList;
 			switch(transferType){
 			case QQ_TRANSFER_IMAGE:
-				dirList.append(user->getSetting()->getPictureCacheDir());
+				dirList.append(settings->getPictureCacheDir());
 				tray->gotTxtMessage( id); // since the chat win will show very shortly,
 							// we cancel the face flashing
 				break;
@@ -2315,29 +2284,31 @@ void EvaMain::slotReceivedFileRequest( const unsigned int id,  const unsigned in
 			fileList.append(file);
 			sizeList.append(size);
 			// create udp download session, and wait for ip notification from your friend
-			m_FileManager->newSession(id, session, dirList, fileList, sizeList, true, transferType);
-			g_ChatWindowManager->slotReceivedFileRequest(frd, session, file, size, transferType);
+			fileManager->newSession(id, sessionId, dirList, fileList, sizeList, true, transferType);
+			g_ChatWindowManager->slotReceivedFileRequest(frd, sessionId, file, size, transferType);
 		}
 	}
 }
 
-void EvaMain::slotReceivedFileAccepted(const unsigned int id, const unsigned int session,
+void EvaMain::slotReceivedFileAccepted(const unsigned int id, const unsigned int sessionId,
 					const unsigned int /*ip*/, const bool isAccepted,
 					const unsigned char transferType)
 {
+    EvaFileManager* fileManager = session->getFileManager();
 	if(g_ChatWindowManager){
-		g_ChatWindowManager->slotReceivedFileAccepted(id, session, isAccepted, transferType);
+		g_ChatWindowManager->slotReceivedFileAccepted(id, sessionId, isAccepted, transferType);
 	}
-	if(!m_FileManager) return;
+	if(!fileManager) return;
 	if(isAccepted){
  		// here we start udp upload session while buddy is waiting your ip notification
 		// if user is using proxy, we send ip notification directly
-		if(loginWin->getConnectionType() == EvaLoginWindow::HTTP_Proxy)
-			slotNotifyAddressRequest(id, session, 0, 0, 0, 0, 0);
+                EvaNetworkPolicy policy = loginWin->getNetworkPolicy();
+		if(policy.getConnectionType() == HTTP_Proxy)
+			slotNotifyAddressRequest(id, sessionId, 0, 0, 0, 0, 0);
 		else
-			m_FileManager->startSession(id, session);
+			fileManager->startSession(id, sessionId);
 	} else {
-		m_FileManager->stopThread(id, session);
+		fileManager->stopThread(id, sessionId);
 	}
 }
 
@@ -2346,7 +2317,7 @@ void EvaMain::slotNotifyTransferStatus(const unsigned int id, const unsigned int
 {
 	printf("Buddy:%d\tsession:0x%8x size:%d\t sent:%d\ttime:%d secs\n", id, session, size, bytesSent, time);
 //X 	QURL url;
-//X 	url.setPath(m_FileManager->getFileName(id, session, true));
+//X 	url.setPath(fileManager->getFileName(id, session, true));
 //X 	if(g_ChatWindowManager) 
 //X 		g_ChatWindowManager->slotFileStatusNotification(id, session, url, size, bytesSent, time);
 }
@@ -2355,15 +2326,16 @@ void EvaMain::slotReceivedFileAgentInfo( const unsigned int id, const unsigned i
 				const unsigned int newSession, const unsigned int ip, 
 				const unsigned short port, const unsigned char * key)
 {
+    EvaFileManager* fileManager = session->getFileManager();
 	if(g_ChatWindowManager)
 		g_ChatWindowManager->slotChangeFileSessionTo(id, oldSession, newSession);
-	if(m_FileManager){
+	if(fileManager){
 		// buddy ask you to download the file from relay server
-		m_FileManager->changeToAgent(id, oldSession);printf("EvaMain::slotReceivedFileAgentInfo -- changeToAgent\n");
-		m_FileManager->changeSessionTo(id, oldSession, newSession);printf("EvaMain::slotReceivedFileAgentInfo -- changeSessionTo\n");
-		m_FileManager->setBuddyAgentKey(id, newSession, key);printf("EvaMain::slotReceivedFileAgentInfo -- setBuddyAgentKey\n");
-		m_FileManager->setAgentServer(id, newSession, ip, port);printf("EvaMain::slotReceivedFileAgentInfo -- setAgentServer\n");
-		m_FileManager->startSession(id, newSession); // we start agent download session
+		fileManager->changeToAgent(id, oldSession);printf("EvaMain::slotReceivedFileAgentInfo -- changeToAgent\n");
+		fileManager->changeSessionTo(id, oldSession, newSession);printf("EvaMain::slotReceivedFileAgentInfo -- changeSessionTo\n");
+		fileManager->setBuddyAgentKey(id, newSession, key);printf("EvaMain::slotReceivedFileAgentInfo -- setBuddyAgentKey\n");
+		fileManager->setAgentServer(id, newSession, ip, port);printf("EvaMain::slotReceivedFileAgentInfo -- setAgentServer\n");
+		fileManager->startSession(id, newSession); // we start agent download session
 		printf("EvaMain::slotReceivedFileAgentInfo -- startSession\n");
 		printf("EvaMain::slotReceivedFileAgentInfo: -- ip:%s\tport:%d\told:%d\tnew:%d\n", 
 			QHostAddress(ip).toString().ascii(), port, oldSession, newSession);
@@ -2371,7 +2343,7 @@ void EvaMain::slotReceivedFileAgentInfo( const unsigned int id, const unsigned i
 }
 
 void EvaMain::slotReceivedFileNotifyIpEx( const unsigned int id, const bool isSender,
-				const unsigned int session,const unsigned char transferType,
+				const unsigned int sessionId,const unsigned char transferType,
 				const unsigned int wanIp1, const unsigned short /*wanPort1*/,
 				const unsigned int /*wanIp2*/, const unsigned short /*wanPort2*/,
 				const unsigned int /*wanIp3*/, const unsigned short /*wanPort3*/,
@@ -2381,36 +2353,40 @@ void EvaMain::slotReceivedFileNotifyIpEx( const unsigned int id, const bool isSe
 				const unsigned int /*syncIp*/, const unsigned short /*syncPort*/,
 				const unsigned int /*syncSession*/ )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
+        EvaFileManager* fileManager = session->getFileManager();
 	if(isSender) {  // true means buddy started udp upload session
 		// we should start udp download session, but now
 		// we simply ask buddy to use relay server :)
-		packetManager->doNotifyIpEx(id, false, session, transferType, 0,0,  0,0,  0,0,  0,0,  0,0,  0,0,
+		packetManager->doNotifyIpEx(id, false, sessionId, transferType, 0,0,  0,0,  0,0,  0,0,  0,0,  0,0,
 					 0,0,0);
 	}else{ // if I am the sender, I should start udp session connecting to buddy directly
 		// but now I ask relay server to do the job
-		m_FileManager->changeToAgent(id, session);
-		m_FileManager->updateIp(id, session, wanIp1);
-		m_FileManager->startSession(id, session); // here we start agent upload session
+		fileManager->changeToAgent(id, sessionId);
+		fileManager->updateIp(id, sessionId, wanIp1);
+		fileManager->startSession(id, sessionId); // here we start agent upload session
 	}
 }
 
-void EvaMain::slotNotifyAddressRequest( const unsigned int id, const unsigned int session, const unsigned int /*synSession*/, 
+void EvaMain::slotNotifyAddressRequest( const unsigned int id, const unsigned int sessionId, const unsigned int /*synSession*/, 
 				const unsigned int /*synIp*/, const unsigned short /*synPort*/,
 				const unsigned int /*myIp*/, const unsigned short /*myPort*/)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
+        EvaFileManager* fileManager = session->getFileManager();
 	bool ok = false;
-	if(m_FileManager){
-		bool isSender = m_FileManager->isSender(id, session, &ok);
+	if(fileManager){
+		bool isSender = fileManager->isSender(id, sessionId, &ok);
 		if(!ok) return;
-		unsigned char type = m_FileManager->getTransferType(id, session);
+		unsigned char type = fileManager->getTransferType(id, sessionId);
 		// we send our ip information to buddy
 // 		packetManager->doNotifyIpEx(id, isSender, session, 
-// 					user->getLoginWanIp(), user->getLoginWanPort()+100,
-// 					user->getLoginWanIp(), user->getLoginWanPort()+101,
+// 					session->getUser()->getLoginWanIp(), session->getUser()->getLoginWanPort()+100,
+// 					session->getUser()->getLoginWanIp(), session->getUser()->getLoginWanPort()+101,
 // 					myIp, myPort,
-// 					0x0a010113, user->getLoginLanPort()+15,
-// 					0, 0, 0x0a010113, user->getLoginLanPort()+50, synIp, synPort, synSession);
-		packetManager->doNotifyIpEx(id, isSender, session, type, 
+// 					0x0a010113, session->getUser()->getLoginLanPort()+15,
+// 					0, 0, 0x0a010113, session->getUser()->getLoginLanPort()+50, synIp, synPort, synSession);
+		packetManager->doNotifyIpEx(id, isSender, sessionId, type, 
 					0, 0,
 					0, 0,
 					0, 0,
@@ -2421,7 +2397,7 @@ void EvaMain::slotNotifyAddressRequest( const unsigned int id, const unsigned in
 
 void EvaMain::slotIdleTimeUp()
 {
-	if ( (user->getStatus() == EvaUser::Eva_Online) && (!inIdleStatus)) {
+	if ( (session->getStatus() == Eva_Online) && (!inIdleStatus)) {
 		slotDoLeave();
 		inIdleStatus = true;
 	}
@@ -2431,7 +2407,7 @@ void EvaMain::slotIdleTimeUp()
 
 void EvaMain::slotIdleBack()
 {
-	if ( (user->getStatus() == EvaUser::Eva_Leave) && (inIdleStatus) ) {
+	if ( (session->getStatus() == Eva_Leave) && (inIdleStatus) ) {
 		slotDoOnline();
 		inIdleStatus = false;
 	}
@@ -2461,6 +2437,7 @@ void EvaMain::slotIdleBack()
 
 void EvaMain::slotBuddyAdded( const unsigned int id, const QString /*nick*/, const unsigned short /*face*/, const int /*group*/)
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	//g_mainWin->addBuddy(nick, id, QString(""), group, images->getFaceByID(face, true), images->getFaceByID(face, false));
 	g_mainWin->addBuddy(id);
 	packetManager->doGetUserInfo(id);
@@ -2488,24 +2465,28 @@ void EvaMain::changeToInvisible( )
 
 void EvaMain::changeNick( QString nick )
 {
-	QStringList details = packetManager->convertDetails( user->getDetails() );
+	EvaPacketManager* packetManager = session->getPacketManager();
+	QStringList details = packetManager->convertDetails( session->getUser()->getDetails() );
 	details[ContactInfo::Info_nick] = nick;
 	packetManager->doModifyDetails(details);
 }
 
 void EvaMain::changeSignature( QString contents )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	packetManager->doModifySignature( contents );
 }
 
 void EvaMain::sendToContact( unsigned int id, QString msg )
 {
+	EvaPacketManager* packetManager = session->getPacketManager();
 	packetManager->doSendMessage(id , true , msg);
 }
 
 void EvaMain::sendToQun( unsigned int ext, QString msg)
 {
-	Qun *qun = user->getQunList()->getQunByExtID( ext);
+	EvaPacketManager* packetManager = session->getPacketManager();
+	Qun *qun = session->getUser()->getQunList()->getQunByExtID( ext);
 	if(qun)
 		packetManager->doSendQunMessage(qun->getQunID(), msg);
 }
@@ -2513,7 +2494,7 @@ void EvaMain::sendToQun( unsigned int ext, QString msg)
 void EvaMain::textReady( unsigned int id, QString text, bool isQun )
 {
 	if(isQun){
-		Qun *qun = user->getQunList()->getQunByExtID( id);
+		Qun *qun = session->getUser()->getQunList()->getQunByExtID( id);
 		if(qun){
 			EvaQunChatWindow *win = g_ChatWindowManager->getQunWindow(qun->getQunID());
 			if(win)
@@ -2528,10 +2509,10 @@ void EvaMain::textReady( unsigned int id, QString text, bool isQun )
 
 void EvaMain::imageReady( unsigned int id, QString path, bool isQun )
 {
-	QString destDir = EvaMain::user->getSetting()->getPictureCacheDir();
+	QString destDir = EvaMain::settings->getPictureCacheDir();
 	
 	if(isQun){
-		Qun *qun = user->getQunList()->getQunByExtID( id);
+		Qun *qun = session->getUser()->getQunList()->getQunByExtID( id);
 		if(qun){
 			EvaQunChatWindow *win = g_ChatWindowManager->getQunWindow(qun->getQunID());
 			if(win){
@@ -2556,11 +2537,13 @@ void EvaMain::imageReady( unsigned int id, QString path, bool isQun )
 
 void EvaMain::openAddFriendDialog( unsigned int id )
 {
-	m_addingManager->slotAddBuddy( id);
+	addingManager->slotAddBuddy( id);
 }
 
 void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 {
+        EvaContactManager* contactManager = session->getContactManager();
+	EvaPacketManager* packetManager = session->getPacketManager();
 	assert(e);
 	switch(e->m_id){
 		case E_Err:
@@ -2580,8 +2563,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->offline();
 			tray->setOffline();
 			//loggedIn = false;
-			m_loginManager->setLoggedOut();
-			user->setStatus(EvaUser::Eva_Offline);
+			session->logout();
 			numOfLostKeepAlivePackets = 0;
 			QMessageBox::information(g_mainWin, e->m_desc, i18n("Eva Login"));
 			slotDoChangeUser();
@@ -2612,8 +2594,8 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
                         printf( "[EvaMain] MyInfo ready\n" );
 			g_mainWin->UpdateLoginInfo(E_MyInfo + 1, s_ENotify[E_MyInfo]);
 			g_mainWin->updateMyInfo();
-			g_ChatWindowManager->setMyName(codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str()), 
-					user->getQQ());
+			g_ChatWindowManager->setMyName(codec->toUnicode(session->getUser()->getDetails().at(ContactInfo::Info_nick).c_str()), 
+					session->getQQ());
 			break;
 		case E_KeyFileAgent:
 			g_mainWin->UpdateLoginInfo(E_KeyFileAgent + 1, s_ENotify[E_KeyFileAgent]);
@@ -2622,7 +2604,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->UpdateLoginInfo(E_LoginFinished + 1, s_ENotify[E_LoginFinished]);
 			//EvaScriptManager::instance();// very urgly way to ensure dcop category Tools registered
 			// we should start getting buddy list
-			m_contactManager->fetchContacts();
+			contactManager->fetchContacts();
 			break;
 		case E_ContactsDownloading:
 			g_mainWin->UpdateLoginInfo(E_ContactsDownloading + 1, s_ENotify[E_ContactsDownloading]);
@@ -2644,7 +2626,7 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 		case E_QunInfoFinished:
 		{	
 			g_mainWin->UpdateLoginInfo(E_QunInfoFinished + 1, s_ENotify[E_QunInfoFinished]);
-			const Qun *qun = user->getQunList()->getQun((unsigned int)(e->m_param));
+			const Qun *qun = session->getUser()->getQunList()->getQun((unsigned int)(e->m_param));
 			if(qun){
 				g_mainWin->updateQun((unsigned int)(e->m_param));
 			}
@@ -2673,15 +2655,15 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
  			g_mainWin->show();
 			g_mainWin->UpdateLoginInfo(E_LoginProcessDone + 1, s_ENotify[E_LoginProcessDone]);
 			// should be everyting ready(contacts, groups, Quns)
-			QString nick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
-			int faceId = atoi(user->getDetails().at(ContactInfo::Info_face).c_str());
+			QString nick = codec->toUnicode(session->getUser()->getDetails().at(ContactInfo::Info_nick).c_str());
+			int faceId = atoi(session->getUser()->getDetails().at(ContactInfo::Info_face).c_str());
 			
 //			g_mainWin->clearList();
 			g_mainWin->updateMyInfo();//update my info first
-			g_ChatWindowManager->setMyName(nick, user->getQQ());
+			g_ChatWindowManager->setMyName(nick, session->getQQ());
 
 	
-			tray->changeToolTip(user->getQQ(), nick, faceId);			
+			tray->changeToolTip(session->getQQ(), nick, faceId);			
 			g_mainWin->showInfoFrame(false);
 
 			g_mainWin->ShowTab(g_mainWin->m_buddyTabKey);
@@ -2690,12 +2672,12 @@ void EvaMain::dispatchEvaEvent( EvaNotifyEvent * e )
 			g_mainWin->updateQuns();
 			g_mainWin->updateRecentContacts();
 
-			connecter->slotClientReady();
+			session->getConnecter()->slotClientReady();
 			packetManager->doRequestExtraInfo();
-			packetManager->doGetWeatherForecast(user->getLoginWanIp()); /// get local weather
+			packetManager->doGetWeatherForecast(session->getLoginWanIp()); /// get local weather
 			
-			m_contactManager->fetchAllLevels();
-			m_contactManager->fetchAllSignatures();
+			contactManager->fetchAllLevels();
+			contactManager->fetchAllSignatures();
 
 //X 			GetScriptManager()->findScripts();
 

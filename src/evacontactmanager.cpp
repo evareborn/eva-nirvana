@@ -20,6 +20,7 @@
 
 #include "evacontactmanager.h"
 #include "evaguimain.h"
+#include "evasession.h"
 #include "evapacketmanager.h"
 #include "evagroup.h"
 #include "evaqun.h"
@@ -38,11 +39,11 @@
 //X 	return &manager;
 //X }
 
-EvaContactManager::EvaContactManager( EvaMain* evaapp)
+EvaContactManager::EvaContactManager( EvaSession* session, EvaPacketManager* pm)
 	: m_contactsReady(false)
-        , g_eva( evaapp )  
+        , session( session )  
 	, m_status(ESCM_NONE)
-	, m_packetManager(NULL)
+	, packetManager(pm)
 {
 }
 
@@ -56,13 +57,13 @@ void EvaContactManager::notifyEvent( int eId, const QString & msg, EPARAM param)
 	e->m_desc = msg;
 	e->m_param = param;
 	
-	QApplication::postEvent(g_eva, e);
+	QApplication::postEvent(EvaMain::getInstance(), e);
 }
 
 void EvaContactManager::setPacketManager( EvaPacketManager * pm )
 {
 	assert(pm);
-	m_packetManager = pm;
+	packetManager = pm;
 
 	m_status = ESCM_NONE;
 			
@@ -78,7 +79,7 @@ void EvaContactManager::fetchContacts( )
 	m_status = ESCM_CONTACTLIST;
 	
 	//we try to load local cache first
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	if(user && 
 	   user->loadGroupedBuddyList() &&
 	   user->loadQunList() ){
@@ -91,7 +92,7 @@ void EvaContactManager::fetchContacts( )
 	//clear private list first
 	m_Contacts.clearFriendList();
 	//user->getFriendList().clearFriendList();
-	m_packetManager->doGetContacts(QQ_FRIEND_LIST_POSITION_START);	
+	packetManager->doGetContacts(QQ_FRIEND_LIST_POSITION_START);	
 }
 
 void EvaContactManager::processGetFriendListReply( const GetFriendListReplyPacket * packet )
@@ -108,16 +109,16 @@ void EvaContactManager::processGetFriendListReply( const GetFriendListReplyPacke
 		m_Contacts.addFriend(frd);
 	}
 	if(packet->getPosition()!=QQ_FRIEND_LIST_POSITION_END){
-		m_packetManager->doGetContacts( packet->getPosition());
+		packetManager->doGetContacts( packet->getPosition());
 		notifyEvent(E_ContactsDownloading);
 	}else{
-// 		EvaUser * user = EvaMain::getInstance()->getUser();
+// 		EvaUser * user = EvaMain::session->getUser();
 // 		if(user){
 // 			user->setFriendList(m_Contacts);
 // 		}
 		notifyEvent(E_ContactsDone);
 		m_status = ESCM_NONE;
-		EvaUser *user = EvaMain::getInstance()->getUser();
+		EvaUser *user = EvaMain::session->getUser();
 		if(user) user->saveGroupedBuddyList();
 		if(m_downloadAll){
 			fetchGroupNames();
@@ -130,7 +131,7 @@ void EvaContactManager::fetchGroupNames( )
 {
 	m_status = ESCM_GROUPNAMES;
 	m_GroupNames.clear();
-	m_packetManager->doGetGroups();
+	packetManager->doGetGroups();
 }
 
 void EvaContactManager::processDownloadGroupName( const GroupNameOpReplyPacket * packet )
@@ -140,7 +141,7 @@ void EvaContactManager::processDownloadGroupName( const GroupNameOpReplyPacket *
 	if( m_status != ESCM_GROUPNAMES) return;
 		
 	m_GroupNames = packet->getGroupNames();
-// 	EvaUser *user = EvaMain::getInstance()->getUser();
+// 	EvaUser *user = EvaMain::session->getUser();
 // 	if(user){
 // 		user->setGroupNames(m_GroupNames);
 // 	}
@@ -158,7 +159,7 @@ void EvaContactManager::fetchGroupedFriends( )
 	m_status = ESCM_GROUPEDBUDDIES;
 	m_GroupedContacts.clear();
 	//m_QunIDs.clear();
-	m_packetManager->doGetGroupedFriends();
+	packetManager->doGetGroupedFriends();
 }
 
 void EvaContactManager::fetchQunList( )
@@ -196,7 +197,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 	int nextID = packet->getNextStartID();
 	if(nextID != 0x0000){
 		//connecter->append(new DownloadGroupFriendPacket(nextID));		
-		m_packetManager->doGetGroupedFriends(nextID);
+		packetManager->doGetGroupedFriends(nextID);
 	}else{
 //X 		kdDebug() << "[EvaContactManager] Grouped friends done (" << m_QunList.numQuns() << " Quns)" << endl;
 		//emit friendGroupsReady();
@@ -205,7 +206,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 		//	doRequestQunInfo(qunList->getQunList().begin()->getQunID());
 		//}
 		//user->getFriendList().clearFriendList();
-		EvaUser *user = EvaMain::getInstance()->getUser();
+		EvaUser *user = EvaMain::session->getUser();
 		if(user){
 			user->setGroupNames(m_GroupNames);
 			user->setFriendList(m_Contacts);
@@ -232,7 +233,7 @@ void EvaContactManager::fetchQunDetails( const unsigned int id )
 	m_status = ESCM_QUNDETAILS;
 	m_QunInfo.clearInfo();
 	m_QunMembers.clear();
-	m_packetManager->doRequestQunInfo(id);
+	packetManager->doRequestQunInfo(id);
 }
 
 void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
@@ -246,7 +247,7 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 	m_QunList.setDetails(m_QunInfo);
 	m_QunList.setMemberArgs(m_QunInfo.getQunID(), m_QunMembers);
 
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	if(user){
 		user->getQunList()->setDetails(m_QunInfo);
 		user->getQunList()->setMemberArgs(m_QunInfo.getQunID(), m_QunMembers);
@@ -288,7 +289,7 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirst/* = true*/)
 {
 //X 	kdDebug() << "fetchQunMembersInfo" << endl;
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	assert(user);
 	Qun *qun = user->getQunList()->getQun(id);
 	if(!qun){
@@ -317,7 +318,7 @@ void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirs
 // 	for(it = members.begin(); it != members.end(); it++){
 // 		if((start + 30) == i ){
 // 			printf("-----toSend(size:%d)\n", toSend.size());
-// 			m_packetManager->doRequestQunMemberInfo(id, toSend);
+// 			packetManager->doRequestQunMemberInfo(id, toSend);
 // 			toSend.clear();
 // 			break;
 // 			//i = 0;
@@ -330,14 +331,14 @@ void EvaContactManager::fetchQunMembersInfo( const unsigned int id , bool isFirs
 	toSend = qun->getNextMembers();
 //X 	kdDebug() << "to Send size:"<< toSend.size() << endl;
 	if(toSend.size()){
-		m_packetManager->doRequestQunMemberInfo(id, toSend);
+		packetManager->doRequestQunMemberInfo(id, toSend);
 	}
 }
 
 void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 {
 //X 	kdDebug() << "processQunMemberReply" << endl;
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	assert(user);
 	assert(packet);
 	if( m_status != ESCM_QUNMEMBERS) return;
@@ -389,13 +390,13 @@ void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 void EvaContactManager::fetchDetail( const unsigned int id )
 {
 	m_status = ESCM_CONTACTDETAIL;
-	m_packetManager->doGetUserInfo(id);
+	packetManager->doGetUserInfo(id);
 }
 
 void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * packet )
 {
  	printf( "[EvaContactManager] got user info\n" );
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	assert(user);
 	assert(packet);
 	//if( m_status != ESCM_CONTACTDETAIL) return;
@@ -418,18 +419,18 @@ void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * 
 void EvaContactManager::fetchSignature( const unsigned int id )
 {
 	m_status = ESCM_SIGNATURE;
-	m_packetManager->doRequestSignature(id, true);
+	packetManager->doRequestSignature(id, true);
 }
 
 void EvaContactManager::fetchAllSignatures( )
 {
 	m_status = ESCM_ALLSIGNATURES;
-	m_packetManager->doRequestSignature();
+	packetManager->doRequestSignature();
 }
 
 void EvaContactManager::processSignatureReply( const SignatureReplyPacket * packet )
 {
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	assert(user);
 	assert(packet);
 
@@ -451,7 +452,7 @@ void EvaContactManager::processSignatureReply( const SignatureReplyPacket * pack
 	user->saveGroupedBuddyList();
 	
 	if(m_status == ESCM_ALLSIGNATURES){
-		if( false == m_packetManager->doRequestSignature(packet->nextStartID())) //no more contact to request, so we done!
+		if( false == packetManager->doRequestSignature(packet->nextStartID())) //no more contact to request, so we done!
 			notifyEvent(E_AllSignatureDone);
 	} else if (m_status == ESCM_SIGNATURE )
 		{
@@ -464,12 +465,12 @@ void EvaContactManager::processSignatureReply( const SignatureReplyPacket * pack
 void EvaContactManager::fetchLevel( const unsigned int id )
 {
 	m_status = ESCM_LEVEL;
-	m_packetManager->requestFriendLevel(id);
+	packetManager->requestFriendLevel(id);
 }
 
 void EvaContactManager::processGetLevelReply( const EvaGetLevelReplyPacket * packet )
 {
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = EvaMain::session->getUser();
 	assert(user);
 	assert(packet);
 
@@ -494,7 +495,7 @@ void EvaContactManager::processGetLevelReply( const EvaGetLevelReplyPacket * pac
 void EvaContactManager::fetchAllLevels( )
 {
 	m_status = ESCM_ALLLEVELS;
-	m_packetManager->doGetAllLevels();
+	packetManager->doGetAllLevels();
 }
 
 void EvaContactManager::fetchAddQuestion( const unsigned int /*id*/ )

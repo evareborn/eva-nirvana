@@ -20,6 +20,7 @@
 
 #include "customfaceselector.h"
 #include "defines.h"
+#include "evasession.h"
 
 #include <qtabwidget.h>
 #include <qcheckbox.h>
@@ -230,7 +231,7 @@ void CustomFacePanel::initCustomPanel(FaceList &members)
 	int index=0, offset = 0;
 	QPixmap *pic = 0;
 
-	QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
+	QString dir = EvaMain::session->getUser()->getSetting()->getCustomSmileyDir() + "/";
 	//QString dir = "./CustomFace/";
 	for(FaceList::Iterator it = members.begin(); it != members.end(); ++it){
 		files[index]=(*it).org(); // got file name
@@ -353,7 +354,7 @@ CustomFaceSelector::CustomFaceSelector( bool useSysFaceOnly, QWidget* parent,  c
 
 	
 	if(!m_UseSysFaceOnly) {
-		QString dir = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir() + "/";
+		QString dir = EvaMain::session->getUser()->getSetting()->getCustomSmileyDir() + "/";
 		//QString dir = "./CustomFace/";
 		CustomFaceConfig config(dir);
 		if(config.loadXML()){
@@ -401,13 +402,13 @@ void CustomFaceSelector::slotSelectSysFace(int id)
 
 void CustomFaceSelector::slotSelectCustomFace(QString group, QString file)
 {
-	QString src = EvaMain::getInstance()->getUser()->getSetting()->getCustomSmileyDir();
+	QString src = EvaMain::session->getUser()->getSetting()->getCustomSmileyDir();
 
 	if(!group.isEmpty()){
 		src += ("/" + group);
 	}
 	src += ("/" + file );
-	QString dest = EvaMain::getInstance()->getUser()->getSetting()->getPictureCacheDir() + "/" + file;
+	QString dest = EvaMain::session->getUser()->getSetting()->getPictureCacheDir() + "/" + file;
 
  	if(EvaHelper::copyFile(src, dest)){
  		emit selectCustomFace(file);

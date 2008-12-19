@@ -28,7 +28,7 @@
 #include <cstring>
 
 EvaFileManager::EvaFileManager(const int myId, QObject *parent)
-	: QObject(parent), m_MyId(myId), m_FileAgentToken(NULL), m_IsProxySet(false)
+	: QObject(parent), m_MyId(myId), m_FileAgentToken(NULL)
 {
 	m_ThreadList.setAutoDelete(true);
 }
@@ -51,12 +51,9 @@ void EvaFileManager::setMyBasicInfo(const unsigned char *key, const unsigned cha
 	memcpy(m_FileAgentKey, key, 16);
 }
 
-void EvaFileManager::setMyProxyInfo(const QHostAddress addr, const short port, const Q3CString &param)
+void EvaFileManager::setNetworkPolicy(const EvaNetworkPolicy& policy)
 {
-	m_ProxyServer = addr;
-	m_ProxyPort = port;
-	m_ProxyAuthParam = param;
-	m_IsProxySet = true;
+    this->policy = policy;
 }
 
 bool EvaFileManager::newSession(const unsigned int id, const unsigned int session, 
@@ -125,7 +122,7 @@ bool EvaFileManager::changeToAgent(const unsigned int id, const unsigned int ses
 	}
 	m_ThreadList.removeRef(thread);
 	if(newThread){
-		if(m_IsProxySet) newThread->setProxySettings(m_ProxyServer, m_ProxyPort, m_ProxyAuthParam);
+		newThread->setNetworkPolicy(policy);
 		m_ThreadList.append(newThread);
 	}
 	return true;

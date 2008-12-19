@@ -88,7 +88,7 @@ bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> gro
 	return true;
 }
 
-bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
+bool EvaUserSetting::loadBuddyList( QObject * receiver)
 {
 	if(!isDirExisted(getEvaUserDir()))
 		return false;
@@ -228,7 +228,7 @@ bool EvaUserSetting::loadBuddyList( /*QObject * receiver*/)
 	delete []str;
 	file.close();
 	
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = ( EvaUser* ) receiver;
 	if(user)
 	{
 		user->details              = myInfo;
@@ -1257,7 +1257,7 @@ bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
 	return true;
 }
 
-bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
+bool EvaUserSetting::loadQunList( QObject * receiver )
 {
 	if(!isDirExisted(getEvaUserDir()))
 		return false;
@@ -1393,7 +1393,7 @@ bool EvaUserSetting::loadQunList( /*QObject * receiver*/ )
 	delete []str;
 	file.close();
 	
-	EvaUser *user = EvaMain::getInstance()->getUser();
+	EvaUser *user = ( EvaUser* )receiver;
 	if(user){
 		user->qunList = list;
 		return true;

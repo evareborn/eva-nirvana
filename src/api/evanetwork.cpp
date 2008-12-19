@@ -23,19 +23,18 @@
 //Added by qt3to4:
 #include <QByteArray>
 
-EvaNetwork::EvaNetwork(const QHostAddress &host, const short port, const Type type)
- 	:socket(NULL)
+EvaNetwork::EvaNetwork(const QHostAddress &host, short port, const EvaNetworkPolicy& policy)
+ 	: socket(NULL), policy( policy )
 {
-	this->type = type;
-	switch(type){
-	case UDP:
+	switch(policy.getConnectionType()){
+	case CONN_UDP:
 		socket = new EvaSocket(host, port);  // default is UDP
 		QObject::connect(socket, SIGNAL(isReady()), this, SIGNAL(isReady()));
 		QObject::connect(socket, SIGNAL(writeReady()), SIGNAL(writeReady()));
 		QObject::connect(socket, SIGNAL(receivedData(int)), this, SIGNAL(dataComming(int)));
 		QObject::connect(socket, SIGNAL(exceptionEvent(int)), this, SLOT(processProxyEvent(int)));
 		break;
-	case TCP:
+	case CONN_TCP:
 		socket = new EvaSocket(host, port, EvaSocket::TCP);
 		QObject::connect(socket, SIGNAL(isReady()), this, SIGNAL(isReady()));
 		QObject::connect(socket, SIGNAL(writeReady()), SIGNAL(writeReady()));
@@ -43,11 +42,13 @@ EvaNetwork::EvaNetwork(const QHostAddress &host, const short port, const Type ty
 		QObject::connect(socket, SIGNAL(exceptionEvent(int)), this, SLOT(processProxyEvent(int)));
 		break;
 	case HTTP_Proxy:
-		socket = new EvaHttpProxy(host, port);
+		socket = new EvaHttpProxy(QHostAddress(policy.getProxyIP()), policy.getProxyPort());
 		QObject::connect(socket, SIGNAL(proxyWriteReady()), SIGNAL(writeReady()));
 		QObject::connect(socket, SIGNAL(proxyEvent(int)), this, SLOT(processProxyEvent(int)));
 		QObject::connect(socket, SIGNAL(dataArrived(int)), this, SIGNAL(dataComming(int)));
 		QObject::connect(socket, SIGNAL(socketException(int)), this, SIGNAL(exceptionEvent(int)));
+                ((EvaHttpProxy*)(socket))->setDestinationServer(host.toString(), port);
+                ((EvaHttpProxy*)(socket))->setBase64AuthParam(policy.getProxyParam());
 		break;
 	default:
 		socket = new EvaSocket(host, port);  // default is UDP
@@ -60,12 +61,17 @@ EvaNetwork::~EvaNetwork()
 	if(socket) delete socket;
 }
  
+ConnectionType EvaNetwork::getConnectionType() const
+{ 
+    return policy.getConnectionType();
+}
+
 void EvaNetwork::setServer(const QHostAddress &address, const short port)
 {
 	socket->setHost(address, port);	
 }
 
-const QHostAddress &EvaNetwork::getHostAddress() const
+QHostAddress EvaNetwork::getHostAddress() const
 {
 	return socket->getHostAddress();
 }
@@ -75,23 +81,23 @@ short EvaNetwork::getHostPort() const
 	return socket->getHostPort();
 }
 
-void EvaNetwork::setDestinationServer(const QString &server, const short port) // for Http Proxy only;
+void EvaNetwork::redirectTo(const QString &server, const short port) // for Http Proxy only;
 {
-	if(type != HTTP_Proxy) return;
+	if(policy.getConnectionType() != HTTP_Proxy) return;
 	
 	((EvaHttpProxy*)(socket))->setDestinationServer(server, port);
 }
 
-void EvaNetwork::setAuthParameter(const QString &username, const QString &password)
-{
- 	 ((EvaHttpProxy*)(socket))->setAuthParameter(username, password);
-}
-
-void EvaNetwork::setAuthParameter(const QByteArray &param)
-{
-	((EvaHttpProxy*)(socket))->setBase64AuthParam(param);
-}
-
+//X void EvaNetwork::setAuthParameter(const QString &username, const QString &password)
+//X {
+//X  	 ((EvaHttpProxy*)(socket))->setAuthParameter(username, password);
+//X }
+//X 
+//X void EvaNetwork::setAuthParameter(const QByteArray &param)
+//X {
+//X 	((EvaHttpProxy*)(socket))->setBase64AuthParam(param);
+//X }
+//X 
 void EvaNetwork::newURLRequest()
 {
 	((EvaHttpProxy*)(socket))->tcpReady();
@@ -119,7 +125,7 @@ void EvaNetwork::setWriteNotifierEnabled(bool enabled)
 
 void EvaNetwork::processProxyEvent(int num)
 {
-	if(type != HTTP_Proxy){
+	if(policy.getConnectionType() != HTTP_Proxy){
 		switch(num){
 		case EvaSocket::Init:
 		case EvaSocket::Connecting:
@@ -157,13 +163,13 @@ void EvaNetwork::close( )
 	socket->closeConnection();
 }
 
-const QHostAddress EvaNetwork::getSocketIp( )
+QHostAddress EvaNetwork::getSocketIp( ) const
 {
 	if(socket) return socket->getSocketAddress();
 	return QHostAddress();
 }
 
-unsigned int EvaNetwork::getSocketPort( )
+short EvaNetwork::getSocketPort( ) const
 {
 	if(socket) return socket->getSocketPort();
 	return 0;

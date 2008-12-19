@@ -41,7 +41,7 @@ public:
 	~EvaFileManager();
 	// set before starting a new thread
 	void setMyBasicInfo(const unsigned char *key, const unsigned char *token, const unsigned int tokenLen);
-	void setMyProxyInfo(const QHostAddress addr, const short port, const Q3CString &param);
+	void setNetworkPolicy(const EvaNetworkPolicy& policy);
 
 	bool newSession(const unsigned int id, const unsigned int session, 
 				const Q3ValueList<QString> &dirList, 
@@ -106,11 +106,7 @@ private:
 	unsigned char *m_FileAgentToken;
 	unsigned int m_FileAgentTokenLength;
 
-	// my proxy settings
-	bool m_IsProxySet;
-	QHostAddress m_ProxyServer;
-	short m_ProxyPort;
-	Q3CString m_ProxyAuthParam;
+        EvaNetworkPolicy policy;
 
 	//EvaFileThread *getThread(const unsigned int session);
 	EvaFileThread *getThread(const unsigned int id, const unsigned int session);

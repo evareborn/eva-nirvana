@@ -56,17 +56,13 @@ class QTimer;
 //class KGlobalAccel;
 class QShortcut;
 
-class EvaUser;
-class EvaConnecter;
-class EvaPacketManager;
-class EvaFileManager;
+class EvaSession;
+class EvaUserSetting;
 class EvaGlobal;
 class EvaImageResource;
 class EvaSetting;
 class EvaAddingManager;
-class EvaContactManager;
 class EvaSysMsgManager;
-class EvaLoginManager;
 
 class EvaLoginWindow;
 class EvaMainWindow;
@@ -112,17 +108,14 @@ public:
 
         static EvaMain* g_eva;
 
+        static EvaSession* session;
         static EvaMain* getInstance() { return g_eva; }
-        EvaUser* getUser() { return user; }
+//X         EvaSession* getSession() { return session; }
+//X         EvaUser* getUser() { return user; }
         EvaUHManager* getUHManager() { return uhManager; }
-        EvaLoginManager* getLoginManager() { return m_loginManager; }
-        EvaConnecter* getConnecter() { return connecter; }
-        EvaContactManager* getContactManager() { return m_contactManager; }
-        EvaAddingManager* getAddingManager() { return m_addingManager; }
         EvaPicManager* getPicManager() { return picManager; }
-	// transferring files manager
-	EvaFileManager *m_FileManager;
-	
+        EvaAddingManager* getAddingManager() { return addingManager; }
+
 	/// DCOP Actions calls
 	void changeToOnline();
 	void changeToOffline();
@@ -153,30 +146,22 @@ private:
 	// every timer interval to get online friends' status
 	QTimer *onlineFriendTimer;
 
-	// store user information
-	EvaUser *user;
+        EvaUserSetting* settings;
+//X 	// store user information
+//X 	EvaUser *user;
 
 	// user head pictures manager
 	EvaUHManager *uhManager;
 
-	// class to connect to QQ server
-	EvaConnecter *connecter;
-
-	// adding frioend manager
-	EvaAddingManager *m_addingManager;
-
-        EvaContactManager *m_contactManager;
-
 	// ??
 	EvaPicManager *picManager;
 
-	// packetize QQ messages
-	EvaPacketManager *packetManager;
+	// adding frioend manager
+	EvaAddingManager *addingManager;
 
 	// system notification handler
 	EvaSysMsgManager *m_SysMsgManager;
 
-        EvaLoginManager *m_loginManager;
 	// detecting idle time
 	IdleTimeDetector *idt;
 
@@ -245,7 +230,7 @@ private slots:
 	// TODO: should we put so many slots in the same place?
 	void slotIdleTimeUp();
 	void slotIdleBack();
-	//void slotLoadGroupedBuddiesReady();
+//X 	void slotLoadGroupedBuddiesReady();
 	void slotLoadQunListReady();
 	void doQuit();
 	bool doInitUI();
@@ -274,7 +259,7 @@ private slots:
 	void slotLeaveReady();
 	void slotOfflineReady();
 	void slotFriendStatusChanged(unsigned int);
-	//void slotFriendListReady();
+//X 	void slotFriendListReady();
 	//void slotSentMessageResult(bool); 
 	void slotTxtMessage(unsigned int sender, bool isNormal, QString message, QDateTime time, const char fontSize, 
 			const bool u, const bool i, const bool b, 

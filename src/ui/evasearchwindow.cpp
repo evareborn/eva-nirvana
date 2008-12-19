@@ -50,8 +50,9 @@
 //X #include <kstandarddirs.h>
 //X #include <kapp.h>
 
+#include "evasession.h"
 #include "evaguimain.h"
-#include "../evaaddingmanager.h"
+#include "evaaddingmanager.h"
 #include "evaqunlist.h"
 #include "qundetailswindow.h"
 
