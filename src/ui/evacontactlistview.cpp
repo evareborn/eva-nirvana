@@ -711,7 +711,6 @@ void EvaContactListView::dropEvent(QDropEvent *event)
                 group->setOpen(true);
                 f->setGroupIndex(group->groupIndex());
                 m_contacts[id]->update();
-                EvaMain::session->getUser()->saveGroupedBuddyList();
                 updateAllGroups();
                 emit groupChanged(id, group->groupIndex());
             }
@@ -880,7 +879,6 @@ void EvaContactListView::slotNewGroup( )
 	int index = EvaMain::session->getUser()->getGroupIndexOf( gname ); // minus Black list & Anonymous
 	EvaGroupItem *g = new EvaGroupItem(index, this);
 	m_groups[index]  = g;
-	EvaMain::session->getUser()->saveGroupedBuddyList();
 	//emit groupAdded(name, index);
 	
 	clearSelection();

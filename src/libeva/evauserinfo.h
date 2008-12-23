@@ -44,8 +44,8 @@ public:
 			Info_openContact,Info_college,   Info_horoscope,Info_zodiac,    Info_blood, 
 			Info_qqShow,     Info_unknown6  };
 			
-	const std::string &at(const Info_Index index) const { return infos[index]; }
-	const std::string &at(const int index) const { return infos[index]; }  // note this method will not test if out of index range!
+	std::string at(const Info_Index index) const { return infos[index]; }
+	std::string at(const int index) const { return infos[index]; }  // note this method will not test if out of index range!
 	const stringList &details() const {  return infos; };
 	 uint count() const { return infos.size(); }
 	

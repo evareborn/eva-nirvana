@@ -19,15 +19,18 @@
  ***************************************************************************/
 
 #include "evaloginmanager.h"
-
+#include "evacontactmanager.h"
 #include "evapacketmanager.h"
+#include "evafilemanager.h"
+#include "evauser.h"
 #include <qhostaddress.h>
 #include <assert.h>
 #include "evaguimain.h"
+#include "evaqtutil.h"
+#include "evaapi.h"
 #include "evasession.h"
 #include "evasetting.h"
 #include "evaconnecter.h"
-#include "evaapi.h"
 #include "evaloginveriwindow.h"
 #include <QApplication>
 //X #include <kapplication.h>
@@ -41,13 +44,17 @@
 //X 	return &manager;
 //X }
 
-EvaLoginManager::EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaPacketManager* packetManager )
+EvaLoginManager::EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager )
         : session( session )  
         , connecter( connecter )
+        , contactManager( contactManager )
 	, packetManager(packetManager)
 	, m_isLoggedIn(false)
 	, m_veriWin(NULL)
 {
+
+        QObject::connect( connecter, SIGNAL( isNetworkReady() ), SLOT( slotDoLogin() ) );
+        QObject::connect( packetManager, SIGNAL( fileAgentInfoReady() ), SLOT( fileAgentInfoReady() ) );
 }
 
 void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
@@ -58,11 +65,11 @@ void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
 	
 //X 	QApplication::postEvent(g_eva, e);
 	QApplication::sendEvent(EvaMain::getInstance(), e);
+	QApplication::sendEvent(contactManager, e);
  
         if ( QApplication::hasPendingEvents() ) {
             printf( "has pending events!\n" );
         }
-	
 
 }
 
@@ -88,11 +95,11 @@ void EvaLoginManager::setPacketManager( EvaPacketManager * pm )
 
 void EvaLoginManager::serverBusy( )
 {
-	m_status = EStart;
+	loginStatus = EStart;
 	notifyEvent(E_Err);	
 }
 
-void EvaLoginManager::login()
+void EvaLoginManager::slotDoLogin()
 {
     QHostAddress server = connecter->getSocketIp();
     assert(packetManager);
@@ -104,7 +111,84 @@ void EvaLoginManager::login()
     ServerDetectorPacket::setFromIP(0);
 
     packetManager->redirectTo(server.toIPv4Address(), -1);
-    m_status = EStart;
+    loginStatus = EStart;
+}
+ 
+void EvaLoginManager::login()
+{
+    slotDoLogin();
+}
+ 
+void EvaLoginManager::logout()
+{
+    m_isLoggedIn = false; 
+    packetManager->doLogout();
+}
+
+void EvaLoginManager::setStatus(const UserStatus status)
+{ 
+    this->status = status;
+}
+
+UserStatus EvaLoginManager::getStatus() const
+{ 
+    return status;
+}
+
+char EvaLoginManager::getStatusCode(const UserStatus status) 
+{
+	char statusCode;
+	switch(status){
+	case Eva_Online:
+		statusCode = QQ_FRIEND_STATUS_ONLINE;
+		break;
+	case Eva_Offline:
+		statusCode = QQ_FRIEND_STATUS_OFFLINE;
+		break;
+	case Eva_Invisible:
+		statusCode = QQ_FRIEND_STATUS_INVISIBLE;
+		break;
+	case Eva_Leave:
+		statusCode = QQ_FRIEND_STATUS_LEAVE;
+		break;
+	default:
+		statusCode = QQ_FRIEND_STATUS_OFFLINE;
+	}
+	return statusCode;
+}
+
+void EvaLoginManager::online()
+{
+    if(status == Eva_Offline){
+        status = Eva_Online;
+//X         login();
+    }else
+        packetManager->doChangeStatus(Eva_Online);
+}
+ 
+void  EvaLoginManager::offline()
+{
+    status = Eva_Offline;
+    packetManager->doChangeStatus(Eva_Offline);
+}
+ 
+void EvaLoginManager::leave()
+{
+	if(status == Eva_Offline){
+		setStatus(Eva_Leave);
+//X 		login();
+	}else
+		packetManager->doChangeStatus(Eva_Leave);
+
+}
+
+void EvaLoginManager::invisible()
+{
+    if(status == Eva_Offline){
+        setStatus(Eva_Invisible);
+//X         login();
+    }else
+        packetManager->doChangeStatus(Eva_Invisible);
 }
 
 void EvaLoginManager::loginVerification( )
@@ -134,7 +218,7 @@ void EvaLoginManager::loginVerification( )
 
 void EvaLoginManager::verifyPassed( )
 {
-	m_status = ELoginToken;
+	loginStatus = ELoginToken;
 	if(m_veriWin) m_veriWin->slotVerifyPassed();
 	
 	packetManager->doLogin();
@@ -143,11 +227,12 @@ void EvaLoginManager::verifyPassed( )
 void EvaLoginManager::loginOK( )
 {	
         printf( "login Ok!\n" );
-	m_status = ELogin;
+	loginStatus = ELogin;
 	notifyEvent(E_LoggedIn);
 	//We don't care about the reply of this command	
-	packetManager->doChangeStatus(session->getStatus());
+//X 	packetManager->doChangeStatus(session->getStatus());
 
+//X         packetManager->doChangeStatus(status );
 	packetManager->doGetUserInfo(session->getQQ());
 
 }
@@ -155,7 +240,7 @@ void EvaLoginManager::loginOK( )
 void EvaLoginManager::wrongPassword( QString msg )
 {	
 	//KMessageBox::information(0, msg, i18n("Eva Login"));
-	m_status = EStart;
+	loginStatus = EStart;
 	notifyEvent(E_PwWrong, msg);
 	//TODO
 }
@@ -165,7 +250,7 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 	ServerDetectorPacket::nextStep();
 	ServerDetectorPacket::setFromIP(fromIp );
 	
-	m_status = EStart;
+	loginStatus = EStart;
 	notifyEvent(E_SvrRedirect);
 	packetManager->redirectTo( ip, port);
 	
@@ -173,25 +258,29 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 
 void EvaLoginManager::fileAgentInfoReady( )
 {
-	printf( "[EvaLoginManager] file agent info ready\n" );
-	if(session->getFileManager()){
-		session->getFileManager()->setMyBasicInfo(Packet::getFileAgentKey(),
-						 Packet::getFileAgentToken(), 
-						Packet::getFileAgentTokenLength());
-		m_status = EFileAgentKey;
-		m_isLoggedIn = true;
-		notifyEvent(E_KeyFileAgent);
-		notifyEvent(E_LoginFinished);
-	}
+//X 	printf( "[EvaLoginManager] file agent info ready\n" );
+//X 	if(session->getFileManager()){
+//X 		session->getFileManager()->setMyBasicInfo(Packet::getFileAgentKey(),
+//X 						 Packet::getFileAgentToken(), 
+//X 						Packet::getFileAgentTokenLength());
+//X 		loginStatus = EFileAgentKey;
+//X 		m_isLoggedIn = true;
+//X             contactManager->fetchContacts();
+//X 		notifyEvent(E_KeyFileAgent);
+//X 	}
 }
 
 void EvaLoginManager::myInfoReady( const ContactInfo info)
 {
-	m_status = EUserInfo;
+	loginStatus = EUserInfo;
 	EvaUser *user = session->getUser();
 	if(user)
 		user->setDetails(info);
-	notifyEvent(E_MyInfo);
-	packetManager->doRequestFileAgentKey();
+//X 	notifyEvent(E_MyInfo);
+        m_isLoggedIn = true;
+        notifyEvent(E_LoginFinished);
+        contactManager->fetchContacts();
+        packetManager->doGetOnlineFriends();
+//X 	packetManager->doRequestFileAgentKey();
 }
 

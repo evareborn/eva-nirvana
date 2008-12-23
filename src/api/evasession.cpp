@@ -1,3 +1,20 @@
+/**
+ * Copyright (C)2008 George Ang (gnap.an AT gmail.com)
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ */ 
+
 #include "api/evasession.h"
 #include "evauser.h"
 #include "evaconnecter.h"
@@ -11,60 +28,40 @@ EvaSession::EvaSession( unsigned int qq, char const* password, const EvaNetworkP
     : policy( policy )
 {
     user = new EvaUser( qq, password );
-
     connecter = new EvaConnecter(policy);
 
-    packetManager = new EvaPacketManager(user, connecter, this);
-    loginManager = new EvaLoginManager( this, connecter, packetManager );
-    contactManager = new EvaContactManager( this, packetManager );
+    packetManager = new EvaPacketManager(this, user, connecter);
+    contactManager = new EvaContactManager( this, connecter, packetManager );
+    loginManager = new EvaLoginManager( this, connecter, contactManager, packetManager );
 
-    fileManager = new EvaFileManager(qq, this);
-    status = Eva_Offline;
-    printf( "EvaSession::EvaSession()\n" );
+    loginManager->setStatus( Eva_Offline );
 }
  
 EvaSession::~EvaSession()
 {
     delete user;
 
-    fileManager->stopAll();
-    delete fileManager;
+//X     fileManager->stopAll();
+//X     delete fileManager;
+    free();
+}
+ 
+void EvaSession::free()
+{
     delete connecter;
     delete loginManager;
     delete contactManager;
     delete packetManager;
-}
-char EvaSession::getStatusCode(const UserStatus status) 
-{
-	char statusCode;
-	switch(status){
-	case Eva_Online:
-		statusCode = QQ_FRIEND_STATUS_ONLINE;
-		break;
-	case Eva_Offline:
-		statusCode = QQ_FRIEND_STATUS_OFFLINE;
-		break;
-	case Eva_Invisible:
-		statusCode = QQ_FRIEND_STATUS_INVISIBLE;
-		break;
-	case Eva_Leave:
-		statusCode = QQ_FRIEND_STATUS_LEAVE;
-		break;
-	default:
-		statusCode = QQ_FRIEND_STATUS_OFFLINE;
-	}
-	return statusCode;
-}
+    connecter = NULL;
+    packetManager = NULL;
+    contactManager = NULL;
+    loginManager = NULL;
 
+}
 
 EvaUser* EvaSession::getUser()
 {
     return user;
-}
- 
-EvaFileManager* EvaSession::getFileManager()
-{
-    return fileManager;
 }
  
 EvaLoginManager* EvaSession::getLoginManager()
@@ -94,23 +91,37 @@ void EvaSession::login()
  
 void EvaSession::logout()
 {
-    packetManager->doLogout();
-    loginManager->setLoggedOut();
-    setStatus( Eva_Offline );
+    loginManager->logout();
+}
+ 
+void EvaSession::online()
+{
+    loginManager->online();
+}
+ 
+void EvaSession::invisible()
+{
+    loginManager->invisible();
+}
+ 
+void EvaSession::leave()
+{
+    loginManager->leave();
+}
+ 
+void EvaSession::offline()
+{
+    loginManager->offline();
 }
 
 unsigned int EvaSession::getQQ() const
 {
     return user->getQQ();
 }
-void EvaSession::setStatus(const UserStatus status)
-{ 
-    this->status = status;
-}
 
 UserStatus EvaSession::getStatus() const
 { 
-    return status;
+    return loginManager->getStatus();
 }
 
 void EvaSession::setLoginWanIp(const unsigned int ip)

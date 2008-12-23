@@ -345,12 +345,12 @@ void EvaConnecter::processPacket( char * data, int len )
         inPool.append(packet);
 
 	//NOTE: the if condition needs more consideration
-	if(isClientSetup || (!isClientSetup && packet->getCommand()!= QQ_CMD_RECV_IM && 
-				packet->getCommand() != QQ_CMD_RECV_MSG_SYS          &&
-				packet->getCommand() != QQ_CMD_RECV_MSG_FRIEND_CHANGE_STATUS))
-		emit newPacket();
-	else if(!isClientSetup)
-		emit clientNotReady();
+//X 	if(isClientSetup || (!isClientSetup && packet->getCommand()!= QQ_CMD_RECV_IM && 
+//X 				packet->getCommand() != QQ_CMD_RECV_MSG_SYS          &&
+//X 				packet->getCommand() != QQ_CMD_RECV_MSG_FRIEND_CHANGE_STATUS))
+        emit newPacket();
+//X 	else if(!isClientSetup)
+//X 		emit clientNotReady();
 }
 
 void EvaConnecter::packetMonitor()

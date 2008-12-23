@@ -22,6 +22,7 @@
 
 #include "evapacketmanager.h"
 #include "evaguimain.h"
+#include "evaapi.h"
 #include "evauser.h"
 #include "evausersetting.h"
 #include "evaresource.h"

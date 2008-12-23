@@ -612,7 +612,6 @@ void EvaChatWindow::slotFontChanged(QColor color, int size)
 	printf("setting color: %s size: %d\n", color.name().ascii(), size);
 	//QColor c=color;
 	//QString s=c.name();
-	EvaMain::session->getUser()->saveGroupedBuddyList();
 }
 
 void EvaChatWindow::setEnterSend()

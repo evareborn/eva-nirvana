@@ -20,14 +20,15 @@
 
 #include "evacontactmanager.h"
 #include "evaguimain.h"
+#include "evaconnecter.h"
 #include "evasession.h"
+#include "evaapi.h"
 #include "evapacketmanager.h"
 #include "evagroup.h"
 #include "evaqun.h"
 #include "evauser.h"
 #include "evaqunlist.h"
 #include "libeva.h"
-#include "evaapi.h"
 #include <assert.h>
 #include <qapplication.h>
 //X #include <kdebug.h>
@@ -39,11 +40,12 @@
 //X 	return &manager;
 //X }
 
-EvaContactManager::EvaContactManager( EvaSession* session, EvaPacketManager* pm)
-	: m_contactsReady(false)
-        , session( session )  
-	, m_status(ESCM_NONE)
-	, packetManager(pm)
+EvaContactManager::EvaContactManager( EvaSession* session, EvaConnecter* connecter, EvaPacketManager* pm)
+    : m_contactsReady(false)
+    , session( session )  
+    , connecter( connecter )
+    , m_status(ESCM_NONE)
+      , packetManager(pm)
 {
 }
 
@@ -80,11 +82,15 @@ void EvaContactManager::fetchContacts( )
 	
 	//we try to load local cache first
 	EvaUser *user = EvaMain::session->getUser();
-	if(user && 
-	   user->loadGroupedBuddyList() &&
-	   user->loadQunList() ){
+	if(user && user->getNumberOfFriends() ){
 		m_downloadAll = false;
+                fetchAllLevels();
+                fetchAllSignatures();
+                packetManager->doRequestExtraInfo();
+                packetManager->doGetWeatherForecast(session->getLoginWanIp()); /// get local weather
+			
 		notifyEvent(E_LoginProcessDone);
+                connecter->slotClientReady();
 		return;
 	} else
 		m_downloadAll = true;
@@ -118,8 +124,8 @@ void EvaContactManager::processGetFriendListReply( const GetFriendListReplyPacke
 // 		}
 		notifyEvent(E_ContactsDone);
 		m_status = ESCM_NONE;
-		EvaUser *user = EvaMain::session->getUser();
-		if(user) user->saveGroupedBuddyList();
+//X 		EvaUser *user = EvaMain::session->getUser();
+//X 		if(user) user->saveGroupedBuddyList();
 		if(m_downloadAll){
 			fetchGroupNames();
 		}
@@ -210,7 +216,7 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 		if(user){
 			user->setGroupNames(m_GroupNames);
 			user->setFriendList(m_Contacts);
-			user->saveGroupedBuddyList();
+//X 			user->saveGroupedBuddyList();
 			
 			user->setQunList(m_QunList);
 			user->saveQunList();
@@ -269,6 +275,11 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 			m_downloadAll = false;
 			m_QunMemberCount = 0;
 			// show main display to user
+			packetManager->doRequestExtraInfo();
+			packetManager->doGetWeatherForecast(session->getLoginWanIp()); /// get local weather
+			
+			fetchAllLevels();
+			fetchAllSignatures();
 			notifyEvent(E_LoginProcessDone);
 			
 // 			q = m_QunList.first();
@@ -406,10 +417,8 @@ void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * 
 	unsigned int id = atoi(strID.c_str());
 	if( id == user->getQQ()){
 		user->setDetails(m_ContactInfo);
-		user->saveGroupedBuddyList();
 	}else if(user->getFriendList().hasFriend( id)){
-			user->getFriendList().addContactInfoTo(id, m_ContactInfo);
-			user->saveGroupedBuddyList();
+			user->setContactInfo(id, m_ContactInfo);
 		}
 	
 	QString msg = QString("%1").arg(id);
@@ -447,9 +456,8 @@ void EvaContactManager::processSignatureReply( const SignatureReplyPacket * pack
 		if(iter->first == user->getQQ())
 			user->setSignature(iter->second.signature, iter->second.lastModifyTime);
 		else
-			user->getFriendList().setSignature(iter->first, iter->second.signature, iter->second.lastModifyTime);
+			user->setContactSignature(iter->first, iter->second.signature, iter->second.lastModifyTime);
 	}
-	user->saveGroupedBuddyList();
 	
 	if(m_status == ESCM_ALLSIGNATURES){
 		if( false == packetManager->doRequestSignature(packet->nextStartID())) //no more contact to request, so we done!
@@ -485,9 +493,9 @@ void EvaContactManager::processGetLevelReply( const EvaGetLevelReplyPacket * pac
 			user->setLevel(iter->level);
 			user->setHoursToLevelUp(iter->timeRemainder);
 		}else
-			user->getFriendList().updateFriendLevel(iter->qqNum, iter->onlineTime, iter->level, iter->timeRemainder);
+			user->updateFriendLevel(iter->qqNum, iter->onlineTime, iter->level, iter->timeRemainder);
 	}	
-	user->saveGroupedBuddyList();
+
 	if(m_status == ESCM_LEVEL && id)
 		notifyEvent(E_LevelDone, "", (EPARAM)id);
 }

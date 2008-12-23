@@ -31,189 +31,621 @@
 #include <qevent.h>
 //Added by qt3to4:
 #include <QCustomEvent>
+#include <QDir>
 //X #include <klocale.h>
 
 std::string EvaUser::qunName = "Qun List";
 std::string EvaUser::anonymousName = "Anonymous";
 std::string EvaUser::blackName = "Black List";
 
-EvaUser::EvaUser(const unsigned int id, const std::string &password)
-	: //DCOPObject("Contacts"),
-	QObject()
+EvaUser::EvaUser(const unsigned int id, const char *md5Password)
+    //X 	: DCOPObject("Contacts")
 {
-	qqNum = id;
-	md5Password = new char[16];
-	memcpy(md5Password, EvaUtil::doMd5Md5((char *)password.c_str(), password.length()), 16);
+    qqNum = id;
 
-	timeOnline = 0;
-	level = 0;
-	hoursToLevelUp = 0;
+    this->md5Password = new char[16];
+    memcpy(this->md5Password, md5Password, 16);
 
-	mSignature = "";
-	mSignatureModifyTime = 0;
+    timeOnline = 0;
+    level = 0;
+    hoursToLevelUp = 0;
 
-//X 	status = Eva_Offline;
-	groupNames.clear();
-	setting = new EvaUserSetting(id);
-	setting->loadSettings();
-	isBuddyListLoaded = false;
-	isQunListLoaded = false;
+    mSignature = "";
+    mSignatureModifyTime = 0;
 
-	//mLoginManager = new EvaLoginProcess();
+    groupNames.clear();
+
+    setting = new EvaUserSetting(id);
+    //mLoginManager = new EvaLoginProcess();
+    loadGroupedBuddyList();
+    loadQunList();
 }
 
-EvaUser::EvaUser(const unsigned int id, const char *md5Password)
-//X 	: DCOPObject("Contacts")
+EvaUser::EvaUser(const unsigned int id, const std::string &password)
+    : QObject()
 {
-	qqNum = id;
-	
-	this->md5Password = new char[16];
-	memcpy(this->md5Password, md5Password, 16);
-	
-	timeOnline = 0;
-	level = 0;
-	hoursToLevelUp = 0;
-
-	mSignature = "";
-	mSignatureModifyTime = 0;
-	
-//X 	status = Eva_Offline;
-	groupNames.clear();
-
-	setting = new EvaUserSetting(id);
-	//mLoginManager = new EvaLoginProcess();
+    EvaUser( id, EvaUtil::doMd5Md5((char *)password.c_str(), password.length()) );
+//X     qqNum = id;
+//X     md5Password = new char[16];
+//X     memcpy(md5Password, EvaUtil::doMd5Md5((char *)password.c_str(), password.length()), 16);
+//X 
+//X     timeOnline = 0;
+//X     level = 0;
+//X     hoursToLevelUp = 0;
+//X 
+//X     mSignature = "";
+//X     mSignatureModifyTime = 0;
+//X 
+//X     //X 	status = Eva_Offline;
+//X     groupNames.clear();
+//X     setting = new EvaUserSetting(id);
+//X     setting->loadSettings();
+//X     isBuddyListLoaded = false;
+//X     isQunListLoaded = false;
+//X 
+//X     //mLoginManager = new EvaLoginProcess();
 }
 
 EvaUser::~EvaUser()
 {
-	delete md5Password;
-	delete setting;
+    saveGroupedBuddyList();
+    saveQunList();
+    delete md5Password;
+    delete setting;
 }
-bool EvaUser::newGroup( const std::string & name )
+
+
+void EvaUser::setDetails(const ContactInfo &details)
+{ 
+    this->details = details;
+}
+
+void EvaUser::addContact( const QQFriend& f )
 {
-	groupNames.push_back(name);
-	return true;
+    myFriends.addFriend(f);
+}
+
+void EvaUser::deleteContact( unsigned int id )
+{
+    myFriends.deleteFriend(id);
+}
+
+void EvaUser::setContactInfo( unsigned int id, const ContactInfo& info )
+{
+    if ( myFriends.hasFriend( id ) ) {
+        myFriends.addContactInfoTo( id, info );
+    }
+}
+
+void EvaUser::setContactSignature( unsigned int id, const std::string& sig, unsigned int time)
+{
+    if ( myFriends.hasFriend( id ) ) {
+        myFriends.setSignature(id, sig, time );
+    }
+}
+
+void EvaUser::setContactMemo( unsigned int id, const MemoItem& memo )
+{
+    if ( myFriends.hasFriend( id ) ) {
+        myFriends.setMemo(id, memo );
+    }
+}
+
+void EvaUser::updateFriendLevel(unsigned int id, unsigned int online, unsigned short level, unsigned short hours)
+{
+    if ( myFriends.hasFriend(id ) ) {
+        myFriends.updateFriendLevel(id, online, level, hours );
+    }
+}
+
+void EvaUser::updateFriendGroupIndex( unsigned int id, int index)
+{
+    if ( myFriends.hasFriend(id ) ) {
+        myFriends.updateFriendGroupIndex(id, index );
+    }
+}
+
+void EvaUser::newGroup( const std::string& name )
+{
+    groupNames.push_back(name);
 }
 
 void EvaUser::clearGroupNames()
 {
-	//std::string buddy = groupNameAtIndex(0); 
-	groupNames.clear();
-	groupNames.push_back("Buddy List");
+    //std::string buddy = groupNameAtIndex(0); 
+    groupNames.clear();
+    groupNames.push_back("Buddy List");
 }
 
 void EvaUser::setGroupNames( std::list<std::string> &groups)
 {
-	groupNames = groups;
-	groupNames.push_front("Buddy List");
-	printf("==========EvaUser::setGroupNames:%d\n", groupNames.size());
+    groupNames = groups;
+    groupNames.push_front("Buddy List");
+    printf("==========EvaUser::setGroupNames:%d\n", groupNames.size());
 }
 
-void EvaUser::removeGroupName(const int index)
+void EvaUser::removeGroupName(int index)
 {
-	if(index == 0 ) return; // the first group name cannot be removed
-	if((uint)index >= groupNames.size()) return; 
-	std::list<std::string>::iterator iter;
-	iter = groupNames.begin();
-	for(int i=0; i<index; i++)
-		iter++;
-	groupNames.erase(iter);
+    if(index == 0 ) return; // the first group name cannot be removed
+    if((uint)index >= groupNames.size()) return; 
+    std::list<std::string>::iterator iter;
+    iter = groupNames.begin();
+    for(int i=0; i<index; i++)
+        iter++;
+    groupNames.erase(iter);
 }
 
 int EvaUser::getGroupIndexOf(const std::string &name)
 {
-	std::list<std::string>::iterator iter;
-	int i=0;	
-	for(iter=groupNames.begin(); iter != groupNames.end(); ++iter){
-		if(name== *iter) break;
-		++i;
-	}
-	if((uint)i>= groupNames.size()) 
-		return -1;
-	else 
-		return i;	
+    std::list<std::string>::iterator iter;
+    int i=0;	
+    for(iter=groupNames.begin(); iter != groupNames.end(); ++iter){
+        if(name== *iter) break;
+        ++i;
+    }
+    if((uint)i>= groupNames.size()) 
+        return -1;
+    else 
+        return i;	
 }
 
-void EvaUser::updateGroupName(const std::string &newName, const int index)
+void EvaUser::updateGroupName(const std::string& newName, int index)
 {
-	if(index == 0 ) return; // the first group name cannot be removed
-	if((uint)index >= groupNames.size()) return; 
-	std::list<std::string>::iterator iter;
-	iter = groupNames.begin();
-	int i;
-	for(i=0; i<index; i++){
-		iter++;
-	}
-	groupNames.insert(iter, newName);
-	groupNames.erase(iter);
+    if(index == 0 ) return; // the first group name cannot be removed
+    if((uint)index >= groupNames.size()) return; 
+    std::list<std::string>::iterator iter;
+    iter = groupNames.begin();
+    int i;
+    for(i=0; i<index; i++){
+        iter++;
+    }
+    groupNames.insert(iter, newName);
+    groupNames.erase(iter);
 }
 
 const std::string EvaUser::groupNameAtIndex( const int index )
 {
-	if(index == anonymousIndex) return anonymousName;
-	if(index == blackIndex) return blackName;
-	
-	if((uint)index>= groupNames.size()) return "Buddy List";
-	
-	std::list<std::string>::iterator iter;
-	int i=0;	
-	for(iter=groupNames.begin(); iter != groupNames.end(); ++iter){
-		if(i==index) break;
-		++i;
-	}
-	return *iter;
+    if(index == anonymousIndex) return anonymousName;
+    if(index == blackIndex) return blackName;
+
+    if((uint)index>= groupNames.size()) return "Buddy List";
+
+    std::list<std::string>::iterator iter;
+    int i=0;	
+    for(iter=groupNames.begin(); iter != groupNames.end(); ++iter){
+        if(i==index) break;
+        ++i;
+    }
+    return *iter;
 }
 
 bool EvaUser::loadGroupedBuddyList()
 {
-	if(setting->loadBuddyList(this)){
-		isBuddyListLoaded = true;
-	}else{
-		isBuddyListLoaded = false;
-	}
-	return isBuddyListLoaded;
+    //X     if(!isDirExisted(setting->getEvaUserDir()))
+    //X         return false;
+
+    QString fullName = setting->getEvaBuddyListFilename();
+    QFile file(fullName);
+    if(!file.open(QIODevice::ReadOnly)){
+        return false;
+    }
+
+    if(!isVersionCorrect(fullName)){
+        file.close();
+        return false;
+    }
+
+    std::list<std::string> tmpGroupNames;
+    ContactInfo myInfo;
+    FriendList list;	
+    Q_UINT32 numGroups=0;
+    MemoItem memo;
+
+    QDataStream stream(&file);
+
+    // check version first
+    char *flag = new char[3];
+    stream.readRawBytes(flag, 3);
+    Q_UINT32 version = 0;
+    stream>>version;
+    if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
+        file.close();
+        file.remove();
+        delete flag;
+        return false;
+    }
+    delete []flag;
+
+    // load my details first
+    Q_UINT32 size=0;
+    std::string item;
+    std::vector<std::string> strlist;
+
+    stream>>size;
+    char *str = new char[512];
+    for(uint i=0; i<size; i++){
+        stream>>str;
+        item = str;
+        strlist.push_back(item);
+    }	
+    myInfo.setDetails(strlist);
+
+    // read my extra info
+    Q_UINT16 myExtraInfo;
+    stream>>myExtraInfo;
+
+    // read signature & time
+    std::string signature;
+    stream>>str; 
+    signature = str;
+
+    Q_UINT32 sigTime;
+    stream>>sigTime;
+
+    // read in how many groups
+    stream>>numGroups;
+    std::string name;
+    // read all groups in
+    for(uint i=0; i<numGroups; i++){
+        stream>>str;
+        name = str;
+        tmpGroupNames.push_back(name);
+    }
+
+    Q_UINT32 id;
+    Q_UINT16 face;
+    Q_UINT8  age;
+    Q_UINT8  gender;
+    std::string nick;
+    Q_UINT8  extFlag;
+    Q_UINT8  commonFlag;
+    Q_UINT32 groupIndex;
+    Q_UINT16 extraInfo;
+    std::string frdSig;
+    Q_UINT32 frdSigTime;
+    Q_UINT32 fontSize;
+    Q_UINT32 fontColor;
+
+    // read in all friends
+    while(!stream.atEnd()){
+        stream>>id;
+        stream>>face;
+        stream>>age;
+        stream>>gender;
+        stream>>str;
+        nick = str;
+        stream>>extFlag;
+        stream>>commonFlag;
+        stream>>groupIndex;
+        stream>>extraInfo;
+        stream>>str;
+        frdSig = str;
+        stream>>frdSigTime;
+
+        strlist.clear();
+        stream>>size;
+        for(uint i=0; i<size; i++){
+            stream>>str;
+            item = str;
+            strlist.push_back(item);
+        }
+        stream>>str;memo.name = str;
+        stream>>str;memo.mobile = str;
+        stream>>str;memo.telephone = str;
+        stream>>str;memo.address = str;
+        stream>>str;memo.email = str;
+        stream>>str;memo.zipcode = str;
+        stream>>str;memo.note = str;
+
+        stream>>fontSize>>fontColor;
+        QQFriend f(id, face);
+
+        f.setAge(age);
+        f.setGender(gender);
+        f.setNick(nick);
+        f.setExtFlag(extFlag);
+        f.setCommonFlag(commonFlag);
+        f.setGroupIndex(groupIndex);
+        f.setExtraInfo(extraInfo);
+        f.setSignature(frdSig, frdSigTime);
+        ContactInfo info;
+        info.setDetails(strlist);
+        f.setUserInformation(info);
+        f.setMemo(memo);
+        f.setChatFontSize(fontSize);
+        f.setChatFontColor(fontColor);
+
+        list.addFriend(f);
+    }
+    delete []str;
+    file.close();
+
+    //X     EvaUser *user = ( EvaUser* ) receiver;
+    //X     if(user)
+    //X     {
+    details              = myInfo;
+    groupNames           = tmpGroupNames;
+    myFriends            = list;
+    mExtraInfo           = myExtraInfo;
+    mSignature           = signature;
+    mSignatureModifyTime = sigTime;
+    //X         return true;
+    //X     } else
+    //X         return false;	
+
+    //EvaMain::helper->setCategory(EvaHelper::LoadGroupedUsers, receiver);
+    //EvaMain::helper->setLoadGroupedUsersArgs(&file);
+    //EvaMain::helper->run();
+    //return true;
+
+    //X 	if(setting->loadBuddyList(this)){
+    //X 		isBuddyListLoaded = true;
+    //X 	}else{
+    //X 		isBuddyListLoaded = false;
+    //X 	}
+    //X 	return isBuddyListLoaded;
+    buddylistMutex.unlock();
+    return true;
 }
 
 bool EvaUser::saveGroupedBuddyList()
 {
-	return setting->saveBuddyList(this, groupNames, details, myFriends, mExtraInfo, mSignature, mSignatureModifyTime);
+    buddylistMutex.lock();
+    QString dir = setting->getEvaUserDir();
+    QDir d;
+    if ( d.exists( dir ) && (!d.mkdir(dir))) {
+        return false;
+    }
+
+    QString fullName = setting->getEvaBuddyListFilename();
+    QFile file(fullName);
+    if(file.exists()) file.remove();
+    if(!file.open(QIODevice::WriteOnly)){
+        return false;
+    }
+    EvaMain::helper->setCategory(EvaHelper::SaveGroupedUsers, this);
+    EvaMain::helper->setSaveGroupedUsersArgs(&file, groupNames, details, myFriends, mExtraInfo, mSignature, mSignatureModifyTime);
+    EvaMain::helper->run();
+    return true;
+    //X 
+    //X 	return setting->saveBuddyList(this, groupNames, details, myFriends, mExtraInfo, mSignature, mSignatureModifyTime);
 }
 
-
+bool EvaUser::isVersionCorrect( const QString&fileName )
+{
+    QFile file(fileName);
+    if(!file.exists()) return false;
+    if(!file.open(QIODevice::ReadOnly)){
+        return false;
+    }
+    Q_UINT32 version;
+    QDataStream stream(&file);
+    char *flag = new char[3];
+    stream.readRawBytes(flag, 3);
+    stream>>version;
+    file.close();
+    if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
+        file.remove();
+        delete flag;
+        return false;
+    }
+    delete flag;
+    return true;
+}
+void EvaUser::setFriendList(const FriendList &l)
+{ 
+    myFriends.clearFriendList();
+    myFriends = l;
+}
 void EvaUser::customEvent( QCustomEvent * e )
 {
-	if(e->type() == EvaLoadGroupedUsersEvent){
-		EvaBuddyListEvent *ge = (EvaBuddyListEvent *)e;
-		details = ge->getMyInfo();
-		groupNames = ge->getGroupNames();
-		myFriends = ge->getMyFriendList();
-		mExtraInfo = ge->getExtraInfo();
-		mSignature = ge->getSignature();
-		mSignatureModifyTime = ge->getSignatureTime();
-		emit loadGroupedBuddiesReady();
-	}
-	if(e->type() == EvaLoadQunUsersEvent){
-		EvaQunListEvent *gl = (EvaQunListEvent *)e;
-		qunList = gl->getQunList();
-		emit loadQunListReady();
-	}
+    if(e->type() == EvaLoadGroupedUsersEvent){
+        EvaBuddyListEvent *ge = (EvaBuddyListEvent *)e;
+        details = ge->getMyInfo();
+        groupNames = ge->getGroupNames();
+        myFriends = ge->getMyFriendList();
+        mExtraInfo = ge->getExtraInfo();
+        mSignature = ge->getSignature();
+        mSignatureModifyTime = ge->getSignatureTime();
+        emit loadGroupedBuddiesReady();
+    }
+    if(e->type() == EvaLoadQunUsersEvent){
+        EvaQunListEvent *gl = (EvaQunListEvent *)e;
+        qunList = gl->getQunList();
+        emit loadQunListReady();
+    }
 }
 
 bool EvaUser::loadQunList( )
 {
-	if(setting->loadQunList(this)){
-		isQunListLoaded = true;
-	}else{
-		isQunListLoaded = false;
-	}
-	return isQunListLoaded;
+    QString fullName = setting->getEvaQunListFilename();
+    QFile file(fullName);
+    if(!file.open(QIODevice::ReadOnly)){
+        return false;
+    }
+
+    qunlistMutex.lock();
+    QDataStream stream(&file);
+
+    // check version first
+    char *flag = new char[3];
+    stream.readRawBytes(flag, 3);
+    Q_UINT32 version = 0;
+    stream>>version;
+    if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
+        file.close();
+        file.remove();
+        delete flag;
+        return false;
+    }
+    delete flag;
+
+    QunList list;
+
+    Q_UINT32 qunID;
+    Q_UINT32 extID;
+    Q_UINT8 type;
+    Q_UINT32 creator;
+    Q_UINT8 authType;
+    Q_UINT16 unknown1;
+    Q_UINT16 category;
+    Q_UINT32 versionID;
+    std::string name;
+    Q_UINT16 unknown2;
+    std::string description;
+    std::string notice;
+    Q_UINT32 realNamesVersion;
+
+    Q_UINT32 fontSize;
+    Q_UINT32 fontColor;
+
+    Q_UINT8 cardGender;
+    Q_UINT8 msgType;
+    char *str = new char[1024];
+    memset(str, 0, 1024);
+
+    while(!stream.atEnd()){
+        // load qun basic info
+        stream>>qunID>>extID>>type>>creator>>authType>>unknown1>>category>>versionID>>str;
+        name = str;
+        stream>>unknown2>>str;
+        description = str;
+        stream>>str;
+        notice = str;
+        QunInfo info;
+        info.setQunID(qunID);
+        info.setExtID(extID);
+        info.setType(type);
+        info.setCreator(creator);
+        info.setAuthType(authType);
+        info.setUnknown1(unknown1);
+        info.setCategory(category);
+        info.setVersionID(versionID);
+        info.setName(name);
+        info.setUnknown2(unknown2);
+        info.setDescription(description);
+        info.setNotice(notice);
+
+        Qun qun(info.getQunID());
+        qun.setDetails(info);
+
+        stream >> fontSize >> fontColor;	
+        qun.setChatFontSize(fontSize);
+        qun.setChatFontColor(fontColor);
+
+        // load message type
+        stream>>msgType;
+        qun.setMessageType((Qun::MessageType)msgType);
+
+        stream >> realNamesVersion;
+        qun.setRealNamesVersion(realNamesVersion);
+        // load my card for this qun
+        stream>>str;
+        qun.setCardName(str);
+        stream>>cardGender;
+        qun.setCardGender(cardGender);
+        stream>>str;
+        qun.setCardPhone(str);
+        stream>>str;
+        qun.setCardEmail(str);
+        stream>>str;
+        qun.setCardMemo(str);
+
+        // load all members details
+        std::list<FriendItem> members;
+        Q_UINT16 size;
+        stream >> size;
+        for(int i=0; i< size; i++){
+            Q_UINT32 qqNum;
+            Q_UINT16 face;
+            Q_UINT8 age;
+            Q_UINT8 gender;
+            std::string nick;
+            Q_UINT8 extFlag;  
+            Q_UINT8 commonFlag;
+            Q_UINT16 qunGroupIndex;
+            Q_UINT16 qunAdminValue;
+            std::string realName;   // added by henry
+
+            stream>>qqNum>>face>>age>>gender>>str;
+            nick = str;
+            stream>>extFlag>>commonFlag>>qunGroupIndex>>qunAdminValue>>str;
+            realName = str;
+            FriendItem item;
+            item.setQQ(qqNum);
+            item.setFace(face);
+            item.setAge(age);
+            item.setGender(gender);
+            item.setNick(nick);
+            item.setExtFlag(extFlag);
+            item.setCommonFlag(commonFlag);
+            item.setQunGroupIndex(qunGroupIndex);
+            item.setQunAdminValue(qunAdminValue);
+            item.setQunRealName( realName); // henry
+            members.push_back(item);
+        }
+        qun.setMembers(members);
+        list.add(qun);
+    }
+    delete []str;
+    file.close();
+    qunlistMutex.unlock();
+    qunList = list;
+    return true;
+
+    //X 	if(setting->loadQunList(this)){
+    //X 		isQunListLoaded = true;
+    //X 	}else{
+    //X 		isQunListLoaded = false;
+    //X 	}
+    //X 	return isQunListLoaded;
 }
 
 bool EvaUser::saveQunList( )
 {
-	return setting->saveQunList(this, qunList);
+    QString dir = setting->getEvaUserDir();
+    QDir d;
+    if ( d.exists( dir ) && (!d.mkdir(dir))) {
+        return false;
+    }
+
+    QString fullName = setting->getEvaQunListFilename();
+    QFile file(fullName);
+    if(file.exists()) file.remove();
+    if(!file.open(QIODevice::WriteOnly)){
+        return false;
+    }
+    qunlistMutex.lock();
+    EvaMain::helper->setCategory(EvaHelper::SaveQunUsers, this);
+    EvaMain::helper->setSaveQunListArgs(&file, qunList);
+    EvaMain::helper->run();
+    qunlistMutex.lock();
+    return true;
+
+    //X 	return setting->saveQunList(this, qunList);
 }
 
+
+void EvaUser::setOnlineTime(unsigned int time )
+{ 
+    timeOnline = time;
+}
+
+void EvaUser::setLevel(unsigned short l )
+{ 
+    level = l;
+}
+
+void EvaUser::setHoursToLevelUp(unsigned short time )
+{ 
+    hoursToLevelUp = time;
+}
+
+void EvaUser::setSignature(const std::string& sig, unsigned int time)
+{ 
+    mSignature = sig;
+    mSignatureModifyTime = time;
+}
 
 //X void EvaUser::addLoginVerifyInfo( const GraphicVerifyCode & info )
 //X {

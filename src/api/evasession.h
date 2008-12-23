@@ -21,6 +21,7 @@
 #include <QObject>
 #include <QHostAddress>
 
+#include "evaapi.h"
 #include "evanetworkpolicy.h"
 #include "evagraphicverifycode.h"
 
@@ -33,7 +34,6 @@ class EvaAddingManager;
 class EvaPacketManager;
 class EvaContactManager;
  
-enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
  
 /**
  * Holds one session per one QQ account connection, all non-graphic stuff
@@ -51,7 +51,6 @@ class EvaSession : public QObject {
  
         EvaUser* getUser();
         EvaConnecter* getConnecter();
-        EvaFileManager* getFileManager();
         EvaLoginManager* getLoginManager();
         EvaPacketManager* getPacketManager();
         EvaContactManager* getContactManager();
@@ -60,8 +59,12 @@ class EvaSession : public QObject {
         bool isLoggedIn() const;
         void login();
         void logout();
+ 
+        void online();
+        void offline();
+        void invisible();
+        void leave();
 
-        void setStatus(const UserStatus status);
         UserStatus getStatus() const;
 
         void setLoginWanIp(const unsigned int ip);
@@ -85,9 +88,8 @@ class EvaSession : public QObject {
         int getNumVerifyCodes() const;
         void clearAllVerifyCodes();
 
-        static char getStatusCode(const UserStatus status) ;
-
     private:
+        void free();
  
         EvaUser* user;
 
@@ -105,7 +107,6 @@ class EvaSession : public QObject {
 	// packetize QQ messages
 	EvaPacketManager *packetManager;
 
-        UserStatus status;
 
         unsigned int loginIp;
         unsigned short loginPort;

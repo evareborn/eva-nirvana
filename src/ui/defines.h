@@ -18,12 +18,14 @@
 #ifndef API_DEFINES_H_
 #define API_DEFINES_H_
  
+
+//X #include <klocale.h>
+
 // for portability.
 //
 #ifndef i18n
 # define i18n(x) (QString( x ))
 # define I18N_NOOP(x) (x)
 #endif
-
 
 #endif // API_DEFINES_H_

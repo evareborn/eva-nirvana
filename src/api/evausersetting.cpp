@@ -67,185 +67,185 @@ EvaUserSetting::~EvaUserSetting()
 //X 	}
 }
 
-bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
-				unsigned short extraInfo, std::string sig, unsigned int sigTime)
-{
-	if(!isDirExisted(getEvaUserDir())){
-		QDir d;
-		if(!d.mkdir(getEvaUserDir()))
-			return false;
-	}
-	
-	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
-	QFile file(fullName);
-	if(file.exists()) file.remove();
-	if(!file.open(QIODevice::WriteOnly)){
-		return false;
-	}
-	EvaMain::helper->setCategory(EvaHelper::SaveGroupedUsers, receiver);
-	EvaMain::helper->setSaveGroupedUsersArgs(&file, groups, myInfo, list, extraInfo, sig, sigTime);
-	EvaMain::helper->run();
-	return true;
-}
-
-bool EvaUserSetting::loadBuddyList( QObject * receiver)
-{
-	if(!isDirExisted(getEvaUserDir()))
-		return false;
-	
-	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
-	QFile file(fullName);
-	if(!file.open(QIODevice::ReadOnly)){
-		return false;
-	}
-	if(!isVersionCorrect(fullName)){
-		file.close();
-		return false;
-	}
-
-	std::list<std::string> groupNames;
-	ContactInfo myInfo;
-	FriendList list;	
-	Q_UINT32 numGroups=0;
-	MemoItem memo;
-
-	QDataStream stream(&file);
-	
-	// check version first
-	char *flag = new char[3];
-	stream.readRawBytes(flag, 3);
-	Q_UINT32 version = 0;
-	stream>>version;
-	if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
-		file.close();
-		file.remove();
-		delete flag;
-		return false;
-	}
-	delete []flag;
-	
-	// load my details first
-	Q_UINT32 size=0;
-	std::string item;
-	std::vector<std::string> strlist;
-	
-	stream>>size;
-	char *str = new char[512];
-	for(uint i=0; i<size; i++){
-		stream>>str;
-		item = str;
-		strlist.push_back(item);
-	}	
-	myInfo.setDetails(strlist);
-
-	// read my extra info
-	Q_UINT16 myExtraInfo;
-	stream>>myExtraInfo;
-	
-	// read signature & time
-	std::string signature;
-	stream>>str; 
-	signature = str;
-	
-	Q_UINT32 sigTime;
-	stream>>sigTime;
-	
-	// read in how many groups
-	stream>>numGroups;
-	std::string name;
-	// read all groups in
-	for(uint i=0; i<numGroups; i++){
-		stream>>str;
-		name = str;
-		groupNames.push_back(name);
-	}
-	
-	Q_UINT32 id;
-	Q_UINT16 face;
-	Q_UINT8  age;
-	Q_UINT8  gender;
-	std::string nick;
-	Q_UINT8  extFlag;
-	Q_UINT8  commonFlag;
-	Q_UINT32 groupIndex;
-	Q_UINT16 extraInfo;
-	std::string frdSig;
-	Q_UINT32 frdSigTime;
-	Q_UINT32 fontSize;
-	Q_UINT32 fontColor;
-	
-	// read in all friends
-	while(!stream.atEnd()){
-		stream>>id;
-		stream>>face;
-		stream>>age;
-		stream>>gender;
-		stream>>str;
-		nick = str;
-		stream>>extFlag;
-		stream>>commonFlag;
-		stream>>groupIndex;
-		stream>>extraInfo;
-		stream>>str;
-		frdSig = str;
-		stream>>frdSigTime;
-		
-		strlist.clear();
-		stream>>size;
-		for(uint i=0; i<size; i++){
-			stream>>str;
-			item = str;
-			strlist.push_back(item);
-		}
-		stream>>str;memo.name = str;
-		stream>>str;memo.mobile = str;
-		stream>>str;memo.telephone = str;
-		stream>>str;memo.address = str;
-		stream>>str;memo.email = str;
-		stream>>str;memo.zipcode = str;
-		stream>>str;memo.note = str;
-
-		stream>>fontSize>>fontColor;
-		QQFriend f(id, face);
-		
-		f.setAge(age);
-		f.setGender(gender);
-		f.setNick(nick);
-		f.setExtFlag(extFlag);
-		f.setCommonFlag(commonFlag);
-		f.setGroupIndex(groupIndex);
-		f.setExtraInfo(extraInfo);
-		f.setSignature(frdSig, frdSigTime);
-		ContactInfo info;
-		info.setDetails(strlist);
-		f.setUserInformation(info);
-		f.setMemo(memo);
-		f.setChatFontSize(fontSize);
-		f.setChatFontColor(fontColor);
-		
-		list.addFriend(f);
-	}
-	delete []str;
-	file.close();
-	
-	EvaUser *user = ( EvaUser* ) receiver;
-	if(user)
-	{
-		user->details              = myInfo;
-		user->groupNames           = groupNames;
-		user->myFriends            = list;
-		user->mExtraInfo           = myExtraInfo;
-		user->mSignature           = signature;
-		user->mSignatureModifyTime = sigTime;
-		return true;
-	} else
-		return false;	
-	
-	//EvaMain::helper->setCategory(EvaHelper::LoadGroupedUsers, receiver);
-	//EvaMain::helper->setLoadGroupedUsersArgs(&file);
-	//EvaMain::helper->run();
-	//return true;
-}
+//X bool EvaUserSetting::saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
+//X 				unsigned short extraInfo, std::string sig, unsigned int sigTime)
+//X {
+//X 	if(!isDirExisted(getEvaUserDir())){
+//X 		QDir d;
+//X 		if(!d.mkdir(getEvaUserDir()))
+//X 			return false;
+//X 	}
+//X 	
+//X 	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
+//X 	QFile file(fullName);
+//X 	if(file.exists()) file.remove();
+//X 	if(!file.open(QIODevice::WriteOnly)){
+//X 		return false;
+//X 	}
+//X 	EvaMain::helper->setCategory(EvaHelper::SaveGroupedUsers, receiver);
+//X 	EvaMain::helper->setSaveGroupedUsersArgs(&file, groups, myInfo, list, extraInfo, sig, sigTime);
+//X 	EvaMain::helper->run();
+//X 	return true;
+//X }
+//X 
+//X bool EvaUserSetting::loadBuddyList( QObject * receiver)
+//X {
+//X 	if(!isDirExisted(getEvaUserDir()))
+//X 		return false;
+//X 	
+//X 	QString fullName = getEvaUserDir() + "/" + buddyListFileName;
+//X 	QFile file(fullName);
+//X 	if(!file.open(QIODevice::ReadOnly)){
+//X 		return false;
+//X 	}
+//X 	if(!isVersionCorrect(fullName)){
+//X 		file.close();
+//X 		return false;
+//X 	}
+//X 
+//X 	std::list<std::string> groupNames;
+//X 	ContactInfo myInfo;
+//X 	FriendList list;	
+//X 	Q_UINT32 numGroups=0;
+//X 	MemoItem memo;
+//X 
+//X 	QDataStream stream(&file);
+//X 	
+//X 	// check version first
+//X 	char *flag = new char[3];
+//X 	stream.readRawBytes(flag, 3);
+//X 	Q_UINT32 version = 0;
+//X 	stream>>version;
+//X 	if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
+//X 		file.close();
+//X 		file.remove();
+//X 		delete flag;
+//X 		return false;
+//X 	}
+//X 	delete []flag;
+//X 	
+//X 	// load my details first
+//X 	Q_UINT32 size=0;
+//X 	std::string item;
+//X 	std::vector<std::string> strlist;
+//X 	
+//X 	stream>>size;
+//X 	char *str = new char[512];
+//X 	for(uint i=0; i<size; i++){
+//X 		stream>>str;
+//X 		item = str;
+//X 		strlist.push_back(item);
+//X 	}	
+//X 	myInfo.setDetails(strlist);
+//X 
+//X 	// read my extra info
+//X 	Q_UINT16 myExtraInfo;
+//X 	stream>>myExtraInfo;
+//X 	
+//X 	// read signature & time
+//X 	std::string signature;
+//X 	stream>>str; 
+//X 	signature = str;
+//X 	
+//X 	Q_UINT32 sigTime;
+//X 	stream>>sigTime;
+//X 	
+//X 	// read in how many groups
+//X 	stream>>numGroups;
+//X 	std::string name;
+//X 	// read all groups in
+//X 	for(uint i=0; i<numGroups; i++){
+//X 		stream>>str;
+//X 		name = str;
+//X 		groupNames.push_back(name);
+//X 	}
+//X 	
+//X 	Q_UINT32 id;
+//X 	Q_UINT16 face;
+//X 	Q_UINT8  age;
+//X 	Q_UINT8  gender;
+//X 	std::string nick;
+//X 	Q_UINT8  extFlag;
+//X 	Q_UINT8  commonFlag;
+//X 	Q_UINT32 groupIndex;
+//X 	Q_UINT16 extraInfo;
+//X 	std::string frdSig;
+//X 	Q_UINT32 frdSigTime;
+//X 	Q_UINT32 fontSize;
+//X 	Q_UINT32 fontColor;
+//X 	
+//X 	// read in all friends
+//X 	while(!stream.atEnd()){
+//X 		stream>>id;
+//X 		stream>>face;
+//X 		stream>>age;
+//X 		stream>>gender;
+//X 		stream>>str;
+//X 		nick = str;
+//X 		stream>>extFlag;
+//X 		stream>>commonFlag;
+//X 		stream>>groupIndex;
+//X 		stream>>extraInfo;
+//X 		stream>>str;
+//X 		frdSig = str;
+//X 		stream>>frdSigTime;
+//X 		
+//X 		strlist.clear();
+//X 		stream>>size;
+//X 		for(uint i=0; i<size; i++){
+//X 			stream>>str;
+//X 			item = str;
+//X 			strlist.push_back(item);
+//X 		}
+//X 		stream>>str;memo.name = str;
+//X 		stream>>str;memo.mobile = str;
+//X 		stream>>str;memo.telephone = str;
+//X 		stream>>str;memo.address = str;
+//X 		stream>>str;memo.email = str;
+//X 		stream>>str;memo.zipcode = str;
+//X 		stream>>str;memo.note = str;
+//X 
+//X 		stream>>fontSize>>fontColor;
+//X 		QQFriend f(id, face);
+//X 		
+//X 		f.setAge(age);
+//X 		f.setGender(gender);
+//X 		f.setNick(nick);
+//X 		f.setExtFlag(extFlag);
+//X 		f.setCommonFlag(commonFlag);
+//X 		f.setGroupIndex(groupIndex);
+//X 		f.setExtraInfo(extraInfo);
+//X 		f.setSignature(frdSig, frdSigTime);
+//X 		ContactInfo info;
+//X 		info.setDetails(strlist);
+//X 		f.setUserInformation(info);
+//X 		f.setMemo(memo);
+//X 		f.setChatFontSize(fontSize);
+//X 		f.setChatFontColor(fontColor);
+//X 		
+//X 		list.addFriend(f);
+//X 	}
+//X 	delete []str;
+//X 	file.close();
+//X 	
+//X 	EvaUser *user = ( EvaUser* ) receiver;
+//X 	if(user)
+//X 	{
+//X 		user->details              = myInfo;
+//X 		user->groupNames           = groupNames;
+//X 		user->myFriends            = list;
+//X 		user->mExtraInfo           = myExtraInfo;
+//X 		user->mSignature           = signature;
+//X 		user->mSignatureModifyTime = sigTime;
+//X 		return true;
+//X 	} else
+//X 		return false;	
+//X 	
+//X 	//EvaMain::helper->setCategory(EvaHelper::LoadGroupedUsers, receiver);
+//X 	//EvaMain::helper->setLoadGroupedUsersArgs(&file);
+//X 	//EvaMain::helper->run();
+//X 	//return true;
+//X }
 
 bool EvaUserSetting::saveMessage(const int buddy, const int sender, QString sNick, 
 			const int receiver, QString rNick,
@@ -1213,21 +1213,31 @@ const std::list<QString> &EvaUserSetting::getQuickReplyList()
 	return quickList;
 }
 
-const QString EvaUserSetting::getUserHomeDir()
+QString EvaUserSetting::getUserHomeDir()
 {
 	return QDir::homeDirPath();
 }
 
-const QString EvaUserSetting::getEvaSettingDir()
+QString EvaUserSetting::getEvaSettingDir()
 {
 	return getUserHomeDir()+"/.eva";
 }
 
-const QString EvaUserSetting::getEvaUserDir()
+QString EvaUserSetting::getEvaUserDir()
 {
 	return getEvaSettingDir() + "/" + QString::number(qqNum);
 }
-	
+ 
+QString EvaUserSetting::getEvaBuddyListFilename()
+{
+    return getEvaUserDir() + "/" + buddyListFileName;
+}
+
+QString EvaUserSetting::getEvaQunListFilename()
+{
+    return getEvaUserDir() + "/" + qunListFileName;
+}
+
 bool EvaUserSetting::isDirExisted(const QString &dir)
 {
 	QDir d;
@@ -1236,176 +1246,176 @@ bool EvaUserSetting::isDirExisted(const QString &dir)
 	else
 		return false;
 }
-
-bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
-{
-	if(!isDirExisted(getEvaUserDir())){
-		QDir d;
-		if(!d.mkdir(getEvaUserDir()))
-			return false;
-	}
-	
-	QString fullName = getEvaUserDir() + "/" + qunListFileName;
-	QFile file(fullName);
-	if(file.exists()) file.remove();
-	if(!file.open(QIODevice::WriteOnly)){
-		return false;
-	}
-	EvaMain::helper->setCategory(EvaHelper::SaveQunUsers, receiver);
-	EvaMain::helper->setSaveQunListArgs(&file, list);
-	EvaMain::helper->run();
-	return true;
-}
-
-bool EvaUserSetting::loadQunList( QObject * receiver )
-{
-	if(!isDirExisted(getEvaUserDir()))
-		return false;
-	
-	QString fullName = getEvaUserDir() + "/" + qunListFileName;
-	QFile file(fullName);
-	if(!file.open(QIODevice::ReadOnly)){
-		return false;
-	}
-	
-	QDataStream stream(&file);
-
-	// check version first
-	char *flag = new char[3];
-	stream.readRawBytes(flag, 3);
-	Q_UINT32 version = 0;
-	stream>>version;
-	if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
-		file.close();
-		file.remove();
-		delete flag;
-		return false;
-	}
-	delete flag;
-	
-	QunList list;
-	
-	Q_UINT32 qunID;
-	Q_UINT32 extID;
-	Q_UINT8 type;
-	Q_UINT32 creator;
-	Q_UINT8 authType;
-	Q_UINT16 unknown1;
-	Q_UINT16 category;
-	Q_UINT32 versionID;
-	std::string name;
-	Q_UINT16 unknown2;
-	std::string description;
-	std::string notice;
-	Q_UINT32 realNamesVersion;
-
-	Q_UINT32 fontSize;
-	Q_UINT32 fontColor;
-	
-	Q_UINT8 cardGender;
-	Q_UINT8 msgType;
-	char *str = new char[1024];
-	memset(str, 0, 1024);
-	
-	while(!stream.atEnd()){
-		// load qun basic info
-		stream>>qunID>>extID>>type>>creator>>authType>>unknown1>>category>>versionID>>str;
-		name = str;
-		stream>>unknown2>>str;
-		description = str;
-		stream>>str;
-		notice = str;
-		QunInfo info;
-		info.setQunID(qunID);
-		info.setExtID(extID);
-		info.setType(type);
-		info.setCreator(creator);
-		info.setAuthType(authType);
-		info.setUnknown1(unknown1);
-		info.setCategory(category);
-		info.setVersionID(versionID);
-		info.setName(name);
-		info.setUnknown2(unknown2);
-		info.setDescription(description);
-		info.setNotice(notice);
-		
-		Qun qun(info.getQunID());
-		qun.setDetails(info);
-
-		stream >> fontSize >> fontColor;	
-		qun.setChatFontSize(fontSize);
-		qun.setChatFontColor(fontColor);
-
-		// load message type
-		stream>>msgType;
-		qun.setMessageType((Qun::MessageType)msgType);
-		
-		stream >> realNamesVersion;
-		qun.setRealNamesVersion(realNamesVersion);
-		// load my card for this qun
-		stream>>str;
-		qun.setCardName(str);
-		stream>>cardGender;
-		qun.setCardGender(cardGender);
-		stream>>str;
-		qun.setCardPhone(str);
-		stream>>str;
-		qun.setCardEmail(str);
-		stream>>str;
-		qun.setCardMemo(str);
-		
-		// load all members details
-		std::list<FriendItem> members;
-		Q_UINT16 size;
-		stream >> size;
-		for(int i=0; i< size; i++){
-			Q_UINT32 qqNum;
-			Q_UINT16 face;
-			Q_UINT8 age;
-			Q_UINT8 gender;
-			std::string nick;
-			Q_UINT8 extFlag;  
-			Q_UINT8 commonFlag;
-			Q_UINT16 qunGroupIndex;
-			Q_UINT16 qunAdminValue;
-			std::string realName;   // added by henry
-			
-			stream>>qqNum>>face>>age>>gender>>str;
-			nick = str;
-			stream>>extFlag>>commonFlag>>qunGroupIndex>>qunAdminValue>>str;
-			realName = str;
-			FriendItem item;
-			item.setQQ(qqNum);
-			item.setFace(face);
-			item.setAge(age);
-			item.setGender(gender);
-			item.setNick(nick);
-			item.setExtFlag(extFlag);
-			item.setCommonFlag(commonFlag);
-			item.setQunGroupIndex(qunGroupIndex);
-			item.setQunAdminValue(qunAdminValue);
-			item.setQunRealName( realName); // henry
-			members.push_back(item);
-		}
-		qun.setMembers(members);
-		list.add(qun);
-	}
-	delete []str;
-	file.close();
-	
-	EvaUser *user = ( EvaUser* )receiver;
-	if(user){
-		user->qunList = list;
-		return true;
-	} else
-		return false;
-	
-	//EvaMain::helper->setCategory(EvaHelper::LoadQunUsers, receiver);
-	//EvaMain::helper->setLoadQunListArgs(&file);
-	//EvaMain::helper->run();
-	//return true;
-}
-
+//X 
+//X bool EvaUserSetting::saveQunList( QObject * receiver, QunList & list )
+//X {
+//X 	if(!isDirExisted(getEvaUserDir())){
+//X 		QDir d;
+//X 		if(!d.mkdir(getEvaUserDir()))
+//X 			return false;
+//X 	}
+//X 	
+//X 	QString fullName = getEvaUserDir() + "/" + qunListFileName;
+//X 	QFile file(fullName);
+//X 	if(file.exists()) file.remove();
+//X 	if(!file.open(QIODevice::WriteOnly)){
+//X 		return false;
+//X 	}
+//X 	EvaMain::helper->setCategory(EvaHelper::SaveQunUsers, receiver);
+//X 	EvaMain::helper->setSaveQunListArgs(&file, list);
+//X 	EvaMain::helper->run();
+//X 	return true;
+//X }
+//X 
+//X bool EvaUserSetting::loadQunList( QObject * receiver )
+//X {
+//X 	if(!isDirExisted(getEvaUserDir()))
+//X 		return false;
+//X 	
+//X 	QString fullName = getEvaUserDir() + "/" + qunListFileName;
+//X 	QFile file(fullName);
+//X 	if(!file.open(QIODevice::ReadOnly)){
+//X 		return false;
+//X 	}
+//X 	
+//X 	QDataStream stream(&file);
+//X 
+//X 	// check version first
+//X 	char *flag = new char[3];
+//X 	stream.readRawBytes(flag, 3);
+//X 	Q_UINT32 version = 0;
+//X 	stream>>version;
+//X 	if(!(flag[0]=='E' && flag[1]=='V' && flag[2]=='A' && version == profileVersion)){
+//X 		file.close();
+//X 		file.remove();
+//X 		delete flag;
+//X 		return false;
+//X 	}
+//X 	delete flag;
+//X 	
+//X 	QunList list;
+//X 	
+//X 	Q_UINT32 qunID;
+//X 	Q_UINT32 extID;
+//X 	Q_UINT8 type;
+//X 	Q_UINT32 creator;
+//X 	Q_UINT8 authType;
+//X 	Q_UINT16 unknown1;
+//X 	Q_UINT16 category;
+//X 	Q_UINT32 versionID;
+//X 	std::string name;
+//X 	Q_UINT16 unknown2;
+//X 	std::string description;
+//X 	std::string notice;
+//X 	Q_UINT32 realNamesVersion;
+//X 
+//X 	Q_UINT32 fontSize;
+//X 	Q_UINT32 fontColor;
+//X 	
+//X 	Q_UINT8 cardGender;
+//X 	Q_UINT8 msgType;
+//X 	char *str = new char[1024];
+//X 	memset(str, 0, 1024);
+//X 	
+//X 	while(!stream.atEnd()){
+//X 		// load qun basic info
+//X 		stream>>qunID>>extID>>type>>creator>>authType>>unknown1>>category>>versionID>>str;
+//X 		name = str;
+//X 		stream>>unknown2>>str;
+//X 		description = str;
+//X 		stream>>str;
+//X 		notice = str;
+//X 		QunInfo info;
+//X 		info.setQunID(qunID);
+//X 		info.setExtID(extID);
+//X 		info.setType(type);
+//X 		info.setCreator(creator);
+//X 		info.setAuthType(authType);
+//X 		info.setUnknown1(unknown1);
+//X 		info.setCategory(category);
+//X 		info.setVersionID(versionID);
+//X 		info.setName(name);
+//X 		info.setUnknown2(unknown2);
+//X 		info.setDescription(description);
+//X 		info.setNotice(notice);
+//X 		
+//X 		Qun qun(info.getQunID());
+//X 		qun.setDetails(info);
+//X 
+//X 		stream >> fontSize >> fontColor;	
+//X 		qun.setChatFontSize(fontSize);
+//X 		qun.setChatFontColor(fontColor);
+//X 
+//X 		// load message type
+//X 		stream>>msgType;
+//X 		qun.setMessageType((Qun::MessageType)msgType);
+//X 		
+//X 		stream >> realNamesVersion;
+//X 		qun.setRealNamesVersion(realNamesVersion);
+//X 		// load my card for this qun
+//X 		stream>>str;
+//X 		qun.setCardName(str);
+//X 		stream>>cardGender;
+//X 		qun.setCardGender(cardGender);
+//X 		stream>>str;
+//X 		qun.setCardPhone(str);
+//X 		stream>>str;
+//X 		qun.setCardEmail(str);
+//X 		stream>>str;
+//X 		qun.setCardMemo(str);
+//X 		
+//X 		// load all members details
+//X 		std::list<FriendItem> members;
+//X 		Q_UINT16 size;
+//X 		stream >> size;
+//X 		for(int i=0; i< size; i++){
+//X 			Q_UINT32 qqNum;
+//X 			Q_UINT16 face;
+//X 			Q_UINT8 age;
+//X 			Q_UINT8 gender;
+//X 			std::string nick;
+//X 			Q_UINT8 extFlag;  
+//X 			Q_UINT8 commonFlag;
+//X 			Q_UINT16 qunGroupIndex;
+//X 			Q_UINT16 qunAdminValue;
+//X 			std::string realName;   // added by henry
+//X 			
+//X 			stream>>qqNum>>face>>age>>gender>>str;
+//X 			nick = str;
+//X 			stream>>extFlag>>commonFlag>>qunGroupIndex>>qunAdminValue>>str;
+//X 			realName = str;
+//X 			FriendItem item;
+//X 			item.setQQ(qqNum);
+//X 			item.setFace(face);
+//X 			item.setAge(age);
+//X 			item.setGender(gender);
+//X 			item.setNick(nick);
+//X 			item.setExtFlag(extFlag);
+//X 			item.setCommonFlag(commonFlag);
+//X 			item.setQunGroupIndex(qunGroupIndex);
+//X 			item.setQunAdminValue(qunAdminValue);
+//X 			item.setQunRealName( realName); // henry
+//X 			members.push_back(item);
+//X 		}
+//X 		qun.setMembers(members);
+//X 		list.add(qun);
+//X 	}
+//X 	delete []str;
+//X 	file.close();
+//X 	
+//X 	EvaUser *user = ( EvaUser* )receiver;
+//X 	if(user){
+//X 		user->qunList = list;
+//X 		return true;
+//X 	} else
+//X 		return false;
+//X 	
+//X 	//EvaMain::helper->setCategory(EvaHelper::LoadQunUsers, receiver);
+//X 	//EvaMain::helper->setLoadQunListArgs(&file);
+//X 	//EvaMain::helper->run();
+//X 	//return true;
+//X }
+//X 
 bool EvaUserSetting::createDefaultDirs( )
 {
 	QDir d;

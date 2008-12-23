@@ -207,6 +207,7 @@ void EvaMainWindow::updateMyInfo()
 		setCaption(myNick + " - Eva");
 		QString faceIdStr = user->getDetails().at(ContactInfo::Info_face).c_str();
 		if( faceIdStr.isNull() ) faceIdStr = "0";
+                printf( "EvaMainWindow::updateMYInfo() bad faceIdStr!!\n" );
 		int myFaceId = faceIdStr.toInt();
 		QPixmap *face = EvaMain::images->getFaceByID(myFaceId);
 		if(user->hasUserHead()){

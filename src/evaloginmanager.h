@@ -22,9 +22,12 @@
 #define EVA_LOGIN_MANAGER_H
 
 #include <QObject>
-#include <qhostaddress.h>
+#include <QHostAddress>
+ 
+#include "evaapi.h"
 
 class EvaConnecter;
+class EvaContactManager;
 class EvaPacketManager;
 class ContactInfo;
 class EvaLoginVeriWindow;
@@ -55,53 +58,70 @@ class EvaSession;
 
 class EvaLoginManager : public QObject
 {
-	Q_OBJECT
-public:
-	EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaPacketManager* packetManager);
-	void setPacketManager(EvaPacketManager *pm);
+    Q_OBJECT
+    public:
+        EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager);
+        void setPacketManager(EvaPacketManager *pm);
 
-	void login();
-	void logout();
-	inline void setLoggedOut();
-	inline bool isLoggedIn();
-private:
+        void login();
+        void logout();
+
+        void online();
+        void offline();
+        void leave();
+        void invisible();
+
+        bool isLoggedIn() { return m_isLoggedIn; }
+
+        UserStatus getStatus() const;
+        void setStatus(const UserStatus status);
+
+        static char getStatusCode(const UserStatus status) ;
+    private slots:
+ 
+        void slotDoLogin();
+
+    private:
+
         EvaSession* session;
         EvaConnecter* connecter;
-	EvaPacketManager *packetManager;
+        EvaContactManager* contactManager;
+        EvaPacketManager *packetManager;
 
-	enum LoginStatus{
-		EStart,
-		ELoginToken,
-		ELogin,
-		EUserInfo,
-		EFileAgentKey,
-	};
-	
-	LoginStatus m_status;
-	
-	void notifyEvent(const int eId, const QString &msg = QString::null);
-		
-private:
-	bool m_isLoggedIn;
+        enum LoginStatus{
+            EStart,
+            ELoginToken,
+            ELogin,
+            EUserInfo,
+            EFileAgentKey,
+        };
 
-	void serverBusy();
-	
-	void loginVerification();
-	void verifyPassed();
-	void loginOK();
-	void wrongPassword(QString);
-	void loginNeedRedirect(const unsigned int fromIp, const unsigned int ip, const short port);
-	void fileAgentInfoReady();
-	void myInfoReady(const ContactInfo info);
+        LoginStatus loginStatus;
 
-private:
-		EvaLoginVeriWindow *m_veriWin;
+        UserStatus status;
+        void notifyEvent(const int eId, const QString &msg = QString::null);
 
-	friend class EvaPacketManager;
+    private slots:
+
+        void fileAgentInfoReady();
+
+    private:
+        bool m_isLoggedIn;
+
+        void serverBusy();
+
+        void loginVerification();
+        void verifyPassed();
+        void loginOK();
+        void wrongPassword(QString);
+        void loginNeedRedirect(const unsigned int fromIp, const unsigned int ip, const short port);
+        void myInfoReady(const ContactInfo info);
+
+    private:
+        EvaLoginVeriWindow *m_veriWin;
+
+        friend class EvaPacketManager;
 };
-
-inline bool EvaLoginManager::isLoggedIn() { return m_isLoggedIn; }
-inline void EvaLoginManager::setLoggedOut() { m_isLoggedIn = false; }
 
 //X EvaLoginManager *GetLoginManager();
 #endif //EVA_LOGIN_MANAGER_H

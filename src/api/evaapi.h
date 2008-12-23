@@ -21,27 +21,6 @@
 #ifndef EVAAPI_H
 #define EVAAPI_H
 
-#include "evaconnecter.h"
-#include "evahtmlparser.h"
-#include "evanetwork.h"
-#include "evapacketmanager.h"
-#include "evaresource.h"
-#include "evasetting.h"
-#include "evasocket.h"
-#include "evauser.h"
-#include "evausersetting.h"
-#include "evaservers.h"
-#include "qmdcodec.h"
-#include "evaqtutil.h"
-#include "evapicmanager.h"
-#include "evauhmanager.h"
-#include "regiongrabber.h"
-#include "filetrans/evafilemanager.h"
-#include "defines.h"
-#include <qtextcodec.h>
-//X #include <klocale.h>
-
-
 enum EVA_NOTIFY
 {
 	E_Err = 0,
@@ -68,28 +47,30 @@ enum EVA_NOTIFY
 	E_Count
 };
 
+enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
+
 static QString s_ENotify[E_Count] =
 {
-	I18N_NOOP("Something error"),
-	I18N_NOOP("Server connected"),
-	I18N_NOOP("Login redirection"),
-	I18N_NOOP("Login failed"),
-	I18N_NOOP("Password wrong"),
-	I18N_NOOP("User logged in"),
-	I18N_NOOP("My details ready"),
-	I18N_NOOP("File agent key ready"),	
-	I18N_NOOP("Login finished"),
-	I18N_NOOP("Downloading contact list"),
-	I18N_NOOP("Downloading contacts finished"),	
-	I18N_NOOP("Downloading group names finished"),
-	I18N_NOOP("Received group index of contacts"),
-	I18N_NOOP("Downloading group index of contacts finished"),
-	I18N_NOOP("Qun information ready"),
-	I18N_NOOP("Qun member information ready"),
-	I18N_NOOP("Contact signature ready"),
-	I18N_NOOP("All contact signatures ready"),
-	I18N_NOOP("Contact level ready"),
-	I18N_NOOP("Login process finished"),
+	QString("Something error"),
+	QString("Server connected"),
+	QString("Login redirection"),
+	QString("Login failed"),
+	QString("Password wrong"),
+	QString("User logged in"),
+	QString("My details ready"),
+	QString("File agent key ready"),	
+	QString("Login finished"),
+	QString("Downloading contact list"),
+	QString("Downloading contacts finished"),	
+	QString("Downloading group names finished"),
+	QString("Received group index of contacts"),
+	QString("Downloading group index of contacts finished"),
+	QString("Qun information ready"),
+	QString("Qun member information ready"),
+	QString("Contact signature ready"),
+	QString("All contact signatures ready"),
+	QString("Contact level ready"),
+	QString("Login process finished"),
 	""
 };
 

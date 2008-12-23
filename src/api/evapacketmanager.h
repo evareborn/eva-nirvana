@@ -46,11 +46,12 @@ typedef struct {
 class EvaPacketManager : public QObject {
 	Q_OBJECT
 public:
-	EvaPacketManager(EvaUser *user, EvaConnecter *connecter, EvaSession* session);
+	EvaPacketManager(EvaSession* session, EvaUser *user, EvaConnecter *connecter);
 	~EvaPacketManager();
 	
 //X 	EvaUser *getUser() { return user; }
 	EvaConnecter *getConnecter() { return connecter; }
+        EvaLoginManager* getLoginManager() { return loginManager; }
 	
 	QStringList convertDetails(const ContactInfo &info);
 	
@@ -185,6 +186,7 @@ signals:
 	void friendListReady();
 	//void myInfoReady();
 	void userInfoReady(QStringList info);
+        void fileAgentInfoReady();
 	void extraInfoReady();
 	void modifyInfo(bool);
 	
@@ -295,6 +297,7 @@ private:
 	EvaSession *session;
 	EvaUser *user;
 	EvaConnecter *connecter;
+        EvaLoginManager *loginManager;
 	QTimer *timer; // keep online and get online friends
 	std::map<short, int>sendRemoveCacheList; // packet sequence(key), qq id
 	int numOnlineUsers;

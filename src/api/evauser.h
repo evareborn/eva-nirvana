@@ -31,8 +31,10 @@
 #include <QCustomEvent>
 #include <cstring>
 #include <list>
+#include <QMutex>
 
 // used in the reply of login token ex requests
+class QQFriend;
 class EvaUserSetting;
 class CustomEvent;
 //X class KConfig;
@@ -48,28 +50,37 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
         unsigned int getQQ() const { return qqNum; }
         const char *getMd5Password() const { return md5Password; }
 
-        void setDetails(const ContactInfo &details) { this->details = details; }
+        void setDetails(const ContactInfo &details);
         const ContactInfo &getDetails() const { return details; }
 
+        int getNumberOfFriends() { return myFriends.numberOfFriends(); }
         FriendList &getFriendList() { return myFriends; }
         FriendList *getFriends() { return &myFriends; }
-        void setFriendList(const FriendList &l) { myFriends.clearFriendList(); myFriends = l; }
+        void setFriendList(const FriendList &l);
 
 
         unsigned int getOnlineTime() const { return timeOnline;}     // the following 6 funs are about the level requst
         unsigned short getLevel() const { return level; }
         unsigned short getHoursToLevelUp() const { return hoursToLevelUp;}
 
-        void setOnlineTime(const unsigned int time ) { timeOnline = time;}
-        void setLevel(const unsigned short l ) { level = l;}
-        void setHoursToLevelUp(const unsigned short time ) { hoursToLevelUp = time;}
+        void setOnlineTime(unsigned int time );
+        void setLevel( unsigned short l );
+        void setHoursToLevelUp( unsigned short time );
+ 
+        void addContact( const QQFriend& f );
+        void deleteContact( unsigned int id );
+        void setContactInfo( unsigned int id, const ContactInfo& info );
+        void setContactSignature( unsigned int id, const std::string& sig, unsigned int time);
+        void setContactMemo( unsigned int id, const MemoItem& memo );
+        void updateFriendLevel( unsigned int id, unsigned int time, unsigned short level, unsigned short hours);
+        void updateFriendGroupIndex(unsigned int id, int index);
 
-        bool newGroup(const std::string &name);
+        void newGroup(const std::string& name);
         void clearGroupNames();
         void setGroupNames(const std::list<std::string> &groups);
-        void removeGroupName(const int index);
+        void removeGroupName(int index);
         int getGroupIndexOf(const std::string &name);
-        void updateGroupName(const std::string &newName, const int index);
+        void updateGroupName(const std::string& newName, int index);
 
         void setQunGroupName(const std::string &name) { qunName = name; }
         void setAnonymousGroupName(const std::string &name) { anonymousName = name; }
@@ -90,15 +101,13 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
         EvaUserSetting *getSetting() { return setting; }
         //X 	KConfig *config(const QString &group);
 
-        bool loadGroupedBuddyList();
-        bool saveGroupedBuddyList();
-        void setBuddyLoadedEnabled( const bool v) { isBuddyListLoaded = v; }
-        bool isBuddiesLoaded() const { return isBuddyListLoaded; }
-
         QunList *getQunList() { return &qunList; }
         void setQunList( const QunList &l) { qunList = l; }
         bool loadQunList();
         bool saveQunList();
+
+        bool loadGroupedBuddyList();
+        bool saveGroupedBuddyList();
         //X 	 bool isQunLoaded() const { return isQunListLoaded; }
 
         void setExtraInfo( const unsigned long long info) { mExtraInfo = info; }
@@ -109,7 +118,7 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
         bool hasPalEntry() { return mExtraInfo & QQ_EXTAR_INFO_PAL; }
         bool hasUserHead() { return mExtraInfo & QQ_EXTAR_INFO_USER_HEAD; }
 
-        void setSignature(const std::string sig, const unsigned int time) { mSignature = sig;  mSignatureModifyTime = time; }
+        void setSignature(const std::string& sig, unsigned int time);
         const std::string &getSignature() const { return mSignature; }
         unsigned int getSignatureModifyTime() const { return mSignatureModifyTime; }
 
@@ -157,15 +166,20 @@ class EvaUser : public QObject//, virtual public EvaDCOPContactsInterface
         void loadQunListReady();
     protected:
         virtual void customEvent( QCustomEvent * e );
+ 
     private:
+
+	static bool isVersionCorrect(const QString& fileName);
+
+    private:
+        QMutex buddylistMutex;
+        QMutex qunlistMutex;
         unsigned int qqNum;
         char *md5Password;
         ContactInfo details;
         FriendList myFriends;
         std::list<std::string> groupNames;
         EvaUserSetting *setting;
-        bool isBuddyListLoaded;
-        bool isQunListLoaded;
 
         unsigned int timeOnline;
         unsigned short level;

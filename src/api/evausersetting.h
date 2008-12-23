@@ -130,14 +130,20 @@ public:
 	};
 	
 	// save Qun information method	
-	 bool saveQunList(QObject *receiver, QunList &list);
-	 bool loadQunList(QObject *receiver);
+//X 	 bool saveQunList(QObject *receiver, QunList &list);
+//X 	 bool loadQunList(QObject *receiver);
 	
 	// the group names include user creating ones and the first one "buddy list"
-	 bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
-				unsigned short extraInfo, std::string sig, unsigned int sigTime);
-	 bool loadBuddyList(QObject * receiver);
-	
+//X 	 bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
+//X 				unsigned short extraInfo, std::string sig, unsigned int sigTime);
+//X 	 bool loadBuddyList(QObject * receiver);
+
+        QString getUserHomeDir();
+	QString getEvaSettingDir();
+	QString getEvaUserDir();
+        QString getEvaBuddyListFilename();
+        QString getEvaQunListFilename();
+
 	 bool saveMessage(const int buddy, const int sender, QString sNick, 
 			const int receiver, QString rNick,
 			const bool isNormal, 
@@ -338,9 +344,7 @@ public:
 // protected:
 // 	virtual void customEvent( QCustomEvent *e);
 private:
-	const QString getUserHomeDir();
-	const QString getEvaSettingDir();
-	const  QString getEvaUserDir();
+
 	 bool isDirExisted(const QString &dir);
 	bool createDefaultDirs();
 	bool loadOldProfile();
@@ -414,7 +418,7 @@ private:
 //X 	KConfig *m_config;
 	bool m_NeedRepaint;
 	
-	friend class EvaUser;
+//X 	friend class EvaUser;
 };
 
 inline void EvaUserSetting::setNeedRepaint(const bool repaint) { m_NeedRepaint = repaint; }

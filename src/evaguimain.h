@@ -61,6 +61,7 @@ class EvaUserSetting;
 class EvaGlobal;
 class EvaImageResource;
 class EvaSetting;
+class EvaFileManager;
 class EvaAddingManager;
 class EvaSysMsgManager;
 
@@ -115,19 +116,20 @@ public:
         EvaUHManager* getUHManager() { return uhManager; }
         EvaPicManager* getPicManager() { return picManager; }
         EvaAddingManager* getAddingManager() { return addingManager; }
+        EvaFileManager* getFileManager() { return fileManager; }
 
 	/// DCOP Actions calls
-	void changeToOnline();
-	void changeToOffline();
-	void changeToLeave();
-	void changeToInvisible();
-	void changeNick(QString nick);
-	void changeSignature( QString contents);
-	void sendToContact(unsigned int id, QString msg);
-	void sendToQun(unsigned int ext, QString msg);
-	void textReady(unsigned int id, QString text, bool isQun);
-	void imageReady(unsigned int id, QString path, bool isQun);
-	void openAddFriendDialog(unsigned int id);
+//X 	void changeToOnline();
+//X 	void changeToOffline();
+//X 	void changeToLeave();
+//X 	void changeToInvisible();
+//X 	void changeNick(QString nick);
+//X 	void changeSignature( QString contents);
+//X 	void sendToContact(unsigned int id, QString msg);
+//X 	void sendToQun(unsigned int ext, QString msg);
+//X 	void textReady(unsigned int id, QString text, bool isQun);
+//X 	void imageReady(unsigned int id, QString path, bool isQun);
+//X 	void openAddFriendDialog(unsigned int id);
 
 protected:
 	virtual void customEvent( QEvent * e );
@@ -144,7 +146,7 @@ private:
 	void initUserLeaveMenu();
 
 	// every timer interval to get online friends' status
-	QTimer *onlineFriendTimer;
+//X 	QTimer *onlineFriendTimer;
 
         EvaUserSetting* settings;
 //X 	// store user information
@@ -162,6 +164,7 @@ private:
 	// system notification handler
 	EvaSysMsgManager *m_SysMsgManager;
 
+        EvaFileManager* fileManager;
 	// detecting idle time
 	IdleTimeDetector *idt;
 
@@ -249,8 +252,8 @@ private slots:
 	void slotDoLoginClick();
 	void slotServerBusy();
 	void slotSetupEvaClient();
-	void slotFetchQQServer();
-	void slotGotServer(QHostAddress addr);
+//X 	void slotFetchQQServer();
+//X 	void slotGotServer(QHostAddress addr);
 	//void slotLoginOK();
 	//void slotWrongPassword(QString msg);
 	void slotKickedOut(const QString msg);
@@ -381,7 +384,7 @@ private slots:
 					const unsigned int, const unsigned short);
 	//void slotLoginVerification();
 	void slotBuddyAdded(const unsigned int id, const QString nick, const unsigned short face, const int group);
-	void slotShowScriptManager();
+//X 	void slotShowScriptManager();
  
 public:
 	
