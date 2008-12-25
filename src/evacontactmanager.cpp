@@ -21,6 +21,7 @@
 #include "evacontactmanager.h"
 #include "evaguimain.h"
 #include "evaconnecter.h"
+#include "evaloginmanager.h"
 #include "evasession.h"
 #include "evaapi.h"
 #include "evapacketmanager.h"
@@ -31,14 +32,6 @@
 #include "libeva.h"
 #include <assert.h>
 #include <qapplication.h>
-//X #include <kdebug.h>
-
-//X 
-//X EvaContactManager *GetContactManager()
-//X {
-//X 	static EvaContactManager manager;
-//X 	return &manager;
-//X }
 
 EvaContactManager::EvaContactManager( EvaSession* session, EvaConnecter* connecter, EvaPacketManager* pm)
     : m_contactsReady(false)
@@ -53,15 +46,6 @@ EvaContactManager::~ EvaContactManager( )
 {
 }
 
-void EvaContactManager::notifyEvent( int eId, const QString & msg, EPARAM param)
-{
-	EvaNotifyEvent *e = new EvaNotifyEvent(eId);
-	e->m_desc = msg;
-	e->m_param = param;
-	
-	QApplication::postEvent(EvaMain::getInstance(), e);
-}
-
 void EvaContactManager::setPacketManager( EvaPacketManager * pm )
 {
 	assert(pm);
@@ -69,9 +53,6 @@ void EvaContactManager::setPacketManager( EvaPacketManager * pm )
 
 	m_status = ESCM_NONE;
 			
-	//QObject::connect();
-	//QObject::connect();
-	//QObject::connect();
 	//QObject::connect();
 	
 }
@@ -87,9 +68,8 @@ void EvaContactManager::fetchContacts( )
                 fetchAllLevels();
                 fetchAllSignatures();
                 packetManager->doRequestExtraInfo();
-                packetManager->doGetWeatherForecast(session->getLoginWanIp()); /// get local weather
+                packetManager->doGetWeatherForecast(session->getLoginManager()->getLoginWanIp()); /// get local weather
 			
-		notifyEvent(E_LoginProcessDone);
                 connecter->slotClientReady();
 		return;
 	} else
@@ -116,16 +96,12 @@ void EvaContactManager::processGetFriendListReply( const GetFriendListReplyPacke
 	}
 	if(packet->getPosition()!=QQ_FRIEND_LIST_POSITION_END){
 		packetManager->doGetContacts( packet->getPosition());
-		notifyEvent(E_ContactsDownloading);
 	}else{
 // 		EvaUser * user = EvaMain::session->getUser();
 // 		if(user){
 // 			user->setFriendList(m_Contacts);
 // 		}
-		notifyEvent(E_ContactsDone);
 		m_status = ESCM_NONE;
-//X 		EvaUser *user = EvaMain::session->getUser();
-//X 		if(user) user->saveGroupedBuddyList();
 		if(m_downloadAll){
 			fetchGroupNames();
 		}
@@ -151,7 +127,6 @@ void EvaContactManager::processDownloadGroupName( const GroupNameOpReplyPacket *
 // 	if(user){
 // 		user->setGroupNames(m_GroupNames);
 // 	}
-	notifyEvent(E_GroupNameDownloadDone);
 	if(m_downloadAll)
 		fetchGroupedFriends();
 	//user->clearGroupNames(); // note that the first group won't be deleted
@@ -198,7 +173,6 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 	}
 //X 	QString msg = QString(i18n("%1")).arg(m_GroupedContacts.size());
 	QString msg = QString("%1").arg(m_GroupedContacts.size());
-	notifyEvent(E_GroupContactsReceived, msg);
 	
 	int nextID = packet->getNextStartID();
 	if(nextID != 0x0000){
@@ -222,7 +196,6 @@ void EvaContactManager::processDownloadGroupFriendReply( const DownloadGroupFrie
 			user->saveQunList();
 		}
 		m_contactsReady = true;
-		notifyEvent(E_GroupContactsDone);
 		if(m_downloadAll){
 			printf("fetching qun info\n");
 			Qun *q = m_QunList.first();
@@ -265,7 +238,6 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 	}
 	
 	QString msg = QString("%1").arg(m_QunInfo.getQunID());
-	notifyEvent(E_QunInfoFinished, msg, (EPARAM)(m_QunInfo.getQunID()));
 	if(m_downloadAll){
 		Qun *q = m_QunList.next();
 		if(q){
@@ -276,11 +248,10 @@ void EvaContactManager::processQunInfoReply( const QunReplyPacket * packet )
 			m_QunMemberCount = 0;
 			// show main display to user
 			packetManager->doRequestExtraInfo();
-			packetManager->doGetWeatherForecast(session->getLoginWanIp()); /// get local weather
+			packetManager->doGetWeatherForecast(session->getLoginManager()->getLoginWanIp()); /// get local weather
 			
 			fetchAllLevels();
 			fetchAllSignatures();
-			notifyEvent(E_LoginProcessDone);
 			
 // 			q = m_QunList.first();
 // 			kdDebug() << "[EvaContactManager] All Quns infos finished. Fetching Qun member info of " << q->getQunID() << endl;
@@ -368,7 +339,6 @@ void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 			//q->resetMemberIterator();
 			m_QunMemberCount = 0;
 // 			kdDebug() << "[EvaContactManager] 2 q->numMembers() " << q->numMembers() << ", m_QunMemberCount " << m_QunMemberCount << endl;
-			notifyEvent(E_QunMemberFinished, "", EPARAM(q->getQunID()));
 // 			if(m_downloadAll){
 // 				kdDebug() << "[EvaContactManager] 3 q->numMembers() " << q->numMembers() << ", m_QunMemberCount " << m_QunMemberCount << endl;
 // 				Qun *q = m_QunList.next();
@@ -382,7 +352,6 @@ void EvaContactManager::processQunMemberReply( const QunReplyPacket * packet )
 // 					fetchQunMembersInfo(q->getQunID());
 // 				} else{
 // 					m_downloadAll = false;
-// 					//notifyEvent(E_LoginProcessDone);
 // 				}
 // 			}
 		} else {  // Still some members needed
@@ -422,7 +391,6 @@ void EvaContactManager::processGetUserInfoReply( const GetUserInfoReplyPacket * 
 		}
 	
 	QString msg = QString("%1").arg(id);
-	notifyEvent(E_ContactDetailDone, msg, (EPARAM)id);
 }
 
 void EvaContactManager::fetchSignature( const unsigned int id )
@@ -460,14 +428,8 @@ void EvaContactManager::processSignatureReply( const SignatureReplyPacket * pack
 	}
 	
 	if(m_status == ESCM_ALLSIGNATURES){
-		if( false == packetManager->doRequestSignature(packet->nextStartID())) //no more contact to request, so we done!
-			notifyEvent(E_AllSignatureDone);
-	} else if (m_status == ESCM_SIGNATURE )
-		{
-			if(id){
-				notifyEvent(E_SignatureDone, sig, (EPARAM)id);
-			}
-		}
+		packetManager->doRequestSignature(packet->nextStartID());
+	} 
 }
 
 void EvaContactManager::fetchLevel( const unsigned int id )
@@ -495,9 +457,6 @@ void EvaContactManager::processGetLevelReply( const EvaGetLevelReplyPacket * pac
 		}else
 			user->updateFriendLevel(iter->qqNum, iter->onlineTime, iter->level, iter->timeRemainder);
 	}	
-
-	if(m_status == ESCM_LEVEL && id)
-		notifyEvent(E_LevelDone, "", (EPARAM)id);
 }
 
 void EvaContactManager::fetchAllLevels( )

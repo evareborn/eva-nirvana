@@ -19,8 +19,8 @@
  ***************************************************************************/
  
 #include "evauser.h"
-#include "evaresource.h"
 #include "evaguimain.h"
+#include "evaresource.h"
 #include "evaqtutil.h"
 #include "evautil.h"
 #include "evafriend.h"

@@ -176,7 +176,7 @@ void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int sen
 	}
 	chatDisplay->append(nick, time, Qt::blue, true, QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue), size, u, i, b, message);
 	if( tbEnableSound->isOn())
-		EvaMain::global->getSoundResource()->playNewMessage();
+		EvaMain::sound->playNewMessage();
 }
 
 void EvaQunChatWindow::showMessages()

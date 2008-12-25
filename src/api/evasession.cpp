@@ -32,17 +32,18 @@ EvaSession::EvaSession( unsigned int qq, char const* password, const EvaNetworkP
 
     packetManager = new EvaPacketManager(this, user, connecter);
     contactManager = new EvaContactManager( this, connecter, packetManager );
-    loginManager = new EvaLoginManager( this, connecter, contactManager, packetManager );
-
-    loginManager->setStatus( Eva_Offline );
+    loginManager = new EvaLoginManager( user, connecter, contactManager, packetManager );
+ 
+    connect( loginManager, SIGNAL( loginProcessUpdate( EvaLoginProcess ) ), SIGNAL( loginProcessUpdate( EvaLoginProcess ) ) );
+    connect( packetManager, SIGNAL( error( EvaError ) ), SIGNAL( error( EvaError ) ) );
+    connect( packetManager, SIGNAL( statusChanged( UserStatus ) ), SIGNAL( statusChanged( UserStatus ) ) );
+    connect( packetManager, SIGNAL( friendStatusChanged( unsigned int ) ), SIGNAL( friendStatusChanged( unsigned int ) ) );
 }
  
 EvaSession::~EvaSession()
 {
     delete user;
 
-//X     fileManager->stopAll();
-//X     delete fileManager;
     free();
 }
  
@@ -123,107 +124,15 @@ UserStatus EvaSession::getStatus() const
 { 
     return loginManager->getStatus();
 }
-
-void EvaSession::setLoginWanIp(const unsigned int ip)
-{ 
-    loginIp = ip;
-}
-void EvaSession::setLoginWanPort(const unsigned short port)
-{ 
-    loginPort = port;
-}
-
-void EvaSession::setLoginLanIp(const unsigned int ip) 
-{ 
-    lanIp = ip;
-}
- 
-void EvaSession::setLoginLanPort(const unsigned short port)
-{ 
-    lanPort = port;
-}
-
-void EvaSession::setLastLoginIp(const unsigned int ip)
-{ 
-    lastLoginIp = ip;
-}
-
-void EvaSession::setLastLoginTime(const unsigned int time)
-{ 
-    lastLoginTime = time;
-}
-
-unsigned int EvaSession::getLoginWanIp() const
-{ 
-    return loginIp;
-}
-
-unsigned short EvaSession::getLoginWanPort() const
-{ 
-    return loginPort;
-}
-
-unsigned int EvaSession::getLoginLanIp() const
-{ 
-    return lanIp;
-}
-
-unsigned short EvaSession::getLoginLanPort() const
-{ 
-    return lanPort;
-}
-
-unsigned int EvaSession::getLastLoginIp() const
-{ 
-    return lastLoginIp;
-}
-
-unsigned int EvaSession::getLastLoginTime() const
-{ 
-    return lastLoginTime;
-}
-void EvaSession::addLoginVerifyInfo( const GraphicVerifyCode & info )
-{
-	codeList.push_back(info);
-}
-
-GraphicVerifyCode EvaSession::getLoginVerifyInfo( )
-{
-	GraphicVerifyCode code;
-	if(codeList.empty()) return code;
-	return codeList.front();
-}
-
-
-GraphicVerifyCode EvaSession::getNextLoginVerifyInfo( )
-{
-	GraphicVerifyCode code;
-	if(codeList.empty()) return code;
-	code = codeList.front();
-	codeList.pop_front();
-	return code;
-}
  
 bool EvaSession::isLoggedIn() const
 {
     return loginManager->isLoggedIn();
 }
-
-void EvaSession::clearAllVerifyCodes( )
+ 
+unsigned int EvaSession::getLoginWanIp() const
 {
-	if(codeList.size())
-		codeList.clear();
-}
-
-
-int EvaSession::getNumVerifyCodes() const
-{ 
-    return codeList.size();
-}
-
-bool EvaSession::isLoginNeedVerify() const
-{ 
-    return (codeList.size() != 0);
+    return loginManager->getLoginWanIp();
 }
 
 // vim: sw=4 sts=4 et tw=100 

@@ -25,13 +25,14 @@
 #include <QHostAddress>
  
 #include "evaapi.h"
+#include "evagraphicverifycode.h"
 
+class EvaUser;
 class EvaConnecter;
 class EvaContactManager;
 class EvaPacketManager;
 class ContactInfo;
 class EvaLoginVeriWindow;
-class EvaSession;
 
 /**
  * \class EvaLoginManager
@@ -60,7 +61,7 @@ class EvaLoginManager : public QObject
 {
     Q_OBJECT
     public:
-        EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager);
+        EvaLoginManager(EvaUser* user, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager);
         void setPacketManager(EvaPacketManager *pm);
 
         void login();
@@ -71,19 +72,47 @@ class EvaLoginManager : public QObject
         void leave();
         void invisible();
 
-        bool isLoggedIn() { return m_isLoggedIn; }
+        bool isLoggedIn() const;
 
         UserStatus getStatus() const;
         void setStatus(const UserStatus status);
 
         static char getStatusCode(const UserStatus status) ;
+ 
+        void setLoginWanIp(const unsigned int ip);
+        void setLoginWanPort(const unsigned short port);
+        void setLoginLanIp(const unsigned int ip);
+        void setLoginLanPort(const unsigned short port);
+        void setLastLoginIp(const unsigned int ip);
+        void setLastLoginTime(const unsigned int time);
+
+        unsigned int getLoginWanIp() const;
+        unsigned short getLoginWanPort() const;
+        unsigned int getLoginLanIp() const;
+        unsigned short getLoginLanPort() const;
+        unsigned int getLastLoginIp() const;
+        unsigned int getLastLoginTime() const;
+
+        bool isLoginNeedVerify() const;
+        void addLoginVerifyInfo(const GraphicVerifyCode &info);
+        GraphicVerifyCode getLoginVerifyInfo();
+        GraphicVerifyCode getNextLoginVerifyInfo();
+        int getNumVerifyCodes() const;
+        void clearAllVerifyCodes();
+ 
+    signals:
+ 
+        void loginProcessUpdate( EvaLoginProcess );
+
+
     private slots:
  
         void slotDoLogin();
+        void fileAgentInfoReady();
 
     private:
 
-        EvaSession* session;
+        EvaUser* user;
         EvaConnecter* connecter;
         EvaContactManager* contactManager;
         EvaPacketManager *packetManager;
@@ -99,13 +128,18 @@ class EvaLoginManager : public QObject
         LoginStatus loginStatus;
 
         UserStatus status;
-        void notifyEvent(const int eId, const QString &msg = QString::null);
+//X         void notifyEvent(const int eId, const QString &msg = QString::null);
 
-    private slots:
+        unsigned int loginIp;
+        unsigned short loginPort;
+        unsigned int lastLoginIp;
+        unsigned int lastLoginTime;
 
-        void fileAgentInfoReady();
+        unsigned int lanIp;
+        unsigned short lanPort;
 
-    private:
+        std::list<GraphicVerifyCode> codeList;
+
         bool m_isLoggedIn;
 
         void serverBusy();
@@ -117,7 +151,6 @@ class EvaLoginManager : public QObject
         void loginNeedRedirect(const unsigned int fromIp, const unsigned int ip, const short port);
         void myInfoReady(const ContactInfo info);
 
-    private:
         EvaLoginVeriWindow *m_veriWin;
 
         friend class EvaPacketManager;

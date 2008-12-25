@@ -21,29 +21,23 @@
 #ifndef EVAMAIN_H
 #define EVAMAIN_H
 
-#include <QObject>
-#include <qdatetime.h>
-#include <qstringlist.h>
-//Added by qt3to4:
-#include <QCustomEvent>
 #include <inttypes.h>
-#include <qhostaddress.h>
-//#include <dcopobject.h>
+#include <QObject>
+#include <QDateTime>
+#include <QStringList>
+#include <QCustomEvent>
+#include <QHostAddress>
 
-//X #include "config.h"
 #include "libeva/evamemo.h"
 #include "evaidt.h"
-//#include "evadcopactions.h"
+#include "evaapi.h"
 
  
-// FIXME: wanna integrate with kwallet? why not then?
-//#include <kwallet.h>
-
 // Predefinitions
 
 //   Versions should be kept in one place
 #define	EVA_VERSION	"0.4.2"
-#define EVA_BUILD	"20070320"
+#define EVA_BUILD	"20081224"
 
 
 // External classes?
@@ -51,15 +45,13 @@ class QMenu;
 //X class QHelpMenu;
 class QTextCodec;
 class QTimer;
-//class KAboutData;
-//class KAboutApplication;
-//class KGlobalAccel;
 class QShortcut;
 
 class EvaSession;
 class EvaUserSetting;
 class EvaGlobal;
 class EvaImageResource;
+class EvaSoundResource;
 class EvaSetting;
 class EvaFileManager;
 class EvaAddingManager;
@@ -79,8 +71,6 @@ class EvaNotifyEvent;
 //class Wallet;
 
 
-//X class EvaMain : public QObject//, virtual public EvaDCOPActionsInterface
-//class EvaMain : public QObject//, virtual public EvaDCOPActionsInterface
 class EvaMain : public QObject
 {
 	Q_OBJECT
@@ -89,11 +79,13 @@ public:
 	EvaMain();
 	~EvaMain();
 
-	// store some global system setting such as paths
-	static EvaGlobal *global;
+//X 	// store some global system setting such as paths
+//X 	static EvaGlobal *global;
 
 	// store resources like images and sounds
 	static EvaImageResource *images;
+ 
+        static EvaSoundResource *sound;
 
 	// ??
 	static EvaHelper *helper;	
@@ -111,31 +103,23 @@ public:
 
         static EvaSession* session;
         static EvaMain* getInstance() { return g_eva; }
-//X         EvaSession* getSession() { return session; }
-//X         EvaUser* getUser() { return user; }
         EvaUHManager* getUHManager() { return uhManager; }
         EvaPicManager* getPicManager() { return picManager; }
         EvaAddingManager* getAddingManager() { return addingManager; }
         EvaFileManager* getFileManager() { return fileManager; }
 
-	/// DCOP Actions calls
-//X 	void changeToOnline();
-//X 	void changeToOffline();
-//X 	void changeToLeave();
-//X 	void changeToInvisible();
-//X 	void changeNick(QString nick);
-//X 	void changeSignature( QString contents);
-//X 	void sendToContact(unsigned int id, QString msg);
-//X 	void sendToQun(unsigned int ext, QString msg);
-//X 	void textReady(unsigned int id, QString text, bool isQun);
-//X 	void imageReady(unsigned int id, QString path, bool isQun);
-//X 	void openAddFriendDialog(unsigned int id);
-
 protected:
 	virtual void customEvent( QEvent * e );
-	void dispatchEvaEvent( EvaNotifyEvent * e);
 	
 private:
+	bool initUI();
+	void initMenus();
+	void setupUser();
+	void setupNetwork();
+	void doSlotConnection();
+	void setupEvaClient();
+	void setupWindowManager();
+
 	// process console arguments
 	void processCLIArgs();
 	
@@ -145,12 +129,7 @@ private:
 	// initialize user customized leaving messages
 	void initUserLeaveMenu();
 
-	// every timer interval to get online friends' status
-//X 	QTimer *onlineFriendTimer;
-
         EvaUserSetting* settings;
-//X 	// store user information
-//X 	EvaUser *user;
 
 	// user head pictures manager
 	EvaUHManager *uhManager;
@@ -168,30 +147,14 @@ private:
 	// detecting idle time
 	IdleTimeDetector *idt;
 
-	// FIXME: do the following two need existing in the code?
-	//QString lastSentName;
-	//int lastSentID;
-	
 	// for connection interruption detecting
 	int numOfLostKeepAlivePackets;
-
-	// whether user is logged in
-	//bool loggedIn;
-
-	// one QQ server, choose random from config file
-	QHostAddress QQServer;
 
 	// guard against deleting one friend from more than one friend group
 	int deleteFromQQ;
 
-	// control groups showing while getting friend list from server
-	bool m_IsShowingGroups;
-	
 	// idle status
 	bool inIdleStatus;
-
-	// about window
-	//KAboutApplication *aboutEva;
 
 	// store user defined system settings such as user home diretory, message history etc.
 	EvaSetting *sysSetting;
@@ -209,9 +172,6 @@ private:
 	// login window, first one you will see
 	EvaLoginWindow *loginWin;
 
-// 	// the main guy, with your friend list in
-// 	EvaMainWindow *mainWin;	
-
 	// system tray icon
 	EvaSystemTray *tray;
 
@@ -221,76 +181,77 @@ private:
 	// if not set, all the windows should be constructed at once, otherwise just do login thing
 	bool isClientSet;
 
-	// accelerate key, maybe officially CTRL+ALT+Z
-	//KGlobalAccel *accelKey;
-//X         QShortcut *accelKey;
-
-	// FIXME: wanna integrate with kwallet? why not then?
-	//KWallet::Wallet *_wallet;
-	
-	void loginOK();
 private slots:
+ 
+        /**
+         * We use emited signals rather than notified events so that
+         * the core session need not to know whom to send event to
+         * in its own code.
+         */
+
+        void slotLoginProcessUpdate( EvaLoginProcess );
+        void slotError( EvaError );
+
 	// TODO: should we put so many slots in the same place?
 	void slotIdleTimeUp();
 	void slotIdleBack();
-//X 	void slotLoadGroupedBuddiesReady();
-	void slotLoadQunListReady();
-	void doQuit();
-	bool doInitUI();
-	void initMenus();
-	void doSlotConnection();
-	void slotGetOnlineStatus();
 
-	void slotSetupUser();
-	void slotSetupNetwork();
-	void slotSetupWindowManager();
-	
-	void slotNetworkException(int);
-	void slotPacketException(int);
+	void slotUserSettingChanged();
+        void slotStatusChanged( UserStatus );
+	void slotQunListChanged();
+	void slotGroupChanged(const unsigned int, int);
+	void slotUserMemoChanged(const unsigned int id, const MemoItem &memo);
+	void slotFriendSignatureChanged(const unsigned int qq, const QDateTime time, const QString signature);
 
-	//void slotConnectReady();
-	void slotDoLoginClick();
-	void slotServerBusy();
-	void slotSetupEvaClient();
-//X 	void slotFetchQQServer();
-//X 	void slotGotServer(QHostAddress addr);
-	//void slotLoginOK();
-	//void slotWrongPassword(QString msg);
-	void slotKickedOut(const QString msg);
-	void slotOnlineReady();
-	void slotInvisibleReady();
-	void slotLeaveReady();
-	void slotOfflineReady();
-	void slotFriendStatusChanged(unsigned int);
-//X 	void slotFriendListReady();
-	//void slotSentMessageResult(bool); 
 	void slotTxtMessage(unsigned int sender, bool isNormal, QString message, QDateTime time, const char fontSize, 
 			const bool u, const bool i, const bool b, 
 			const char blue, const char green, const char red); 
-	//void slotFriendGroupsReady();  
+	void slotReceivedQunMessage( unsigned int, unsigned int, QString, QDateTime, const char, 
+			const bool, const bool, const bool, const char, const char, const char);
 	
-	// login window
+        /**
+         * Start: the '*Ready' messages.
+         */
+	void slotExtraInfoReady();
+	void slotFriendGroupsUploadReady(bool);
+	void slotQQShowReady(const unsigned int);
+	void slotDeleteBuddyReady(unsigned int, bool);
+	void slotQunInfomationReady(const unsigned int, const bool, QString);
+	void slotQunPictureReady(const unsigned int id, const QString fileName, const QString tmpFileName);
+	void slotRequestQunCardReady(const unsigned int id, const bool ok, const unsigned int qq, QString realName, const unsigned char gender, 
+					QString phone, QString email, QString memo, QString msg);
+	
+	void slotDeleteMeReply(bool);
+	void slotQunExitReply(const unsigned int, const bool, QString);
+	void slotAddAnonymous(const unsigned int id, const unsigned short face);
+
+        /* End: the '*Ready' messages. */
+	
+        /**
+         * Start:  slots for gui actions, we are considering to move them.
+         */
+
 	void slotDoLogin();
 	void slotDoCancel();
-	
+	void slotAutoReplyMenuActivated(int id);
 	void slotDoOnline();
 	void slotDoOffline();
 	void slotDoLeave();
-	void slotAutoReplyMenuActivated(int id);
 	void slotDoInvisible();
 	void slotDoLogout();
+	void slotDoQuit();
+ 
+        // This slot should be moved to the EvaLoginManager class
+	void slotDoLoginClick();
 	
 	void slotDoDownloadGroups();
 	void slotDoUploadGroups();
-	void slotFriendGroupsUploadReady(bool);
 	
 	void slotDoDownloadBuddies();
 	void slotDoChangeUser();
 	
 	void slotGroupDeleted(const int);
-	//void slotGroupAdded(QString, int);
 	void slotGroupRenamed(QString, int);
-	void slotGroupChanged(const unsigned int, int);
 	
 	void slotRequestDetails(const unsigned int);
 	void slotRequestLevel(const unsigned int);
@@ -299,63 +260,36 @@ private slots:
 	void slotRequestHistory(const unsigned int);
 	void slotRequestQQShow(const unsigned int);
 	void slotRequestMyQQShow();
-	void slotQQShowReady(const unsigned int);
 	void slotRequestSearch();
 	
-	//void slotSystemMeBeenAdded(unsigned int);
-	//void slotSystemAddMeRequest(unsigned int, QString);
-	//void slotSystemAddRequestApproved(unsigned int);
-	//void slotSystemAddRequestRejected(unsigned int, QString);
-	
-	//void slotRequestSystemMessage();
-	//void slotShowSystemMessage(const short, const uint8_t type, const unsigned int from, const unsigned int me, const QString message, const unsigned int internalQunID = 0);
 	void slotRequestSystemMessages();
 	
 	void slotRequestDelete(const unsigned int);
-	void slotDeleteBuddyReady(unsigned int, bool);
+	void slotBuddyAdded(const unsigned int id, const QString nick, const unsigned short face, const int group);
 	
 	void slotRequestSystemSettingWindow();
 	void slotDeleteMeFrom(const unsigned int);
-	void slotDeleteMeReply(bool);
 	void slotRequestAddBuddy(const unsigned int);
 	
-	//void slotMyInfoReady();
-	
-	void slotQunInfomationReady(const unsigned int, const bool, QString);
 	
 	void slotRequestQunDetails(const unsigned int);
 	void slotRequestQunHistory(const unsigned int);
 	void slotRequestQunChat(const unsigned int);
-	void slotReceivedQunMessage( unsigned int, unsigned int, QString, QDateTime, const char, 
-			const bool, const bool, const bool, const char, const char, const char);
-	void slotQunSystemMessageRequest(const unsigned int, QString);
-	
-	void slotQunPictureReady(const unsigned int id, const QString fileName, const QString tmpFileName);
-	void slotRequestQunCardReady(const unsigned int id, const bool ok, const unsigned int qq, QString realName, const unsigned char gender, 
-					QString phone, QString email, QString memo, QString msg);
 	void slotDoQunExit(const unsigned int id);
-	void slotQunExitReply(const unsigned int, const bool, QString);
 	void slotQunCreateFailed(QString);
 	void slotQunCreate();
 
-	void slotFriendSignatureChanged(const unsigned int qq, const QDateTime time, const QString signature);
 	void slotUpdateQunMessageSettings(const unsigned int id, const signed char type);
 	
-	void slotUserSettingChanged();
-	void slotFaceSizeChanged();
 	void slotUpdateShortcut();
 	void slotShotcutKeyPressed();
 	
-	//void slotLoginProcessReady();
-	void slotAddAnonymous(const unsigned int id, const unsigned short face);
-	
-	void slotExtraInfoReady();
-	//void slotShowOnlineSelected();
-	//void slotShowAllSelected();
-
-	void slotUserMemoChanged(const unsigned int id, const MemoItem &memo);
 	void slotModifyMemo(const unsigned int id );
+         /*End:  slots for gui actions, we are considering to move them. */
 
+        /**
+         * Start: slots for file transfering
+         */
 	void slotFileTransferSend(const unsigned int, const unsigned int, const QList<QString>,
 				const QList<unsigned int>, const unsigned char transferType);
 	void slotFileTransferAccept(const unsigned int, const unsigned int, const QString,
@@ -382,15 +316,12 @@ private slots:
 	void slotNotifyAddressRequest(const unsigned int, const unsigned int, const unsigned int, 
 					const unsigned int, const unsigned short,  
 					const unsigned int, const unsigned short);
-	//void slotLoginVerification();
-	void slotBuddyAdded(const unsigned int id, const QString nick, const unsigned short face, const int group);
-//X 	void slotShowScriptManager();
+        /*End: slots for file transfering */
  
 public:
 	
 	friend class EvaMainWindow;
 };
 
-//X extern EvaMain *g_eva;
 #endif
 

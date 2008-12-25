@@ -134,7 +134,7 @@ void EvaSysMsgManager::slotReceivedSysMessage(const unsigned char type, const un
 	}
 
 	if(EvaMain::session->getUser()->getSetting()->isSoundEnabled())
-		EvaMain::global->getSoundResource()->playSysMessage();
+		EvaGlobal::getInstance()->getSoundResource()->playSysMessage();
 
 	emit sysMessage();
 }

@@ -309,7 +309,7 @@ void EvaChatWindow::slotReceivedMessage(unsigned int sender, bool isNormal, QStr
 				QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue),
 				size, u, i, b, message);
 	if ( tbEnableSound->isOn() )
-		EvaMain::global->getSoundResource()->playNewMessage();
+		EvaMain::sound->playNewMessage();
 }
 
 void EvaChatWindow::showMessages()

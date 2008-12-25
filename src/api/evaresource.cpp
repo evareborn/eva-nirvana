@@ -21,7 +21,6 @@
 #include "evasetting.h"
 #include "evaservers.h"
 #include "evasocket.h"
-#include "evaguimain.h"
 #include "evauser.h"
 #include "evaqtutil.h"
 #include "evasession.h"
@@ -40,11 +39,11 @@
 //#include <kstandarddirs.h>
 
 
-EvaImageResource::EvaImageResource()
+EvaImageResource::EvaImageResource(const QString& imageRoot)
+    : imageRoot( imageRoot )
 {
 	//imageRoot = qApp->applicationDirPath() + "/images";
 	themePath = "";
-	imageRoot = EvaGlobal::getDirPath() + "/image";
         BAD_ICON = new QPixmap();
 	isDownloadingQQShow = false;
 	http = new EvaHttp();
@@ -270,35 +269,35 @@ QPixmap *EvaImageResource::getQQShow(const unsigned int id)
 	return NULL;
 }
 
-void EvaImageResource::requestQQShow(const unsigned int id)
+void EvaImageResource::requestQQShow(const unsigned int /*id*/)
 {
-	if(isDownloadingQQShow) return;	
-	QString path = getQQShowPath();
-	if(path == "") return;
-	EvaUser *user = EvaMain::session->getUser();
-	if(!user) return;
-	
-	qqshowFile.setName(path +"/"+ QString::number(id) + ".gif" );
-	if(qqshowFile.exists()){
-		qqshowFile.remove();
-	}
-	
-	if ( !qqshowFile.open( QIODevice::WriteOnly ) ) {
-		printf("cannot create the image\n");
-		return;
-	}
-
-	EvaSetting *sysSetting = EvaMain::global->getEvaSetting();
-	if(sysSetting->getConnectType(user->getQQ()) == 2){
-		http->setProxyServer( QHostAddress(sysSetting->getServer( user->getQQ())).toString(), 
-					sysSetting->getPort( user->getQQ() ));
-		http->setBase64AuthParam( sysSetting->getProxyParam( user->getQQ()));
-	}
-	http->setHost( "qqshow-user.tencent.com" );
-	unsigned int picNum = rand()*100;
-	QString remoteFile = "/"+QString::number(id) + "/10/00/" + QString::number(picNum) +".gif";
-	downloadID = id;	
-	http->get( remoteFile, &qqshowFile  );
+//X 	if(isDownloadingQQShow) return;	
+//X 	QString path = getQQShowPath();
+//X 	if(path == "") return;
+//X 	EvaUser *user = EvaMain::session->getUser();
+//X 	if(!user) return;
+//X 	
+//X 	qqshowFile.setName(path +"/"+ QString::number(id) + ".gif" );
+//X 	if(qqshowFile.exists()){
+//X 		qqshowFile.remove();
+//X 	}
+//X 	
+//X 	if ( !qqshowFile.open( QIODevice::WriteOnly ) ) {
+//X 		printf("cannot create the image\n");
+//X 		return;
+//X 	}
+//X 
+//X 	EvaSetting *sysSetting = EvaMain::global->getEvaSetting();
+//X 	if(sysSetting->getConnectType(user->getQQ()) == 2){
+//X 		http->setProxyServer( QHostAddress(sysSetting->getServer( user->getQQ())).toString(), 
+//X 					sysSetting->getPort( user->getQQ() ));
+//X 		http->setBase64AuthParam( sysSetting->getProxyParam( user->getQQ()));
+//X 	}
+//X 	http->setHost( "qqshow-user.tencent.com" );
+//X 	unsigned int picNum = rand()*100;
+//X 	QString remoteFile = "/"+QString::number(id) + "/10/00/" + QString::number(picNum) +".gif";
+//X 	downloadID = id;	
+//X 	http->get( remoteFile, &qqshowFile  );
 }
 
 void EvaImageResource::slotQQShowDone( bool error )
@@ -353,11 +352,26 @@ void EvaImageResource::addUserHeadImage(const unsigned int id, QImage imgOn, QIm
 	imgOffList[id] = QPixmap(imgOff);
 }
 
+const QSize EvaImageResource::getFaceSize() const
+{
+    return faceSize;
+}
+
+void EvaImageResource::setFaceSize( const QSize& size)
+{
+    faceSize = size;
+    loadFace( faceSize );
+}
+
+
+
+
+
 /*  ---------------------------------------------------------------------------------------------- */
 
-EvaSoundResource::EvaSoundResource()
+EvaSoundResource::EvaSoundResource(const QString& soundRoot)
+    : soundRoot( soundRoot )
 {
-	soundRoot = EvaGlobal::getDirPath() + "/sound";
 }
 
 void EvaSoundResource::playNewMessage()
@@ -379,9 +393,6 @@ void EvaSoundResource::playSound(const QString &filename)
 {
 	QString absPath = soundRoot + "/" + filename;
 	QDir d;
-	if(!d.exists(absPath)){
-		absPath = EvaGlobal::getDirPath() + "/sound" + "/" + filename;
-	}
 	
 	if(!d.exists(absPath))	return;
 	
@@ -399,33 +410,35 @@ void EvaSoundResource::playSound(const QString &filename)
 }
 
 /*  ---------------------------------------------------------------------------------------------- */
+ 
+EvaGlobal* EvaGlobal::instance = new EvaGlobal();
 
-QString EvaGlobal::dirPath = QDir::current().absPath();
+QString EvaGlobal::getDirPath() 
+{ 
+	return instance->dirPath; 
+}
+
 
 EvaGlobal::EvaGlobal()
 {
-	initialize();
+    dirPath = QDir::current().absPath();
+    initialize();
 }
 
 EvaGlobal::~EvaGlobal()
 {
-	delete imgResource;
+//X 	delete imgResource;
 	delete sndResource;
 	delete system;
 	delete servers;
 }
-
-QString &EvaGlobal::getDirPath() 
-{ 
-	return dirPath; 
-}
-
-bool EvaGlobal::loadImage()
-{
-	if(!imgResource) return false;
-	return imgResource->loadImage();
-}
-
+//X 
+//X bool EvaGlobal::loadImage()
+//X {
+//X 	if(!imgResource) return false;
+//X 	return imgResource->loadImage();
+//X }
+//X 
 // const bool EvaGlobal::loadFace()
 // {
 //         imgResource->loadFace();
@@ -462,7 +475,7 @@ void EvaGlobal::initialize()
 //X 		dirPath = dirPath.left(dirPath.length() - strlen("/servers"));
 
 	printf("found data path: %s\n", dirPath.ascii());
-	initImage();
+//X 	initImage();
 	initSound();
 	initEvaSetting();
 	initServers();
@@ -470,12 +483,14 @@ void EvaGlobal::initialize()
 
 void EvaGlobal::initImage()
 {
-	imgResource = new EvaImageResource();
+//X     QString imageRoot = dirPath + "/image";
+//X     imgResource = new EvaImageResource(imageRoot);
 }
 
 void EvaGlobal::initSound()
 {
-	sndResource = new EvaSoundResource();
+	QString soundRoot = dirPath + "/sound";
+	sndResource = new EvaSoundResource(soundRoot);
 }
 
 void EvaGlobal::initEvaSetting()
@@ -487,20 +502,15 @@ void EvaGlobal::initServers( )
 {
 	servers = new EvaServers(dirPath);
 }
-
-const QSize &EvaGlobal::getFaceSize() const
-{
-    return faceSize;
-}
-
-void EvaGlobal::setFaceSize( const QSize size)
-{
-    faceSize = size;
-    if(imgResource)
-        imgResource->loadFace(faceSize);
-}
-
-
-
-
+//X 
+//X const QSize EvaGlobal::getFaceSize() const
+//X {
+//X     return imgResource->getFaceSize();
+//X }
+//X 
+//X void EvaGlobal::setFaceSize( const QSize& size)
+//X {
+//X     imgResource->setFaceSize(size );
+//X }
+//X 
 

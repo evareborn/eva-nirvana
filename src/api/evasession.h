@@ -26,7 +26,6 @@
 #include "evagraphicverifycode.h"
 
 class EvaUser;
-class EvaNetwork;
 class EvaConnecter;
 class EvaFileManager;
 class EvaLoginManager;
@@ -36,24 +35,47 @@ class EvaContactManager;
  
  
 /**
- * Holds one session per one QQ account connection, all non-graphic stuff
- * would be moved here.
+ * Session for each single QQ connection. This class only offers a simple
+ * interface for the basic im features of QQ protocl. Optional functions
+ * should be implemented in separated classes with the first arugment of
+ * contructor as a pointer to active session instance.
+ * 
  */
 
 class EvaSession : public QObject {
     Q_OBJECT
 
     public:
+ 
+        /**
+         * id: QQ account id.
+         * password: QQ account password
+         * policy: we use network policies to represent connection strategies such as
+         * UDP/TCP selecting, Proxy setups. The side effect is that we can have a 
+         * shorter contructor argument list.
+         */
+
         EvaSession( const unsigned int id, const std::string& password, const EvaNetworkPolicy& policy );
         EvaSession( const unsigned int id, const char *md5Password, const EvaNetworkPolicy& policy );
  
         virtual ~EvaSession();
  
+        /**
+         * Member asscess to the internal objects of an eva session.
+         * This interface was supplied for compact purpose. We should
+         * consider comment them out after the whole programme was
+         * refactored properly.
+         */
+
         EvaUser* getUser();
         EvaConnecter* getConnecter();
         EvaLoginManager* getLoginManager();
         EvaPacketManager* getPacketManager();
         EvaContactManager* getContactManager();
+ 
+        /**
+         * Methods to get the basic stuff and do status switch.
+         */
 
         unsigned int getQQ() const;
         bool isLoggedIn() const;
@@ -66,57 +88,42 @@ class EvaSession : public QObject {
         void leave();
 
         UserStatus getStatus() const;
-
-        void setLoginWanIp(const unsigned int ip);
-        void setLoginWanPort(const unsigned short port);
-        void setLoginLanIp(const unsigned int ip);
-        void setLoginLanPort(const unsigned short port);
-        void setLastLoginIp(const unsigned int ip);
-        void setLastLoginTime(const unsigned int time);
+ 
+        /**
+         * We call loginManager methods to get the infomation. Considering of keep
+         * loginManage inaccessible, maybe we sould use a class to represent the
+         * network info for a compact interface.
+         */
 
         unsigned int getLoginWanIp() const;
-        unsigned short getLoginWanPort() const;
-        unsigned int getLoginLanIp() const;
-        unsigned short getLoginLanPort() const;
-        unsigned int getLastLoginIp() const;
-        unsigned int getLastLoginTime() const;
+ 
+    signals:
+ 
+        /**
+         * Re-yeild the EvaLoginManager signal as the login progresses.
+         */
 
-        bool isLoginNeedVerify() const;
-        void addLoginVerifyInfo(const GraphicVerifyCode &info);
-        GraphicVerifyCode getLoginVerifyInfo();
-        GraphicVerifyCode getNextLoginVerifyInfo();
-        int getNumVerifyCodes() const;
-        void clearAllVerifyCodes();
+        void error( EvaError );
+        void statusChanged( UserStatus );
+        void friendStatusChanged( unsigned int );
+        void loginProcessUpdate( EvaLoginProcess );
 
     private:
         void free();
  
         EvaUser* user;
 
-	// transferring files manager
-	EvaFileManager *fileManager;
-
         EvaContactManager *contactManager;
 
         EvaLoginManager *loginManager;
 
         EvaNetworkPolicy policy;
+
 	// class to connect to QQ server
 	EvaConnecter *connecter;
 
 	// packetize QQ messages
 	EvaPacketManager *packetManager;
-
-
-        unsigned int loginIp;
-        unsigned short loginPort;
-        unsigned int lastLoginIp;
-        unsigned int lastLoginTime;
-
-        unsigned int lanIp;
-        unsigned short lanPort;
-
-        std::list<GraphicVerifyCode> codeList;
 
 };
 

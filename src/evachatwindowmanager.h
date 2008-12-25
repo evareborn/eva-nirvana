@@ -80,7 +80,7 @@ public slots:
 	void slotQunPicSent(const unsigned int, const unsigned int, const unsigned int, const unsigned short);
 	void slotSendImageError(const unsigned int id, const QString message);
 	void slotQunMemberInfoReady( const unsigned int);
-	void slotQunListUpdated();
+	void slotQunListChanged();
 
 	void slotReceivedFileRequest(QQFriend * frd, const unsigned int session, 
 					const QString fileName, const int size,

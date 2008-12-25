@@ -415,7 +415,7 @@ void EvaAddingManager::requestGraphic( )
 		return;
 	}
 
-	EvaSetting *sysSetting = EvaMain::global->getEvaSetting();
+	EvaSetting *sysSetting = EvaGlobal::getInstance()->getEvaSetting();
 	if(sysSetting->getConnectType(user->getQQ()) == 2){
 		m_Http->setProxyServer( QHostAddress(sysSetting->getServer( user->getQQ())).toString(), 
 					sysSetting->getPort( user->getQQ() ));

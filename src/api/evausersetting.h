@@ -129,15 +129,6 @@ public:
 		}
 	};
 	
-	// save Qun information method	
-//X 	 bool saveQunList(QObject *receiver, QunList &list);
-//X 	 bool loadQunList(QObject *receiver);
-	
-	// the group names include user creating ones and the first one "buddy list"
-//X 	 bool saveBuddyList(QObject *receiver, std::list<std::string> groups, ContactInfo &myInfo, FriendList &list,
-//X 				unsigned short extraInfo, std::string sig, unsigned int sigTime);
-//X 	 bool loadBuddyList(QObject * receiver);
-
         QString getUserHomeDir();
 	QString getEvaSettingDir();
 	QString getEvaUserDir();

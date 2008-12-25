@@ -61,7 +61,7 @@ class EvaMainWindow : public EvaMainUIBase// , virtual public EvaDCOPViewInterfa
 {
 	Q_OBJECT
 public:
-	EvaMainWindow( EvaMain* evaapp, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0); // | WDestructiveClose
+	EvaMainWindow( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0); // | WDestructiveClose
 	~EvaMainWindow();
 	
 	void setMainInfo(const unsigned int id, const QString &nick, QPixmap *p);
@@ -112,6 +112,7 @@ public:
 //X 	void openUrl(int id, QString url);
 
 public slots:
+        void friendStatusChanged( unsigned int id );
 	void changeToOnline(unsigned int id);
 	void changeToOffline(unsigned int id);
 	void changeToLeave(unsigned int id);

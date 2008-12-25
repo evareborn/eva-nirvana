@@ -212,7 +212,7 @@ void EvaBuddyItem::updateIcon(QPixmap *p)
 {
 	if(!p) return;
 	if(m_icon) delete m_icon;
-	m_icon = new QPixmap( p->convertToImage().smoothScale(EvaMain::global->getFaceSize() ));
+	m_icon = new QPixmap( p->convertToImage().smoothScale(EvaMain::images->getFaceSize() ));
 }
 
 
@@ -1451,7 +1451,7 @@ void EvaRecentContactLVItem::buddyUpdate( )
 
 void EvaRecentContactLVItem::qunUpdate( )
 {
-	if(m_icon && m_icon->size() != EvaMain::global->getFaceSize()){
+	if(m_icon && m_icon->size() != EvaMain::images->getFaceSize()){
 		QPixmap *pixmap = EvaMain::images->getIcon("QUNS");
 		if(pixmap){
   //		QPixmap head = pixmap->convertToImage().smoothScale(EvaMain::global->getFaceSize());
@@ -1510,7 +1510,7 @@ QString EvaRecentContactLVItem::buddyTip( )
 {
 	QString tip = "<qt>";
 	if(m_buddy){
-		EvaIPSeeker ipAddr(EvaGlobal::getDirPath().latin1());
+		EvaIPSeeker ipAddr(EvaGlobal::getInstance()->getDirPath().latin1());
 		QTextCodec *codec = QTextCodec::codecForName("GB18030");
 		QString addr = codec->toUnicode(ipAddr.getIPLocation(m_buddy->getIP()).c_str());
 		if(addr.length()<4) addr = "0.0.0.0";
@@ -1911,7 +1911,7 @@ void EvaRecentContactLVItem::updateIcon(QPixmap *p)
 {
 	if(!p) return;
 	if(m_icon) delete m_icon;
-	m_icon = new QPixmap( p->convertToImage().smoothScale(EvaMain::global->getFaceSize() ));
+	m_icon = new QPixmap( p->convertToImage().smoothScale(EvaMain::images->getFaceSize() ));
 }
 
 EvaRecentContactLVItem * EvaRecentContactsListView::addQun( const unsigned int id, const unsigned int time )

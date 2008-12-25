@@ -21,18 +21,9 @@
 #ifndef EVAAPI_H
 #define EVAAPI_H
 
-enum EVA_NOTIFY
+enum EvaNotify
 {
-	E_Err = 0,
-	E_SvrConnected,
-	E_SvrRedirect,
-	E_SvrLoginFailed,
-	E_PwWrong,
-	E_LoggedIn,
-	E_MyInfo,
-	E_KeyFileAgent,
-	E_LoginFinished,
-	E_ContactsDownloading,
+	E_ContactsDownloading = 0,
 	E_ContactsDone,
 	E_GroupNameDownloadDone,
 	E_GroupContactsReceived,
@@ -46,20 +37,39 @@ enum EVA_NOTIFY
 	E_LevelDone,
 	E_Count
 };
+ 
+enum EvaLoginProcess {
+	E_Err = 0,
+	E_SvrConnected,
+	E_SvrRedirect,
+	E_SvrLoginFailed,
+	E_PwWrong,
+	E_LoggedIn,
+	E_MyInfo,
+	E_KeyFileAgent,
+	E_LoginFinished,
+};
+ 
+enum EvaError {
+    E_NETWORK_EXCEPTION = 0,
+    E_PACKET_EXCEPTION,
+    E_SERVER_BUSY,
+    E_KICKED_OUT
+};
 
 enum UserStatus {Eva_Online = 10, Eva_Offline = 20, Eva_Leave = 30, Eva_Invisible = 40};
 
 static QString s_ENotify[E_Count] =
 {
-	QString("Something error"),
-	QString("Server connected"),
-	QString("Login redirection"),
-	QString("Login failed"),
-	QString("Password wrong"),
-	QString("User logged in"),
-	QString("My details ready"),
-	QString("File agent key ready"),	
-	QString("Login finished"),
+//X 	QString("Something error"),
+//X 	QString("Server connected"),
+//X 	QString("Login redirection"),
+//X 	QString("Login failed"),
+//X 	QString("Password wrong"),
+//X 	QString("User logged in"),
+//X 	QString("My details ready"),
+//X 	QString("File agent key ready"),	
+//X 	QString("Login finished"),
 	QString("Downloading contact list"),
 	QString("Downloading contacts finished"),	
 	QString("Downloading group names finished"),

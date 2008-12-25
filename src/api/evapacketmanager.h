@@ -169,21 +169,24 @@ signals:
         /**
          * These erros should be merged.
          */
+ 
+        void error( EvaError );
 
-	void networkException(int);
-	void packetException(int);
-	void serverBusy();
+//X 	void networkException(int);
+//X 	void packetException(int);
+//X 	void serverBusy();
+//X 	void kickedOut(const QString);
 	
-	void logoutOK(); 
-	void onlineReady();
-	void offlineReady();
-	void invisibleReady();
-	void leaveReady();
+        void statusChanged( UserStatus );
+//X 	void logoutOK(); 
+//X 	void onlineReady();
+//X 	void offlineReady();
+//X 	void invisibleReady();
+//X 	void leaveReady();
 
-	void kickedOut(const QString);
 	
 	void friendStatusChanged(unsigned int id);
-	void friendListReady();
+//X 	void friendListReady();
 	//void myInfoReady();
 	void userInfoReady(QStringList info);
         void fileAgentInfoReady();

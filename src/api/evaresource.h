@@ -44,7 +44,7 @@ class EvaImageResource : public QObject
 	Q_OBJECT
 public:
 
-	EvaImageResource();
+	EvaImageResource(const QString& imageRoot);
 	~EvaImageResource();
 	
 	
@@ -52,7 +52,10 @@ public:
 	 const QString getIconPath() ;
 	 const QString getSmileyPath() const;
 	 const QString getQQShowPath() const;
-	
+
+         const QSize getFaceSize() const;
+         void setFaceSize( const QSize& size);
+
 	 int getFaceID(const int fileIndex) const ;
 	 int getFaceFileIndex(const int faceId);
 	QPixmap *getFace(const int fileIndex, const bool on = true);
@@ -112,7 +115,7 @@ private:
 class EvaSoundResource
 {
 public:
-	EvaSoundResource();
+	EvaSoundResource(const QString& soundRoot);
 	~EvaSoundResource(){}
 	//const bool loadSound(){ return false; }
 	void playNewMessage();
@@ -130,33 +133,37 @@ class EvaGlobal
 public:
 	EvaGlobal();
 	virtual ~EvaGlobal();
+ 
+        static EvaGlobal* getInstance() { return instance; }
+        static QString getDirPath();
 	
-	static QString &getDirPath();
-	 bool loadImage();
+//X 	 bool loadImage();
         //const bool loadFace();
 	//const bool loadSound();
 	 bool loadEvaSetting();
 	
-	EvaImageResource *getImageResource() { return imgResource;}
-	EvaSoundResource *getSoundResource() { return sndResource;}
-	EvaSetting *getEvaSetting() { return system; }
-	EvaServers *getEvaServers() { return servers; }
+         EvaSetting *getEvaSetting() { return system; }
+         EvaServers *getEvaServers() { return servers; }
+
+         const QSize getFaceSize() const;
+         void setFaceSize( const QSize& size);
 	
-	const QSize &getFaceSize() const;
-	void setFaceSize( const QSize size);
+//X  	EvaImageResource *getImageResource() { return imgResource;}
+	EvaSoundResource *getSoundResource() { return sndResource;}
 private:
 	void initialize();
 	void initImage();
 	void initSound();
 	void initEvaSetting();
 	void initServers();
+ 
+        static EvaGlobal* instance;
 	
-	static QString dirPath;
+	QString dirPath;
 	EvaSetting *system;
 	EvaServers *servers;
-	EvaImageResource *imgResource;
+//X 	EvaImageResource *imgResource;
 	EvaSoundResource *sndResource;
-	QSize faceSize;
 };
 
 #endif

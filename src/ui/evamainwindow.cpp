@@ -74,10 +74,9 @@
 //X 	tip(r, ((EvaMainWindow *)parentWidget())->myInfoTip());
 //X }
 
-EvaMainWindow::EvaMainWindow(EvaMain* evaapp, QWidget* parent, const char* name, Qt::WFlags fl )
+EvaMainWindow::EvaMainWindow(QWidget* parent, const char* name, Qt::WFlags fl )
 //X 	: DCOPObject("View")
         : EvaMainUIBase(parent, name, fl)
-        , g_eva( evaapp )
 	, sysMenu(NULL), statusMenu(NULL)
 	, pixOnline(NULL), pixOffline(NULL), pixLeave(NULL), pixInvisible(NULL)
 {
@@ -248,6 +247,45 @@ void EvaMainWindow::clearList()
 	if(m_buddyLv) m_buddyLv->clear();
 	if(m_qunLv) m_qunLv->clear();
 	if(m_recentLv) m_recentLv->clear();
+}
+
+void EvaMainWindow::friendStatusChanged( unsigned int id )
+{
+	const QQFriend *frd = (EvaMain::session->getUser()->getFriendList()).getFriend(id);
+	if(frd){
+		switch(frd->getStatus()){
+		case QQ_FRIEND_STATUS_ONLINE:
+			changeToOnline(id);
+//X 			if(settings->isShowBudyOnlineNotifyEnabled()){
+//X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am online." ) );
+//X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
+//X 									id, frd->getFace(), i18n("I am online."));
+//X 				connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 				tip->show();
+//X 				if(settings->isSoundEnabled())
+//X 					global->getSoundResource()->playOnlineSound();
+//X 			}
+			break;
+		case QQ_FRIEND_STATUS_OFFLINE:
+			changeToOffline(id);
+			break;
+		case QQ_FRIEND_STATUS_LEAVE:
+			changeToLeave(id);
+//X 			if(EvaMain::settings->isShowBudyOnlineNotifyEnabled()){
+//X                                 tray->showMessageTip( id, codec->toUnicode(frd->getNick().c_str()), i18n( "I am busy ..." ) );
+//X 				EvaTipWindow *tip = new EvaTipWindow(images, codec->toUnicode(frd->getNick().c_str()), 
+//X 									id, frd->getFace(), i18n("I am busy ..."));
+//X 				connect(tip, SIGNAL(requestChat(const unsigned int)), SLOT(slotRequestChat(const unsigned int)));
+//X 				tip->show();
+//X 			}
+			break;
+		case QQ_FRIEND_STATUS_INVISIBLE:
+			changeToInvisible(id);
+			break;
+		}
+	}else{
+		printf("buddy %d not in list\n", id);
+	}
 }
 
 void EvaMainWindow::changeToOnline(unsigned int id)

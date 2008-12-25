@@ -24,7 +24,6 @@
 #include <qfile.h>
 #include <qtextcodec.h>
 #include <Q3TextStream>
-#include "evaguimain.h"
 
 //X #include <klocale.h>
 

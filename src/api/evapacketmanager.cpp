@@ -23,7 +23,6 @@
 #include "evaconnecter.h"
 #include "evaloginmanager.h"
 #include "evacontactmanager.h"
-#include "evaguimain.h"
 #include "evaapi.h"
 #include <QApplication>
 #include <qdatetime.h>
@@ -81,13 +80,13 @@ void EvaPacketManager::newPacketSlot()
 void EvaPacketManager::networkExceptionSlot(int exp)
 {
 	printf("network exception: %d\n", exp);
-	emit networkException(exp);
+	emit error( E_NETWORK_EXCEPTION );
 }
 
 void EvaPacketManager::packetExceptionSlot(int cmd)
 {
 	printf("packet exception: (cmd)0x%4x\n",cmd);
-	emit packetException(cmd);
+        emit error( E_PACKET_EXCEPTION );
 }
 
 void EvaPacketManager::timerSlot()
@@ -154,7 +153,6 @@ void EvaPacketManager::parsePacket(InPacket *packet)
 		processGetFriendListReply(packet);
 		break;
 	case QQ_CMD_GET_FRIEND_ONLINE:
-		//printf("online-friend list\n");
 		processGetOnlineFriendReply(packet);
 		break;
 	case QQ_CMD_SEND_IM:
@@ -166,7 +164,7 @@ void EvaPacketManager::parsePacket(InPacket *packet)
 		processReceiveIM(packet);
 		break;
 	case QQ_CMD_RECV_MSG_FRIEND_CHANGE_STATUS:
-		printf("friend change status\n");
+//X 		printf("friend change status\n");
 		processFriendChangeStatus(packet);
 		break;
 	case QQ_CMD_GROUP_NAME_OP:
@@ -304,8 +302,8 @@ void EvaPacketManager::processRequestLoginTokenReply(const InPacket *in)
 	bool isWrong = packet->parse();
 	delete packet;
 	if(!isWrong){
-		emit serverBusy();
-		return;
+            emit error( E_SERVER_BUSY );
+            return;
 	}
 	//session->session->getLoginManager()()->finishedCommand(QQ_CMD_REQUEST_LOGIN_TOKEN);
 	// here, we've got login token, therefore, try to log in
@@ -314,90 +312,91 @@ void EvaPacketManager::processRequestLoginTokenReply(const InPacket *in)
 
 void EvaPacketManager::processLoginReply(const InPacket *in)
 {
-	// if client key is set, the session has logged in.
-	if(Packet::isClientKeySet()) 
-		return;
-	//if(session->session->getLoginManager()()->isCommandFinished(QQ_CMD_LOGIN))
-	//	return;
+    loginManager = session->getLoginManager();
+    // if client key is set, the session has logged in.
+    if(Packet::isClientKeySet()) 
+        return;
+    //if(session->session->getLoginManager()()->isCommandFinished(QQ_CMD_LOGIN))
+    //	return;
 
-	LoginReplyPacket *packet = new LoginReplyPacket();
-	packet->setInPacket(in);
-	if(!packet->parse()) { 
-		printf("parse error\n"); 
-		delete packet;
-		//emit serverBusy(); // if parse error, we just emit a serverBusy signal so that we can have another try
-		return;
-	}
-	switch(packet->getReplyCode())
-	{
-	case QQ_LOGIN_REPLY_OK:
-		{
-//X 		kdDebug() << "[EvaPacketManager] session \"" << session->getQQ()
-//X 				<< "\" logged in from "
-//X 				<< QHostAddress(packet->getMyIP()).toString()
-//X 				<< ":" << packet->getMyPort()<< endl;
- 		printf("EvaPacketManager::processLoginReply -- \n");
-// 		for(int i=0; i<packet->getLength(); i++){
-// 			if(!(i%8)) printf("\n%d: ",i);
-// 			char t = packet->getBody()[i];
-// 			printf("%02x ", (uint8_t)t);
-// 		}
-// 		printf("\n----====== Login Successfully ======----\n\n");
-		session->setLoginWanIp(packet->getMyIP());
-		session->setLoginWanPort(packet->getMyPort());
-		session->setLastLoginIp(packet->getLastLoginIP());
-		session->setLastLoginTime(packet->getLastLoginTime());
-		session->setLoginLanIp(connecter->getSocketIp().toIPv4Address());
-		session->setLoginLanPort(connecter->getSocketPort());
-		
-		//session->session->getLoginManager()()->finishedCommand(QQ_CMD_LOGIN);
-		///connecter->append(new ChangeStatusPacket(EvaSession::getStatusCode(session->getStatus())));
-		///connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_FILE_AGENT_KEY));
-		//connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_UNKNOWN_KEY));
-//X 			connecter->append(new GetOnlineFriendsPacket());
+    LoginReplyPacket *packet = new LoginReplyPacket();
+    packet->setInPacket(in);
+    if(!packet->parse()) { 
+        printf("parse error\n"); 
+        delete packet;
+        //emit serverBusy(); // if parse error, we just emit a serverBusy signal so that we can have another try
+        return;
+    }
+    switch(packet->getReplyCode())
+    {
+        case QQ_LOGIN_REPLY_OK:
+            {
+                //X 		kdDebug() << "[EvaPacketManager] session \"" << session->getQQ()
+                //X 				<< "\" logged in from "
+                //X 				<< QHostAddress(packet->getMyIP()).toString()
+                //X 				<< ":" << packet->getMyPort()<< endl;
+                printf("EvaPacketManager::processLoginReply -- \n");
+                // 		for(int i=0; i<packet->getLength(); i++){
+                // 			if(!(i%8)) printf("\n%d: ",i);
+                // 			char t = packet->getBody()[i];
+                // 			printf("%02x ", (uint8_t)t);
+                // 		}
+                // 		printf("\n----====== Login Successfully ======----\n\n");
+                loginManager->setLoginWanIp(packet->getMyIP());
+                loginManager->setLoginWanPort(packet->getMyPort());
+                loginManager->setLastLoginIp(packet->getLastLoginIP());
+                loginManager->setLastLoginTime(packet->getLastLoginTime());
+                loginManager->setLoginLanIp(connecter->getSocketIp().toIPv4Address());
+                loginManager->setLoginLanPort(connecter->getSocketPort());
+
+                //session->session->getLoginManager()()->finishedCommand(QQ_CMD_LOGIN);
+                ///connecter->append(new ChangeStatusPacket(EvaSession::getStatusCode(session->getStatus())));
+                ///connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_FILE_AGENT_KEY));
+                //connecter->append(new EvaRequestKeyPacket(QQ_REQUEST_UNKNOWN_KEY));
+                //X 			connecter->append(new GetOnlineFriendsPacket());
                 doGetOnlineFriends();
-		if(!timer->isActive()){
-			timer->start(60000, false);
-		}else
-			printf("impossible! \n");
-		//emit loginOK();
+                if(!timer->isActive()){
+                    timer->start(60000, false);
+                }else
+                    printf("impossible! \n");
+                //emit loginOK();
                 session->getLoginManager()->loginOK();
-		}
-		break;
-	case QQ_LOGIN_REPLY_REDIRECT:
-	case QQ_LOGIN_REPLY_REDIRECT_EX:
-		printf("EVA redirect to: %8x, %d\n", packet->getRedirectedIP(), packet->getRedirectedPort());
-		if(packet->getRedirectedIP() == 0) {
-			emit serverBusy();
-		}else{
-			//ServerDetectorPacket::nextStep();
-			//ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
-			//redirectTo(packet->getRedirectedIP(),packet->getRedirectedPort());
-			session->getLoginManager()->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
-								   packet->getRedirectedIP(),
-								   packet->getRedirectedPort());
-// 			emit loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
-// 								   packet->getRedirectedIP(),
-// 								   packet->getRedirectedPort());
-		}
-		break;
-	case QQ_LOGIN_REPLY_PWD_ERROR:
-	case QQ_LOGIN_REPLY_NEED_REACTIVATE:
-		printf("something wrong:%s\n",codec->toUnicode(packet->getReplyMessage().c_str()).local8Bit().data());
-		session->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
-		//emit wrongPassword(codec->toUnicode(packet->getReplyMessage().c_str()));
-		break;
-	case QQ_LOGIN_REPLY_PWD_ERROR_EX:
-		session->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
-		break;
-	case QQ_LOGIN_REPLY_MISC_ERROR:
-		printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
-		emit serverBusy();
-		break;
+            }
+            break;
+        case QQ_LOGIN_REPLY_REDIRECT:
+        case QQ_LOGIN_REPLY_REDIRECT_EX:
+            printf("EVA redirect to: %8x, %d\n", packet->getRedirectedIP(), packet->getRedirectedPort());
+            if(packet->getRedirectedIP() == 0) {
+                emit error( E_SERVER_BUSY );
+            }else{
+                //ServerDetectorPacket::nextStep();
+                //ServerDetectorPacket::setFromIP(connecter->getHostAddress().toIPv4Address());
+                //redirectTo(packet->getRedirectedIP(),packet->getRedirectedPort());
+                session->getLoginManager()->loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
+                        packet->getRedirectedIP(),
+                        packet->getRedirectedPort());
+                // 			emit loginNeedRedirect(connecter->getHostAddress().toIPv4Address(), 
+                // 								   packet->getRedirectedIP(),
+                // 								   packet->getRedirectedPort());
+            }
+            break;
+        case QQ_LOGIN_REPLY_PWD_ERROR:
+        case QQ_LOGIN_REPLY_NEED_REACTIVATE:
+            printf("something wrong:%s\n",codec->toUnicode(packet->getReplyMessage().c_str()).local8Bit().data());
+            session->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+            //emit wrongPassword(codec->toUnicode(packet->getReplyMessage().c_str()));
+            break;
+        case QQ_LOGIN_REPLY_PWD_ERROR_EX:
+            session->getLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+            break;
+        case QQ_LOGIN_REPLY_MISC_ERROR:
+            printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
+            emit error( E_SERVER_BUSY );
+            break;
         default:
-                printf("unknown reply code\n");
-	}
-	delete packet;
+            printf("unknown reply code\n");
+    }
+    delete packet;
 }
 
 void EvaPacketManager::doRequestFileAgentKey()
@@ -421,7 +420,7 @@ void EvaPacketManager::doLogout( )
 	
 	longMsgPacketQueue.clear();
 	Packet::clearAllKeys();
-	emit logoutOK();
+//X 	emit logoutOK();
 }
 
 void EvaPacketManager::doGetUserInfo( const unsigned int id )
@@ -469,7 +468,6 @@ void EvaPacketManager::doChangeStatus( UserStatus newStatus )
 
 void EvaPacketManager::processChangeStatusReply( const InPacket * in )
 {
-    printf( "processChangeStatusReplay() packet len = %d\n", in->getLength( ) );
 	ChangeStatusReplyPacket *packet = new ChangeStatusReplyPacket();
 	packet->setInPacket(in);
 	if(!packet->parse()){
@@ -480,27 +478,24 @@ void EvaPacketManager::processChangeStatusReply( const InPacket * in )
 		//session->session->getLoginManager()()->finishedCommand(QQ_CMD_CHANGE_STATUS);    // so we simply emit a offline signal
 		switch(session->getStatus()){
 		case Eva_Online:
-			emit onlineReady();
 			break;
 		case Eva_Offline:
 			if(timer->isActive())
 				timer->stop();
 			connecter->stop();
 			Packet::clearAllKeys();
-			emit offlineReady();
 			break;	
 		case Eva_Invisible:
-			emit invisibleReady();
 			break;
 		case Eva_Leave:
-			emit leaveReady();
 			break; 
 		}
+                emit statusChanged( session->getStatus( ) );
 	}else{
 		if(timer->isActive())
 			timer->stop();
 		connecter->stop();
-		emit offlineReady();    // if we meet any problem, just emit offline signal
+                emit statusChanged( Eva_Offline );
 	}
 	delete packet;
 }
@@ -662,7 +657,6 @@ void EvaPacketManager::processKeepAliveReply( const InPacket * in )
 
 void EvaPacketManager::processGetOnlineFriendReply( const InPacket * in )
 {
-        printf( "EvaPacketManager::processGetOnlineFriendListReply \n" );
 	GetOnlineFriendReplyPacket *packet = new GetOnlineFriendReplyPacket();
 	packet->setInPacket(in);
 	if(!packet->parse()){
@@ -673,11 +667,16 @@ void EvaPacketManager::processGetOnlineFriendReply( const InPacket * in )
 	onlineList::iterator iter;
 	for(iter = list.begin(); iter!=list.end(); ++iter){
 		user->getFriendList().addOnlineFriendEntryTo(iter->getQQ(), *iter);
+                emit friendStatusChanged( iter->getQQ() );
 	}
 	if(packet->getPosition() != QQ_FRIEND_ONLINE_LIST_POSITION_END){
 		connecter->append(new GetOnlineFriendsPacket(packet->getPosition()));
-	} else
-		emit friendListReady();
+	} 
+
+//X 	if(packet->getPosition() != QQ_FRIEND_ONLINE_LIST_POSITION_END){
+//X 		connecter->append(new GetOnlineFriendsPacket(packet->getPosition()));
+//X 	} else
+//X 		emit friendListReady();
 	delete packet;
 }
 
@@ -980,7 +979,8 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 			if(timer->isActive())
 				timer->stop();
 			connecter->stop();
-			emit kickedOut(codec->toUnicode(sys->getMessage().c_str()));
+                        emit error( E_KICKED_OUT );
+//X 			emit kickedOut(codec->toUnicode(sys->getMessage().c_str()));
 			break;
 		default:
 			printf("Got a system msg: %s\n", sys->getMessage().c_str());
@@ -1073,7 +1073,8 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 		user->getSetting()->saveMessage(qunId,  sender, sNick, session->getQQ(), rNick,
 					true, msg, time, fontSize, u, i, b, blue, green, red, true);
 		QString qunName = qun ? (codec->toUnicode(qun->getDetails().getName().c_str())) : ("Not In List");
-		printf("Qun -- %s--%s(%d) : %s\n", qunName.local8Bit().data(), sNick.local8Bit().data(), sender, msg.local8Bit().data());
+//X 		printf("Qun -- %s--%s(%d) : %s\n", qunName.local8Bit().data(), sNick.local8Bit().data(), sender, msg.local8Bit().data());
+		printf("Qun -- %s--%s(%d) \n", qunName.local8Bit().data(), sNick.local8Bit().data(), sender);
 		if(qun->getMessageType() != Qun::RecordOnly)
 			emit qunTxtMessage(qunId, sender, msg, time, fontSize, u, i, b, blue, green, red);
 
@@ -1434,7 +1435,6 @@ void EvaPacketManager::processModifyInfoReply(const InPacket *in)
 	if(packet->isAccepted()){
 		user->setDetails(changingDetails);
 		//emit myInfoReady();
-		QApplication::postEvent(EvaMain::getInstance(), new EvaNotifyEvent(E_MyInfo));
 		emit modifyInfo(true);
 	}else
 		emit modifyInfo(false);
@@ -2182,7 +2182,7 @@ void EvaPacketManager::doSendFileUdpRequest(const unsigned int id, const QString
 	udpPacket->setFileName(strName.data());
 	udpPacket->setFileSize(fileSize);
 	udpPacket->setSessionId(sessionId);
-	udpPacket->setWanIp(session->getLoginWanIp());
+	udpPacket->setWanIp(session->getLoginManager()->getLoginWanIp());
 	connecter->append(udpPacket);
 	printf("EvaPacketManager::doSendFileUdpRequest - Sent.\n");
 }
@@ -2307,23 +2307,26 @@ void EvaPacketManager::slotClientNotReady( )
 
 void EvaPacketManager::doRequestLoginTokenEx(  const QString &code )
 {
-	if(!session->isLoginNeedVerify()){
+    loginManager = session->getLoginManager();
+
+	if(!loginManager->isLoginNeedVerify()){
 		// as QQ does send it 3 times, so do we
 		connecter->append(new RequestLoginTokenExPacket());
 		connecter->append(new RequestLoginTokenExPacket());
 		connecter->append(new RequestLoginTokenExPacket());
 	} else {
 		RequestLoginTokenExPacket *packet = new RequestLoginTokenExPacket(QQ_LOGIN_TOKEN_VERIFY);
-		GraphicVerifyCode gcode = session->getLoginVerifyInfo();
+		GraphicVerifyCode gcode = loginManager->getLoginVerifyInfo();
 		packet->setToken(gcode.m_SessionToken, gcode.m_SessionTokenLen);
 		packet->setCode(codec->fromUnicode(code).data());
 		connecter->append( packet);
-		session->clearAllVerifyCodes(); // remove all codes here.
+		loginManager->clearAllVerifyCodes(); // remove all codes here.
 	}
 }
 
 void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 {
+    loginManager = session->getLoginManager();
 	if(Packet::isLoginTokenSet()) return;
 	RequestLoginTokenExReplyPacket *packet = new RequestLoginTokenExReplyPacket();
 	packet->setInPacket(in);
@@ -2339,8 +2342,8 @@ void EvaPacketManager::processRequestLoginTokenExReply( const InPacket * in )
 			GraphicVerifyCode code;
 			code.setSessionToken(packet->getToken(), packet->getTokenLength());
 			code.setData(packet->getData(), packet->getDataLength());
-			session->addLoginVerifyInfo( code);
-			if( session->getNumVerifyCodes()==1 ){
+			loginManager->addLoginVerifyInfo( code);
+			if( loginManager->getNumVerifyCodes()==1 ){
 				session->getLoginManager()->loginVerification();
 				//emit loginNeedVerification();
 			}
@@ -2560,9 +2563,6 @@ void EvaPacketManager::processWeatherOpReply( const InPacket * in )
 
 void EvaPacketManager::slotConnectReady( )
 {
-	EvaNotifyEvent *event = new EvaNotifyEvent(E_SvrConnected);
-	QApplication::postEvent(EvaMain::getInstance(), event);
-
 //X 	kdDebug() << "[QQ: " << session->getQQ() << "] start logging in server \"" 
 //X 				<< connecter->getHostAddress().toString()  << "\" ..." << endl;
 	doLogin();

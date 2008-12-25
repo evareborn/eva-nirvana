@@ -33,45 +33,35 @@
 #include "evaconnecter.h"
 #include "evaloginveriwindow.h"
 #include <QApplication>
-//X #include <kapplication.h>
-//X #include <kdebug.h>
 
-
-//X 
-//X EvaLoginManager *GetLoginManager()
-//X {
-//X 	static EvaLoginManager manager( g_eva );
-//X 	return &manager;
-//X }
-
-EvaLoginManager::EvaLoginManager(EvaSession* session, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager )
-        : session( session )  
+EvaLoginManager::EvaLoginManager(EvaUser* user, EvaConnecter* connecter, EvaContactManager* contactManager, EvaPacketManager* packetManager )
+        : user( user )  
         , connecter( connecter )
         , contactManager( contactManager )
 	, packetManager(packetManager)
 	, m_isLoggedIn(false)
 	, m_veriWin(NULL)
 {
-
-        QObject::connect( connecter, SIGNAL( isNetworkReady() ), SLOT( slotDoLogin() ) );
-        QObject::connect( packetManager, SIGNAL( fileAgentInfoReady() ), SLOT( fileAgentInfoReady() ) );
+    status = Eva_Offline;
+    QObject::connect( connecter, SIGNAL( isNetworkReady() ), SLOT( slotDoLogin() ) );
+    QObject::connect( packetManager, SIGNAL( fileAgentInfoReady() ), SLOT( fileAgentInfoReady() ) );
 }
-
-void EvaLoginManager::notifyEvent(const int eId, const QString &msg)
-{
-        printf( "EvaLoginManager::notifyEvent\n" );
-	EvaNotifyEvent *e = new EvaNotifyEvent(eId);
-	e->m_desc = msg;
-	
-//X 	QApplication::postEvent(g_eva, e);
-	QApplication::sendEvent(EvaMain::getInstance(), e);
-	QApplication::sendEvent(contactManager, e);
- 
-        if ( QApplication::hasPendingEvents() ) {
-            printf( "has pending events!\n" );
-        }
-
-}
+//X 
+//X void EvaLoginManager::emit loginProcessUpdate(const int eId, const QString &msg)
+//X {
+//X         printf( "EvaLoginManager::emit loginProcessUpdate\n" );
+//X 	EvaNotifyEvent *e = new EvaNotifyEvent(eId);
+//X 	e->m_desc = msg;
+//X 	
+//X //X 	QApplication::postEvent(g_eva, e);
+//X 	QApplication::sendEvent(EvaMain::getInstance(), e);
+//X 	QApplication::sendEvent(contactManager, e);
+//X  
+//X         if ( QApplication::hasPendingEvents() ) {
+//X             printf( "has pending events!\n" );
+//X         }
+//X 
+//X }
 
 void EvaLoginManager::setPacketManager( EvaPacketManager * pm )
 {
@@ -96,7 +86,7 @@ void EvaLoginManager::setPacketManager( EvaPacketManager * pm )
 void EvaLoginManager::serverBusy( )
 {
 	loginStatus = EStart;
-	notifyEvent(E_Err);	
+	emit loginProcessUpdate(E_Err);	
 }
 
 void EvaLoginManager::slotDoLogin()
@@ -228,20 +218,20 @@ void EvaLoginManager::loginOK( )
 {	
         printf( "login Ok!\n" );
 	loginStatus = ELogin;
-	notifyEvent(E_LoggedIn);
+	emit loginProcessUpdate(E_LoggedIn);
 	//We don't care about the reply of this command	
 //X 	packetManager->doChangeStatus(session->getStatus());
 
 //X         packetManager->doChangeStatus(status );
-	packetManager->doGetUserInfo(session->getQQ());
+	packetManager->doGetUserInfo(user->getQQ());
 
 }
 
-void EvaLoginManager::wrongPassword( QString msg )
+void EvaLoginManager::wrongPassword( QString /*msg*/ )
 {	
 	//KMessageBox::information(0, msg, i18n("Eva Login"));
 	loginStatus = EStart;
-	notifyEvent(E_PwWrong, msg);
+	emit loginProcessUpdate(E_PwWrong);
 	//TODO
 }
 
@@ -251,7 +241,7 @@ void EvaLoginManager::loginNeedRedirect(const unsigned int fromIp, const unsigne
 	ServerDetectorPacket::setFromIP(fromIp );
 	
 	loginStatus = EStart;
-	notifyEvent(E_SvrRedirect);
+	emit loginProcessUpdate(E_SvrRedirect);
 	packetManager->redirectTo( ip, port);
 	
 }
@@ -266,21 +256,122 @@ void EvaLoginManager::fileAgentInfoReady( )
 //X 		loginStatus = EFileAgentKey;
 //X 		m_isLoggedIn = true;
 //X             contactManager->fetchContacts();
-//X 		notifyEvent(E_KeyFileAgent);
+//X 		emit loginProcessUpdate(E_KeyFileAgent);
 //X 	}
 }
 
 void EvaLoginManager::myInfoReady( const ContactInfo info)
 {
 	loginStatus = EUserInfo;
-	EvaUser *user = session->getUser();
 	if(user)
 		user->setDetails(info);
-//X 	notifyEvent(E_MyInfo);
+//X 	emit loginProcessUpdate(E_MyInfo);
         m_isLoggedIn = true;
-        notifyEvent(E_LoginFinished);
+        emit loginProcessUpdate(E_LoginFinished);
         contactManager->fetchContacts();
         packetManager->doGetOnlineFriends();
 //X 	packetManager->doRequestFileAgentKey();
+}
+
+void EvaLoginManager::setLoginWanIp(const unsigned int ip)
+{ 
+    loginIp = ip;
+}
+void EvaLoginManager::setLoginWanPort(const unsigned short port)
+{ 
+    loginPort = port;
+}
+
+void EvaLoginManager::setLoginLanIp(const unsigned int ip) 
+{ 
+    lanIp = ip;
+}
+ 
+void EvaLoginManager::setLoginLanPort(const unsigned short port)
+{ 
+    lanPort = port;
+}
+
+void EvaLoginManager::setLastLoginIp(const unsigned int ip)
+{ 
+    lastLoginIp = ip;
+}
+
+void EvaLoginManager::setLastLoginTime(const unsigned int time)
+{ 
+    lastLoginTime = time;
+}
+
+unsigned int EvaLoginManager::getLoginWanIp() const
+{ 
+    return loginIp;
+}
+
+unsigned short EvaLoginManager::getLoginWanPort() const
+{ 
+    return loginPort;
+}
+
+unsigned int EvaLoginManager::getLoginLanIp() const
+{ 
+    return lanIp;
+}
+
+unsigned short EvaLoginManager::getLoginLanPort() const
+{ 
+    return lanPort;
+}
+
+unsigned int EvaLoginManager::getLastLoginIp() const
+{ 
+    return lastLoginIp;
+}
+
+unsigned int EvaLoginManager::getLastLoginTime() const
+{ 
+    return lastLoginTime;
+}
+void EvaLoginManager::addLoginVerifyInfo( const GraphicVerifyCode & info )
+{
+	codeList.push_back(info);
+}
+
+GraphicVerifyCode EvaLoginManager::getLoginVerifyInfo( )
+{
+	GraphicVerifyCode code;
+	if(codeList.empty()) return code;
+	return codeList.front();
+}
+
+
+GraphicVerifyCode EvaLoginManager::getNextLoginVerifyInfo( )
+{
+	GraphicVerifyCode code;
+	if(codeList.empty()) return code;
+	code = codeList.front();
+	codeList.pop_front();
+	return code;
+}
+ 
+bool EvaLoginManager::isLoggedIn() const
+{
+    return m_isLoggedIn;
+}
+
+void EvaLoginManager::clearAllVerifyCodes( )
+{
+	if(codeList.size())
+		codeList.clear();
+}
+
+
+int EvaLoginManager::getNumVerifyCodes() const
+{ 
+    return codeList.size();
+}
+
+bool EvaLoginManager::isLoginNeedVerify() const
+{ 
+    return (codeList.size() != 0);
 }
 

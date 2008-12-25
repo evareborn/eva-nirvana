@@ -498,7 +498,7 @@ void EvaChatWindowManager::slotQunMemberInfoReady( const unsigned int id)
 }
 
 // if Qun is not in user's list, just close the chat window
-void EvaChatWindowManager::slotQunListUpdated()
+void EvaChatWindowManager::slotQunListChanged()
 {
 	int id = 0;
 	EvaQunChatWindow *win = 0;

@@ -32,7 +32,6 @@
 //X #include <kdebug.h>
 //X #include <kconfig.h>
 
-#include "evaguimain.h"
 #include "evauser.h"
 #include "evausersetting.h"
 

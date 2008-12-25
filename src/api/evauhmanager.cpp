@@ -710,9 +710,9 @@ void EvaUHManager::processBuddyFileReply()
 					mCurrentFile->save(mUHDir);
 					mProfileManager->fileFinished(packet->getQQ());
 					mProfileManager->saveProfile();
-					
-					QImage imgOn  = QImage(getFileName(packet->getQQ())).smoothScale(EvaMain::global->getFaceSize());
-					QImage imgOff = QImage(getFileName(packet->getQQ(), true)).smoothScale(EvaMain::global->getFaceSize());
+
+					QImage imgOn  = QImage(getFileName(packet->getQQ())).smoothScale(EvaMain::images->getFaceSize());
+					QImage imgOff = QImage(getFileName(packet->getQQ(), true)).smoothScale(EvaMain::images->getFaceSize());
 					imageOnList[packet->getQQ()]  = imgOn;
 					imageOffList[packet->getQQ()] = imgOff;
 					EvaUHReadyEvent *event = new EvaUHReadyEvent();

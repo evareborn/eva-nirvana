@@ -18,7 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "evaguimain.h"
 #include "evaconnecter.h"
 #include "evaresource.h"
 #include "evanetwork.h"
@@ -82,7 +81,7 @@ EvaConnecter::~EvaConnecter()
 
 void EvaConnecter::fetchQQServer()
 {
-	EvaServers *server = EvaMain::global->getEvaServers();
+	EvaServers *server = EvaGlobal::getInstance()->getEvaServers();
 //X         slotGotServer( server->getDefaultAddress( ) );
 //X 	QObject::disconnect(server, 0, 0, 0);
 	QObject::connect(server, SIGNAL(isReady(QHostAddress)), this, SLOT(slotGotServer(QHostAddress)));
@@ -94,7 +93,7 @@ void EvaConnecter::slotGotServer(QHostAddress addr)
     printf( "server ip: %s\n", addr.toString().latin1() );
     printf( "type: %d\n", policy.getConnectionType( ) );
     if ( network ) return;
-    EvaMain::global->getEvaServers()->stopDns();
+    EvaGlobal::getInstance()->getEvaServers()->stopDns();
 
     switch(policy.getConnectionType()){
         case CONN_UDP:
