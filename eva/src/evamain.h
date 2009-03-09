@@ -333,6 +333,7 @@ private slots:
 	void slotUpdateQunMessageSettings(const unsigned int id, const signed char type);
 	
 	void slotUserSettingChanged();
+	void slotFaceSizeChanged();
 	void slotUpdateShortcut();
 	void slotShotcutKeyPressed();
 	

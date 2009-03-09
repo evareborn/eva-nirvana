@@ -387,6 +387,7 @@ void EvaPacketManager::processLoginReply(const InPacket *in)
 		break;
 	case QQ_LOGIN_REPLY_PWD_ERROR_EX:
 		GetLoginManager()->wrongPassword( codec->toUnicode(packet->getReplyMessage().c_str()));
+		break;
 	case QQ_LOGIN_REPLY_MISC_ERROR:
 		printf("some unknown error:%s\nhaving another try ...\n",packet->getReplyMessage().c_str());
 		emit serverBusy();
@@ -499,6 +500,11 @@ void EvaPacketManager::processChangeStatusReply( const InPacket * in )
 		emit offlineReady();    // if we meet any problem, just emit offline signal
 	}
 	delete packet;
+}
+
+void EvaPacketManager::doGetOnlineFriends()
+{
+	connecter->append(new GetOnlineFriendsPacket());
 }
 
 void EvaPacketManager::doGetAllFriends( )
@@ -666,7 +672,8 @@ void EvaPacketManager::processGetOnlineFriendReply( const InPacket * in )
 	}
 	if(packet->getPosition() != QQ_FRIEND_ONLINE_LIST_POSITION_END){
 		connecter->append(new GetOnlineFriendsPacket(packet->getPosition()));
-	}
+	} else
+		emit friendListReady();
 	delete packet;
 }
 
@@ -686,8 +693,8 @@ void EvaPacketManager::processFriendChangeStatus( const InPacket * in )
 	
 	if( frd && (frd->getStatus() != packet->getStatus()) ){
 		user->getFriendList().updateFriendStatus(packet->getQQ(), packet->getStatus());
+		emit friendStatusChanged(packet->getQQ());
 	}
-	emit friendStatusChanged(packet->getQQ());
 	delete packet;
 }
 
@@ -814,7 +821,7 @@ void EvaPacketManager::processReceiveIM( const InPacket * in )
 			QString rNick = codec->toUnicode(user->getDetails().at(ContactInfo::Info_nick).c_str());
 			user->getSetting()->saveMessage(sender, sender, sNick, user->getQQ(), rNick, 
 						isNormal, msg, time, fontSize, u, i, b, blue, green, red);
-			printf("From Buddy -- %s (%d)  : %s\n", sNick.local8Bit().data(), sender, msg.local8Bit().data());
+			printf("From Buddy -- %s (%d): <BEGIN>%s<END>\n", sNick.local8Bit().data(), sender, msg.local8Bit().data());
 			emit txtMessage(sender, isNormal, msg, time, fontSize, 
 					u, i, b, blue, green, red);
 			delete received;

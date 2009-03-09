@@ -24,11 +24,14 @@
 #include <qregexp.h>
 #include <qfile.h>
 #include <qpixmap.h>
+#include <cstring>
+//#include <stdio.h>
 
 unsigned int EvaHtmlParser::tmpNum = 0;
 
 std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn, bool isAbsImgPath, bool useRealFileName)
 {
+	//printf("EvaHtmlParser::convertToHtml before:%s\n", txt.latin1() );
 	// FIXME  by this way, some html code may not be displayed properly
 	txt.replace("&amp;", "&amp;amp;");
 	txt.replace("&lt;", "&lt;lt;");
@@ -91,7 +94,9 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 				"|dog|xg|\\$|qianc|\\(\\!\\)|dp|cup|bei|music|yy|pill|yw|kiss|wen|metting|hy|phone|dh|time|sj"
 				"|email|yj|tv|ds|<D>|dd|<J>|mn|<H>|hl|<M>|mamao|<QQ>|qz|<B>|bj|<U>|qsh|<\\!\\!>|xy"
 				"|<~>|duoy|<Z>|xr|<\\*>|xixing|<00>|nv|<11>|nan)");
+
 	QRegExp rx4("(http|ftp)://[a-z0-9._%-]+\\.[a-z0-9._%\\-]+\\.[a-z0-9]{1,4}[a-z0-9._%\\-/\\?=~&#]*");
+//	QRegExp rx4("(http|ftp)://([a-z0-9._%-]+\\.)+[a-z0-9]{1,4}[a-z0-9._%\\-/\\?=~&#;,\\[\\]\\$\\+:]*");
 		rx4.setCaseSensitive(false);
 	int pos=0;
 	int pos1=0;
@@ -152,6 +157,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 			}
 		}
 	}
+	//printf("EvaHtmlParser::convertToHtml stage 1:%s\n", txt.latin1() );
 	std::list< CustomizedPic > picList = convertCustomizedPictures(txt, useRealFileName);
 	if(isURLOn){
 		QString email;
@@ -186,6 +192,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 				}
 			}
 	}
+	//printf("EvaHtmlParser::convertToHtml stage 2:%s\n", txt.latin1() );
 	bool isIgnore = false;
 	for(pos = 0; pos < (int)txt.length(); pos ++ ){
 		QChar ch = txt.at(pos);//printf("ch(%d): %c\t", pos,  ch.latin1());
@@ -206,6 +213,7 @@ std::list<CustomizedPic> EvaHtmlParser::convertToHtml(QString &txt, bool isURLOn
 			pos+= (QString("&nbsp;&nbsp;&nbsp;&nbsp;").length() - 1);
 		}
 	}
+	//printf("EvaHtmlParser::convertToHtml after:%s\n", txt.latin1() );
 	return picList;
 }
 
@@ -431,7 +439,8 @@ QString EvaHtmlParser::processPic36( const QString &src, CustomizedPic * args )
 	
 	// start getting session key,  it's 4 bytes long but represented in ascii expression of hex with 8 bytes long
 	bool ok;
-	Q_UINT16 sessionLen = contents.mid(pos, 2).toInt(&ok, 16) - 16 - 2; // we have to minus 2, because we need get rid ot these 2 bytes. 16 is ip(8 bytes) & port(8 bytes)
+	//Q_UINT16 sessionLen = contents.mid(pos, 2).toInt(&ok, 16) - 16 - 2; // we have to minus 2, because we need get rid ot these 2 bytes. 16 is ip(8 bytes) & port(8 bytes)
+	contents.mid(pos, 2).toInt(&ok, 16); // we have to minus 2, because we need get rid ot these 2 bytes. 16 is ip(8 bytes) & port(8 bytes)
 	pos+=2;
 	if(!ok){
 		args->type = 0;
@@ -630,7 +639,8 @@ void EvaHtmlParser::parseToAbsPath( QString & html, const QString absPath )
 	QRegExp rx1("\\d\\d?\\d?");
 	QRegExp picRx("<img src=[a-zA-Z0-9_/\\.\\s\\-\\{\\}\\[\\]\\(\\)]+\\.(jpg|JPG|gif|GIF|bmp|BMP|jpeg|JPEG) >");
 	QRegExp picRx1("[a-zA-Z0-9_\\.\\s\\-\\{\\}\\[\\]\\(\\)]+\\.(jpg|JPG|gif|GIF|bmp|BMP|jpeg|JPEG)");
-	int pos=0, len = 0, fileIndex = 0;
+	//int pos=0, len = 0, fileIndex = 0;
+	int pos=0, len = 0;
 	QString imgTxt, strFile, smiley;
 	
 	while(pos>=0){

@@ -19,13 +19,15 @@
  ***************************************************************************/
  
 #include "evaextrainfo.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #ifdef _WIN32
 #include <winsock.h>
 #else
 #include <arpa/inet.h>
 #endif
-#include <byteswap.h>
+#include <cstring>
 
 RequestExtraInfoPacket::RequestExtraInfoPacket()
 	: OutPacket(QQ_CMD_REQUEST_EXTRA_INFORMATION, true), 

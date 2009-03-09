@@ -27,6 +27,7 @@
 #endif
 #include <string.h>
 #include <stdio.h>
+#include <cstring>
 
 unsigned short EvaUHPacket::seq_random    = 0;
 unsigned short EvaUHPacket::seq_info      = 0;

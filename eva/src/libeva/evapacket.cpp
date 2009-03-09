@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "evacrypt.h"
+#include <cstring>
 
 unsigned char Packet::iniKey[16] = {
 			0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,

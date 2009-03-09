@@ -23,12 +23,16 @@
  #include "evaaddfriendex.h"
  #include "evautil.h"
  #include "evadefines.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #ifdef _WIN32
 #include <winsock.h>
 #else
 #include <arpa/inet.h>
 #endif
- 
+#include <cstring> 
+
 EvaAddFriendExPacket::EvaAddFriendExPacket()
  	:OutPacket(),
 	m_AddQQNum(0)
@@ -292,7 +296,8 @@ EvaAddFriendGetAuthInfoPacket::EvaAddFriendGetAuthInfoPacket( )
 	:OutPacket(QQ_CMD_ADD_FRIEND_AUTH_INFO, true),
 	m_IsQun(false),
 	m_AddID(0),
-	m_Cmd(AUTH_INFO_CMD_INFO)
+	m_Cmd(AUTH_INFO_CMD_INFO),
+	m_SubCmd(AUTH_INFO_SUB_CMD_USER)
 {
 }
 
@@ -300,7 +305,8 @@ EvaAddFriendGetAuthInfoPacket::EvaAddFriendGetAuthInfoPacket( const unsigned int
 	:OutPacket(QQ_CMD_ADD_FRIEND_AUTH_INFO, true),
 	m_IsQun(isQun),
 	m_AddID(id),
-	m_Cmd(cmd)	
+	m_Cmd(cmd),
+	m_SubCmd(AUTH_INFO_SUB_CMD_USER)
 {
 }
 
@@ -322,6 +328,7 @@ EvaAddFriendGetAuthInfoPacket & EvaAddFriendGetAuthInfoPacket::operator =( const
 	m_Verification = rhs.getVerificationStr();
 	m_Session = rhs.getSessionStr();
 	m_IsQun = rhs.isQun();
+	m_SubCmd = rhs.getSubSubCommand();
 	return *this;
 }
 
@@ -334,9 +341,9 @@ int EvaAddFriendGetAuthInfoPacket::putBody( unsigned char * buf )
 	// unknown 2 bytes, always 0x00 0x01
 	buf[pos++] = 0x00;
 	if(m_IsQun){
-		buf[pos++] = 0x02;
+		buf[pos++] = AUTH_INFO_SUB_CMD_QUN;
 	} else {
-		buf[pos++] = 0x01;
+		buf[pos++] = m_SubCmd;
 	}
 
 	pos += EvaUtil::write32(buf+pos, m_AddID);
@@ -440,15 +447,11 @@ printf("\n\n");
 
 	offset++; // unknown 0x00
 
-	unsigned char tmp = decryptedBuf[offset++];
-	if(tmp == 0x01)
+	m_SubCmd = decryptedBuf[offset++];
+	if(m_SubCmd == AUTH_INFO_SUB_CMD_USER)
 		m_IsQun = false;
-	else if(tmp == 0x02)
+	else if(m_SubCmd == AUTH_INFO_SUB_CMD_QUN)
 			m_IsQun = true;
-		else{
-			fprintf(stderr, "[EvaAddFriendGetAuthInfoReplyPacket] parse error -- unknown message type(not for QQ, not for Qun):%2x\n", tmp);
-			return;
-		}
 
 	m_ReplyCode = decryptedBuf[offset++];
 	

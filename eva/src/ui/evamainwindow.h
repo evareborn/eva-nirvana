@@ -74,6 +74,7 @@ public:
 	void addBuddy(const unsigned int id);
 
 	void updateBuddy(const unsigned int id);
+	void updateMyInfo();
 
 	void addQun(const unsigned int id);
 	void updateQun(const unsigned int id);
@@ -117,6 +118,7 @@ public slots:
 
 	void addBuddyToRecentList(const unsigned int id, bool isMyWord = false);
 	void addQunToRecentList(const unsigned int id, bool isMyWord = false);
+	void slotFaceSizeChanged();
 	
 	void deleteBuddy(unsigned int id);
 	

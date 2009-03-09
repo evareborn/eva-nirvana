@@ -19,7 +19,9 @@
  ***************************************************************************/
 #ifndef EVA_RECEIVE_IM_PACKET_H
 #define EVA_RECEIVE_IM_PACKET_H
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "evapacket.h"
 #include <string>
 
@@ -464,6 +466,82 @@ private:
 	std::string m_Title;
 	std::string m_Brief;
 	std::string m_URL;
+	void parseData(const unsigned char *buf, const int len);
+};
+
+class ReceivedTempSessionTextIMPacket {
+public:
+	ReceivedTempSessionTextIMPacket(const unsigned char *buf, const int len);
+	ReceivedTempSessionTextIMPacket( const ReceivedTempSessionTextIMPacket &rhs);
+	~ReceivedTempSessionTextIMPacket() {};
+	ReceivedTempSessionTextIMPacket &operator=(const ReceivedTempSessionTextIMPacket &rhs);
+
+	const int getSender() const { return sender; }
+	const std::string getNick() const { return nick; }
+	const std::string getSite() const { return site; }
+	const int getTime() const { return time; }
+	const std::string getMessage() const { return message; }
+	const std::string getFontName() const { return fontname; }
+	const int getFontSize() const { return fontsize; }
+	const bool isBold() const { return bold; }
+	const bool isItalic() const { return italic; }
+	const bool isUnderline() const { return underline; }
+	const unsigned char getRed() const { return red; }
+	const unsigned char getGreen() const { return green; }
+	const unsigned char getBlue() const { return blue; }
+private:
+	int sender;
+	std::string nick;
+	std::string site;
+	int time;
+	std::string message;
+	std::string fontname;
+	int fontsize;
+	bool bold;
+	bool italic;
+	bool underline;
+	unsigned char red;
+	unsigned char green;
+	unsigned char blue;
+
+	void parseData(const unsigned char *buf, const int len);
+};
+
+class TempSessionOpReplyPacket {
+public:
+	TempSessionOpReplyPacket(const unsigned char *buf, const int len);
+	TempSessionOpReplyPacket( const TempSessionOpReplyPacket &rhs);
+	~TempSessionOpReplyPacket() {};
+	TempSessionOpReplyPacket &operator=(const TempSessionOpReplyPacket &rhs);
+
+	const int getReceiver() const { return receiver; }
+	const unsigned char getReplyCode() const { return replyCode; }
+	const unsigned char getSubCommand() const { return subCommand; }
+	const std::string getReplyMessage() const { return replyMessage; }
+private:
+	std::string replyMessage;
+	int receiver;
+	unsigned char replyCode;
+	unsigned char subCommand;
+
+	void parseData(const unsigned char *buf, const int len);
+};
+
+class ReceivedQQMailPacket {
+public:
+	ReceivedQQMailPacket(const unsigned char *buf, const int len);
+	ReceivedQQMailPacket( const ReceivedQQMailPacket &rhs);
+	~ReceivedQQMailPacket() {};
+	ReceivedQQMailPacket &operator=(const ReceivedQQMailPacket &rhs);
+
+	const std::string getMailID() const { return mailID; }
+	const std::string getFrom() const { return from; }
+	const std::string getTitle() const { return title; }
+private:
+	std::string mailID;
+	std::string from;
+	std::string title;
+
 	void parseData(const unsigned char *buf, const int len);
 };
 

@@ -45,6 +45,7 @@ public:
 	~EvaSysSettingWindow();
 signals:
 	void settingChanged();
+	void faceSizeChanged();
 	void requestUpdate(const unsigned int);
 	void requestQQShow(const unsigned int);
 	void requestUpdateSignature(const QString contents);
@@ -76,6 +77,7 @@ private:
 	QStringList details;
 	int selectedFaceIndex;
 	bool isSignatureChanged;
+	bool isFaceSizeChanged;
 	
 	bool isUserInfoChanged;
 	bool isSysSettingChanged;

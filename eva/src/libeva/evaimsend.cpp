@@ -20,12 +20,16 @@
 
 #include "evaimsend.h"
 #include "evadefines.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #ifdef _WIN32
 #include <winsock.h>
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 SendIM::SendIM(const unsigned short type)
 	: OutPacket(QQ_CMD_SEND_IM, true),
@@ -727,3 +731,200 @@ int SendFileNotifyAgentPacket::putContents(unsigned char *buf)
 	return pos;	
 }
 
+
+/** ====================================================================== */
+
+
+SendTempSessionTextIMPacket::SendTempSessionTextIMPacket()
+: OutPacket(QQ_CMD_TEMP_SESSION_OP,true),
+encoding(QQ_IM_ENCODING_GB),
+red(0),green(0),blue(0),
+bold(false),italic(false),underline(false),
+fontSize(0x09),
+fontFlag(0x09),
+message("Hello, I am using Eva."),
+subcommand(QQ_SUB_CMD_SEND_TEMP_SESSION_IM),
+authInfo(NULL)
+{
+	char *fname = (char *)malloc(5);
+	fname[0] = 0xcb;
+	fname[1] = 0xce;
+	fname[2] = 0xcc;
+	fname[3] = 0xe5;
+	fname[4] = 0x00;
+	fontName = fname; // just set font name to "Song Ti" in Chinese
+	free(fname);
+}
+
+SendTempSessionTextIMPacket::SendTempSessionTextIMPacket(const SendTempSessionTextIMPacket &rhs)
+: OutPacket(rhs)
+{
+	encoding = rhs.getEncoding();  
+	fontName = rhs.getFontName();
+
+	red = rhs.getRed();
+	green = rhs.getGreen();
+	blue = rhs.getBlue();
+
+	fontFlag = 0x00;
+	bold = rhs.isBold(); 
+	fontFlag |= bold ? 0x20 : 0x00; 
+
+	italic = rhs.isItalic(); 
+	fontFlag |= italic ? 0x40 : 0x00;
+
+	underline = rhs.isUnderline();
+	fontFlag |= underline ? 0x80 : 0x00;
+
+	fontSize = rhs.getFontSize();
+	fontFlag |= fontSize;
+
+	message = rhs.getMessage();
+	subcommand = rhs.getSubcommand();
+
+	site = rhs.getSite();
+	nick = rhs.getNick();
+}
+
+SendTempSessionTextIMPacket &SendTempSessionTextIMPacket::operator=(const SendTempSessionTextIMPacket &rhs)
+{
+	*((OutPacket *)this) = (OutPacket)rhs;
+	encoding = rhs.getEncoding();  
+	fontName = rhs.getFontName();
+
+	red = rhs.getRed();
+	green = rhs.getGreen();
+	blue = rhs.getBlue();
+
+	fontFlag = 0x00;
+	bold = rhs.isBold(); 
+	fontFlag |= bold ? 0x20 : 0x00; 
+
+	italic = rhs.isItalic(); 
+	fontFlag |= italic ? 0x40 : 0x00;
+
+	underline = rhs.isUnderline();
+	fontFlag |= underline ? 0x80 : 0x00;
+
+	fontSize = rhs.getFontSize();
+	fontFlag |= fontSize;
+
+	message = rhs.getMessage();
+	subcommand = rhs.getSubcommand();
+
+	site = rhs.getSite();
+	nick = rhs.getNick();
+
+	setAuthInfo(rhs.getAuthInfo(),rhs.getAuthInfoSize());
+	return *this;
+}
+
+SendTempSessionTextIMPacket::~SendTempSessionTextIMPacket() {
+	if (authInfo) delete[] authInfo;
+}
+
+void SendTempSessionTextIMPacket::setAuthInfo(const unsigned char* authInfo, int len) {
+	if (this->authInfo) delete authInfo;
+	this->authInfo = new unsigned char[len];
+	this->authInfoSize=len;
+	memcpy(this->authInfo,authInfo,len);
+}
+
+void SendTempSessionTextIMPacket::setBold(bool bold) 
+{
+	this->bold = bold;
+	fontFlag &= 0xDF;
+	fontFlag |= bold ? 0x20 : 0x00;
+}
+
+void SendTempSessionTextIMPacket::setItalic(bool italic) 
+{
+	this->italic = italic;
+	fontFlag &= 0xBF;
+	fontFlag |= italic ? 0x40 : 0x00;
+}
+
+void SendTempSessionTextIMPacket::setUnderline(bool underline) 
+{
+	this->underline = underline;
+	fontFlag &= 0x7F;
+	fontFlag |= underline ? 0x80 : 0x00;
+}
+
+void SendTempSessionTextIMPacket::setFontSize(char fontSize) 
+{
+	this->fontSize = fontSize;
+	fontSize &= 0x1F;
+	fontFlag &= 0xE0;
+	fontFlag |= fontSize;
+}
+
+int SendTempSessionTextIMPacket::putBody(unsigned char *buf) 
+{
+	int pos=0;
+	buf[pos++]=subcommand;
+	char* pszPos;
+	int rev;
+	unsigned short sht;
+
+	switch(subcommand) {
+			case QQ_SUB_CMD_SEND_TEMP_SESSION_IM:
+				// ±µ¶¨™Ã
+				rev=htonl(getReceiver());
+				memmove(buf+pos,&rev,4);
+				pos+=4;
+				// authinfo
+				sht=htons(authInfoSize);
+				memmove(buf+pos,&sht,2);
+				pos+=2;
+				memmove(buf+pos,authInfo,authInfoSize);
+				pos+=authInfoSize;
+				// •º™æ
+				memset(buf+pos,0,4);
+				pos+=4;
+				// nick
+				buf[pos++]=(unsigned char) strlen(nick.c_str());
+				memmove(buf+pos,nick.c_str(),strlen(nick.c_str()));
+				pos+=strlen(nick.c_str());
+				// site name
+				buf[pos++]=(unsigned char) strlen(site.c_str());
+				memmove(buf+pos,site.c_str(),strlen(site.c_str()));
+				pos+=strlen(site.c_str());
+				// •º™æ
+				buf[pos++]=2;
+				// •º™æ
+				memset(buf+pos,0,4);
+				pos+=4;
+				// Éc´◊°A≥Ã¶Z¶A∂ÅE
+				pszPos=(char*)buf+pos;
+				pos+=2;
+				// Æ¯ÆßÅXÆe
+				memmove(buf+pos,message.c_str(),strlen(message.c_str()));
+				pos+=strlen(message.c_str());
+				buf[pos++]=0x20;
+				// ¶r ^åp© 
+				buf[pos++] = 0x00;    //  C style string terminator
+
+				buf[pos++] = fontFlag;
+				buf[pos++] = red;
+				buf[pos++] = green;
+				buf[pos++] = blue;
+
+				buf[pos++] = 0;
+
+				short tmpEncoding = htons(encoding);  // encoding for text
+				memcpy(buf+pos,&tmpEncoding, 2);
+				pos+=2;
+
+				int len = fontName.length();     // font name
+				memcpy(buf+pos, fontName.c_str(), len);
+				pos+=len;
+
+				buf[pos++] = 0x0D;   // an Enter
+				// ¶^∂ÒÉc´◊
+				int finalLength=htons((char*)buf+pos-pszPos-2);
+				memmove(pszPos,&finalLength,2);
+				break;
+	}
+	return pos;
+}

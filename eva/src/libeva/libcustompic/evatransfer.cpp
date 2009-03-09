@@ -26,7 +26,7 @@
 #else
 #include <arpa/inet.h>
 #endif
-
+#include <cstring>
 EvaPicTransferPacket::EvaPicTransferPacket() 
 	: EvaPicOutPacket(QQ_05_CMD_TRANSFER, false), fragment(NULL)
 {

@@ -23,7 +23,9 @@
 
 #include "evapacket.h"
 #include "evautil.h"
-#include <string>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 // note that all text in SendIMPacket class is assumed as
@@ -372,6 +374,74 @@ private:
 	unsigned char m_ConnectMode;
 };
 
+class SendTempSessionTextIMPacket : public OutPacket
+{
+public:
+	SendTempSessionTextIMPacket();
+	SendTempSessionTextIMPacket(const SendTempSessionTextIMPacket &rhs) ;
+	virtual ~SendTempSessionTextIMPacket();
+
+	OutPacket * copy() { return new SendTempSessionTextIMPacket(*this);}
+	SendTempSessionTextIMPacket &operator=(const SendTempSessionTextIMPacket &rhs);
+
+	const int getReceiver() const { return receiver; };                       // your friend's qq number
+	void setReceiver(int receiver) { this->receiver = receiver; }
+
+	const std::string &getFontName() const { return fontName; }               // font setting
+	void setFontName(std::string &fontName) { this->fontName = fontName; }
+	const char getFontSize() const { return fontSize; }
+	void setFontSize(char fontSize); 
+	const short getEncoding() const { return encoding; }
+	void setEncoding(short encoding) { this->encoding = encoding; }
+
+	const bool isUnderline() const { return underline;}                      // U B I setting
+	void setUnderline(bool underline) ;
+	const bool isItalic() const { return italic; }
+	void setItalic(bool italic);
+	const bool isBold() const { return bold; };
+	void setBold(bool bold);
+
+	const char getBlue() const { return blue; }                         // color setting
+	void setBlue(char blue) { this->blue = blue; }
+	const char getGreen() const { return green; }
+	void setGreen(char green)  {this->green = green; }
+	const char getRed() const { return red; }
+	void setRed(char red) { this->red = red; }
+
+	/*
+	the message is plain text, which means the smiley code is already
+	replaced with plain text.  
+	*/
+	const std::string &getMessage() const { return message; }              // message you want to send
+	void setMessage(std::string message) { this->message = message; }   // and just put your plain text message here
+	const unsigned char getSubcommand() const { return subcommand; }
+	void setSubcommand(unsigned char subcommand) { this->subcommand = subcommand; }
+	const std::string &getNick() const { return nick; }
+	void setNick(std::string nick) { this->nick = nick; }
+	const std::string &getSite() const { return site; }
+	void setSite(std::string site) { this->site = site; }
+	const unsigned char* getAuthInfo() const { return authInfo; }
+	void setAuthInfo(const unsigned char* authInfo, int len);
+	const int getAuthInfoSize() const { return authInfoSize; }
+
+protected:
+	virtual int putBody(unsigned char *buf);
+private:
+	int receiver; 
+	short encoding;
+	std::string fontName;
+	char red, green, blue;
+	bool bold, italic, underline;
+	unsigned char fontSize;
+	unsigned char fontFlag; 
+
+	std::string message; 
+	std::string nick;
+	std::string site;
+	unsigned char subcommand;
+	unsigned char* authInfo;
+	int authInfoSize;
+};
 
 #endif
 

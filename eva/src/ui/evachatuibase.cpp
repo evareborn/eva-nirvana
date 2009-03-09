@@ -164,6 +164,16 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	tbQuickReply->setMaximumSize( QSize( 24, 24 ) );
 	tbQuickReply->setAutoRaise( TRUE );
 	layout3->addWidget( tbQuickReply );
+
+	tbEnableSound = new QToolButton( lowerLayoutWidget, "tbEnableSound" );
+	tbEnableSound->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, tbEnableSound->sizePolicy().hasHeightForWidth() ) );
+	tbEnableSound->setMinimumSize( QSize( 24, 24 ) );
+	tbEnableSound->setMaximumSize( QSize( 24, 24 ) );
+	tbEnableSound->setToggleButton( TRUE );
+	tbEnableSound->setUsesTextLabel( FALSE );
+	tbEnableSound->setAutoRaise( TRUE );
+	layout3->addWidget( tbEnableSound );
+
 	spcToolBtn3 = new QSpacerItem( 71, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout3->addItem( spcToolBtn3 );
 	
@@ -186,6 +196,7 @@ EvaChatUIBase::EvaChatUIBase( QWidget* parent, const char* name, WFlags fl )
 	layout2 = new QHBoxLayout( 0, 4, 6, "layout2"); 
 	
 	pbHistory = new QPushButton( lowerLayoutWidget, "pbHistory" );
+	pbHistory->setToggleButton( TRUE );
 	layout2->addWidget( pbHistory );
 	spcBottom = new QSpacerItem( 60, 20, QSizePolicy::Expanding, QSizePolicy::Minimum );
 	layout2->addItem( spcBottom );
@@ -316,30 +327,32 @@ void EvaChatUIBase::languageChange()
 	tbAddImage->setText("...");
 	tbAddImage->setAccel( QKeySequence( tr( "Alt+A" ) ) );
 	tbAddImage->setText( i18n( "..." ) );
-	QToolTip::add( tbAddImage, i18n( "send image files" ) );
+	QToolTip::add( tbAddImage, i18n( "Send image files" ) );
 	tbScreenShot->setText(i18n("..."));
 	tbScreenShot->setAccel( QKeySequence( tr( "Alt+T" ) ) );
-	QToolTip::add( tbScreenShot, i18n( "add a screen shot" ) );
+	QToolTip::add( tbScreenShot, i18n( "Add a screenshot" ) );
 	tbQuickReply->setAccel( QKeySequence( tr( "Alt+R" ) ) );
-	QToolTip::add( tbQuickReply, i18n( "select an quick-reply message" ) );
+	QToolTip::add( tbQuickReply, i18n( "Select an quick-reply message" ) );
+
+	QToolTip::add(tbEnableSound, i18n("Toggle sound notification") );
 	
 	
 	tbHideShows->setText( i18n( "..." ) );
 	tbHideShows->setAccel( QKeySequence( tr( "Alt+P" ) ) );
-	QToolTip::add( tbHideShows, i18n( "hide/display QQ show panel" ) );
+	QToolTip::add( tbHideShows, i18n( "Hide/Display QQ Show panel" ) );
 	
 	pbHistory->setText( i18n( "&History" ) );
 	pbHistory->setAccel( QKeySequence( tr( "Alt+H" ) ) );
-	QToolTip::add( pbHistory, i18n( "view IM history(Alt+H)" ) );
+	QToolTip::add( pbHistory, i18n( "View/Hide IM history (Alt+H)" ) );
 	pbClose->setText( i18n( "Close" ) );
 	pbClose->setAccel( QKeySequence( tr( "Alt+X" ) ) );
-	QToolTip::add( pbClose, i18n( "close this window(Alt+X)" ) );
+	QToolTip::add( pbClose, i18n( "Close this window (Alt+X)" ) );
 	pbSend->setText( i18n( "&Send" ) );
 	pbSend->setAccel( QKeySequence( tr( "Alt+S" ) ) );
-	QToolTip::add( pbSend, i18n( "send message" ) );
+	QToolTip::add( pbSend, i18n( "Send message" ) );
 	pbSendKey->setText( QString::null );
 	pbSendKey->setAccel( QKeySequence( QString::null ) );
-	QToolTip::add( pbSendKey, i18n( "change send key" ) );
+	QToolTip::add( pbSendKey, i18n( "Change send key" ) );
 	lblBuddyShow->setText( i18n( "Buddy" ) );
 	tbShowBuddy->setText( i18n( "..." ) );
 	QToolTip::add( tbShowBuddy, i18n( "Click to update" ) );

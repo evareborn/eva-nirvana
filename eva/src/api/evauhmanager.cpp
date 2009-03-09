@@ -31,6 +31,7 @@
 #include <qstringlist.h>
 #include <qapplication.h>
 #include <string.h>
+#include <cstring>
 
 #define MaxBlockSize       800
 
@@ -419,7 +420,7 @@ EvaUHManager::~EvaUHManager()
 	mProfileManager = NULL;
 }
 
-void EvaUHManager::initiate(QSize size)
+void EvaUHManager::initiate(QSize /*size*/)
 {
 	if(mProfileManager) delete mProfileManager;
 	mProfileManager = new EvaUHProfile();

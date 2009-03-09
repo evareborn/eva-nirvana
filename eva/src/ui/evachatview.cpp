@@ -143,7 +143,7 @@ QString EvaChatView::wrapNickName(QString &nick, QDateTime time, QColor color, b
 	QString dateFormat = "hh:mm:ss";
 	if(current.date() != time.date())
 		dateFormat = "yyyy-MM-dd hh:mm:ss";
-	msg+=" "+time.toString(dateFormat) + "</span><br>";
+	msg+="  "+time.toString(dateFormat) + "</span><br>";
 	return msg;
 }
 
@@ -522,9 +522,10 @@ void EvaChatView::showFileNotification( const QString & who, const QString & fil
 
 void EvaChatView::updateContents( const QString & contents )
 {
-	QString newMsg = contents;
-	newMsg.replace("&nbsp;", "&nbsp; ");
-	buffer += (newMsg + "<br>");
+	//QString newMsg = contents;
+	//Wonder why the following line was added, it does nothing other than extra mess spaces.
+	//newMsg.replace("&nbsp;", "&nbsp; ");
+	buffer += (contents + "<br>");
 }
 
 void EvaChatView::showContents()

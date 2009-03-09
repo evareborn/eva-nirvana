@@ -39,6 +39,7 @@ class QCloseEvent;
 class EvaFontSelecter;
 class QPopupMenu;
 class RegionGrabber;
+class EvaHistoryViewer;
 
 class EvaChatWindow : public EvaChatUIBase
 {
@@ -128,6 +129,7 @@ private:
 
 	int m_NumImages;
 	RegionGrabber *grabber;
+	EvaHistoryViewer *viewer;
 
 	QMap<QString, QToolButton*> m_btnMap; // button name, button widget
 	QMap<QString, QString> m_scriptMap;   // button name, script name
@@ -152,6 +154,7 @@ private slots:
 	void slotHideShowsClick();
 	
 	void slotHistoryClick();
+	void slotHistoryWindowClosed();
 	void slotSendKeyClick();
 	void slotSend();
 	

@@ -172,7 +172,7 @@ void EvaAddUIBase::languageChange()
     //lblTopic->setText( i18n( "-" ) );
     //tbtnFace->setText( i18n( "..." ) );
     lblGroup->setText( i18n( "Select Group:" ) );
-    lblVeriCode->setText( i18n( "Verify Code:" ) );
+    lblVeriCode->setText( i18n( "Verification Code:" ) );
     lblQuestion->setText( i18n( "Personal Question:" ) );
     lblAnswer->setText( i18n( "Your Answer:" ) );
     //lblCodeGraphic->setText( i18n( "-" ) );

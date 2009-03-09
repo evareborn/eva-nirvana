@@ -25,6 +25,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qtextcodec.h>
+#include <cstring>
 
 #define InfoFileName_Ext       ".info"
 #define CacheFileName_Ext      ".cache"

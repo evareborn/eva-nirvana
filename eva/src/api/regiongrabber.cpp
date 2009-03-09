@@ -44,7 +44,7 @@ SizeTip::SizeTip( QWidget *parent, const char *name )
 
 void SizeTip::setTip( const QRect &rect )
 {
-  QString des = "<font color=red>" + i18n("Press mouse left button<br>to grab screenshot.") + "</font><p>" + i18n("Size(W x H):");
+  QString des = "<font color=red>" + i18n("Press mouse left button<br>to grab screenshot.") + "</font><p>" + i18n("Size (W x H):");
   QString tip = "<qt>" + des + QString("<b><font color=yellow>%1</font></b> x <b><font color=yellow>%2</font></b>").arg( rect.width() )
       .arg( rect.height() ) + "</qt>";
 

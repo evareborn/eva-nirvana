@@ -19,6 +19,11 @@
  ***************************************************************************/ 
 #include "evauserinfo.h"
 #include "evadefines.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <cstring>
+#include <cstdlib>
 
 // important: all string stored are encoded by "GB18030"
 

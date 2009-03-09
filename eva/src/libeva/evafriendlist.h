@@ -27,6 +27,7 @@
 #include "evauserinfo.h"
 #include "evalevel.h"
 #include "evamemo.h"
+#include <cstring>
 
 
 #define BUDDY_INVALID_FIELD 01

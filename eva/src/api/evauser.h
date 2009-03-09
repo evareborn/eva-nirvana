@@ -27,7 +27,7 @@
 #include "evausersetting.h"
 #include <qobject.h>
 #include <qstringlist.h>
-#include <string>
+#include <cstring>
 #include <list>
 
 // used in the reply of login token ex requests

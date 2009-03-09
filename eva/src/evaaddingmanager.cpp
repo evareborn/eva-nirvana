@@ -183,7 +183,7 @@ void EvaAddingManager::addingFinished( )
 void EvaAddingManager::slotAddBuddyExReply( const unsigned int id, const unsigned char reply, const unsigned char auth )
 {
 	if(id !=  m_ID) {
-		KMessageBox::information(0, QString(i18n("You are adding %1, cannot processing %2 request.")).arg(m_ID).arg(id),
+		KMessageBox::information(0, QString(i18n("You are adding %1, cannot process %2 request.")).arg(m_ID).arg(id),
 			i18n("Eva Search/Add Friend"));
 		return;
 	}
@@ -248,7 +248,7 @@ void EvaAddingManager::slotAuthInfoReply( const unsigned char cmd, const unsigne
 	if(cmd == AUTH_INFO_CMD_CODE){
 		printf(" auth info cmd code reply\n");
 		if(reply == 0x01){
-			KMessageBox::information(0, QString(i18n("Incorrect verify code, try again please!")),
+			KMessageBox::information(0, QString(i18n("Incorrect verification code, try again please!")),
 				i18n("Eva Search/Add Friend"));
 			m_AddingDialog->leCode->setFocus();
 			return;
@@ -281,7 +281,7 @@ void EvaAddingManager::slotAuthInfoReply( const unsigned char cmd, const unsigne
 			}
 			break;
 		default:
-			KMessageBox::information(0, QString(i18n("Unkown auth reply type(%1), adding failed.")).arg(reply),
+			KMessageBox::information(0, QString(i18n("Unknown auth reply type (%1), adding failed.")).arg(reply),
 				i18n("Eva Search/Add Friend"));
 			addingFinished();
 			return;
@@ -510,7 +510,7 @@ void EvaAddingManager::slotFinalAdd( )
 
 void EvaAddingManager::authAddEx( )
 {
-	unsigned char auth;
+	unsigned char auth = 0;
 	switch(m_AuthType){
 		case QQ_AUTH_NO_AUTH:
 			auth = ADDING_AUTH_TYPE_ANYONE;
@@ -591,7 +591,7 @@ void EvaAddingManager::acceptAndAdd( const unsigned int id, const QString &nick,
 	
 }
 
-void EvaAddingManager::slotAccepAndAdd( const int index)
+void EvaAddingManager::slotAccepAndAdd( const int /*index*/)
 {
 	m_PacketManager->doAddBuddyAuthEx(m_ID, ADDING_AUTH_TYPE_ACCEPT_ADD);
 }
@@ -617,7 +617,7 @@ void EvaAddingManager::slotAddQun( const QunInfo & info )
 	}
 }
 
-void EvaAddingManager::slotJoinQunReply( const unsigned int id, const unsigned char authType, const QString & message )
+void EvaAddingManager::slotJoinQunReply( const unsigned int /*id*/, const unsigned char authType, const QString & message )
 {
 	m_AuthType = authType;
 	switch(m_AuthType){

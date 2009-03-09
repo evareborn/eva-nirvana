@@ -27,6 +27,7 @@
 #endif
 #include <string>
 #include <list>
+#include <cstdlib>
 /**
 @author yunfan
 */
@@ -36,11 +37,11 @@ public:
 	OnlineUser();
 	~OnlineUser() {}
 	
-	const int getQQ() const { return qqNum; }
+	const int getQQ() const { if (qqNum!=0) return qqNum;else return atoi(nick.c_str()); }
 	void setQQ(const int id){ qqNum = id; }
-	const std::string getNick() const { return nick; }
+	const std::string getNick() const { if (qqNum!=0) return nick;else return province;}
 	const short getFace() const { return face; }
-	const std::string getProvince() const { return province; }
+	const std::string getProvince() const { if (qqNum!=0) return province;else return "";}
 	int readData(unsigned char * buf);
 	OnlineUser &operator=(const OnlineUser &rhs);
 private:

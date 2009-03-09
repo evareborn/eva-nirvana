@@ -23,6 +23,7 @@
 #include "../evacrypt.h"
 #include <stdio.h>
 #include <string.h>
+#include <cstring>
 
 EvaFTAgentCreate::EvaFTAgentCreate()
 	: EvaFTAgentPacket(QQ_FILE_AGENT_CMD_CREATE),

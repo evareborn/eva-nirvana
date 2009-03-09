@@ -66,8 +66,8 @@ const bool TmpQun::removeMember( const unsigned int qqNum )
 
 
 Qun::Qun( const unsigned int id )
-	: qunID(id), cardName(""), cardGender(0), cardPhone(""), cardEmail(""), cardMemo(""),
-	m_RealNamesVersion(0), msgType(Notify), m_ChatFontSize(9), m_ChatFontColor(0)
+	: qunID(id), cardName(""), cardGender(0), cardPhone(""), cardEmail(""), cardMemo(""), numOnline(0),
+	m_RealNamesVersion(0), msgType(Notify), m_ChatFontSize(14), m_ChatFontColor(255)
 {
 	m_memberStartCount = 0;
 	m_bFirstRefresh = true;
@@ -92,6 +92,8 @@ Qun &Qun::operator=(const Qun &rhs)
 	cardEmail = rhs.getCardEmail();
 	cardMemo = rhs.getCardMemo();
 	m_RealNamesVersion = rhs.getRealNamesVersion();
+	numOnline = rhs.getNumOnline();
+	numTotal = rhs.getNumMembers();
 	msgType = rhs.getMessageType();
 
 	m_ChatFontSize = rhs.getChatFontSize();
@@ -126,12 +128,17 @@ void Qun::updateOnlineMembers(const std::list<unsigned int> &list)
 {
 	std::list<unsigned int> onlist = list;
 	std::list<FriendItem>::iterator iter;
+	numOnline = 0;
+	numTotal = 0;
 	for(iter = memberList.begin(); iter!= memberList.end(); ++iter){
+		numTotal++;
 		iter->setOnline(false);
 		std::list<unsigned int>::iterator iter1;
 		for(iter1 = onlist.begin(); iter1 != onlist.end(); ++iter1){
-			if(iter->getQQ() == *iter1)
+			if(iter->getQQ() == *iter1){
 				iter->setOnline(true);
+				numOnline++;
+			}
 		}
 	}
 }

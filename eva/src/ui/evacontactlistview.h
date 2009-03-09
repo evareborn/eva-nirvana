@@ -22,6 +22,7 @@
 #define EVA_CONTACT_LISTVIEW_H
 
 #include "evalistview.h"
+#include "evafriendlist.h"
 #include <qdatetime.h>
 
 class QQFriend;
@@ -30,10 +31,10 @@ class QPopupMenu;
 class EvaBuddyItem : public EvaListViewItem
 {
 public:
-    EvaBuddyItem( QQFriend * buddy, QListViewItem *parent);
+    EvaBuddyItem( const QQFriend& buddy, QListViewItem *parent);
 
     const unsigned int QQ();
-    QQFriend * getFriend() { return m_buddy; }
+    const QQFriend &getFriend() const { return m_buddy; }
 
     void setNumOfMessages(const int n) { m_numOfMessages = n; }
     const int numOfMessages() const { return m_numOfMessages; }
@@ -51,7 +52,7 @@ public:
     QString tip();
     virtual QString key( int col, bool ascending) const;
 private:
-    QQFriend * m_buddy;
+    QQFriend m_buddy;
     int m_numOfMessages;
 };
 
@@ -73,7 +74,7 @@ protected:
 	virtual void cancelRename(int col);
 private:
 	int m_groupIndex;
-	
+
 	const int countOnlineFriends();
 };
 
@@ -84,6 +85,7 @@ public:
 	EvaContactListView(QWidget *parent = 0, const char *name = 0, WFlags f = 0);
 
 	void loadContacts();
+	void updateContacts();
 	void clear();
 	void changeGroupTo(const unsigned int id, const int index);
 
@@ -116,7 +118,7 @@ private:
 
 	QPopupMenu *m_groupMenu; 
 	QPopupMenu *m_buddyMenu;
-	
+
 	void initPopup();
 
 private slots:
@@ -146,6 +148,7 @@ private slots:
 
 public slots:
 	void friendStatusChanged(const int id);
+	void slotFaceSizeChanged();
 	void buddyAdded(const unsigned int id);
 	void newMessage(const unsigned int id);
 	void getMessage(const unsigned int id);

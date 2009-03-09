@@ -19,6 +19,8 @@
  ***************************************************************************/
  #include "evafriendlist.h"
  #include <stdio.h>
+#include <cstring>
+#include <cstdlib>
 
 QQFriend::sortItem QQFriend::field2Sort = Sort_Nick;
 
@@ -232,8 +234,8 @@ void QQFriend::initalizeBuddy(const unsigned int qqid, const unsigned short qqFa
 	hoursToLevelUp = 0;
 	m_Sequence = 0;
 
-	m_ChatFontSize = 9;
-	m_ChatFontColor = 0;
+	m_ChatFontSize = 14;
+	m_ChatFontColor = 255;
 	
 	m_evaUpdateFlag = 0xffffffff;
 }

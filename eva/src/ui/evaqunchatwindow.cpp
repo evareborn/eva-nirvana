@@ -32,6 +32,7 @@
 #include "evachatview.h"
 #include "evaqunlist.h"
 #include "evaqunlistview.h"
+#include "evahistoryviewer.h"
 #include "evafriend.h"
 #include "evaqtutil.h"
 #include "regiongrabber.h"
@@ -78,7 +79,7 @@ std::list<QString> EvaQunChatWindow::quickList;
 
 EvaQunChatWindow::EvaQunChatWindow( Qun * qun, QWidget * parent, const char * name, WFlags fl )
 	: EvaQunChatUIBase(parent, name, fl), smileyPopup(NULL), fontSelecter(NULL), quickMenu(NULL),
-	mQun(qun), grabber(NULL)
+	mQun(qun), grabber(NULL), viewer(NULL)
 {
 	codec = QTextCodec::codecForName("GB18030");
 	initObjects();
@@ -145,6 +146,7 @@ void EvaQunChatWindow::graphicChanged( )
 	tbImageFile->setIconSet(*(images->getIcon("CUSTOM_SMILEY")));
 	tbScreenShot->setIconSet(*(images->getIcon("SCREEN_SHOT")));
 	tbQuickReply->setIconSet(*(images->getIcon("QUICK_REPLY")));
+	tbEnableSound->setIconSet(*(images->getIcon("SYSTEM_MSG")));
 }
 
 void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int senderQQ, QString message, QDateTime time, const char size, 
@@ -165,6 +167,8 @@ void EvaQunChatWindow::slotReceivedMessage( unsigned int qunID, unsigned int sen
 		QApplication::postEvent((QObject *)EvaMain::picManager, event);
 	}
 	chatDisplay->append(nick, time, Qt::blue, true, QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue), size, u, i, b, message);
+	if( tbEnableSound->isOn())
+		EvaMain::global->getSoundResource()->playNewMessage();
 }
 
 void EvaQunChatWindow::showMessages()
@@ -180,7 +184,7 @@ void EvaQunChatWindow::slotAddMessage(unsigned int sender, QString sNick, unsign
 	if(!teInput->isEnabled()) return;
 	EvaHtmlParser parser;
 	parser.convertToHtml(message, false, false, true);
-	QString msg = QString::number(sender) + "(" +sNick + ")" + (isNormal?(""):i18n("(Auto-Reply)")) + " " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
+	QString msg = QString::number(sender) + "(" +sNick + ")" + (isNormal?(""):i18n("(Auto-Reply)")) + "  " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
 	kdDebug()  << msg << endl;
 	teInput->append(msg);
 }
@@ -274,6 +278,7 @@ void EvaQunChatWindow::slotUpdateOnlineMembers()
 	}
 	
 	memberList->updateOnlineMembers(onlineList);
+	updateQunCountNumbers();
 	QTimer::singleShot(100, this, SLOT(slotRequestQunRealNames()));
 }
 
@@ -328,6 +333,13 @@ void EvaQunChatWindow::initInformation( )
 	QString notice = codec->toUnicode(mQun->getDetails().getNotice().c_str());
 	teNotice->setText(notice);
 	teNotice->adjustSize();
+}
+void EvaQunChatWindow::updateQunCountNumbers( )
+// TODO this should be implemented as a slot.
+{
+	if(!mQun) return;
+	QString num = " (" + QString::number(mQun->getNumOnline()) + "/" + QString::number(mQun->getNumMembers()) + ")";
+	lblMembers->setText(i18n("Members") + num);
 }
 
 void EvaQunChatWindow::initConnection( )
@@ -451,7 +463,50 @@ void EvaQunChatWindow::slotQuickReplyActivated( int id )
 
 void EvaQunChatWindow::slotHistoryClick( )
 {
-	emit requestHistory(mQun->getQunID());
+	//emit requestHistory(mQun->getQunID());
+	if ( !viewer )
+	{
+		QString qName = i18n("Qun");
+
+		if (mQun){
+			QunInfo info = mQun->getDetails();
+			qName = codec->toUnicode(info.getName().c_str());
+		}
+
+		viewer = new EvaHistoryViewer(getQunID(), qName, EvaMain::user->getSetting(), true);
+
+		unsigned short faceId = atoi(EvaMain::user->getDetails().at(ContactInfo::Info_face).c_str());
+		QPixmap *face = EvaMain::images->getFaceByID(faceId);
+		viewer->setIcon(*face);
+
+		connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)),
+				this,
+				SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)));
+		connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
+	}
+	if ( pbHistory->isOn() )
+	{
+		viewer->move(this->x(), this->y() + this->height() + 25);
+
+		viewer->show();
+	}
+	else
+	{
+		viewer->hide();
+	}
+
+}
+
+void EvaQunChatWindow::slotHistoryWindowClosed()
+{
+//	viewer->hide();
+	pbHistory->setOn(FALSE);
 }
 
 void EvaQunChatWindow::slotSendKeyClick( )
@@ -512,7 +567,7 @@ void EvaQunChatWindow::slotSend( )
 void EvaQunChatWindow::slotInputKeyPress( QKeyEvent * e )
 {
 	if(isSentByEnter && ((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ) && 
-			(e->state() != Qt::KeyButtonMask) ){
+			(e->state() == Qt::NoButton) ){
 		e->accept();
 		slotSend();
 	}else{
@@ -592,6 +647,8 @@ void EvaQunChatWindow::closeEvent( QCloseEvent * e )
 {
 	if(timer->isActive())
 		timer->stop();
+	if (viewer)
+		delete viewer;
 	QWidget::closeEvent(e);
 }
 
@@ -834,7 +891,7 @@ void EvaQunChatWindow::addToolButton( QString & scriptName, QString buttonName, 
 	m_scriptMap[buttonName] = scriptName;
 }
 
-void EvaQunChatWindow::removeToolButton( QString & scriptName, QString buttonName )
+void EvaQunChatWindow::removeToolButton( QString & /*scriptName*/, QString buttonName )
 {
 	QMap<QString, QToolButton*>::Iterator it = m_btnMap.find(buttonName);
 	if( it == m_btnMap.end()) return;

@@ -25,6 +25,8 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 FriendItem::FriendItem(const unsigned int id)
 	:qqNum(id), face(0), 

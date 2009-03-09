@@ -18,7 +18,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "evasearchuser.h"
-
+#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 #define   DIVIDER      0x1F

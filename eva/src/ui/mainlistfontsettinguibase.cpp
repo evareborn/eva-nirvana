@@ -327,7 +327,7 @@ void MainListFontSettingUIBase::languageChange()
 	chbBuddySigFontB->setText( i18n("bold" ) );
 	chbBuddySigFontU->setText( i18n("underline" ) );
 	chbBuddySigFontI->setText( i18n("italic" ) );
-	gbQunName->setTitle( i18n("name:" ) );
+	gbQunName->setTitle( i18n("Name:" ) );
 	lblQunNameColor->setText( i18n("name color:" ) );
 	chbQunNameFontB->setText( i18n("bold" ) );
 	chbQunNameFontU->setText( i18n("underline" ) );
@@ -337,7 +337,7 @@ void MainListFontSettingUIBase::languageChange()
 	chbQunFlashFontB->setText( i18n("bold" ) );
 	chbQunFlashFontU->setText( i18n("underline" ) );
 	chbQunFlashFontI->setText( i18n("italic" ) );
-	gbGroupName->setTitle( i18n("name:" ) );
+	gbGroupName->setTitle( i18n("Name:" ) );
 	lblGroupNameColor->setText( i18n("name color:" ) );
 	chbGroupNameFontB->setText( i18n("bold" ) );
 	chbGroupNameFontU->setText( i18n("underline" ) );
@@ -347,7 +347,7 @@ void MainListFontSettingUIBase::languageChange()
 	chbGroupFlashFontB->setText( i18n("bold" ) );
 	chbGroupFlashFontU->setText( i18n("underline" ) );
 	chbGroupFlashFontI->setText( i18n("italic" ) );
-	gbGroupOnlineCount->setTitle( i18n("online counting:" ) );
+	gbGroupOnlineCount->setTitle( i18n("Online statistics:" ) );
 	lblGroupOnlineColor->setText( i18n("signature color:" ) );
 	chbGroupOnlineFontB->setText( i18n("bold" ) );
 	chbGroupOnlineFontU->setText( i18n("underline" ) );

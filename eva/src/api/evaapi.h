@@ -18,6 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef EVAAPI_H
+#define EVAAPI_H
+
 #include "evaconnecter.h"
 #include "evahtmlparser.h"
 #include "evanetwork.h"
@@ -65,7 +68,7 @@ enum EVA_NOTIFY
 
 static QString s_ENotify[E_Count] =
 {
-	I18N_NOOP("Somethign error"),
+	I18N_NOOP("Something error"),
 	I18N_NOOP("Server connected"),
 	I18N_NOOP("Login redirection"),
 	I18N_NOOP("Login failed"),
@@ -88,4 +91,4 @@ static QString s_ENotify[E_Count] =
 	""
 };
 
-
+#endif //EVAAPI_H

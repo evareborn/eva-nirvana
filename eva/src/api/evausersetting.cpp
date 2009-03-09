@@ -868,9 +868,9 @@ const bool EvaUserSetting::loadSettings()
 		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
 			autoList.push_back(*iter);
 	} else {
-		autoList.push_back(QString(i18n("sorry, I am working.")));
-		autoList.push_back(QString(i18n("having dinner now./fa")));
-		autoList.push_back(QString(i18n("I am not available now, sorry")));	
+		autoList.push_back(QString(i18n("Sorry, I am working.")));
+		autoList.push_back(QString(i18n("Having dinner now./fa")));
+		autoList.push_back(QString(i18n("I am not available now, sorry.")));	
 	}
 	
 	strList.clear();
@@ -879,9 +879,9 @@ const bool EvaUserSetting::loadSettings()
 		for(QStringList::Iterator iter = strList.begin(); iter != strList.end(); ++iter)
 			quickList.push_back(*iter);
 	} else {
-		quickList.push_back(QString(i18n("oh.")));
-		quickList.push_back(QString(i18n("ok, ok, I got u.")));
-		quickList.push_back(QString(i18n("/jy ,really?")));	
+		quickList.push_back(QString(i18n("Oh.")));
+		quickList.push_back(QString(i18n("OK, OK, I got you.")));
+		quickList.push_back(QString(i18n("/jy , really?")));	
 	}
 	delete groupSaver;
 
@@ -1079,7 +1079,7 @@ void EvaUserSetting::loadDefaultSettings()
 	showMessageTipWindow = true;
 	showBudyOnlineNotifyWindow = true;
 	showOnlineUsers = false;
-	isSendKeyEnter = false;
+	isSendKeyEnter = true;
 	shortcut = KShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Z);
 	playSound = true;
 	pageSize = 25;
@@ -1112,15 +1112,15 @@ void EvaUserSetting::loadDefaultSettings()
 	m_ShowSignatureInSeperateLine = false;
 
 	if(!autoList.size()){
-		autoList.push_back(QString(i18n("sorry, I am working.")));
-		autoList.push_back(QString(i18n("having dinner now./fa")));
-		autoList.push_back(QString(i18n("I am not available now, sorry")));
+		autoList.push_back(QString(i18n("Sorry, I am working.")));
+		autoList.push_back(QString(i18n("Having dinner now./fa")));
+		autoList.push_back(QString(i18n("I am not available now, sorry.")));
 	}
 	
 	if(!quickList.size()){
-		quickList.push_back(QString(i18n("oh.")));
-		quickList.push_back(QString(i18n("ok, ok, I got u.")));
-		quickList.push_back(QString(i18n("/jy ,really?")));
+		quickList.push_back(QString(i18n("Oh.")));
+		quickList.push_back(QString(i18n("OK, OK, I got you.")));
+		quickList.push_back(QString(i18n("/jy , really?")));
 	}
 }
 

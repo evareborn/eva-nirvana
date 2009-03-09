@@ -130,7 +130,7 @@ const bool EvaImageResource::loadImage()
 	//return (loadFace() && loadIcon() && loadSmiley());
 }
 
-bool EvaImageResource::loadFace(const QSize &size)
+bool EvaImageResource::loadFace(const QSize &/*size*/)
 {
 	QString path = getFacePath();
 	QFile file( path + "/face.theme");    

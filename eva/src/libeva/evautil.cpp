@@ -18,6 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "evautil.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <string>
 #ifdef _WIN32
 #include <winsock.h>
@@ -25,6 +28,8 @@
 #include <arpa/inet.h>
 #endif
 #include "md5.h"
+#include <cstring>
+#include <cstdlib>
 
 // const char EvaUtil::smileyMap[QQ_SMILEY_AMOUNT] = {
 // 	0x41,0x42,0x43,0x44,0x45,0x46,0x47,0x48,
@@ -290,7 +295,7 @@ void EvaUtil::initMap()
 	strcpy(map[14].en,"/:o"); strcpy(map[14].py, "/jy");
 	strcpy(map[15].en, "/:("); strcpy(map[15].py, "/ng");
 	strcpy(map[16].en, "/:+"); strcpy(map[16].py, "/kuk");
-	strcpy(map[17].en, "/--b"); strcpy(map[17].py, "/lengh"); // 冷汗，"/lh" inuse	
+	strcpy(map[17].en, "/--b"); strcpy(map[17].py, "/lengh"); // 冷汗＄1�7/lh" inuse	
 	strcpy(map[18].en, "/:Q"); strcpy(map[18].py, "/zk");
 	strcpy(map[19].en, "/:t"); strcpy(map[19].py, "/tu");
 	
@@ -320,19 +325,14 @@ void EvaUtil::initMap()
 	strcpy(map[40].en, "/wipe"); strcpy(map[40].py, "/ch"); // 擦汗
 	strcpy(map[41].en, "/dig"); strcpy(map[41].py, "/kb"); // 挖鼻
 	strcpy(map[42].en, "/handclap"); strcpy(map[42].py, "/gz"); // 鼓掌
-	strcpy(map[43].en, "/&-("); strcpy(map[43].py, "/qd"); // 糗大了
-	strcpy(map[44].en, "/B-)"); strcpy(map[44].py, "/huaix"); // 壞笑，"/hx" inuse
-	strcpy(map[45].en, "/<@"); strcpy(map[45].py, "/zhh"); // 左哼哼
-	strcpy(map[46].en, "/@>"); strcpy(map[46].py, "/yhh"); // 右哼哼
-	strcpy(map[47].en, "/:-O"); strcpy(map[47].py, "/hq"); // 哈欠
+	strcpy(map[43].en, "/&-("); strcpy(map[43].py, "/qd"); // 糗大亄1�7	strcpy(map[44].en, "/B-)"); strcpy(map[44].py, "/huaix"); // 壞笑＄1�7/hx" inuse
+	strcpy(map[45].en, "/<@"); strcpy(map[45].py, "/zhh"); // 左哼哄1�7	strcpy(map[46].en, "/@>"); strcpy(map[46].py, "/yhh"); // 右哼哄1�7	strcpy(map[47].en, "/:-O"); strcpy(map[47].py, "/hq"); // 哈欠
 	strcpy(map[48].en, "/>-|"); strcpy(map[48].py, "/bs"); // 鄙視
 	strcpy(map[49].en, "/P-("); strcpy(map[49].py, "/wq"); // 委屈
 
-	strcpy(map[50].en, "/:'|"); strcpy(map[50].py, "/kk"); // 快哭了
-	strcpy(map[51].en, "/X-)"); strcpy(map[51].py, "/yx"); // 陰險
+	strcpy(map[50].en, "/:'|"); strcpy(map[50].py, "/kk"); // 快哭亄1�7	strcpy(map[51].en, "/X-)"); strcpy(map[51].py, "/yx"); // 陰險
 	strcpy(map[52].en, "/:*"); strcpy(map[52].py, "/qq"); // 親親
-	strcpy(map[53].en, "/@x"); strcpy(map[53].py, "/xia"); // 嚇
-	strcpy(map[54].en, "/8*"); strcpy(map[54].py, "/kel"); // 可憐
+	strcpy(map[53].en, "/@x"); strcpy(map[53].py, "/xia"); // 嚄1�7	strcpy(map[54].en, "/8*"); strcpy(map[54].py, "/kel"); // 可憐
 	strcpy(map[55].en, "/pd"); strcpy(map[55].py, "/cd"); // 菜刀	
 	strcpy(map[56].en, "/<W>"); strcpy(map[56].py, "/xig");
 	strcpy(map[57].en, "/beer"); strcpy(map[57].py, "/pj"); // 啤酒
@@ -385,12 +385,9 @@ void EvaUtil::initMap()
 	strcpy(map[98].en, "/skip"); strcpy(map[98].py, "/tsh"); // 跳繩
 	strcpy(map[99].en, "/oY"); strcpy(map[99].py, "/hsh"); // 揮手
 
-	strcpy(map[100].en, "/#-O"); strcpy(map[100].py, "/jd"); // 激動
-	strcpy(map[101].en, "/hiphop"); strcpy(map[101].py, "/jw"); // 街舞
+	strcpy(map[100].en, "/#-O"); strcpy(map[100].py, "/jd"); // 濄1�7勄1�7	strcpy(map[101].en, "/hiphop"); strcpy(map[101].py, "/jw"); // 街舞
 	strcpy(map[102].en, "/kiss"); strcpy(map[102].py, "/xw"); // 獻吻
-	strcpy(map[103].en, "/<&"); strcpy(map[103].py, "/ztj"); // 左太極
-	strcpy(map[104].en, "/&>"); strcpy(map[104].py, "/ytj"); // 右太極
-
+	strcpy(map[103].en, "/<&"); strcpy(map[103].py, "/ztj"); // 左太楄1�7	strcpy(map[104].en, "/&>"); strcpy(map[104].py, "/ytj"); // 右太楄1�7
 	strcpy(map[105].en, "/:#"); strcpy(map[105].py, "/feid");
 	strcpy(map[106].en, "/go"); strcpy(map[106].py, "/shan");
 	strcpy(map[107].en, "/find"); strcpy(map[107].py, "/zhao");

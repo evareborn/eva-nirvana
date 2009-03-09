@@ -26,6 +26,7 @@
 #endif
 #include <string.h>
 #include <stdio.h>
+#include <cstring>
 
 EvaUHInfoRequest::EvaUHInfoRequest() 
 	:EvaUHPacket(true)

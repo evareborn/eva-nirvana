@@ -233,6 +233,7 @@ EvaSysSettingWindow::EvaSysSettingWindow( QStringList &user, EvaImageResource * 
 	pbApply->setEnabled( FALSE );
 	isUserInfoChanged = FALSE;
 	isSysSettingChanged = FALSE;
+	isFaceSizeChanged = FALSE;
 	isSignatureChanged = false;
 	m_IsAuthQuestionChanged = false;
 }
@@ -446,9 +447,14 @@ void EvaSysSettingWindow::slotPbApplyClicked( )
 	if( isSysSettingChanged ){
 		saveSetting( );
 	}
+
+	if( isFaceSizeChanged ) {
+		emit faceSizeChanged();
+	}
 	
 	isUserInfoChanged = FALSE;
 	isSysSettingChanged = FALSE;
+	isFaceSizeChanged = FALSE;
 	pbApply->setEnabled( FALSE );
 	
 }
@@ -463,6 +469,8 @@ void EvaSysSettingWindow::slotFaceSizeChanged( int value )
 {
 	QString txt = i18n("large" ) + " (" + QString::number(value) + ")";
 	lblFaceBig->setText( txt );
+
+	isFaceSizeChanged = TRUE;
 	
 }
 
@@ -880,6 +888,10 @@ void EvaSysSettingWindow::slotDetailsUpdated(QStringList list)
 		return;
 	details = list;
 	UpdateData(true);
+
+	isUserInfoChanged = FALSE;
+	isSysSettingChanged = FALSE;
+	pbApply->setEnabled( FALSE );
 }
 
 void EvaSysSettingWindow::slotSignatureChanged( )

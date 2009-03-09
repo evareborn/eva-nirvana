@@ -26,6 +26,7 @@
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
 
 unsigned int EvaPicPacket::myQQ = 0;
 unsigned char *EvaPicPacket::fileAgentKey = NULL;

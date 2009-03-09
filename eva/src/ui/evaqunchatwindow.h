@@ -40,6 +40,7 @@ class QShowEvent;
 class QCloseEvent;
 class QHideEvent;
 class RegionGrabber;
+class EvaHistoryViewer;
 
 class EvaQunChatWindow : public EvaQunChatUIBase
 {
@@ -60,6 +61,7 @@ public:
 	
 	void addToolButton( QString &scriptName, QString buttonName, QString &pixmap, QString &tip );
 	void removeToolButton( QString &scriptName, QString buttonName );
+	void updateQunCountNumbers();
 public slots:
 	void graphicChanged();
 	void slotReceivedMessage(unsigned int qunID, unsigned int senderQQ, QString message, QDateTime time, const char size, 
@@ -131,6 +133,7 @@ private:
 	QString sendingImageMsg;
 	
 	RegionGrabber *grabber;
+	EvaHistoryViewer* viewer;
 	//std::list<QString> outPicList;
 	unsigned int sessionID;
 	unsigned int ip;
@@ -155,6 +158,7 @@ private slots:
 	void slotQuickReplyActivated(int id);
 	
 	void slotHistoryClick();
+	void slotHistoryWindowClosed();
 	void slotSendKeyClick();
 	void slotSend();
 	

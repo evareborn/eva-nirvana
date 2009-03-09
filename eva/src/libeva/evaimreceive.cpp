@@ -20,12 +20,13 @@
 #include "evaimreceive.h"
 #include "evadefines.h"
 #include "evautil.h"
-#include <string.h>
 #ifdef _WIN32
 #include <winsock.h>
 #else
 #include <arpa/inet.h>
 #endif
+#include <cstring>
+#include <cstdlib>
 
 
 ReceiveIMPacket::ReceiveIMPacket(unsigned char *buf, const int len)
@@ -60,7 +61,8 @@ std::string ReceiveIMPacket::convertToShow(const std::string &src, const unsigne
 		start+=38;
 		start+=2; // 2 unknown bytes: 0x13 0x4c (always)
 	}
-	for(uint i=start; i<src.length(); i++){
+	for(uint i=start; i<src.length()-1; i++){
+	// Here it is length()-1 to cut off the extra space at the end of every message (always)
 		if(src[i]==0x14){
 			converted+=EvaUtil::smileyToText(src[++i]);
 			converted+=' ';
@@ -577,8 +579,13 @@ ReceivedQunIMJoinRequest::ReceivedQunIMJoinRequest(const unsigned short imType, 
 			sender = READ32(buf+pos);
 			pos+=4;
 			exttype=buf[pos++];
-			pos++;
-			if(exttype == 3) {
+			
+			// LumaQQ disregard value of exttype(rootCause) when deal with QQ_RECV_IM_ADDED_TO_QUN
+			// Values for exttype (For QQ_RECV_IM_DELETED_FROM_QUN, from LumaQQ Mac)
+			// static const char kQQExitClusterDismissed = 0x01;
+			// static const char kQQExitClusterActive = 0x02;
+			// static const char kQQExitClusterPassive = 0x03;
+			if(imType == QQ_RECV_IM_ADDED_TO_QUN || exttype == 3) {
 				commander = READ32(buf+pos);
 				pos+=4;
 			}
@@ -1000,10 +1007,198 @@ void ReceivedQQNews::parseData( const unsigned char * buf, const int /*len*/ )
 }
 
 
+/** ====================================================================== */
 
 
+ReceivedTempSessionTextIMPacket::ReceivedTempSessionTextIMPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
+
+ReceivedTempSessionTextIMPacket::ReceivedTempSessionTextIMPacket( const ReceivedTempSessionTextIMPacket & rhs )
+{
+	*this = rhs;
+}
+
+ReceivedTempSessionTextIMPacket & ReceivedTempSessionTextIMPacket::operator =( const ReceivedTempSessionTextIMPacket & rhs )
+{
+	//*((ReceivedTempSessionTextIMPacket *)this) = (ReceivedTempSessionTextIMPacket)rhs;
+	sender=rhs.getSender();
+	nick=rhs.getNick();
+	site=rhs.getSite();
+	time=rhs.getTime();
+	message=rhs.getMessage();
+	fontname=rhs.getFontName();
+	fontsize=rhs.getFontSize();
+	bold=rhs.isBold();
+	italic=rhs.isItalic();
+	underline=rhs.isUnderline();
+	red=rhs.getRed();
+	green=rhs.getGreen();
+	blue=rhs.getBlue();
+	return *this;
+}
+
+void ReceivedTempSessionTextIMPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=0;
+	int len2=0;
+	int fontStyleLength;
+	char* pszTemp;
+	int fontFlag;
+
+	// Sender
+	sender = htonl(*(unsigned int*)buf);
+	pos+=4;
+	// Unknown 4 bytes
+	pos+=4;
+	// Nick (TM only sends string version of QQ number)
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	nick=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+	// Qun name (TM only sends "QQ Qun")
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	site=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+	// Unknown 1 byte
+	pos++;
+	// Timestamp
+	time = htonl(*(unsigned int*)(buf+pos));
+	pos+=4;
+	// Length of following content
+	len2 = htons(*(unsigned short*)(buf+pos));
+	pos+=2;
+	// Obtain length of font attributes, then get message content
+	fontStyleLength = buf[pos+len2-1];
+	pszTemp=new char[len2+1];
+	message = strncpy(pszTemp,(const char*)buf+pos,len2-fontStyleLength);
+	message[len2-fontStyleLength]=0;
+	delete[] pszTemp;
+	pos+=(len2-fontStyleLength);
+	// Font attributes
+	fontFlag = htons(*(unsigned short*)(buf+pos));
+	pos+=2;
+	// Analyze font attribute for assigning to variables
+	// Font size
+	fontsize = fontFlag & 0x1F;
+	// Bold, Italic, Underline
+	bold = (fontFlag & 0x20) != 0;
+	italic = (fontFlag & 0x40) != 0;
+	underline = (fontFlag & 0x80) != 0;
+	// Font color in rgb
+	red = buf[pos++] & 0xFF;
+	green = buf[pos++] & 0xFF;
+	blue = buf[pos++] & 0xFF;
+	// 1 Unknown Byte
+	pos++;
+	// Encoding (unused)
+	pos+=2;
+	// Font name in GBK
+	pszTemp=new char[strlen((const char*)buf+pos)+1];
+	strcpy(pszTemp,(const char*)buf+pos);
+	pszTemp[strlen(pszTemp)-1]=0;
+	fontname = pszTemp;
+	delete[] pszTemp;
+}
 
 
+/** ====================================================================== */
 
 
+TempSessionOpReplyPacket::TempSessionOpReplyPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
 
+TempSessionOpReplyPacket::TempSessionOpReplyPacket( const TempSessionOpReplyPacket & rhs )
+{
+	*this = rhs;
+}
+
+TempSessionOpReplyPacket & TempSessionOpReplyPacket::operator =( const TempSessionOpReplyPacket & rhs )
+{
+	replyMessage=rhs.getReplyMessage();
+	receiver=rhs.getReceiver();
+	replyCode=rhs.getReplyCode();
+	subCommand=rhs.getSubCommand();
+
+	return *this;
+}
+
+void TempSessionOpReplyPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=0;
+
+	subCommand = buf[pos++];
+	switch(subCommand) {
+			case QQ_SUB_CMD_SEND_TEMP_SESSION_IM:
+				receiver = htonl(*(int*)(buf+pos));
+				pos+=4;
+				replyCode = buf[pos++];
+				unsigned char len2 = buf[pos++];
+				char* pszTemp=new char[len2+1];
+				memmove(pszTemp,(char*)buf+pos,len2);
+				pszTemp[len2]=0;
+				replyMessage = pszTemp;
+				delete[] pszTemp;
+				break;
+	}
+}
+
+
+/** ====================================================================== */
+
+
+ReceivedQQMailPacket::ReceivedQQMailPacket( const unsigned char * buf, const int len )
+{
+	parseData(buf, len);
+}
+
+ReceivedQQMailPacket::ReceivedQQMailPacket( const ReceivedQQMailPacket & rhs )
+{
+	*this = rhs;
+}
+
+ReceivedQQMailPacket & ReceivedQQMailPacket::operator =( const ReceivedQQMailPacket & rhs )
+{
+	return *this;
+}
+
+void ReceivedQQMailPacket::parseData( const unsigned char * buf, const int len )
+{
+	int pos=1;
+	int len2=0;
+	char* pszTemp;
+
+	pszTemp=new char[31];
+	strncpy(pszTemp,(const char*)buf+pos,30);
+	pszTemp[30]=0;
+	mailID=pszTemp;
+	delete[] pszTemp;
+	pos+=30;
+
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	from=pszTemp;
+	delete[] pszTemp;
+	pos+=len2;
+
+	pos+=9;
+
+	len2=buf[pos++];
+	pszTemp=new char[len2+1];
+	strncpy(pszTemp,(const char*)buf+pos,len2);
+	pszTemp[len2]=0;
+	title=pszTemp;
+	delete[] pszTemp;
+}

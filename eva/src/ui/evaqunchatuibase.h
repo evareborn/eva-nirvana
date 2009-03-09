@@ -59,6 +59,7 @@ public:
 	QToolButton* tbImageFile;
 	QToolButton* tbScreenShot;
 	QToolButton* tbQuickReply;
+	QToolButton* tbEnableSound;
 	EvaTextEdit* teInput;
 	QPushButton* pbHistory;
 	QPushButton* pbClose;

@@ -35,6 +35,7 @@
 #include "evafilestatusuibase.h"
 #include "regiongrabber.h"
 #include "evamainwindow.h"
+#include "evahistoryviewer.h"
 #include "evascriptmanager.h"
 
 #include <qtextcodec.h>
@@ -61,6 +62,7 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <kapplication.h>
+#include <stdio.h>
 
 #ifndef QQ_MSG_IM_MAX
 #define QQ_MSG_IM_MAX 15000
@@ -75,7 +77,7 @@ std::list<QString> EvaChatWindow::quickList;
 	
 EvaChatWindow::EvaChatWindow(QQFriend * frd, QWidget* parent, const char* name, WFlags fl)
 	: EvaChatUIBase(parent, name, fl), smileyPopup(NULL), quickMenu(NULL), fontSelecter(NULL),
-	m_NumImages(0), grabber(NULL)
+	m_NumImages(0), grabber(NULL), viewer(NULL)
 {
 	//buddy = new QQFriend(*frd);
 	buddy = frd;
@@ -125,6 +127,7 @@ void EvaChatWindow::graphicChanged()
 	tbAddImage->setIconSet(*(images->getIcon("SEND_IMAGE")));
 	tbScreenShot->setIconSet(*(images->getIcon("SCREEN_SHOT")));
 	tbQuickReply->setIconSet(*(images->getIcon("QUICK_REPLY")));
+	tbEnableSound->setIconSet(*(images->getIcon("SYSTEM_MSG")));
 	tbHideShows->setIconSet(*(images->getIcon("HIDE_PORTRAIT")));
 	slotBuddyQQShowReady(getBuddyQQ());
 	slotMyQQShowReady();
@@ -295,6 +298,8 @@ void EvaChatWindow::slotReceivedMessage(unsigned int sender, bool isNormal, QStr
 	chatDisplay->append(nick, time, Qt::blue, isNormal,
 				QColor((Q_UINT8)red, (Q_UINT8)green,(Q_UINT8)blue),
 				size, u, i, b, message);
+	if ( tbEnableSound->isOn() )
+		EvaMain::global->getSoundResource()->playNewMessage();
 }
 
 void EvaChatWindow::showMessages()
@@ -310,7 +315,7 @@ void EvaChatWindow::slotAddMessage(unsigned int , QString sNick, unsigned int , 
 	if(!kteInput->isEnabled()) return;
 	EvaHtmlParser parser;
 	parser.convertToHtml(message, false, false, true);
-	QString msg = sNick + (isNormal?(""):i18n("(Auto-Reply)")) + " " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
+	QString msg = sNick + (isNormal?(""):i18n("(Auto-Reply)")) + "  " + time.toString("yyyy-MM-dd hh:mm:ss") + "<br />" + message;
 	kteInput->append(msg);
 }
 
@@ -454,7 +459,44 @@ void EvaChatWindow::slotHideShowsClick()
 
 void EvaChatWindow::slotHistoryClick()
 {
-	emit requestHistory(getBuddyQQ());
+//	emit requestHistory(getBuddyQQ());
+	if ( !viewer )
+	{
+		QString nick = codec->toUnicode(buddy->getNick().c_str());
+
+		viewer = new EvaHistoryViewer(getBuddyQQ(), nick, EvaMain::user->getSetting());
+
+		unsigned short faceId = buddy->getFace();
+		QPixmap *face = EvaMain::images->getFaceByID(faceId);
+		viewer->setIcon(*face);
+
+		connect(viewer, SIGNAL(historyDoubleClicked(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)),
+				this,
+				SLOT(slotAddMessage(unsigned int, QString, unsigned int, QString, bool,
+						QString, QDateTime, const char,
+						const bool, const bool, const bool,
+						const char, const char, const char)));
+		connect(viewer, SIGNAL(windowClosed()), this, SLOT(slotHistoryWindowClosed()));
+	}
+	if ( pbHistory->isOn() )
+	{
+		viewer->move(this->x(), this->y() + this->height() + 25);
+
+		viewer->show();
+	}
+	else
+	{
+		viewer->hide();
+	}
+}
+
+void EvaChatWindow::slotHistoryWindowClosed()
+{
+//	viewer->hide();
+	pbHistory->setOn(FALSE);
 }
 
 void EvaChatWindow::slotSendKeyClick()
@@ -554,6 +596,9 @@ void EvaChatWindow::slotFontChanged(QColor color, int size)
 // 	int fontColor = color;
 	buddy->setChatFontSize(size);
 	buddy->setChatFontColor(color.rgb());
+	printf("setting color: %s size: %d\n", color.name().ascii(), size);
+	//QColor c=color;
+	//QString s=c.name();
 	EvaMain::user->saveGroupedBuddyList();
 }
 
@@ -648,7 +693,7 @@ void EvaChatWindow::slotReceivedFileRequest( const unsigned int session, const Q
 
 void EvaChatWindow::slotFileTransferAcceptClicked( const unsigned int showSession)
 {	
-	QString msg = i18n("You have accepted transfering \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+	QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferAccept(buddy->getQQ(), getSession(showSession), "", QQ_TRANSFER_FILE);
 }
@@ -664,7 +709,7 @@ void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int showSessio
 	QString dir = fullname.left(fullname.findRev("/"));
 	//QFileInfo info(fullname);
 	if(!dir.isEmpty()){
-		QString msg = i18n("You have accepted transfering \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
+		QString msg = i18n("You have accepted transferring \"%1\", network connecting start, please wait...").arg(getFileName(getSession(showSession)));
 		chatDisplay->showInfomation(msg);
 		emit fileTransferAccept(buddy->getQQ(), session, dir, QQ_TRANSFER_FILE);
 	}
@@ -673,7 +718,7 @@ void EvaChatWindow::slotFileTransferSaveAsClicked( const unsigned int showSessio
 void EvaChatWindow::slotFileTransferCancelClicked( const unsigned int showSession)
 {
 	printf("EvaChatWindow::slotFileTransferCancelClicked -- \n");
-	QString msg = i18n("You have cancelled transfering \"%1\".").arg(getFileName(getSession(showSession)));
+	QString msg = i18n("You have cancelled transferring \"%1\".").arg(getFileName(getSession(showSession)));
 	chatDisplay->showInfomation(msg);
 	emit fileTransferCancel(buddy->getQQ(), getSession(showSession));
 	removeFromFileList(getSession(showSession));
@@ -692,8 +737,8 @@ void EvaChatWindow::slotReceivedFileAccepted(const unsigned int session, const b
 		return;
 	
 	QString name = codec->toUnicode(buddy->getNick().c_str());
-	QString action = isAccepted?i18n("accepted"):i18n("stoped");
-	QString msg = i18n("%1 has %2 transfering \"%3\".").arg(name).arg(action).arg(filename);
+	QString action = isAccepted ? i18n("accepted") : i18n("stopped");
+	QString msg = i18n("%1 has %2 transferring \"%3\".").arg(name).arg(action).arg(filename);
 	chatDisplay->showInfomation(msg);
 }
 
@@ -744,7 +789,7 @@ void EvaChatWindow::slotFileNotifyNormalInfo( const unsigned int session, EvaFil
 	case ESNone:
 		break;
 	case ESError:{
-		QString msg = i18n("network lost connection or your friend has stoped transfering \"%1\".").arg(filename);
+		QString msg = i18n("network lost connection or your friend has stopped transferring \"%1\".").arg(filename);
 		switch(transferType){
 		case QQ_TRANSFER_FILE:{
 			if(getFileName(session).isEmpty()) break;
@@ -841,8 +886,8 @@ void EvaChatWindow::slotFilePanelCloseClicked( const unsigned int session)
 void EvaChatWindow::closeEvent( QCloseEvent * e )
 {
 	if(m_FileList.size() && m_NumImages && KMessageBox::questionYesNo(this,
-			i18n("File transfer is still in process( %1 file(s) left ). Closing this window"
-				" will also stop those transfer processes."
+			i18n("File transfer is still in process (%1 file(s) left). Closing this window "
+				"will also stop those transfer processes. "
 				"Do you want to close this window?").arg(m_FileList.size()),
 			i18n("Close Window?")) == KMessageBox::No){
 		e->ignore();
@@ -851,6 +896,8 @@ void EvaChatWindow::closeEvent( QCloseEvent * e )
 		for(iter = m_FileList.begin(); iter!=m_FileList.end(); ++iter){
 			emit fileTransferCancel(buddy->getQQ(), iter.key());
 		}
+		if (viewer)
+			delete viewer;
 		e->accept();
 	}
 }
@@ -959,7 +1006,7 @@ void EvaChatWindow::addToolButton( QString & scriptName, QString buttonName, QSt
 	m_scriptMap[buttonName] = scriptName;
 }
 
-void EvaChatWindow::removeToolButton( QString & scriptName, QString buttonName )
+void EvaChatWindow::removeToolButton( QString & /*scriptName*/, QString buttonName )
 {
 	QMap<QString, QToolButton*>::Iterator it = m_btnMap.find(buttonName);
 	if( it == m_btnMap.end()) return;

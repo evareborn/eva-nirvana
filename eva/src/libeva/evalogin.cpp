@@ -23,10 +23,12 @@
 #else
 #include <arpa/inet.h>
 #endif
-#include <string.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "evacrypt.h"
 #include "evautil.h"
+#include <cstring>
 
 LoginPacket::LoginPacket()
 	: OutPacket(),
@@ -289,6 +291,7 @@ void LoginReplyPacket::parseBody()
 			replyMessage.assign(tmpMsg);
 			delete []tmpMsg;
 		}
+		break;
 	default:
 		replyCode = QQ_LOGIN_REPLY_MISC_ERROR;
 		{
