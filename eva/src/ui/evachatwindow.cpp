@@ -524,7 +524,7 @@ void EvaChatWindow::slotSend()
 		KMessageBox::information(this, i18n("Message is too long, cannot send."), i18n("Message"));
 		return;
 	}
-printf("*********************************** %s\n",toSend.ascii());
+	
 	pbSend->setEnabled(false);
 	kteInput->setEnabled(false);
 

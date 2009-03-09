@@ -39,19 +39,27 @@ void EvaTextEdit::keyPressEvent(QKeyEvent *e)
 	int para;
 	int index;	
 	getCursorPosition(&para,&index);
-	if( (isEnterSend && (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return)  && (e->state() != Qt::KeyButtonMask)) || 
-			( (!isEnterSend)  &&
-			( (e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ) && 
-			( (e->state() & Qt::ControlButton)==Qt::ControlButton))  ){
+	if (isEnterSend && (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) && (e->state() != Qt::KeyButtonMask)) {
+		if ((e->state() & Qt::ControlButton)==Qt::ControlButton) {
+			KTextEdit::keyPressEvent(e);
+			QString txt = text();
+			txt.replace("</p>\n<p>", "<br />");
+			setText(txt);
+			setCursorPosition(para, index + 1);
+		}
 		emit keyPressed(e);
 		return;
 	}
-	KTextEdit::keyPressEvent(e);
+	if (!isEnterSend && (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) && ((e->state() & Qt::ControlButton)==Qt::ControlButton)){
+		emit keyPressed(e);
+		return;
+	}
+
+	KTextEdit::keyPressEvent(e);	
 	if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){
 		QString txt = text();
 		txt.replace("</p>\n<p>", "<br />");
 		setText(txt);
-		puts(txt.ascii());
 		setCursorPosition(para, index + 1);
 	}
 	emit keyPressed(e);
