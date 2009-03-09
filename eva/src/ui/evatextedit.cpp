@@ -47,10 +47,11 @@ void EvaTextEdit::keyPressEvent(QKeyEvent *e)
 		return;
 	}
 	KTextEdit::keyPressEvent(e);
-	if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){	
+	if((e->key() == Qt::Key_Enter) || (e->key() == Qt::Key_Return) ){
 		QString txt = text();
 		txt.replace("</p>\n<p>", "<br />");
 		setText(txt);
+		puts(txt.ascii());
 		setCursorPosition(para, index + 1);
 	}
 	emit keyPressed(e);
